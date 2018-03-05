@@ -9,13 +9,45 @@ public class UiManager : ManagerParent
 {
 	#region Variables
 	Dictionary <MenuType, UiParent> AllMenu;
-
+	MenuType menuOpen;
 	#endregion
 
 	#region Mono
 	#endregion
 
 	#region Public Methods
+	public void OpenThisMenu ( MenuType thisType, MenuTokenAbstract GetTok = null )
+	{
+		UiParent thisUi;
+		//Debug.Log ( "open " + thisType );
+
+		if ( AllMenu.TryGetValue ( thisType, out thisUi ) )
+		{
+			if ( menuOpen == thisType )
+			{
+				return;
+			}
+            
+			if ( menuOpen != MenuType.Nothing )
+			{
+				CloseThisMenu ( );
+			}
+
+			menuOpen = thisType;
+			thisUi.OpenThis ( GetTok );
+		}
+    }
+
+	public void CloseThisMenu ( )
+	{
+		UiParent thisUi;
+
+		if ( menuOpen != MenuType.Nothing && AllMenu.TryGetValue ( menuOpen, out thisUi ) )
+		{
+			thisUi.CloseThis ( );
+			menuOpen = MenuType.Nothing;
+		}
+	}
 	#endregion
 
 	#region Private Methods
