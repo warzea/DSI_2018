@@ -10,7 +10,7 @@ public abstract class GameEvent
     #region Public Methods
 	public void Raise()
 	{
-		GlobalManager.Event.Raise ( this );
+		Manager.Event.Raise ( this );
 	}
     #endregion
 	

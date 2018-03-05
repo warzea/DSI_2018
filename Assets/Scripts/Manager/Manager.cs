@@ -11,6 +11,8 @@ public class Manager : MonoBehaviour
 
 	static EventManager evnt;
 	public static EventManager Event { get { return evnt; } }
+	#endregion
+	
 	#region Mono
 	void Awake()
 	{
