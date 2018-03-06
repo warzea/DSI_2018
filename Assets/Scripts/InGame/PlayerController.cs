@@ -52,7 +52,6 @@ public class PlayerController : MonoBehaviour
 		
 		playerShoot ( getDeltaTime) ;
 		interactPlayer ( );
-		 
 	}
 
 	void playerMove ( float getDeltaTime )
@@ -95,7 +94,7 @@ public class PlayerController : MonoBehaviour
 
 		if ( interactInput )
 		{
-
+			
 		}
 	}
 

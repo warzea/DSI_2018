@@ -71,7 +71,7 @@ public class MenuSelect : UiParent
 	{
 		gameObject.SetActive ( false );
 
-		Manager.GameCont.SpawnPlayer ( );
+		Manager.GameCont.StartGame ( );
 	}
 	#endregion
 

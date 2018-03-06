@@ -20,23 +20,10 @@ public class GameController : ManagerParent
 	#endregion
 
 	#region Public Methods
-	public void SpawnPlayer ( )
+
+	public void StartGame ( )
 	{
-		PlayerInfoInput[] getPlayers = GetPlayersInput;
-		GameObject getPlayer;
-
-		for ( int a = 0; a < getPlayers.Length; a ++ )
-		{
-			getPlayers[a].ReadyPlayer = false;
-			
-			if ( getPlayers[a].EnablePlayer )
-			{
-				getPlayer = ( GameObject ) Instantiate ( PlayerPrefab );
-
-				getPlayer.transform.position = PlayerPosSpawn.position;
-				getPlayer.GetComponent<PlayerController>().IdPlayer = getPlayers[a].IdPlayer;
-			}
-		}
+		SpawnPlayer ( );
 	}
 	#endregion
 
@@ -52,6 +39,25 @@ public class GameController : ManagerParent
 			GetPlayersInput[a].IdPlayer = a;
 			GetPlayersInput[a].InputPlayer = ReInput.players.GetPlayer ( a );
 			GetPlayersInput[a].EnablePlayer = false;
+		}
+	}
+
+	void SpawnPlayer ( )
+	{
+		PlayerInfoInput[] getPlayers = GetPlayersInput;
+		GameObject getPlayer;
+
+		for ( int a = 0; a < getPlayers.Length; a ++ )
+		{
+			getPlayers[a].ReadyPlayer = false;
+			
+			if ( getPlayers[a].EnablePlayer )
+			{
+				getPlayer = ( GameObject ) Instantiate ( PlayerPrefab );
+
+				getPlayer.transform.position = PlayerPosSpawn.position;
+				getPlayer.GetComponent<PlayerController>().IdPlayer = getPlayers[a].IdPlayer;
+			}
 		}
 	}
 	#endregion
