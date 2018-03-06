@@ -65,10 +65,14 @@ public class UiManager : ManagerParent
 			thisMenu = ( GameObject ) Instantiate ( getAllMenu [ a ], Parent );
 			thisUi = thisMenu.GetComponent<UiParent> ( );
 			thisUi.Initialize ( );
+			thisMenu.SetActive(false);
+			
 			setAllMenu.Add ( thisUi.ThisMenu, thisUi );
 		}
 
 		AllMenu = setAllMenu;
+
+		OpenThisMenu(MenuType.SelectPlayer);
 	}
 
 	#endregion

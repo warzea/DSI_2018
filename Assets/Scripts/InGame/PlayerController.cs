@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
 		playerMove ( getDeltaTime) ;
 		
 		playerShoot ( getDeltaTime) ;
-
+		interactPlayer ( );
 		 
 	}
 
@@ -86,6 +86,16 @@ public class PlayerController : MonoBehaviour
 			getBullet.GetComponent<Rigidbody>( ).AddForce ( getBullet.transform.forward * 10, ForceMode.VelocityChange );
 
 			StartCoroutine ( waitNewShoot ( ) );
+		}
+	}
+
+	void interactPlayer ( )
+	{
+		bool interactInput = inputPlayer.GetButtonDown("Interact");
+
+		if ( interactInput )
+		{
+
 		}
 	}
 

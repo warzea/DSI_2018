@@ -6,5 +6,6 @@ public enum TokenType
 
 public enum MenuType
 {
-	Nothing
+	Nothing,
+	SelectPlayer
 }
