@@ -43,13 +43,20 @@ public class AgentController : MonoBehaviour
 	public void InitGame(){
 		int nbAgents = agents.Length;
 
-		float nbLawPv = Mathf.Round(nbAgents * pourcentLowPV/100);
-		float nbMaxPv = Mathf.Round(nbAgents * pourcentMaxPV/100);
-		float nbLead = Mathf.Round(nbAgents * pourcentLead/100);
-		float nbOther = nbAgents - nbLawPv - nbMaxPv - nbLead;
+		int nbLawPv = (int)Mathf.Round(nbAgents * pourcentLowPV/100);
+		int nbMaxPv = (int)Mathf.Round(nbAgents * pourcentMaxPV/100);
+		int nbLead = (int)Mathf.Round(nbAgents * pourcentLead/100);
 
+
+		for (int i = 0; i < nbLawPv; i++){	agents [i].GetComponent<AgentInfo> ().SetFocusPlayer (player [0]);}
+		for (int i = nbLawPv; i < nbLawPv+nbMaxPv; i++){	agents [i].GetComponent<AgentInfo> ().SetFocusPlayer (player [1]);}
+		for (int i = nbLawPv+nbMaxPv; i < nbLawPv+nbMaxPv+nbLead; i++){		agents [i].GetComponent<AgentInfo> ().SetFocusPlayer (player [2]);}
+		for (int i = nbLawPv+nbMaxPv+nbLead; i < nbAgents; i++){		agents [i].GetComponent<AgentInfo> ().SetFocusPlayer (player [3]);}
 	}
 
+	public void ChecLawPlayer(){
+	}
+		
     private void Update()
     {
 		timeAgent += Time.deltaTime;
