@@ -524,6 +524,16 @@ Prefab:
       value: 
       objectReference: {fileID: 1528122427535438, guid: 9b3404be833a47c44aeae862331dd09b,
         type: 2}
+    - target: {fileID: 114533155146921874, guid: 09c0fcd273fc2424693f3e4b734896bb,
+        type: 2}
+      propertyPath: _userData.joystickMaps.Array.data[0].actionElementMaps.Array.data[15]._actionId
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114533155146921874, guid: 09c0fcd273fc2424693f3e4b734896bb,
+        type: 2}
+      propertyPath: _userData.joystickMaps.Array.data[0].actionElementMaps.Array.data[16]._actionId
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 09c0fcd273fc2424693f3e4b734896bb, type: 2}
   m_IsPrefabParent: 0

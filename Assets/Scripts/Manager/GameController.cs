@@ -10,7 +10,7 @@ public class GameController : ManagerParent
 	public Transform PlayerPosSpawn;
 
 	[HideInInspector]
-	public Transform Gargabe;
+	public Transform Garbage;
 
 	[HideInInspector]
 	public PlayerInfoInput[] GetPlayersInput;
@@ -30,7 +30,7 @@ public class GameController : ManagerParent
 	#region Private Methods
 	protected override void InitializeManager ( )
 	{
-		Gargabe = transform.Find("Garbage");
+		Garbage = transform.Find("Garbage");
 		GetPlayersInput = new PlayerInfoInput[4];
 
 		for ( int a = 0; a < 4; a ++ )

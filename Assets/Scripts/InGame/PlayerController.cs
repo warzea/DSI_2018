@@ -10,17 +10,18 @@ public class PlayerController : MonoBehaviour
 	public int IdPlayer;
 
 	public float MoveSpeed;
-	public float FireRate;
-	public GameObject Bullet;
-	public Transform SpawnBullet;
 
+	[Range(0,1)]
+	[Tooltip("Speed reduce pendant la phase de shoot")]
+	public float SpeedReduce;
+
+	WeaponAbstract thisWeapon;
 	Transform thisTrans;
-	Transform getGargabe;
 	Rigidbody thisRig;
 
 	Player inputPlayer;
 
-	bool canShoot = true;
+	bool shooting = false;
 	#endregion
 	
 	#region Mono
@@ -28,9 +29,9 @@ public class PlayerController : MonoBehaviour
 	{
 		thisTrans = transform;
 		thisRig = GetComponent<Rigidbody>();
-		getGargabe = Manager.GameCont.Gargabe;
 
 		inputPlayer = ReInput.players.GetPlayer(IdPlayer);
+		UpdateWeapon();
 	}
 	
 	void Update () 
@@ -42,16 +43,21 @@ public class PlayerController : MonoBehaviour
 	#endregion
 	
 	#region Public Methods
+	public void UpdateWeapon ( )
+	{
+		thisWeapon = GetComponentInChildren<WeaponAbstract>();
+	}
 	#endregion
 
 	#region Private Methods
 	void inputAction ( float getDeltaTime )
 	{
+		interactPlayer ( );
+		playerShoot ( getDeltaTime) ;
+
 		playerAim ( getDeltaTime) ;
 		playerMove ( getDeltaTime) ;
 		
-		playerShoot ( getDeltaTime) ;
-		interactPlayer ( );
 	}
 
 	void playerMove ( float getDeltaTime )
@@ -59,6 +65,11 @@ public class PlayerController : MonoBehaviour
 		float Xmove = inputPlayer.GetAxis("MoveX");
 		float Ymove = inputPlayer.GetAxis("MoveY");
 		
+		if ( shooting )
+		{
+			getDeltaTime *= SpeedReduce;
+		}
+
 		thisRig.MovePosition ( thisTrans.localPosition + getDeltaTime * MoveSpeed * new Vector3 ( Xmove, 0, Ymove )  );
 	}
 
@@ -77,14 +88,15 @@ public class PlayerController : MonoBehaviour
 	{
 		float shootInput = inputPlayer.GetAxis("Shoot");
 
-		if ( shootInput > 0 && canShoot )
+		if ( shootInput > 0 && thisWeapon != null )
 		{
-			canShoot = false;
+			thisWeapon.weaponShoot( thisTrans );
 
-			GameObject getBullet = ( GameObject ) Instantiate ( Bullet, SpawnBullet.position, thisTrans.localRotation, getGargabe );
-			getBullet.GetComponent<Rigidbody>( ).AddForce ( getBullet.transform.forward * 10, ForceMode.VelocityChange );
-
-			StartCoroutine ( waitNewShoot ( ) );
+			shooting = true;
+		}
+		else 
+		{
+			shooting = false;
 		}
 	}
 
@@ -98,11 +110,6 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	IEnumerator waitNewShoot ( )
-	{
-		yield return new WaitForSeconds ( FireRate );
-
-		canShoot = true;
-	}
+	
 	#endregion
 }
