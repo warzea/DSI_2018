@@ -9,6 +9,9 @@ public class Manager : MonoBehaviour
 	static UiManager ui;
 	public static UiManager Ui { get { return ui; } }
 
+	static GameController gamecont;
+	public static GameController GameCont { get { return gamecont; } }
+
 	static EventManager evnt;
 	public static EventManager Event { get { return evnt; } }
 	#endregion
@@ -41,6 +44,7 @@ public class Manager : MonoBehaviour
 	void InitializeManagers()
 	{
 		InitializeManager ( ref evnt );
+		InitializeManager ( ref gamecont );
 		InitializeManager ( ref ui );
 	}
 
