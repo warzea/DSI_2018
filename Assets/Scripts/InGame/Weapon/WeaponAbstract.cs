@@ -9,7 +9,6 @@ public class WeaponAbstract : MonoBehaviour
 	public GameObject Bullet;
 	public Transform SpawnBullet;
 
-	Transform thisTrans;
 	Transform getGargabe;
 	bool canShoot = true;
 	#endregion
@@ -18,7 +17,6 @@ public class WeaponAbstract : MonoBehaviour
 	void Awake ( )
 	{
 		getGargabe = Manager.GameCont.Garbage;
-		thisTrans = transform;
 	}
 	#endregion
 	
@@ -27,14 +25,14 @@ public class WeaponAbstract : MonoBehaviour
 	{
 
 	}
-	public void weaponShoot ( Transform thisTrans )
+	public void weaponShoot ( Transform playerTrans )
 	{
 		if ( canShoot )
 		{
 			canShoot = false;
 
-			GameObject getBullet = ( GameObject ) Instantiate ( Bullet, SpawnBullet.position, thisTrans.localRotation, getGargabe );
-			getBullet.transform.position = thisTrans.position;
+			GameObject getBullet = ( GameObject ) Instantiate ( Bullet, SpawnBullet.position, playerTrans.localRotation, getGargabe );
+			getBullet.transform.position = playerTrans.position;
 			getBullet.GetComponent<Rigidbody>( ).AddForce ( getBullet.transform.forward * 10, ForceMode.VelocityChange );
 
 			StartCoroutine ( waitNewShoot ( ) );
