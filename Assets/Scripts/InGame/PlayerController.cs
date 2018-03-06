@@ -16,10 +16,13 @@ public class PlayerController : MonoBehaviour
 	public float SpeedReduce;
 
 	WeaponAbstract thisWeapon;
+	Transform camTrans;
 	Transform thisTrans;
 	Rigidbody thisRig;
 
 	Player inputPlayer;
+
+	Camera getCam;
 
 	bool shooting = false;
 	#endregion
@@ -32,14 +35,19 @@ public class PlayerController : MonoBehaviour
 
 		inputPlayer = ReInput.players.GetPlayer(IdPlayer);
 		UpdateWeapon();
+		
+		getCam = Manager.GameCont.MainCam;
+		camTrans = getCam.transform;
 	}
 	
 	void Update () 
 	{
 		float getDeltaTime = Time.deltaTime;
-
+		
 		inputAction ( getDeltaTime );
-	}
+
+		checkBorder ( );
+	}		
 	#endregion
 	
 	#region Public Methods
@@ -50,6 +58,28 @@ public class PlayerController : MonoBehaviour
 	#endregion
 
 	#region Private Methods
+	void checkBorder ( )
+	{
+		Vector3 getCamPos = getCam.WorldToViewportPoint ( thisTrans.localPosition );
+		
+		if ( getCamPos.x > 1 )
+		{
+			thisTrans.localPosition = new Vector3 ( getCam.ViewportToWorldPoint ( new Vector3 ( 1, getCamPos.y, getCamPos.z ) ).x, thisTrans.localPosition.y, thisTrans.localPosition.z );
+		}
+		else if ( getCamPos.x < 0 )
+		{
+			thisTrans.localPosition = new Vector3 ( getCam.ViewportToWorldPoint ( new Vector3 ( 0, getCamPos.y, getCamPos.z ) ).x, thisTrans.localPosition.y, thisTrans.localPosition.z );
+		}
+
+		if ( getCamPos.y > 1 )
+		{
+			thisTrans.localPosition = new Vector3 ( thisTrans.localPosition.x, thisTrans.localPosition.y, getCam.ViewportToWorldPoint ( new Vector3 ( getCamPos.x, 1, getCamPos.z ) ).z );
+		}
+		else if ( getCamPos.y < 0 )
+		{
+			thisTrans.localPosition = new Vector3 ( thisTrans.localPosition.x, thisTrans.localPosition.y, getCam.ViewportToWorldPoint ( new Vector3 ( getCamPos.x, 0, getCamPos.z ) ).z );
+		}
+	}
 	void inputAction ( float getDeltaTime )
 	{
 		interactPlayer ( );

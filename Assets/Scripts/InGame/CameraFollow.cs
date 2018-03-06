@@ -8,6 +8,7 @@ public class CameraFollow : MonoBehaviour
 	#region Variables
 	public Transform Target;
 	public float TimeGoTarget = 1;
+
 	Transform thisTrans;
 	#endregion
 
@@ -19,6 +20,17 @@ public class CameraFollow : MonoBehaviour
 	#endregion
 
 	#region Public Methods
+	public void InitGame ( Transform setTarget = null )
+	{
+		if ( setTarget != null )
+		{
+			Target = setTarget;
+		}
+
+		thisTrans.SetParent (Target);
+		thisTrans.localPosition = new Vector3 ( 0, thisTrans.localPosition.y, 0);
+	}
+
 	public void UpdateTarget ( Transform newTarget )
 	{
 		Target = newTarget;

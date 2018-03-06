@@ -219,8 +219,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c427c687a2cc82448a9348a0fef4ffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerPrefab: {fileID: 0}
-  Gargabe: {fileID: 0}
+  PlayerPrefab: {fileID: 1528122427535438, guid: 9b3404be833a47c44aeae862331dd09b,
+    type: 2}
+  PlayerPosSpawn: {fileID: 0}
+  MainCam: {fileID: 0}
+  Garbage: {fileID: 0}
+  Players: []
 --- !u!114 &114024564094145676
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -511,6 +515,24 @@ MonoBehaviour:
       _behaviorId: 0
       _userAssignable: 1
       _categoryId: 0
+    - _id: 7
+      _name: Cancel
+      _type: 1
+      _descriptiveName: Cancel
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 0
+    - _id: 10
+      _name: Start
+      _type: 1
+      _descriptiveName: Start
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 0
     actionCategories:
     - _name: Default
       _descriptiveName: Default
@@ -520,7 +542,7 @@ MonoBehaviour:
     actionCategoryMap:
       list:
       - categoryId: 0
-        actionIds: 000000000100000002000000030000000400000005000000
+        actionIds: 000000000100000002000000030000000400000005000000070000000a000000
     inputBehaviors:
     - _id: 0
       _name: Default
@@ -633,7 +655,7 @@ MonoBehaviour:
         _modifierKey2: 0
         _modifierKey3: 0
       - _actionCategoryId: 0
-        _actionId: -1
+        _actionId: 7
         _elementType: 1
         _elementIdentifierId: 5
         _axisRange: 0
@@ -732,7 +754,7 @@ MonoBehaviour:
         _modifierKey2: 0
         _modifierKey3: 0
       - _actionCategoryId: 0
-        _actionId: -1
+        _actionId: 10
         _elementType: 1
         _elementIdentifierId: 14
         _axisRange: 0
@@ -743,7 +765,7 @@ MonoBehaviour:
         _modifierKey2: 0
         _modifierKey3: 0
       - _actionCategoryId: 0
-        _actionId: -1
+        _actionId: 10
         _elementType: 1
         _elementIdentifierId: 15
         _axisRange: 0
@@ -754,7 +776,7 @@ MonoBehaviour:
         _modifierKey2: 0
         _modifierKey3: 0
       - _actionCategoryId: 0
-        _actionId: -1
+        _actionId: 10
         _elementType: 1
         _elementIdentifierId: 16
         _axisRange: 0
@@ -835,7 +857,7 @@ MonoBehaviour:
     customControllerMaps: []
     customControllers: []
     playerIdCounter: 5
-    actionIdCounter: 6
+    actionIdCounter: 11
     actionCategoryIdCounter: 1
     inputBehaviorIdCounter: 1
     mapCategoryIdCounter: 1

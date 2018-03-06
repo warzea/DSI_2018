@@ -9,11 +9,16 @@ public class GameController : ManagerParent
 	public GameObject PlayerPrefab;
 	public Transform PlayerPosSpawn;
 
+	public Camera MainCam;
+
 	[HideInInspector]
 	public Transform Garbage;
 
 	[HideInInspector]
 	public PlayerInfoInput[] GetPlayersInput;
+
+	[HideInInspector]
+	public List<GameObject> Players;
 	#endregion
 
 	#region Mono
@@ -24,6 +29,14 @@ public class GameController : ManagerParent
 	public void StartGame ( )
 	{
 		SpawnPlayer ( );
+		MainCam.GetComponent<CameraFollow>().InitGame();
+	}
+
+	public void EndGame ( )
+	{
+		Players.Clear ( );
+
+		Manager.Ui.OpenThisMenu ( MenuType.SelectPlayer );
 	}
 	#endregion
 
@@ -57,6 +70,8 @@ public class GameController : ManagerParent
 
 				getPlayer.transform.position = PlayerPosSpawn.position;
 				getPlayer.GetComponent<PlayerController>().IdPlayer = getPlayers[a].IdPlayer;
+
+				Players.Add ( getPlayer );
 			}
 		}
 	}
