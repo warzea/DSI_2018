@@ -57,7 +57,7 @@ public class AgentsManager : ManagerParent
     private GameObject playerLead;
 
     //Timer
-    private float timeAgent = 5;
+    private float timeAgent = 0;
 
     protected override void InitializeManager()
     {

@@ -11,9 +11,17 @@ public class AgentController : MonoBehaviour
     [Header("Info Agent")]
     public bool dead = false;
     public GameObject myFocusPlayer;
-    public GameObject bulletAgent;
+	public int lifeAgent = 1;
 
-    public int lifeAgent = 1;
+
+	[Header("Info Bullet")]
+    public GameObject bulletAgent;
+	public Transform spawnBulletAgent;
+	public GameObject parentBullet;
+	public float SpeedBulletAgent = 10f;
+	public float timeLeftAgentshoot = 2f;
+	public float distanceShoot = 20;
+
 
     public enum CibleAgent { lawPlayer, maxPlayer, leadPlayer, randomPlayer, nothing };
     public enum AgentEtat { deadAgent, aliveAgent };
@@ -25,6 +33,7 @@ public class AgentController : MonoBehaviour
 
     public Material deadMaterial;
 
+	private float timeAgent = -5;
 
     void Awake()
     {
@@ -36,12 +45,32 @@ public class AgentController : MonoBehaviour
 
     void Update()
     {
-        if (dead)
-        {
-            DeadFonction();
-            dead = false;
-        }
+		if(myEtatAgent == AgentEtat.aliveAgent){
+			ShootAgent ();
+		}
+
     }
+
+	public void ShootAgent(){
+		timeAgent += Time.deltaTime;
+		if (timeAgent > timeLeftAgentshoot) {
+
+			float distance = Vector3.Distance (transform.position, myFocusPlayer.transform.position);
+
+			if(distance < distanceShoot){
+				transform.LookAt (myFocusPlayer.transform.position);
+				GameObject killeuse = (GameObject)Instantiate (bulletAgent,spawnBulletAgent.position,spawnBulletAgent.rotation,parentBullet.transform);
+				killeuse.GetComponent<Rigidbody> ().velocity = killeuse.transform.forward * SpeedBulletAgent;
+			}
+			timeAgent = 0;
+		}
+
+		if (dead)
+		{
+			DeadFonction();
+			dead = false;
+		}
+	}
 
     public void TargetPlayer(float stopDistance, float maxdist)
     {
