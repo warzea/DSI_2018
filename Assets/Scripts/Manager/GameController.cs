@@ -7,9 +7,11 @@ public class GameController : ManagerParent
 {
 	#region Variables
 	public GameObject PlayerPrefab;
+	public GameObject StartWeapon;
 	public Transform PlayerPosSpawn;
 
 	public Camera MainCam;
+	public WeaponBox WeaponB;
 
 	[HideInInspector]
 	public Transform Garbage;
@@ -25,7 +27,6 @@ public class GameController : ManagerParent
 	#endregion
 
 	#region Public Methods
-
 	public void StartGame ( )
 	{
 		SpawnPlayer ( );
@@ -58,7 +59,9 @@ public class GameController : ManagerParent
 	void SpawnPlayer ( )
 	{
 		PlayerInfoInput[] getPlayers = GetPlayersInput;
+		PlayerController getPC;
 		GameObject getPlayer;
+		GameObject getWeapon;
 
 		for ( int a = 0; a < getPlayers.Length; a ++ )
 		{
@@ -68,9 +71,15 @@ public class GameController : ManagerParent
 			{
 				getPlayer = ( GameObject ) Instantiate ( PlayerPrefab );
 
-				getPlayer.transform.position = PlayerPosSpawn.position;
-				getPlayer.GetComponent<PlayerController>().IdPlayer = getPlayers[a].IdPlayer;
+				getPlayer.transform.position = PlayerPosSpawn.position + new Vector3 ( a * 1.5f, 0, 0 );
+				getPC = getPlayer.GetComponent<PlayerController>();
+				getPC.IdPlayer = getPlayers[a].IdPlayer;
 
+				getWeapon = ( GameObject ) Instantiate ( StartWeapon, getPC.WeaponPos.transform );
+				getWeapon.transform.localPosition = Vector3.zero;
+				getWeapon.transform.localRotation = Quaternion.identity;
+
+				getPC.UpdateWeapon ( getWeapon.GetComponent<WeaponAbstract>() );
 				Players.Add ( getPlayer );
 			}
 		}

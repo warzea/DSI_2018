@@ -13,3 +13,14 @@ public class PlayerInfoInput
 }
 // ------- 
 
+
+// ------- WeaponBox
+public class PlayerWeapon
+{
+	public int IDPlayer;
+
+	public GameObject CurrObj;
+}
+
+// ------- 
+

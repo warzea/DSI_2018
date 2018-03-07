@@ -10,13 +10,18 @@ public class PlayerController : MonoBehaviour
 	public int IdPlayer;
 
 	public float MoveSpeed;
+	public Transform WeaponPos;
+	public Transform BagPos;
 
 	[Range(0,1)]
 	[Tooltip("Speed reduce pendant la phase de shoot")]
 	public float SpeedReduce;
 
+	[HideInInspector]
+	public List<GameObject> AllItem;
+
+	PlayerController thisPC;
 	WeaponAbstract thisWeapon;
-	Transform camTrans;
 	Transform thisTrans;
 	Rigidbody thisRig;
 
@@ -28,16 +33,18 @@ public class PlayerController : MonoBehaviour
 	#endregion
 	
 	#region Mono
+	void Awake ( )
+	{
+		thisPC = GetComponent<PlayerController>();
+	}
 	void Start ( ) 
 	{
 		thisTrans = transform;
 		thisRig = GetComponent<Rigidbody>();
 
 		inputPlayer = ReInput.players.GetPlayer(IdPlayer);
-		UpdateWeapon();
 		
 		getCam = Manager.GameCont.MainCam;
-		camTrans = getCam.transform;
 	}
 	
 	void Update () 
@@ -51,9 +58,16 @@ public class PlayerController : MonoBehaviour
 	#endregion
 	
 	#region Public Methods
-	public void UpdateWeapon ( )
+	public void UpdateWeapon ( WeaponAbstract thisWeap = null )
 	{
-		thisWeapon = GetComponentInChildren<WeaponAbstract>();
+		if ( thisWeap != null )
+		{
+			thisWeapon = thisWeap;
+		}
+		else 
+		{
+			thisWeapon = null;
+		}
 	}
 	#endregion
 
@@ -136,8 +150,37 @@ public class PlayerController : MonoBehaviour
 
 		if ( interactInput )
 		{
-			
+			RaycastHit[] allHit;
+			string getTag;
+
+			allHit = Physics.RaycastAll ( thisTrans.position, thisTrans.forward, 2 );
+			foreach ( RaycastHit thisRay in allHit )
+			{
+				getTag = thisRay.collider.tag;
+
+				if ( getTag == Constants._BoxTag )
+				{
+					if ( thisWeapon != null )
+					{
+						Destroy (thisWeapon.gameObject);
+					}
+					
+					Manager.GameCont.WeaponB.NewWeapon ( thisPC );
+					
+					break;
+				}
+				else if ( getTag == Constants._ContainerItem )
+				{
+					thisRay.collider.GetComponent<InteractAbstract>().OnInteract ( thisPC );
+					break;
+				}
+			}
 		}
+	}
+
+	void emptyBag ( )
+	{
+
 	}
 
 	
