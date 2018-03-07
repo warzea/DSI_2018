@@ -131,8 +131,6 @@ public class PlayerController : MonoBehaviour
 			playerShoot ( getDeltaTime);
 		}
 
-		playerAim ( getDeltaTime);
-
 		if ( canDash )
 		{
 			//playerDash ( );
@@ -143,6 +141,8 @@ public class PlayerController : MonoBehaviour
 			interactPlayer ( );
 			playerMove ( getDeltaTime );
 		}
+
+		playerAim ( getDeltaTime);
 	}
 
 	void playerDash ( )
@@ -221,11 +221,11 @@ public class PlayerController : MonoBehaviour
 		{
 			if ( driveBox )
 			{
-				thisRig.MoveRotation ( Quaternion.Slerp ( thisTrans.rotation, Quaternion.LookRotation ( new Vector3 ( Xaim, 0, Yaim ), thisTrans.up ), SmoothRotateOnBox * getDeltaTime ) );
+				thisTrans.localRotation = Quaternion.Slerp ( thisTrans.rotation, Quaternion.LookRotation ( new Vector3 ( Xaim, 0, Yaim ), thisTrans.up ), SmoothRotateOnBox * getDeltaTime );
 			}
 			else
 			{
-				thisRig.MoveRotation ( Quaternion.LookRotation ( new Vector3 ( Xaim, 0, Yaim ), thisTrans.up ) );
+				thisTrans.localRotation = Quaternion.LookRotation ( new Vector3 ( Xaim, 0, Yaim ), thisTrans.up );
 			}
 		}
 	}
