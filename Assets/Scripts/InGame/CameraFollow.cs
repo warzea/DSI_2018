@@ -18,9 +18,9 @@ public class CameraFollow : MonoBehaviour
 		thisTrans = transform;
 	}
 
-	void Update ( )
+	void LateUpdate ( )
 	{
-        transform.position = Vector3.SmoothDamp ( transform.position, Target.TransformPoint(new Vector3(0, 15, 0)), ref velocity, smoothTime * Time.deltaTime );
+        transform.position = Vector3.Lerp ( transform.position, Target.TransformPoint(new Vector3(0, 15, 0)), smoothTime * Time.deltaTime );
 	}
 	#endregion
 

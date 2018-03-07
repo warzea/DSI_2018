@@ -20,8 +20,7 @@ public class PlayerController : MonoBehaviour
 	[HideInInspector]
 	public float GetSpeed = 0;
 
-	[Range(0,1)]
-	[Tooltip("Speed reduce pendant la phase de shoot")]
+	[HideInInspector]
 	public float SpeedReduce;
 	[Range(0,1)]
 	[Tooltip("Speed reduce pendant qu'on pousse la caisse")]
@@ -198,18 +197,19 @@ public class PlayerController : MonoBehaviour
 	{
 		float Xmove = inputPlayer.GetAxis("MoveX");
 		float Ymove = inputPlayer.GetAxis("MoveY");
+		float getSpeed = MoveSpeed;
 		
 		if ( shooting )
 		{
-			getDeltaTime *= SpeedReduce;
+			getSpeed *= SpeedReduce;
 		}
 		else if ( driveBox )
 		{
-			getDeltaTime *= SpeedReduceOnBox;
+			getSpeed *= SpeedReduceOnBox;
 		}
 
 		//GetSpeed = getDeltaTime * MoveSpeed;
-		thisRig.MovePosition ( thisTrans.position + getDeltaTime * MoveSpeed * new Vector3 ( Xmove, 0, Ymove )  );
+		thisTrans.position += getDeltaTime * getSpeed * new Vector3 ( Xmove, 0, Ymove );
 	}
 
 	void playerAim ( float getDeltaTime )
