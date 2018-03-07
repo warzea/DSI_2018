@@ -48,8 +48,7 @@ public class PlayerController : MonoBehaviour
 	bool canDash = true;
 	bool canEnterBox = false;
 	bool canShoot = true;
-	bool driveBox
-	 = false;
+	bool driveBox = false;
 	bool dead = false;
 
 	#endregion
@@ -204,8 +203,7 @@ public class PlayerController : MonoBehaviour
 		{
 			getDeltaTime *= SpeedReduce;
 		}
-		else if ( driveBox
-		 )
+		else if ( driveBox )
 		{
 			getDeltaTime *= SpeedReduceOnBox;
 		}
@@ -338,8 +336,7 @@ public class PlayerController : MonoBehaviour
 			getBoxWeapon.DOLocalMove ( Vector3.zero, 0.5f );
 			getBoxWeapon.DOLocalRotateQuaternion ( Quaternion.identity, 0.5f );
 
-			driveBox
-			 = true;
+			driveBox = true;
 		}
 		else if ( driveBox )
 		{
@@ -352,8 +349,7 @@ public class PlayerController : MonoBehaviour
 			Manager.GameCont.WeaponB.CanControl = true;
 			getBoxWeapon.SetParent ( null );
 
-			driveBox
-			 = false;
+			driveBox = false;
 		}
 	}
 
