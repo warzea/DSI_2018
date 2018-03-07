@@ -9,3 +9,9 @@ public enum MenuType
 	Nothing,
 	SelectPlayer
 }
+
+public enum ScoreType
+{
+	Nothing,
+	BoxWeapon
+}

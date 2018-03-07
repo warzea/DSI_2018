@@ -7,8 +7,8 @@ public class CameraFollow : MonoBehaviour
 {
 	#region Variables
 	public Transform Target;
-	public float TimeGoTarget = 1;
-
+	public float smoothTime = 0.3F;
+    Vector3 velocity = Vector3.zero;
 	Transform thisTrans;
 	#endregion
 
@@ -16,6 +16,11 @@ public class CameraFollow : MonoBehaviour
 	void Start ( )
 	{
 		thisTrans = transform;
+	}
+
+	void Update ( )
+	{
+        transform.position = Vector3.SmoothDamp ( transform.position, Target.TransformPoint(new Vector3(0, 15, 0)), ref velocity, smoothTime * Time.deltaTime );
 	}
 	#endregion
 
@@ -26,18 +31,11 @@ public class CameraFollow : MonoBehaviour
 		{
 			Target = setTarget;
 		}
-
-		thisTrans.SetParent (Target);
-		thisTrans.localPosition = new Vector3 ( 0, thisTrans.localPosition.y, 0);
 	}
 
 	public void UpdateTarget ( Transform newTarget )
 	{
 		Target = newTarget;
-		thisTrans.SetParent(newTarget);
-
-		thisTrans.DOLocalMoveX(0, TimeGoTarget, true);
-		thisTrans.DOLocalMoveZ(0, TimeGoTarget, true);
 	}
 	#endregion
 
