@@ -3,33 +3,73 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+
 public class AgentController : MonoBehaviour
 {
-    public NavMeshAgent[] agents;
+    public enum CibleAgent { lawPlayer, maxPlayer, leadPlayer, randomPlayer, nothing };
+    public enum AgentEtat { deadAgent, aliveAgent };
+    public CibleAgent myFocusEtatAgent;
+    public bool dead = false;
 
-    private RaycastHit m_HitInfo = new RaycastHit();
-    private Vector3 posPlayer;
+    public GameObject myFocusPlayer;
+    private AgentsManager agentsManager;
+    private NavMeshAgent navAgent;
 
-    void Start()
+
+    void Awake()
     {
-        agents = GameObject.FindObjectsOfType<NavMeshAgent>();
+        agentsManager = GameObject.Find("ManagerNavMesh").GetComponent<AgentsManager>();
+        navAgent = transform.GetComponent<NavMeshAgent>();
+        myFocusEtatAgent = CibleAgent.nothing;
     }
 
-    private void Update()
+    void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (dead)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray.origin, ray.direction, out m_HitInfo))
-            {
-                posPlayer = m_HitInfo.point;
-
-            }
-
-            for (int i = 0; i < agents.Length; i++)
-            {
-                agents[i].SetDestination(posPlayer);
-            }
+            DeadFonction();
+            dead = false;
         }
     }
+
+    public void TargetPlayer(float stopDistance, float maxdist)
+    {
+        float distance = Mathf.Abs(Vector3.Distance(transform.position, myFocusPlayer.transform.position));
+        navAgent.stoppingDistance = stopDistance;
+        if (distance > maxdist)
+        {
+            navAgent.SetDestination(myFocusPlayer.transform.position);
+        }
+    }
+
+    #region ChangeEtat
+    public void DeadFonction()
+    {
+        agentsManager.DeadAgent(myFocusEtatAgent.ToString(), this.gameObject);
+    }
+
+    public void SetFocusLawPlayer(GameObject player)
+    {
+        myFocusEtatAgent = CibleAgent.lawPlayer;
+        myFocusPlayer = player;
+    }
+
+    public void SetFocusMaxPlayer(GameObject player)
+    {
+        myFocusEtatAgent = CibleAgent.maxPlayer;
+        myFocusPlayer = player;
+    }
+
+    public void SetFocusLeadPlayer(GameObject player)
+    {
+        myFocusEtatAgent = CibleAgent.leadPlayer;
+        myFocusPlayer = player;
+    }
+
+    public void SetFocusRandomPlayer(GameObject player)
+    {
+        myFocusEtatAgent = CibleAgent.randomPlayer;
+        myFocusPlayer = player;
+    }
+    #endregion
 }
