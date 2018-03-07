@@ -149,12 +149,13 @@ MonoBehaviour:
     type: 2}
   spawnBulletAgent: {fileID: 4119575178471908}
   parentBullet: {fileID: 0}
-  SpeedBulletAgent: 3
-  timeLeftAgentshoot: 5
+  SpeedBulletAgent: 2
+  timeLeftAgentshoot: 1
   distanceShoot: 30
   myFocusEtatAgent: 0
   myEtatAgent: 0
   deadMaterial: {fileID: 2100000, guid: d94b83cac2a54e64a8f814130e7c6246, type: 2}
+  aliveMaterial: {fileID: 2100000, guid: b3c5b584d913be7408a3092db24ce67f, type: 2}
 --- !u!136 &136426290240739386
 CapsuleCollider:
   m_ObjectHideFlags: 1

@@ -13,6 +13,9 @@ public class AgentController : MonoBehaviour
     public GameObject myFocusPlayer;
 	public int lifeAgent = 1;
 
+	public float timeBeforeDepop = 2f;
+	public float timeBeforeAlive = 1f;
+
 
 	[Header("Info Bullet")]
     public GameObject bulletAgent;
@@ -32,6 +35,7 @@ public class AgentController : MonoBehaviour
     private NavMeshAgent navAgent;
 
     public Material deadMaterial;
+	public Material aliveMaterial;
 
 	private float timeAgent = -5;
 
@@ -48,7 +52,6 @@ public class AgentController : MonoBehaviour
 		if(myEtatAgent == AgentEtat.aliveAgent){
 			ShootAgent ();
 		}
-
     }
 
 	public void ShootAgent(){
@@ -128,6 +131,16 @@ public class AgentController : MonoBehaviour
     }
     #endregion
 
+	IEnumerator WaitRespawn()
+	{
+		yield return new WaitForSeconds(timeBeforeDepop);
+		transform.GetComponent<Renderer>().material = aliveMaterial;
+		transform.position = agentsManager.CheckBestcheckPoint (myFocusPlayer.transform);
+		yield return new WaitForSeconds(timeBeforeAlive);
+		myEtatAgent = AgentEtat.aliveAgent;
+	}
+
+
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == Constants._PlayerBullet && myEtatAgent == AgentEtat.aliveAgent)
@@ -140,6 +153,7 @@ public class AgentController : MonoBehaviour
                 transform.GetComponent<Renderer>().material = deadMaterial;
                 myEtatAgent = AgentEtat.deadAgent;
                 DeadFonction();
+				StartCoroutine (WaitRespawn ());
             }
         }
     }

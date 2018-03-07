@@ -6,6 +6,11 @@ using UnityEngine.AI;
 public class AgentsManager : ManagerParent
 {
 
+	[Header("------------------")]
+	[Header("----INFO Level----")]
+	[Header("------------------")]
+	public Transform[] posRespawn;
+
     /// <summary> Public <summary>
     [Header("-------------------")]
     [Header("----INFO PLAYER----")]
@@ -63,6 +68,7 @@ public class AgentsManager : ManagerParent
     {
         agents = GameObject.FindObjectsOfType<AgentController>();
     }
+
     private void Update()
     {
         timeAgent += Time.deltaTime;
@@ -80,6 +86,20 @@ public class AgentsManager : ManagerParent
         }
     }
 
+	public Vector3 CheckBestcheckPoint(Transform posTarget){
+		float distanceSave = 500;
+		Vector3 bestSpawn = new Vector3();
+		for (int i = 0; i < posRespawn.Length; i++)
+		{
+			float distanceAgent = Vector3.Distance(posRespawn[i].localPosition,posTarget.localPosition);
+			if(distanceSave > distanceAgent){
+				distanceSave = distanceAgent;
+				bestSpawn = posRespawn [i].position;
+			}
+		}
+		return bestSpawn;
+	}
+
     #region WhoFocus
     public void ChangeEtatFocus(GameObject lawP, GameObject maxP, GameObject leadP)
     {
@@ -87,6 +107,7 @@ public class AgentsManager : ManagerParent
         playerMax = maxP;
         playerLead = leadP;
     }
+
     #endregion
 
     #region IniGame
