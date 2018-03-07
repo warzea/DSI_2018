@@ -183,6 +183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IdPlayer: 0
   MoveSpeed: 10
+  DistToDropItem: 3
   WeaponPos: {fileID: 4901489511786308}
   BagPos: {fileID: 4376964705229768}
   SpeedReduce: 0.439

@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
 	Camera getCam;
 
 	bool shooting = false;
+
 	#endregion
 	
 	#region Mono
@@ -141,9 +142,37 @@ public class PlayerController : MonoBehaviour
 	{
 		float shootInput = inputPlayer.GetAxis("Shoot");
 
-		if ( shootInput > 0 && thisWeapon != null )
+		if ( shootInput > 0 )
 		{
-			thisWeapon.weaponShoot( thisTrans );
+			bool checkBox = false;
+			if ( shooting == false )
+			{
+				RaycastHit[] allHit;
+				string getTag;
+
+				allHit = Physics.RaycastAll ( thisTrans.position, thisTrans.forward, 2 );
+				foreach ( RaycastHit thisRay in allHit )
+				{
+					getTag = thisRay.collider.tag;
+
+					if ( getTag == Constants._BoxTag )
+					{
+						if ( thisWeapon != null )
+						{
+							Destroy (thisWeapon.gameObject);
+						}
+						
+						checkBox = true;
+						Manager.GameCont.WeaponB.NewWeapon ( thisPC );
+						break;
+					}
+				}
+			}
+			
+			if ( !checkBox && thisWeapon != null )
+			{
+				thisWeapon.weaponShoot( thisTrans );
+			}
 
 			shooting = true;
 		}

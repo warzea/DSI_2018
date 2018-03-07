@@ -28,10 +28,6 @@ public class WeaponAbstract : MonoBehaviour
 	#endregion
 	
 	#region Public Methods
-	public void UpdateBullet ( )
-	{
-
-	}
 	public void weaponShoot ( Transform playerTrans )
 	{
 		if ( canShoot && nbrBullet > 0 )
@@ -44,8 +40,7 @@ public class WeaponAbstract : MonoBehaviour
 
 			StartCoroutine ( waitNewShoot ( ) );
 		}
-		
-		if ( nbrBullet <= 0 )
+		else if ( nbrBullet <= 0 )
 		{
 			canShoot = false;
 

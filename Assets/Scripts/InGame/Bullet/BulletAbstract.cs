@@ -20,7 +20,7 @@ public class BulletAbstract : MonoBehaviour
 	#endregion
 
 	#region Private Methods
-	protected virtual void OnCollision ( )
+	protected virtual void OnCollisionEnter(Collision collision)
 	{
 		Destroy ( gameObject );
 	}
