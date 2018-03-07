@@ -9,6 +9,7 @@ TagManager:
   - EnterContainer
   - Enemy
   - BulletEnemy
+  - BulletPlayer
   layers:
   - Default
   - TransparentFX

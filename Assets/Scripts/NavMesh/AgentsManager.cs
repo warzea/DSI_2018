@@ -59,20 +59,22 @@ public class AgentsManager : ManagerParent
     //Timer
     private float timeAgent = 5;
 
-	protected override void InitializeManager ( )
+    protected override void InitializeManager()
     {
         agents = GameObject.FindObjectsOfType<AgentController>();
-    }    
+    }
     private void Update()
     {
-
         timeAgent += Time.deltaTime;
         if (timeAgent > timeLeftAgentLook)
         {
             for (int i = 0; i < agents.Length; i++)
             {
-                float randStopDist = Random.Range(10, 20);
-                agents[i].TargetPlayer(randStopDist, maxPosPlayer);
+                if (agents[i].GetEtatAgent())
+                {
+                    float randStopDist = Random.Range(10, 20);
+                    agents[i].TargetPlayer(randStopDist, maxPosPlayer);
+                }
             }
             timeAgent = 0;
         }
