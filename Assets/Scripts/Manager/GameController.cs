@@ -88,6 +88,9 @@ public class GameController : ManagerParent
 				Players.Add ( getPlayer );
 			}
 		}
+
+		Manager.AgentM.player = Players.ToArray ( );
+		Manager.AgentM.InitGame();
 	}
 	#endregion
 }

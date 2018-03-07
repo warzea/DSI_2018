@@ -7,6 +7,8 @@ TagManager:
   - WeaponBox
   - Container
   - EnterContainer
+  - Enemy
+  - BulletEnemy
   layers:
   - Default
   - TransparentFX

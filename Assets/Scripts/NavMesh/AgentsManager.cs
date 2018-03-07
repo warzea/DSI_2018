@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AgentsManager : MonoBehaviour
+public class AgentsManager : ManagerParent
 {
 
     /// <summary> Public <summary>
@@ -59,14 +59,10 @@ public class AgentsManager : MonoBehaviour
     //Timer
     private float timeAgent = 5;
 
-    void Start()
+	protected override void InitializeManager ( )
     {
-        playerLaw = player[0].gameObject;
-        playerMax = player[0].gameObject;
-        playerLead = player[0].gameObject;
         agents = GameObject.FindObjectsOfType<AgentController>();
-        InitGame();
-    }
+    }    
     private void Update()
     {
 
@@ -94,6 +90,10 @@ public class AgentsManager : MonoBehaviour
     #region IniGame
     public void InitGame()
     {
+        playerLaw = player[0].gameObject;
+        playerMax = player[0].gameObject;
+        playerLead = player[0].gameObject;
+
         nbAgents = agents.Length;
 
         nbLawPv = (int)Mathf.Round(nbAgents * pourcentLowPV / 100);
