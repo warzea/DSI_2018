@@ -8,6 +8,11 @@ public static class Constants
 	public const string _ContainerItem = "Container";
 	#endregion
 
+	#region Layer
+	public const string _Charct = "Character";
+	public const string _BulletPlayer = "BulletPlayer";
+	#endregion
+
 	#region PlayerPref
     #endregion
 

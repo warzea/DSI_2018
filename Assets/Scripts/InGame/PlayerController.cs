@@ -9,8 +9,9 @@ public class PlayerController : MonoBehaviour
 	#region Variables
 	[HideInInspector]
 	public int IdPlayer;
-
 	public float MoveSpeed;
+	public float DashDistance = 5;
+	public float DashTime = 1;
 	public float DistToDropItem = 1;
 	public Transform WeaponPos;
 	public Transform BagPos;
@@ -33,6 +34,8 @@ public class PlayerController : MonoBehaviour
 	Camera getCam;
 
 	bool shooting = false;
+	bool dashing = false;
+	bool canDash = true;
 
 	#endregion
 	
@@ -106,12 +109,67 @@ public class PlayerController : MonoBehaviour
 	}
 	void inputAction ( float getDeltaTime )
 	{
-		interactPlayer ( );
-		playerShoot ( getDeltaTime) ;
+		playerShoot ( getDeltaTime);
+		playerAim ( getDeltaTime);
 
-		playerAim ( getDeltaTime) ;
-		playerMove ( getDeltaTime) ;
+		if ( canDash )
+		{
+			//playerDash ( );
+		}
+
+		if ( !dashing )
+		{
+			interactPlayer ( );
+			playerMove ( getDeltaTime );
+		}
+	}
+
+	void playerDash ( )
+	{
+		bool getDash = inputPlayer.GetButtonDown ( "Dash" );
+
+		if ( !getDash )
+		{
+			return;
+		}		
+
+		float Xmove = inputPlayer.GetAxis("MoveX");
+		float Ymove = inputPlayer.GetAxis("MoveY");
+
+		Vector3 getDirect = new Vector3 ( Xmove, 0, Ymove );
+
+		if ( getDirect == Vector3.zero )
+		{
+			return;
+		}
+
+		float getDist = DashDistance;
+		string getTag;
 		
+		RaycastHit[] allHit;
+		allHit = Physics.RaycastAll ( thisTrans.position, getDirect, DashDistance );
+
+		foreach ( RaycastHit thisRay in allHit )
+		{
+			getTag = LayerMask.LayerToName (  thisRay.collider.gameObject.layer );
+			
+			if ( getTag != Constants._BulletPlayer && getTag != Constants._Charct )
+			{
+				if ( thisRay.distance < getDist )
+				{
+					getDist = thisRay.distance;
+				}
+			}
+		}
+
+		canDash = false;
+		dashing = true;
+		
+		thisTrans.DOLocalMove ( thisTrans.localPosition + getDirect * getDist, DashTime * ( getDist / DashDistance) ).OnComplete ( () =>
+		{
+			canDash = true;
+			dashing = false;
+		});
 	}
 
 	void playerMove ( float getDeltaTime )
@@ -198,13 +256,14 @@ public class PlayerController : MonoBehaviour
 
 				if ( getTag == Constants._BoxTag )
 				{
-					if ( thisWeapon != null )
+					useBoxWeapon ( );
+					/*if ( thisWeapon != null )
 					{
 						Destroy (thisWeapon.gameObject);
 					}
 					
 					Manager.GameCont.WeaponB.NewWeapon ( thisPC );
-					
+					*/
 					break;
 				}
 				else if ( getTag == Constants._ContainerItem )
@@ -216,11 +275,16 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	void useBoxWeapon ( )
+	{
+		
+	}
+
 	void emptyBag ( )
 	{
 		GameObject[] getBagItems = AllItem.ToArray();
-		Transform currTrans; 
 		Transform getBoxTrans = getBoxWeapon;
+		Transform currTrans; 
 
 		Manager.GameCont.WeaponB.NbrItem += getBagItems.Length;
 
@@ -253,9 +317,6 @@ public class PlayerController : MonoBehaviour
 				});
 			});
 		});
-	
 	}
-
-	
 	#endregion
 }
