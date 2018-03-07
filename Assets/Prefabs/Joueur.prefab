@@ -61,6 +61,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1657543400838788
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4483543942768048}
+  m_Layer: 8
+  m_Name: BoxPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &4094632863854640
 Transform:
   m_ObjectHideFlags: 1
@@ -73,6 +88,7 @@ Transform:
   m_Children:
   - {fileID: 4901489511786308}
   - {fileID: 4376964705229768}
+  - {fileID: 4483543942768048}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -88,6 +104,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4094632863854640}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4483543942768048
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1657543400838788}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4094632863854640}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4901489511786308
 Transform:
@@ -183,8 +212,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IdPlayer: 0
   MoveSpeed: 10
+  DashDistance: 5
+  DashTime: 1
   DistToDropItem: 3
   WeaponPos: {fileID: 4901489511786308}
   BagPos: {fileID: 4376964705229768}
-  SpeedReduce: 0.439
+  BoxPlace: {fileID: 4483543942768048}
+  SpeedReduce: 0.5
+  SpeedReduceOnBox: 0.195
+  SmoothRotateOnBox: 2.5
   AllItem: []

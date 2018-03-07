@@ -8,6 +8,9 @@ using System.Runtime.CompilerServices;
 public class UiManager : ManagerParent
 {
 	#region Variables
+	public Transform GetInGame;
+	public Scores GetScores;
+
 	Dictionary <MenuType, UiParent> AllMenu;
 	MenuType menuOpen;
 	#endregion

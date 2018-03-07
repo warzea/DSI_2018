@@ -9,16 +9,22 @@ public class PlayerController : MonoBehaviour
 	#region Variables
 	[HideInInspector]
 	public int IdPlayer;
+	public int LifePlayer = 3;
 	public float MoveSpeed;
 	public float DashDistance = 5;
 	public float DashTime = 1;
 	public float DistToDropItem = 1;
 	public Transform WeaponPos;
 	public Transform BagPos;
+	public Transform BoxPlace;
 
 	[Range(0,1)]
 	[Tooltip("Speed reduce pendant la phase de shoot")]
 	public float SpeedReduce;
+	[Range(0,1)]
+	[Tooltip("Speed reduce pendant qu'on pousse la caisse")]
+	public float SpeedReduceOnBox = 0.1f;
+	public float SmoothRotateOnBox = 10;
 
 	[HideInInspector]
 	public List<GameObject> AllItem;
@@ -36,6 +42,10 @@ public class PlayerController : MonoBehaviour
 	bool shooting = false;
 	bool dashing = false;
 	bool canDash = true;
+	bool canEnterBox = false;
+	bool canShoot = true;
+
+	bool DriveBox = false;
 
 	#endregion
 	
@@ -63,7 +73,7 @@ public class PlayerController : MonoBehaviour
 
 		checkBorder ( );
 
-		if ( AllItem.Count > 0 && Vector3.Distance ( thisTrans.localPosition, getBoxWeapon.position ) < DistToDropItem )
+		if ( AllItem.Count > 0 && Vector3.Distance ( thisTrans.position, getBoxWeapon.position ) < DistToDropItem )
 		{
 			emptyBag ( );
 		}
@@ -87,29 +97,33 @@ public class PlayerController : MonoBehaviour
 	#region Private Methods
 	void checkBorder ( )
 	{
-		Vector3 getCamPos = getCam.WorldToViewportPoint ( thisTrans.localPosition );
+		Vector3 getCamPos = getCam.WorldToViewportPoint ( thisTrans.position );
 		
 		if ( getCamPos.x > 1 )
 		{
-			thisTrans.localPosition = new Vector3 ( getCam.ViewportToWorldPoint ( new Vector3 ( 1, getCamPos.y, getCamPos.z ) ).x, thisTrans.localPosition.y, thisTrans.localPosition.z );
+			thisTrans.position = new Vector3 ( getCam.ViewportToWorldPoint ( new Vector3 ( 1, getCamPos.y, getCamPos.z ) ).x, thisTrans.position.y, thisTrans.position.z );
 		}
 		else if ( getCamPos.x < 0 )
 		{
-			thisTrans.localPosition = new Vector3 ( getCam.ViewportToWorldPoint ( new Vector3 ( 0, getCamPos.y, getCamPos.z ) ).x, thisTrans.localPosition.y, thisTrans.localPosition.z );
+			thisTrans.position = new Vector3 ( getCam.ViewportToWorldPoint ( new Vector3 ( 0, getCamPos.y, getCamPos.z ) ).x, thisTrans.position.y, thisTrans.position.z );
 		}
 
 		if ( getCamPos.y > 1 )
 		{
-			thisTrans.localPosition = new Vector3 ( thisTrans.localPosition.x, thisTrans.localPosition.y, getCam.ViewportToWorldPoint ( new Vector3 ( getCamPos.x, 1, getCamPos.z ) ).z );
+			thisTrans.position = new Vector3 ( thisTrans.position.x, thisTrans.position.y, getCam.ViewportToWorldPoint ( new Vector3 ( getCamPos.x, 1, getCamPos.z ) ).z );
 		}
 		else if ( getCamPos.y < 0 )
 		{
-			thisTrans.localPosition = new Vector3 ( thisTrans.localPosition.x, thisTrans.localPosition.y, getCam.ViewportToWorldPoint ( new Vector3 ( getCamPos.x, 0, getCamPos.z ) ).z );
+			thisTrans.position = new Vector3 ( thisTrans.position.x, thisTrans.position.y, getCam.ViewportToWorldPoint ( new Vector3 ( getCamPos.x, 0, getCamPos.z ) ).z );
 		}
 	}
 	void inputAction ( float getDeltaTime )
 	{
-		playerShoot ( getDeltaTime);
+		if ( canShoot )
+		{
+			playerShoot ( getDeltaTime);
+		}
+
 		playerAim ( getDeltaTime);
 
 		if ( canDash )
@@ -165,7 +179,7 @@ public class PlayerController : MonoBehaviour
 		canDash = false;
 		dashing = true;
 		
-		thisTrans.DOLocalMove ( thisTrans.localPosition + getDirect * getDist, DashTime * ( getDist / DashDistance) ).OnComplete ( () =>
+		thisTrans.DOMove ( thisTrans.position + getDirect * getDist, DashTime * ( getDist / DashDistance) ).OnComplete ( () =>
 		{
 			canDash = true;
 			dashing = false;
@@ -181,8 +195,12 @@ public class PlayerController : MonoBehaviour
 		{
 			getDeltaTime *= SpeedReduce;
 		}
+		else if ( DriveBox )
+		{
+			getDeltaTime *= SpeedReduceOnBox;
+		}
 
-		thisRig.MovePosition ( thisTrans.localPosition + getDeltaTime * MoveSpeed * new Vector3 ( Xmove, 0, Ymove )  );
+		thisRig.MovePosition ( thisTrans.position + getDeltaTime * MoveSpeed * new Vector3 ( Xmove, 0, Ymove )  );
 	}
 
 	void playerAim ( float getDeltaTime )
@@ -192,7 +210,14 @@ public class PlayerController : MonoBehaviour
 
 		if ( Xaim != 0 && Yaim != 0 )
 		{
-			thisRig.MoveRotation ( Quaternion.LookRotation ( new Vector3 ( Xaim, 0, Yaim ), thisTrans.up ) );
+			if ( DriveBox )
+			{
+				thisRig.MoveRotation ( Quaternion.Slerp ( thisTrans.rotation, Quaternion.LookRotation ( new Vector3 ( Xaim, 0, Yaim ), thisTrans.up ), SmoothRotateOnBox * getDeltaTime ) );
+			}
+			else
+			{
+				thisRig.MoveRotation ( Quaternion.LookRotation ( new Vector3 ( Xaim, 0, Yaim ), thisTrans.up ) );
+			}
 		}
 	}
 
@@ -200,7 +225,7 @@ public class PlayerController : MonoBehaviour
 	{
 		float shootInput = inputPlayer.GetAxis("Shoot");
 
-		if ( shootInput > 0 )
+		/*if ( shootInput > 0 )
 		{
 			bool checkBox = false;
 			if ( shooting == false )
@@ -233,6 +258,13 @@ public class PlayerController : MonoBehaviour
 			}
 
 			shooting = true;
+		}*/
+
+		if ( shootInput > 0 && thisWeapon != null  )
+		{
+			thisWeapon.weaponShoot( thisTrans );
+
+			shooting = true;
 		}
 		else 
 		{
@@ -246,24 +278,31 @@ public class PlayerController : MonoBehaviour
 
 		if ( interactInput )
 		{
+			if ( canEnterBox || DriveBox )
+			{
+				useBoxWeapon ( );
+				return;
+			}
+
 			RaycastHit[] allHit;
 			string getTag;
-
-			allHit = Physics.RaycastAll ( thisTrans.position, thisTrans.forward, 2 );
+			
+			allHit = Physics.RaycastAll ( thisTrans.position, thisTrans.forward, 1 );
 			foreach ( RaycastHit thisRay in allHit )
 			{
 				getTag = thisRay.collider.tag;
 
 				if ( getTag == Constants._BoxTag )
-				{
+				{		
 					useBoxWeapon ( );
-					/*if ( thisWeapon != null )
+					
+					if ( thisWeapon != null )
 					{
 						Destroy (thisWeapon.gameObject);
 					}
 					
 					Manager.GameCont.WeaponB.NewWeapon ( thisPC );
-					*/
+					
 					break;
 				}
 				else if ( getTag == Constants._ContainerItem )
@@ -277,7 +316,33 @@ public class PlayerController : MonoBehaviour
 
 	void useBoxWeapon ( )
 	{
-		
+		if ( Manager.GameCont.WeaponB.CanControl )
+		{
+			getCam.GetComponent<CameraFollow>().UpdateTarget(thisTrans);
+			WeaponPos.gameObject.SetActive ( false );
+
+			canShoot = false;
+			Physics.IgnoreCollision ( GetComponent<Collider>(), getBoxWeapon.GetComponent<Collider>(), true );
+			Manager.GameCont.WeaponB.CanControl = false;
+			getBoxWeapon.SetParent ( BoxPlace );
+
+			getBoxWeapon.DOLocalMove ( Vector3.zero, 0.5f );
+			getBoxWeapon.DOLocalRotateQuaternion ( Quaternion.identity, 0.5f );
+
+			DriveBox = true;
+		}
+		else if ( DriveBox )
+		{
+			WeaponPos.gameObject.SetActive ( true );
+			getCam.GetComponent<CameraFollow>().UpdateTarget(getBoxWeapon);
+
+			canShoot = true;
+			Physics.IgnoreCollision ( GetComponent<Collider>(), getBoxWeapon.GetComponent<Collider>(), false );
+			Manager.GameCont.WeaponB.CanControl = true;
+			getBoxWeapon.SetParent ( null );
+
+			DriveBox = false;
+		}
 	}
 
 	void emptyBag ( )
@@ -286,7 +351,7 @@ public class PlayerController : MonoBehaviour
 		Transform getBoxTrans = getBoxWeapon;
 		Transform currTrans; 
 
-		Manager.GameCont.WeaponB.NbrItem += getBagItems.Length;
+		Manager.GameCont.WeaponB.AddItem ( getBagItems.Length );
 
 		for ( int a = 0; a < getBagItems.Length; a ++ )
 		{
@@ -317,6 +382,28 @@ public class PlayerController : MonoBehaviour
 				});
 			});
 		});
+	}
+
+	void OnTriggerEnter ( Collider thisColl )
+	{
+		if ( thisColl.tag == Constants._EnterCont )
+		{
+			canEnterBox = true;
+		}
+	}
+	
+	void OnTriggerExit ( Collider thisColl )
+	{
+		if ( thisColl.tag == Constants._EnterCont )
+		{
+			canEnterBox = false;
+		}
+	}
+
+	void OnCollisionEnter ( Collision thisColl )
+	{
+		string getTag = thisColl.collider.tag;
+		//if ( getTag == )
 	}
 	#endregion
 }

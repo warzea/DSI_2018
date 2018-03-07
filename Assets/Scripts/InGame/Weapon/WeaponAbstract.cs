@@ -10,9 +10,11 @@ public class WeaponAbstract : MonoBehaviour
 	public float FireRate;
 	public float ForceProjection;
 	public float SpeedBullet = 10;
+	[Range(0,1)]
+	[Tooltip("Speed reduce pendant la phase de shoot")]
+	public float SpeedReduce = 0.5f;
 	public GameObject Bullet;
 	public Transform SpawnBullet;
-
 
 	Transform getGargabe;
 	int nbrBullet;

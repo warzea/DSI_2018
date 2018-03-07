@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2785b8afd6bb408409b5369a411e6797, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BulletCapacity: 3
+  BulletCapacity: 30
   FireRate: 0.1
   ForceProjection: 10
   SpeedBullet: 10

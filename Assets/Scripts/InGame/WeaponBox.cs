@@ -13,6 +13,9 @@ public class WeaponBox : MonoBehaviour
 	[HideInInspector]
 	public int NbrItem = 0;
 
+	[HideInInspector]
+	public bool CanControl = true;
+
 	List<PlayerWeapon> updateWeapon; 
 	#endregion
 	
@@ -45,6 +48,7 @@ public class WeaponBox : MonoBehaviour
 		}
 
 		updateWeapon[currId].CurrObj = newObj;
+		thisPlayer.SpeedReduce = updateWeapon[currId].CurrObj.GetComponent<WeaponAbstract>().SpeedReduce;
 
 		DOVirtual.DelayedCall ( 0.1f, ( ) => 
 		{
@@ -56,6 +60,13 @@ public class WeaponBox : MonoBehaviour
 				updateWeapon[currId].CurrObj = null;
 			});
 		});
+	}
+
+	public void AddItem ( int lenghtItem )
+	{
+		NbrItem += lenghtItem;
+
+		Manager.Ui.GetScores.UpdateValue( lenghtItem, ScoreType.BoxWeapon );
 	}
 	#endregion
 
