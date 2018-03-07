@@ -211,6 +211,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IdPlayer: 0
+  LifePlayer: 3
   MoveSpeed: 10
   DashDistance: 5
   DashTime: 1
@@ -219,6 +220,6 @@ MonoBehaviour:
   BagPos: {fileID: 4376964705229768}
   BoxPlace: {fileID: 4483543942768048}
   SpeedReduce: 0.5
-  SpeedReduceOnBox: 0.195
+  SpeedReduceOnBox: 1
   SmoothRotateOnBox: 2.5
   AllItem: []

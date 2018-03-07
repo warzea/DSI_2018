@@ -1391,9 +1391,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49555ba341cab3f40a56b88d876f952f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myFocusEtatAgent: 0
   dead: 0
   myFocusPlayer: {fileID: 0}
+  bulletAgent: {fileID: 0}
+  lifeAgent: 1
+  myFocusEtatAgent: 0
+  myEtatAgent: 0
+  deadMaterial: {fileID: 2100000, guid: d94b83cac2a54e64a8f814130e7c6246, type: 2}
 --- !u!54 &638966765
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1444,7 +1448,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: d94b83cac2a54e64a8f814130e7c6246, type: 2}
+  - {fileID: 2100000, guid: b3c5b584d913be7408a3092db24ce67f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1643,9 +1647,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49555ba341cab3f40a56b88d876f952f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myFocusEtatAgent: 0
   dead: 0
   myFocusPlayer: {fileID: 0}
+  bulletAgent: {fileID: 0}
+  lifeAgent: 1
+  myFocusEtatAgent: 0
+  myEtatAgent: 0
+  deadMaterial: {fileID: 2100000, guid: d94b83cac2a54e64a8f814130e7c6246, type: 2}
 --- !u!54 &776177196
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1696,7 +1704,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: d94b83cac2a54e64a8f814130e7c6246, type: 2}
+  - {fileID: 2100000, guid: b3c5b584d913be7408a3092db24ce67f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2048,9 +2056,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49555ba341cab3f40a56b88d876f952f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myFocusEtatAgent: 0
   dead: 0
   myFocusPlayer: {fileID: 0}
+  bulletAgent: {fileID: 0}
+  lifeAgent: 1
+  myFocusEtatAgent: 0
+  myEtatAgent: 0
+  deadMaterial: {fileID: 2100000, guid: d94b83cac2a54e64a8f814130e7c6246, type: 2}
 --- !u!54 &1031520750
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2101,7 +2113,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: d94b83cac2a54e64a8f814130e7c6246, type: 2}
+  - {fileID: 2100000, guid: b3c5b584d913be7408a3092db24ce67f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2200,9 +2212,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49555ba341cab3f40a56b88d876f952f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myFocusEtatAgent: 0
   dead: 0
   myFocusPlayer: {fileID: 0}
+  bulletAgent: {fileID: 0}
+  lifeAgent: 1
+  myFocusEtatAgent: 0
+  myEtatAgent: 0
+  deadMaterial: {fileID: 2100000, guid: d94b83cac2a54e64a8f814130e7c6246, type: 2}
 --- !u!54 &1034739887
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2253,7 +2269,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: d94b83cac2a54e64a8f814130e7c6246, type: 2}
+  - {fileID: 2100000, guid: b3c5b584d913be7408a3092db24ce67f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2552,9 +2568,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49555ba341cab3f40a56b88d876f952f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myFocusEtatAgent: 0
   dead: 0
   myFocusPlayer: {fileID: 0}
+  bulletAgent: {fileID: 0}
+  lifeAgent: 1
+  myFocusEtatAgent: 0
+  myEtatAgent: 0
+  deadMaterial: {fileID: 2100000, guid: d94b83cac2a54e64a8f814130e7c6246, type: 2}
 --- !u!54 &1281664062
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2605,7 +2625,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: d94b83cac2a54e64a8f814130e7c6246, type: 2}
+  - {fileID: 2100000, guid: b3c5b584d913be7408a3092db24ce67f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3110,9 +3130,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49555ba341cab3f40a56b88d876f952f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myFocusEtatAgent: 0
   dead: 0
   myFocusPlayer: {fileID: 0}
+  bulletAgent: {fileID: 0}
+  lifeAgent: 1
+  myFocusEtatAgent: 0
+  myEtatAgent: 0
+  deadMaterial: {fileID: 2100000, guid: d94b83cac2a54e64a8f814130e7c6246, type: 2}
 --- !u!54 &1591772717
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3163,7 +3187,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: d94b83cac2a54e64a8f814130e7c6246, type: 2}
+  - {fileID: 2100000, guid: b3c5b584d913be7408a3092db24ce67f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3772,9 +3796,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49555ba341cab3f40a56b88d876f952f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myFocusEtatAgent: 0
   dead: 0
   myFocusPlayer: {fileID: 0}
+  bulletAgent: {fileID: 0}
+  lifeAgent: 1
+  myFocusEtatAgent: 0
+  myEtatAgent: 0
+  deadMaterial: {fileID: 2100000, guid: d94b83cac2a54e64a8f814130e7c6246, type: 2}
 --- !u!54 &1959300943
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3825,7 +3853,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: d94b83cac2a54e64a8f814130e7c6246, type: 2}
+  - {fileID: 2100000, guid: b3c5b584d913be7408a3092db24ce67f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3924,9 +3952,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49555ba341cab3f40a56b88d876f952f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myFocusEtatAgent: 0
   dead: 0
   myFocusPlayer: {fileID: 0}
+  bulletAgent: {fileID: 0}
+  lifeAgent: 1
+  myFocusEtatAgent: 0
+  myEtatAgent: 0
+  deadMaterial: {fileID: 2100000, guid: d94b83cac2a54e64a8f814130e7c6246, type: 2}
 --- !u!54 &1986420728
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3977,7 +4009,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: d94b83cac2a54e64a8f814130e7c6246, type: 2}
+  - {fileID: 2100000, guid: b3c5b584d913be7408a3092db24ce67f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4233,9 +4265,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49555ba341cab3f40a56b88d876f952f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myFocusEtatAgent: 0
   dead: 0
   myFocusPlayer: {fileID: 0}
+  bulletAgent: {fileID: 0}
+  lifeAgent: 1
+  myFocusEtatAgent: 0
+  myEtatAgent: 0
+  deadMaterial: {fileID: 2100000, guid: d94b83cac2a54e64a8f814130e7c6246, type: 2}
 --- !u!54 &2066640400
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4286,7 +4322,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: d94b83cac2a54e64a8f814130e7c6246, type: 2}
+  - {fileID: 2100000, guid: b3c5b584d913be7408a3092db24ce67f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4485,9 +4521,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49555ba341cab3f40a56b88d876f952f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myFocusEtatAgent: 0
   dead: 0
   myFocusPlayer: {fileID: 0}
+  bulletAgent: {fileID: 0}
+  lifeAgent: 1
+  myFocusEtatAgent: 0
+  myEtatAgent: 0
+  deadMaterial: {fileID: 2100000, guid: d94b83cac2a54e64a8f814130e7c6246, type: 2}
 --- !u!54 &2095511047
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4538,7 +4578,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: d94b83cac2a54e64a8f814130e7c6246, type: 2}
+  - {fileID: 2100000, guid: b3c5b584d913be7408a3092db24ce67f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4737,9 +4777,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49555ba341cab3f40a56b88d876f952f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myFocusEtatAgent: 0
   dead: 0
   myFocusPlayer: {fileID: 0}
+  bulletAgent: {fileID: 0}
+  lifeAgent: 1
+  myFocusEtatAgent: 0
+  myEtatAgent: 0
+  deadMaterial: {fileID: 2100000, guid: d94b83cac2a54e64a8f814130e7c6246, type: 2}
 --- !u!54 &2116292947
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4790,7 +4834,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: d94b83cac2a54e64a8f814130e7c6246, type: 2}
+  - {fileID: 2100000, guid: b3c5b584d913be7408a3092db24ce67f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
