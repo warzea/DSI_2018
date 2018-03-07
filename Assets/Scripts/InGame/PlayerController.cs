@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
 	public Transform WeaponPos;
 	public Transform BagPos;
 	public Transform BoxPlace;
+	[HideInInspector]
+	public float GetSpeed = 0;
 
 	[Range(0,1)]
 	[Tooltip("Speed reduce pendant la phase de shoot")]
@@ -39,19 +41,23 @@ public class PlayerController : MonoBehaviour
 
 	Camera getCam;
 
+
+	int lifePlayer;
 	bool shooting = false;
 	bool dashing = false;
 	bool canDash = true;
 	bool canEnterBox = false;
 	bool canShoot = true;
-
-	bool DriveBox = false;
+	bool driveBox
+	 = false;
+	bool dead = false;
 
 	#endregion
 	
 	#region Mono
 	void Awake ( )
 	{
+		lifePlayer = LifePlayer;
 		thisPC = GetComponent<PlayerController>();
 	}
 	void Start ( ) 
@@ -68,8 +74,11 @@ public class PlayerController : MonoBehaviour
 	void Update () 
 	{
 		float getDeltaTime = Time.deltaTime;
-		
-		inputAction ( getDeltaTime );
+
+		if ( !dead )
+		{
+			inputAction ( getDeltaTime );
+		}
 
 		checkBorder ( );
 
@@ -195,11 +204,13 @@ public class PlayerController : MonoBehaviour
 		{
 			getDeltaTime *= SpeedReduce;
 		}
-		else if ( DriveBox )
+		else if ( driveBox
+		 )
 		{
 			getDeltaTime *= SpeedReduceOnBox;
 		}
 
+		//GetSpeed = getDeltaTime * MoveSpeed;
 		thisRig.MovePosition ( thisTrans.position + getDeltaTime * MoveSpeed * new Vector3 ( Xmove, 0, Ymove )  );
 	}
 
@@ -210,7 +221,7 @@ public class PlayerController : MonoBehaviour
 
 		if ( Xaim != 0 && Yaim != 0 )
 		{
-			if ( DriveBox )
+			if ( driveBox )
 			{
 				thisRig.MoveRotation ( Quaternion.Slerp ( thisTrans.rotation, Quaternion.LookRotation ( new Vector3 ( Xaim, 0, Yaim ), thisTrans.up ), SmoothRotateOnBox * getDeltaTime ) );
 			}
@@ -278,7 +289,7 @@ public class PlayerController : MonoBehaviour
 
 		if ( interactInput )
 		{
-			if ( canEnterBox || DriveBox )
+			if ( canEnterBox || driveBox )
 			{
 				useBoxWeapon ( );
 				return;
@@ -294,8 +305,6 @@ public class PlayerController : MonoBehaviour
 
 				if ( getTag == Constants._BoxTag )
 				{		
-					useBoxWeapon ( );
-					
 					if ( thisWeapon != null )
 					{
 						Destroy (thisWeapon.gameObject);
@@ -329,10 +338,12 @@ public class PlayerController : MonoBehaviour
 			getBoxWeapon.DOLocalMove ( Vector3.zero, 0.5f );
 			getBoxWeapon.DOLocalRotateQuaternion ( Quaternion.identity, 0.5f );
 
-			DriveBox = true;
+			driveBox
+			 = true;
 		}
-		else if ( DriveBox )
+		else if ( driveBox )
 		{
+			getBoxWeapon.DOKill( );
 			WeaponPos.gameObject.SetActive ( true );
 			getCam.GetComponent<CameraFollow>().UpdateTarget(getBoxWeapon);
 
@@ -341,7 +352,8 @@ public class PlayerController : MonoBehaviour
 			Manager.GameCont.WeaponB.CanControl = true;
 			getBoxWeapon.SetParent ( null );
 
-			DriveBox = false;
+			driveBox
+			 = false;
 		}
 	}
 
@@ -384,6 +396,43 @@ public class PlayerController : MonoBehaviour
 		});
 	}
 
+	void animeDead ( )
+	{
+		if ( driveBox )
+		{
+			useBoxWeapon ( );
+		}
+		
+		WeaponPos.gameObject.SetActive(false);
+
+		GameObject[] getList = AllItem.ToArray ( );
+
+		for ( int a = 0; a < getList.Length; a ++ )
+		{
+			Destroy(getList[a]);
+		}
+
+		AllItem.Clear();
+
+		thisTrans.SetParent(getBoxWeapon);
+
+		thisTrans.DOLocalMove(Vector3.zero, 1f);
+		thisTrans.DOScale (Vector3.zero, 1f).OnComplete ( () => 
+		{
+			DOVirtual.DelayedCall ( 3, ( ) => 
+			{
+				thisTrans.SetParent ( null );
+				thisTrans.DOLocalMove( thisTrans.localPosition + Vector3.right, 0.25f);
+				thisTrans.DOScale ( Vector3.one, 0.25f).OnComplete ( () => 
+				{
+					WeaponPos.gameObject.SetActive(true);
+					lifePlayer = LifePlayer;
+					dead = false;
+				});
+			});
+		});
+	}
+
 	void OnTriggerEnter ( Collider thisColl )
 	{
 		if ( thisColl.tag == Constants._EnterCont )
@@ -403,7 +452,17 @@ public class PlayerController : MonoBehaviour
 	void OnCollisionEnter ( Collision thisColl )
 	{
 		string getTag = thisColl.collider.tag;
-		//if ( getTag == )
+		
+		if ( getTag == Constants._EnemyBullet || getTag == Constants._Enemy )
+		{
+			lifePlayer --;
+
+			if ( lifePlayer <= 0 )
+			{
+				dead = true;
+				animeDead ( );
+			}
+		}
 	}
 	#endregion
 }
