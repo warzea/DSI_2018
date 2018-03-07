@@ -29,6 +29,11 @@ public class GameController : ManagerParent
 	#region Public Methods
 	public void StartGame ( )
 	{
+		if ( WeaponB == null )
+		{
+			WeaponB = (WeaponBox)FindObjectOfType(typeof(WeaponBox));
+		}
+
 		SpawnPlayer ( );
 		MainCam.GetComponent<CameraFollow>().InitGame();
 	}

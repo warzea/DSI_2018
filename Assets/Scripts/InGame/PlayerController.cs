@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Rewired;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour 
 {
@@ -10,6 +11,7 @@ public class PlayerController : MonoBehaviour
 	public int IdPlayer;
 
 	public float MoveSpeed;
+	public float DistToDropItem = 1;
 	public Transform WeaponPos;
 	public Transform BagPos;
 
@@ -23,6 +25,7 @@ public class PlayerController : MonoBehaviour
 	PlayerController thisPC;
 	WeaponAbstract thisWeapon;
 	Transform thisTrans;
+	Transform getBoxWeapon;
 	Rigidbody thisRig;
 
 	Player inputPlayer;
@@ -44,6 +47,7 @@ public class PlayerController : MonoBehaviour
 
 		inputPlayer = ReInput.players.GetPlayer(IdPlayer);
 		
+		getBoxWeapon = Manager.GameCont.WeaponB.transform;
 		getCam = Manager.GameCont.MainCam;
 	}
 	
@@ -54,6 +58,11 @@ public class PlayerController : MonoBehaviour
 		inputAction ( getDeltaTime );
 
 		checkBorder ( );
+
+		if ( AllItem.Count > 0 && Vector3.Distance ( thisTrans.localPosition, getBoxWeapon.position ) < DistToDropItem )
+		{
+			emptyBag ( );
+		}
 	}		
 	#endregion
 	
@@ -180,7 +189,42 @@ public class PlayerController : MonoBehaviour
 
 	void emptyBag ( )
 	{
+		GameObject[] getBagItems = AllItem.ToArray();
+		Transform currTrans; 
+		Transform getBoxTrans = getBoxWeapon;
 
+		Manager.GameCont.WeaponB.NbrItem += getBagItems.Length;
+
+		for ( int a = 0; a < getBagItems.Length; a ++ )
+		{
+			currTrans = getBagItems[a].transform;
+
+			currTrans.gameObject.SetActive ( true );
+			currTrans.SetParent ( null );
+			currTrans.SetParent ( getBoxTrans );
+
+			currTrans.position = BagPos.position + new Vector3 ( Random.Range(-0.2f, 0.21f), 0, Random.Range(-0.2f, 0.21f) );
+
+			dropItem ( currTrans );
+		}
+
+		AllItem.Clear();
+	}
+
+	void dropItem ( Transform currTrans )
+	{
+		DOVirtual.DelayedCall ( Random.Range ( 0, 0.2f ), ( ) =>
+		{
+			currTrans.DOLocalMove ( Vector3.zero, 1.3f );
+			currTrans.DOScale ( Vector3.one, 0.5f ).OnComplete( ( ) => 
+			{
+				currTrans.DOScale ( Vector3.zero, 0.7f ).OnComplete( ( ) => 
+				{
+					Destroy ( currTrans.gameObject );
+				});
+			});
+		});
+	
 	}
 
 	

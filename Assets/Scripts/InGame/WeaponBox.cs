@@ -10,6 +10,9 @@ public class WeaponBox : MonoBehaviour
 	public GameObject[] AllWeapon;
 	public float DelayNewWeapon = 1;
 
+	[HideInInspector]
+	public int NbrItem = 0;
+
 	List<PlayerWeapon> updateWeapon; 
 	#endregion
 	

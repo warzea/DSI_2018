@@ -27,18 +27,22 @@ public class InteractAbstract : MonoBehaviour
 		{
 			if ( NbrItem > 0 )
 			{
-				GameObject newItem = (GameObject) Instantiate (ItemDrop[Random.Range(0, ItemDrop.Length - 1)], thisPlayer.BagPos);
-				Transform getTrans = newItem.transform;
-
-				getTrans.position = thisTrans.position;
-				
-				getTrans.DOLocalMove(Vector3.zero, 1);
-				getTrans.DOScale(Vector3.zero,1).OnComplete( () => 
+				DOVirtual.DelayedCall ( Random.Range(0, 0.2f), ()=> 
 				{
-					newItem.SetActive(false);
-				});
+					GameObject newItem = (GameObject) Instantiate (ItemDrop[Random.Range(0, ItemDrop.Length - 1)], thisPlayer.BagPos);
+					Transform getTrans = newItem.transform;
 
-				thisPlayer.AllItem.Add(newItem);
+					getTrans.position = thisTrans.position + new Vector3 ( Random.Range(-0.2f, 0.21f), 0, Random.Range(-0.2f, 0.21f) );
+					
+					getTrans.DOLocalMove(Vector3.zero, 1);
+					getTrans.DOScale(Vector3.zero,1).OnComplete( () => 
+					{
+						newItem.SetActive(false);
+					});
+
+					thisPlayer.AllItem.Add(newItem);
+				});
+				
 				NbrItem --;
 			}
 		}
