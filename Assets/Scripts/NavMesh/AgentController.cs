@@ -34,11 +34,14 @@ public class AgentController : MonoBehaviour
 
     public void TargetPlayer(float stopDistance, float maxdist)
     {
-        float distance = Mathf.Abs(Vector3.Distance(transform.position, myFocusPlayer.transform.position));
-        navAgent.stoppingDistance = stopDistance;
-        if (distance > maxdist)
+        if ( myFocusPlayer!= null )
         {
-            navAgent.SetDestination(myFocusPlayer.transform.position);
+            float distance = Mathf.Abs(Vector3.Distance(transform.position, myFocusPlayer.transform.position));
+            navAgent.stoppingDistance = stopDistance;
+            if (distance > maxdist)
+            {
+                navAgent.SetDestination(myFocusPlayer.transform.position);
+            }
         }
     }
 
