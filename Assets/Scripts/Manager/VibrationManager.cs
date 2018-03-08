@@ -13,6 +13,7 @@ public class VibrationManager : ManagerParent
 
     protected override void InitializeManager ( )
 	{
+        
     }
 
     public void StunVibration( Player thisPlayer )
@@ -31,7 +32,7 @@ public class VibrationManager : ManagerParent
     public void ShootLowVibration( Player thisPlayer )
     {
 
-        foreach (Joystick j in player.controllers.Joysticks)
+        foreach (Joystick j in thisPlayer.controllers.Joysticks)
             {
                 j.SetVibration(0, ShootLowPower,false);
                 DOVirtual.DelayedCall(ShootLowDuration, () =>
