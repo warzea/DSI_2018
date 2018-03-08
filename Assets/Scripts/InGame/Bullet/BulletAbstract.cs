@@ -32,6 +32,10 @@ public class BulletAbstract : MonoBehaviour
 	public float Diameter = 0;
 	[HideInInspector]
 	public bool Projectil = true;
+	[HideInInspector] 
+	public int FarEffect = 1;
+	[HideInInspector]
+	public float TimeFarEffect = 1;
 	Transform thisTrans;
 	Vector3 startPos;
 	Vector3 newPos;
@@ -41,6 +45,7 @@ public class BulletAbstract : MonoBehaviour
 	public bool canExplose;
 	bool checkEnd = false;
 	bool blockUpdate = false;
+	float getDistScale = 0;
 	#endregion
 	
 	#region Mono
@@ -75,7 +80,7 @@ public class BulletAbstract : MonoBehaviour
 
 		if ( !Projectil )
 		{	
-			thisTrans.position = newPos + startPos * 0.5f;
+			thisTrans.position = newPos + thisTrans.forward * getDistScale;
 			thisTrans.localScale = startPos;
 			//getBox.center =  * 0.5f;
 			//getBox.size = ;
@@ -104,8 +109,10 @@ public class BulletAbstract : MonoBehaviour
 	#region Private Methods
 	void playZone ( )
 	{
+		GetComponent<SphereCollider>().enabled = false;
 		startPos = Vector3.zero;
 
+		DOTween.To(()=> getDistScale, x=> getDistScale = x, WidthRange * 0.5f * FarEffect , TimeFarEffect);
 		DOTween.To(()=> startPos, x=> startPos = x, new Vector3(WidthRange, 5, BulletRange), SpeedZone).OnComplete ( () =>
 		{
 			Destroy(gameObject, TimeStay);
@@ -113,7 +120,7 @@ public class BulletAbstract : MonoBehaviour
 	}
 	void OnTriggerEnter(Collider collision)
 	{
-		if (!blockUpdate )
+		if (blockUpdate )
 		{
 			return;
 		}

@@ -44,6 +44,8 @@ public class WeaponAbstract : MonoBehaviour
 	// -- fin Projectile
 	
 	// -- si Zone
+	public float TimeFarEffect;
+	public int FarEffect;
 	public float WidthRange;
 	public float SpeedZone;
 	public float TimeDest;
@@ -145,6 +147,8 @@ public class WeaponAbstract : MonoBehaviour
 		thisBullet.Projectil = Projectile;
 		thisBullet.canExplose = Explosion;
 		thisBullet.Diameter = Diameter;
+		thisBullet.FarEffect = FarEffect;
+		thisBullet.TimeFarEffect = TimeFarEffect;
 	}
 
 	void zoneShoot ( Transform thisPlayer )
