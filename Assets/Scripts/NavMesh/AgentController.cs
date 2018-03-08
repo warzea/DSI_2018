@@ -11,19 +11,19 @@ public class AgentController : MonoBehaviour
     [Header("Info Agent")]
     public bool dead = false;
     public GameObject myFocusPlayer;
-	public int lifeAgent = 1;
+    public int lifeAgent = 1;
 
-	public float timeBeforeDepop = 2f;
-	public float timeBeforeAlive = 1f;
+    public float timeBeforeDepop = 2f;
+    public float timeBeforeAlive = 1f;
 
 
-	[Header("Info Bullet")]
+    [Header("Info Bullet")]
     public GameObject bulletAgent;
-	public Transform spawnBulletAgent;
-	public GameObject parentBullet;
-	public float SpeedBulletAgent = 10f;
-	public float timeLeftAgentshoot = 2f;
-	public float distanceShoot = 20;
+    public Transform spawnBulletAgent;
+    public GameObject parentBullet;
+    public float SpeedBulletAgent = 10f;
+    public float timeLeftAgentshoot = 2f;
+    public float distanceShoot = 20;
 
 
     public enum CibleAgent { lawPlayer, maxPlayer, leadPlayer, randomPlayer, nothing };
@@ -35,9 +35,9 @@ public class AgentController : MonoBehaviour
     private NavMeshAgent navAgent;
 
     public Material deadMaterial;
-	public Material aliveMaterial;
+    public Material aliveMaterial;
 
-	private float timeAgent = -5;
+    private float timeAgent = -5;
 
     void Awake()
     {
@@ -49,31 +49,34 @@ public class AgentController : MonoBehaviour
 
     void Update()
     {
-		if(myEtatAgent == AgentEtat.aliveAgent){
-			ShootAgent ();
-		}
+        if (myEtatAgent == AgentEtat.aliveAgent)
+        {
+            ShootAgent();
+        }
     }
 
-	public void ShootAgent(){
-		timeAgent += Time.deltaTime;
-		if (timeAgent > timeLeftAgentshoot) {
+    public void ShootAgent()
+    {
+        timeAgent += Time.deltaTime;
+        if (timeAgent > timeLeftAgentshoot)
+        {
 
-			float distance = Vector3.Distance (transform.position, myFocusPlayer.transform.position);
+            float distance = Vector3.Distance(transform.position, myFocusPlayer.transform.position);
 
-			if(distance < distanceShoot){
-				transform.LookAt (myFocusPlayer.transform.position);
-				GameObject killeuse = (GameObject)Instantiate (bulletAgent,spawnBulletAgent.position,spawnBulletAgent.rotation,parentBullet.transform);
-				killeuse.GetComponent<Rigidbody> ().velocity = killeuse.transform.forward * SpeedBulletAgent;
-			}
-			timeAgent = 0;
-		}
+            if (distance < distanceShoot)
+            {
+                transform.LookAt(myFocusPlayer.transform.position);
+                GameObject killeuse = (GameObject)Instantiate(bulletAgent, spawnBulletAgent.position, spawnBulletAgent.rotation, parentBullet.transform);
+            }
+            timeAgent = 0;
+        }
 
-		if (dead)
-		{
-			DeadFonction();
-			dead = false;
-		}
-	}
+        if (dead)
+        {
+            DeadFonction();
+            dead = false;
+        }
+    }
 
     public void TargetPlayer(float stopDistance, float maxdist)
     {
@@ -131,14 +134,14 @@ public class AgentController : MonoBehaviour
     }
     #endregion
 
-	IEnumerator WaitRespawn()
-	{
-		yield return new WaitForSeconds(timeBeforeDepop);
-		transform.GetComponent<Renderer>().material = aliveMaterial;
-		transform.position = agentsManager.CheckBestcheckPoint (myFocusPlayer.transform);
-		yield return new WaitForSeconds(timeBeforeAlive);
-		myEtatAgent = AgentEtat.aliveAgent;
-	}
+    IEnumerator WaitRespawn()
+    {
+        yield return new WaitForSeconds(timeBeforeDepop);
+        transform.GetComponent<Renderer>().material = aliveMaterial;
+        transform.position = agentsManager.CheckBestcheckPoint(myFocusPlayer.transform);
+        yield return new WaitForSeconds(timeBeforeAlive);
+        myEtatAgent = AgentEtat.aliveAgent;
+    }
 
 
     void OnTriggerEnter(Collider other)
@@ -153,7 +156,7 @@ public class AgentController : MonoBehaviour
                 transform.GetComponent<Renderer>().material = deadMaterial;
                 myEtatAgent = AgentEtat.deadAgent;
                 DeadFonction();
-				StartCoroutine (WaitRespawn ());
+                StartCoroutine(WaitRespawn());
             }
         }
     }
