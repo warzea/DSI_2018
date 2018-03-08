@@ -8,16 +8,17 @@ public class AgentController : MonoBehaviour
 {
     /// <summary> Public <summary>
 
-    [Header("Info Agent")]
-    public bool dead = false;
+    [Header("------------------")]
+    [Header("----INFO AGENT----")]
+    [Header("------------------")]
     public GameObject myFocusPlayer;
     public int lifeAgent = 1;
-
     public float timeBeforeDepop = 2f;
     public float timeBeforeAlive = 1f;
 
-
-    [Header("Info Bullet")]
+    [Header("------------------")]
+    [Header("----INFO SHOOT----")]
+    [Header("------------------")]
     public GameObject bulletAgent;
     public Transform spawnBulletAgent;
     public GameObject parentBullet;
@@ -28,12 +29,14 @@ public class AgentController : MonoBehaviour
 
     public enum CibleAgent { lawPlayer, maxPlayer, leadPlayer, cauldron, randomPlayer, nothing };
     public enum AgentEtat { deadAgent, aliveAgent };
+
+    [Header("Info Agent")]
     public CibleAgent myFocusEtatAgent;
     public AgentEtat myEtatAgent;
-
     private AgentsManager agentsManager;
     private NavMeshAgent navAgent;
 
+    [Header("Materials dead/alive")]
     public Material deadMaterial;
     public Material aliveMaterial;
 
@@ -84,12 +87,6 @@ public class AgentController : MonoBehaviour
                 }
             }
             timeAgent = 0;
-        }
-
-        if (dead)
-        {
-            DeadFonction();
-            dead = false;
         }
     }
 
