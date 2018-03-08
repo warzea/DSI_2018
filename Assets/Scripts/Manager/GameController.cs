@@ -105,6 +105,8 @@ public class GameController : ManagerParent
 		GameObject lowLife = Players[0];
 		GameObject maxLife = Players[0];
 		GameObject boxWeapon = Players[0];
+			
+		bool check = false;
 
 		int getID = 0;
 		int a;
@@ -126,13 +128,24 @@ public class GameController : ManagerParent
 
 		if ( playerCont[getID].dead )
 		{
+			check = false;
 			for ( a = 0; a < playerCont.Length; a ++ )
 			{
 				if ( !playerCont[a].dead )
 				{
 					getID = a;
+					check = true;
 					break;
 				}
+			}
+
+			if ( !check ) 
+			{
+				DOVirtual.DelayedCall(TimerCheckPlayer, () => 
+				{
+					checkPlayer();
+				});
+				return;
 			}
 		}
 
@@ -155,14 +168,20 @@ public class GameController : ManagerParent
 
 		maxLife = playerCont[getID].gameObject;
 		
+		check = false;
 		for ( a = 0; a < playerCont.Length; a ++ )
 		{
 			if ( playerCont[a].driveBox )
 			{
 				boxWeapon = playerCont[a].gameObject;
-				
+				check = true;
 				break;
 			}
+		}
+
+		if ( !check )
+		{
+			boxWeapon = playerCont[Random.Range(0, playerCont.Length)].gameObject;
 		}
 
 		Manager.AgentM.ChangeEtatFocus(lowLife, maxLife, boxWeapon);

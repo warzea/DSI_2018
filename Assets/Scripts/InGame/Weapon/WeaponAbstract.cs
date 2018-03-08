@@ -16,9 +16,12 @@ public class WeaponAbstract : MonoBehaviour
 	public GameObject Bullet;
 	public Transform SpawnBullet;
 
+	[HideInInspector]
+	public bool canShoot = true;
+	
 	Transform getGargabe;
 	int nbrBullet;
-	bool canShoot = true;
+	
 	#endregion
 	
 	#region Mono
