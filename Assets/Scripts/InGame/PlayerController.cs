@@ -29,7 +29,9 @@ public class PlayerController : MonoBehaviour
 
 	[HideInInspector]
 	public List<GameObject> AllItem;
-
+	
+	[HideInInspector]
+	public bool driveBox = false;
 	PlayerController thisPC;
 	WeaponAbstract thisWeapon;
 	Transform thisTrans;
@@ -47,7 +49,6 @@ public class PlayerController : MonoBehaviour
 	bool canDash = true;
 	bool canEnterBox = false;
 	bool canShoot = true;
-	bool driveBox = false;
 	bool dead = false;
 
 	#endregion
