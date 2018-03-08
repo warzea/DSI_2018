@@ -6,5 +6,18 @@ public enum TokenType
 
 public enum MenuType
 {
-	Nothing
+	Nothing,
+	SelectPlayer
+}
+
+public enum ScoreType
+{
+	Nothing,
+	BoxWeapon
+}
+
+public enum Trajectoir
+{
+	Standard
+	
 }
