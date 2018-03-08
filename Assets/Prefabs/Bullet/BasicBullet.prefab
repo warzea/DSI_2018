@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33232647959024272}
   - component: {fileID: 135674131210696902}
   - component: {fileID: 23583078463115808}
-  - component: {fileID: 114755358873513388}
+  - component: {fileID: 114161150649743412}
   m_Layer: 9
   m_Name: BasicBullet
   m_TagString: BulletPlayer
@@ -84,7 +84,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1530796011795326}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &114755358873513388
+--- !u!114 &114161150649743412
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -92,11 +92,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1530796011795326}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51940b2f41fda944aad732e12518a315, type: 3}
+  m_Script: {fileID: 11500000, guid: 25f8eb5ac5a78614fbd08d2188f0a0cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GetEffect: {fileID: 142746, guid: a183756d778416d4d885ecf041d1acda, type: 2}
   ThisTrajectoir: 0
   MoveSpeed: 10
+  direction: {x: 0, y: 0, z: 0}
+  BulletDamage: 1
+  BulletRange: 10
+  TimeStay: 0
+  WidthRange: 0
+  SpeedZone: 0
+  Through: 0
+  Diameter: 0
+  Projectil: 1
+  FarEffect: 1
+  TimeFarEffect: 1
+  canExplose: 0
 --- !u!135 &135674131210696902
 SphereCollider:
   m_ObjectHideFlags: 1

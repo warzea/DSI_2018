@@ -15,6 +15,8 @@ public class CustomWeapon : Editor
 	SerializedProperty Explosion;
 	SerializedProperty BulletCapacity;
 	SerializedProperty FireRate;
+	SerializedProperty TimeFarEffect;
+	SerializedProperty FarEffect;
 	SerializedProperty CoolDown;
 	SerializedProperty BackPush;
 	SerializedProperty SpeedReduce;
@@ -24,7 +26,7 @@ public class CustomWeapon : Editor
 	SerializedProperty ScaleBullet;
 	SerializedProperty SpeedBullet;
 	SerializedProperty Gust;
-	SerializedProperty SpaceBullet;
+	SerializedProperty SpaceBulletTime;
 	SerializedProperty Angle;
 	SerializedProperty WidthRange;
 	SerializedProperty SpeedZone;
@@ -73,7 +75,7 @@ public class CustomWeapon : Editor
 		NbrBullet = serializedObject.FindProperty("NbrBullet");
 		Gust = serializedObject.FindProperty("Gust");
 			// -- si Gust 
-			SpaceBullet = serializedObject.FindProperty("SpaceBullet");
+			SpaceBulletTime = serializedObject.FindProperty("SpaceBullet");
 			// -- fin Gust
 
 			// -- si spread
@@ -82,6 +84,8 @@ public class CustomWeapon : Editor
 		// -- fin projectile
 
 		// -- si zone
+		FarEffect = serializedObject.FindProperty("FarEffect");
+		TimeFarEffect = serializedObject.FindProperty("TimeFarEffect");
 		WidthRange = serializedObject.FindProperty("WidthRange");
 		SpeedZone = serializedObject.FindProperty("SpeedZone");
 		TimeDest = serializedObject.FindProperty("TimeDest");
@@ -248,7 +252,7 @@ public class CustomWeapon : Editor
 			if ( myTarget.Gust )
 			{
 				EditorGUILayout.LabelField("Gust -------", EditorStyles.boldLabel);
-				EditorGUILayout.PropertyField ( SpaceBullet );
+				EditorGUILayout.PropertyField ( SpaceBulletTime );
 				EditorGUILayout.LabelField("-------", EditorStyles.boldLabel);
 			} // -- fin Gust
 			else // -- si spread
@@ -264,6 +268,8 @@ public class CustomWeapon : Editor
 		else // -- fin projectile
 		{
 			// -- si zone
+			EditorGUILayout.PropertyField ( FarEffect );
+			EditorGUILayout.PropertyField ( TimeFarEffect );
 			EditorGUILayout.PropertyField ( WidthRange );
 			EditorGUILayout.PropertyField ( SpeedZone );
 			EditorGUILayout.PropertyField ( TimeDest );
@@ -279,7 +285,7 @@ public class CustomWeapon : Editor
 			EditorGUILayout.PropertyField ( Diameter );
 			EditorGUILayout.LabelField("-------", EditorStyles.boldLabel);
 			// -- fin explostion
-		}		
+		}	
 
 		EditorGUI.indentLevel = 0;
 		EditorGUILayout.LabelField("-------", EditorStyles.boldLabel);
