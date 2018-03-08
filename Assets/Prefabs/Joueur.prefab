@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 65653185573869840}
   m_Layer: 8
   m_Name: Joueur
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -224,7 +224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IdPlayer: 0
-  LifePlayer: 3
+  LifePlayer: 1
   MoveSpeed: 10
   DashDistance: 5
   DashTime: 1
@@ -232,7 +232,10 @@ MonoBehaviour:
   WeaponPos: {fileID: 4901489511786308}
   BagPos: {fileID: 4376964705229768}
   BoxPlace: {fileID: 4483543942768048}
+  GetSpeed: 0
   SpeedReduce: 0.5
   SpeedReduceOnBox: 1
   SmoothRotateOnBox: 2.5
   AllItem: []
+  driveBox: 0
+  dead: 0

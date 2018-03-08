@@ -103,8 +103,6 @@ public class GameController : ManagerParent
 
     void checkPlayer()
     {
-
-        Debug.Log("just ici");
         PlayerController[] playerCont = getPlayerCont.ToArray();
         GameObject lowLife = Players[0];
         GameObject maxLife = Players[0];
@@ -177,7 +175,6 @@ public class GameController : ManagerParent
         {
             if (playerCont[a].driveBox)
             {
-                Debug.Log(playerCont[a].gameObject.name);
                 boxWeapon = playerCont[a].gameObject;
                 check = true;
                 break;

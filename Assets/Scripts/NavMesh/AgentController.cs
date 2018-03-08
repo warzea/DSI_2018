@@ -45,6 +45,7 @@ public class AgentController : MonoBehaviour
         navAgent = transform.GetComponent<NavMeshAgent>();
         myFocusEtatAgent = CibleAgent.nothing;
         myEtatAgent = AgentEtat.aliveAgent;
+        timeLeftAgentshoot = Random.Range(timeLeftAgentshoot - 0.3f, timeLeftAgentshoot + 0.3f);
     }
 
     void Update()
@@ -65,8 +66,22 @@ public class AgentController : MonoBehaviour
 
             if (distance < distanceShoot)
             {
-                transform.LookAt(myFocusPlayer.transform.position);
-                GameObject killeuse = (GameObject)Instantiate(bulletAgent, spawnBulletAgent.position, spawnBulletAgent.rotation, parentBullet.transform);
+                Vector3 lookAtPosition = new Vector3(myFocusPlayer.transform.transform.position.x, this.transform.position.y, myFocusPlayer.transform.transform.position.z);
+                transform.LookAt(lookAtPosition);
+
+                RaycastHit hit;
+
+                if (Physics.Raycast(spawnBulletAgent.position, spawnBulletAgent.forward, out hit))
+                {
+                    if (hit.transform.tag == "Player")
+                    {
+                        GameObject killeuse = (GameObject)Instantiate(bulletAgent, spawnBulletAgent.position, spawnBulletAgent.rotation, parentBullet.transform);
+                    }
+                    else
+                    {
+                        Debug.Log("I need Move");
+                    }
+                }
             }
             timeAgent = 0;
         }
@@ -138,9 +153,11 @@ public class AgentController : MonoBehaviour
     {
         yield return new WaitForSeconds(timeBeforeDepop);
         transform.GetComponent<Renderer>().material = aliveMaterial;
-        transform.position = agentsManager.CheckBestcheckPoint(myFocusPlayer.transform);
+        navAgent.Warp(agentsManager.CheckBestcheckPoint(myFocusPlayer.transform));
+        // transform.position = agentsManager.CheckBestcheckPoint(myFocusPlayer.transform);
         yield return new WaitForSeconds(timeBeforeAlive);
         myEtatAgent = AgentEtat.aliveAgent;
+        lifeAgent = 1;
     }
 
 
@@ -148,16 +165,14 @@ public class AgentController : MonoBehaviour
     {
         if (other.tag == Constants._PlayerBullet && myEtatAgent == AgentEtat.aliveAgent)
         {
-            Debug.Log("Je suis touché");
             Destroy(other.gameObject);
             lifeAgent = lifeAgent - 1;
             if (lifeAgent <= 0)
             {
-                transform.GetComponent<Renderer>().material = deadMaterial;
                 myEtatAgent = AgentEtat.deadAgent;
+                transform.GetComponent<Renderer>().material = deadMaterial;
                 DeadFonction();
                 StartCoroutine(WaitRespawn());
-                lifeAgent = 1;
             }
         }
     }
