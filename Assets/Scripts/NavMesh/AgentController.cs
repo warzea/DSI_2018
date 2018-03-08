@@ -166,7 +166,6 @@ public class AgentController : MonoBehaviour
         lifeAgent = 1;
     }
 
-
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == Constants._PlayerBullet && myEtatAgent == AgentEtat.aliveAgent)
