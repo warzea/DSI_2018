@@ -426,6 +426,7 @@ public class PlayerController : MonoBehaviour
 					WeaponPos.gameObject.SetActive(true);
 					lifePlayer = LifePlayer;
 					dead = false;
+					thisWeapon.canShoot = true;
 				});
 			});
 		});
