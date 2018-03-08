@@ -6,10 +6,10 @@ using UnityEngine.AI;
 public class AgentsManager : ManagerParent
 {
 
-	[Header("------------------")]
-	[Header("----INFO Level----")]
-	[Header("------------------")]
-	public Transform[] posRespawn;
+    [Header("------------------")]
+    [Header("----INFO Level----")]
+    [Header("------------------")]
+    public Transform[] posRespawn;
 
     /// <summary> Public <summary>
     [Header("-------------------")]
@@ -73,7 +73,7 @@ public class AgentsManager : ManagerParent
     private void Update()
     {
         timeAgent += Time.deltaTime;
-        if ( startCheck && timeAgent > timeLeftAgentLook)
+        if (startCheck && timeAgent > timeLeftAgentLook)
         {
             for (int i = 0; i < agents.Length; i++)
             {
@@ -87,19 +87,21 @@ public class AgentsManager : ManagerParent
         }
     }
 
-	public Vector3 CheckBestcheckPoint(Transform posTarget){
-		float distanceSave = 500;
-		Vector3 bestSpawn = new Vector3();
-		for (int i = 0; i < posRespawn.Length; i++)
-		{
-			float distanceAgent = Vector3.Distance(posRespawn[i].localPosition,posTarget.localPosition);
-			if(distanceSave > distanceAgent){
-				distanceSave = distanceAgent;
-				bestSpawn = posRespawn [i].position;
-			}
-		}
-		return bestSpawn;
-	}
+    public Vector3 CheckBestcheckPoint(Transform posTarget)
+    {
+        float distanceSave = 500;
+        Vector3 bestSpawn = new Vector3();
+        for (int i = 0; i < posRespawn.Length; i++)
+        {
+            float distanceAgent = Vector3.Distance(posRespawn[i].localPosition, posTarget.localPosition);
+            if (distanceSave > distanceAgent)
+            {
+                distanceSave = distanceAgent;
+                bestSpawn = posRespawn[i].position;
+            }
+        }
+        return bestSpawn;
+    }
 
     #region WhoFocus
     public void ChangeEtatFocus(GameObject lawP, GameObject maxP, GameObject leadP)
@@ -107,6 +109,27 @@ public class AgentsManager : ManagerParent
         playerLaw = lawP;
         playerMax = maxP;
         playerLead = leadP;
+        ChangeFocusEtat();
+    }
+
+
+    public void ChangeFocusEtat()
+    {
+        for (int i = 0; i < agents.Length; i++)
+        {
+            if (agents[i].myFocusEtatAgent.ToString() == "lawPlayer")
+            {
+                agents[i].SetFocusLawPlayer(playerLaw);
+            }
+            else if (agents[i].myFocusEtatAgent.ToString() == "maxPlayer")
+            {
+                agents[i].SetFocusMaxPlayer(playerMax);
+            }
+            else if (agents[i].myFocusEtatAgent.ToString() == "leadPlayer")
+            {
+                agents[i].SetFocusLeadPlayer(playerLead);
+            }
+        }
     }
 
     #endregion
