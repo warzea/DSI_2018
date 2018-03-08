@@ -26,7 +26,7 @@ public class AgentController : MonoBehaviour
     public float distanceShoot = 20;
 
 
-    public enum CibleAgent { lawPlayer, maxPlayer, leadPlayer, randomPlayer, nothing };
+    public enum CibleAgent { lawPlayer, maxPlayer, leadPlayer, cauldron, randomPlayer, nothing };
     public enum AgentEtat { deadAgent, aliveAgent };
     public CibleAgent myFocusEtatAgent;
     public AgentEtat myEtatAgent;
@@ -73,7 +73,7 @@ public class AgentController : MonoBehaviour
 
                 if (Physics.Raycast(spawnBulletAgent.position, spawnBulletAgent.forward, out hit))
                 {
-                    if (hit.transform.tag == "Player")
+                    if (hit.transform.tag == "Player" || hit.transform.tag == "WeaponBox")
                     {
                         GameObject killeuse = (GameObject)Instantiate(bulletAgent, spawnBulletAgent.position, spawnBulletAgent.rotation, parentBullet.transform);
                     }
@@ -139,6 +139,12 @@ public class AgentController : MonoBehaviour
     public void SetFocusLeadPlayer(GameObject player)
     {
         myFocusEtatAgent = CibleAgent.leadPlayer;
+        myFocusPlayer = player;
+    }
+
+    public void SetFocusCauldron(GameObject player)
+    {
+        myFocusEtatAgent = CibleAgent.cauldron;
         myFocusPlayer = player;
     }
 
