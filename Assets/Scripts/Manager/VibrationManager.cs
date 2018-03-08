@@ -6,34 +6,18 @@ using Rewired;
 using DG.Tweening;
 
 
-public class VibrationManager : MonoBehaviour
+public class VibrationManager : ManagerParent
 {
-    public static VibrationManager Singleton;
-
-    public int playerID;
-
-    Player player;
-
     [Range(0, 3)]
     public float ObsPower = .12f, ObsDuration = .2f, ShootLowPower = .15f, ShootLowDuration = .25f, ShootMediumPower = .5f, ShootMediumDuration = .5f, ShootHighPower = .5f, ShootHighDuration = .5f, StunPower = 2.5f, StunDuration = 1f;
 
-    void Awake()
-    {
-        if (VibrationManager.Singleton == null)
-        {
-            VibrationManager.Singleton = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-        
-        player = ReInput.players.GetPlayer(0);
+    protected override void InitializeManager ( )
+	{
     }
 
-    public void StunVibration()
+    public void StunVibration( Player thisPlayer )
     {
-        foreach (Joystick j in player.controllers.Joysticks)
+        foreach (Joystick j in thisPlayer.controllers.Joysticks)
         {
             j.StopVibration();
             j.SetVibration(0, StunPower, true);
@@ -42,11 +26,9 @@ public class VibrationManager : MonoBehaviour
                 j.StopVibration();
             });
         }
-        
     }
 
-
-    public void ShootLowVibration()
+    public void ShootLowVibration( Player thisPlayer )
     {
 
         foreach (Joystick j in player.controllers.Joysticks)
@@ -59,11 +41,10 @@ public class VibrationManager : MonoBehaviour
           }
     }
 
-
-    public void ShootMediumVibration()
+    public void ShootMediumVibration( Player thisPlayer )
     {
 
-        foreach (Joystick j in player.controllers.Joysticks)
+        foreach (Joystick j in thisPlayer.controllers.Joysticks)
         {
             j.SetVibration(1, ShootMediumPower,false);
             DOVirtual.DelayedCall(ShootMediumDuration, () =>
@@ -73,10 +54,10 @@ public class VibrationManager : MonoBehaviour
         }
     }
 
-    public void ShootHighVibration()
+    public void ShootHighVibration( Player thisPlayer )
     {
 
-        foreach (Joystick j in player.controllers.Joysticks)
+        foreach (Joystick j in thisPlayer.controllers.Joysticks)
         {
             j.SetVibration(1, ShootHighPower, false);
             DOVirtual.DelayedCall(ShootHighDuration, () =>
@@ -85,8 +66,4 @@ public class VibrationManager : MonoBehaviour
             });
         }
     }
-
-
-
-   
 }
