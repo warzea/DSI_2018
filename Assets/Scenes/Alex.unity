@@ -998,6 +998,10 @@ Prefab:
       propertyPath: parentBullet
       value: 
       objectReference: {fileID: 1953648171}
+    - target: {fileID: 1761805416676882, guid: b475873df400d4f109fd46964cc99f7d, type: 2}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b475873df400d4f109fd46964cc99f7d, type: 2}
   m_IsPrefabParent: 0
@@ -1449,6 +1453,10 @@ Prefab:
       propertyPath: parentBullet
       value: 
       objectReference: {fileID: 1953648171}
+    - target: {fileID: 1761805416676882, guid: b475873df400d4f109fd46964cc99f7d, type: 2}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b475873df400d4f109fd46964cc99f7d, type: 2}
   m_IsPrefabParent: 0
@@ -1600,6 +1608,10 @@ Prefab:
       propertyPath: parentBullet
       value: 
       objectReference: {fileID: 1953648171}
+    - target: {fileID: 1761805416676882, guid: b475873df400d4f109fd46964cc99f7d, type: 2}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b475873df400d4f109fd46964cc99f7d, type: 2}
   m_IsPrefabParent: 0
@@ -1814,6 +1826,10 @@ Prefab:
       propertyPath: parentBullet
       value: 
       objectReference: {fileID: 1953648171}
+    - target: {fileID: 1761805416676882, guid: b475873df400d4f109fd46964cc99f7d, type: 2}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b475873df400d4f109fd46964cc99f7d, type: 2}
   m_IsPrefabParent: 0
@@ -2550,6 +2566,10 @@ Prefab:
       propertyPath: parentBullet
       value: 
       objectReference: {fileID: 1953648171}
+    - target: {fileID: 1761805416676882, guid: b475873df400d4f109fd46964cc99f7d, type: 2}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b475873df400d4f109fd46964cc99f7d, type: 2}
   m_IsPrefabParent: 0
@@ -2694,6 +2714,10 @@ Prefab:
       propertyPath: parentBullet
       value: 
       objectReference: {fileID: 1953648171}
+    - target: {fileID: 1761805416676882, guid: b475873df400d4f109fd46964cc99f7d, type: 2}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b475873df400d4f109fd46964cc99f7d, type: 2}
   m_IsPrefabParent: 0
@@ -2839,6 +2863,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f87f9c079ae8e3243a9200d59924cd7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DistFollow: 30
   Target: {fileID: 853295049}
   smoothTime: 15
 --- !u!1001 &1700289767
@@ -2889,6 +2914,10 @@ Prefab:
       propertyPath: parentBullet
       value: 
       objectReference: {fileID: 1953648171}
+    - target: {fileID: 1761805416676882, guid: b475873df400d4f109fd46964cc99f7d, type: 2}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b475873df400d4f109fd46964cc99f7d, type: 2}
   m_IsPrefabParent: 0
@@ -3140,6 +3169,10 @@ Prefab:
       propertyPath: parentBullet
       value: 
       objectReference: {fileID: 1953648171}
+    - target: {fileID: 1761805416676882, guid: b475873df400d4f109fd46964cc99f7d, type: 2}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b475873df400d4f109fd46964cc99f7d, type: 2}
   m_IsPrefabParent: 0
@@ -3230,6 +3263,10 @@ Prefab:
       propertyPath: parentBullet
       value: 
       objectReference: {fileID: 1953648171}
+    - target: {fileID: 1761805416676882, guid: b475873df400d4f109fd46964cc99f7d, type: 2}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b475873df400d4f109fd46964cc99f7d, type: 2}
   m_IsPrefabParent: 0
@@ -3281,6 +3318,10 @@ Prefab:
       propertyPath: parentBullet
       value: 
       objectReference: {fileID: 1953648171}
+    - target: {fileID: 1761805416676882, guid: b475873df400d4f109fd46964cc99f7d, type: 2}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b475873df400d4f109fd46964cc99f7d, type: 2}
   m_IsPrefabParent: 0
