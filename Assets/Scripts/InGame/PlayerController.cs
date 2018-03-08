@@ -39,11 +39,10 @@ public class PlayerController : MonoBehaviour
 	Transform thisTrans;
 	Transform getBoxWeapon;
 	Rigidbody thisRig;
-
+	CameraFollow GetCamFoll;
 	Player inputPlayer;
 
 	Camera getCam;
-
 
 	int lifePlayer;
 	bool shooting = false;
@@ -51,6 +50,8 @@ public class PlayerController : MonoBehaviour
 	bool canDash = true;
 	bool canEnterBox = false;
 	bool canShoot = true;
+	bool autoShoot = true;
+	bool checkShoot = true;
 
 	#endregion
 	
@@ -69,6 +70,7 @@ public class PlayerController : MonoBehaviour
 		
 		getBoxWeapon = Manager.GameCont.WeaponB.transform;
 		getCam = Manager.GameCont.MainCam;
+		GetCamFoll = Manager.GameCont.GetCameraFollow;
 	}
 	
 	void Update () 
@@ -94,11 +96,23 @@ public class PlayerController : MonoBehaviour
 	{
 		if ( thisWeap != null )
 		{
+			autoShoot = thisWeap.AutoShoot;
+			SpeedReduce = thisWeap.SpeedReduce;
 			thisWeapon = thisWeap;
 		}
 		else 
 		{
 			thisWeapon = null;
+		}
+	}
+	public void GetDamage ( int intDmg = 1 )
+	{
+		lifePlayer -= intDmg;
+
+		if ( lifePlayer <= 0 && !dead )
+		{
+			dead = true;
+			animeDead ( );
 		}
 	}
 	#endregion
@@ -236,6 +250,10 @@ public class PlayerController : MonoBehaviour
 	{
 		float shootInput = inputPlayer.GetAxis("Shoot");
 
+		if ( shootInput == 0 )
+		{
+			checkShoot = true;
+		}
 		/*if ( shootInput > 0 )
 		{
 			bool checkBox = false;
@@ -271,8 +289,13 @@ public class PlayerController : MonoBehaviour
 			shooting = true;
 		}*/
 
-		if ( shootInput > 0 && thisWeapon != null  )
+		if ( shootInput > 0 && thisWeapon != null && checkShoot )
 		{
+			if ( !autoShoot )
+			{
+				checkShoot = false;
+			}
+
 			thisWeapon.weaponShoot( thisTrans );
 
 			shooting = true;
@@ -327,7 +350,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if ( Manager.GameCont.WeaponB.CanControl )
 		{
-			getCam.GetComponent<CameraFollow>().UpdateTarget(thisTrans);
+			GetCamFoll.UpdateTarget(thisTrans);
 			WeaponPos.gameObject.SetActive ( false );
 
 			canShoot = false;
@@ -344,7 +367,7 @@ public class PlayerController : MonoBehaviour
 		{
 			getBoxWeapon.DOKill( );
 			WeaponPos.gameObject.SetActive ( true );
-			getCam.GetComponent<CameraFollow>().UpdateTarget(getBoxWeapon);
+			GetCamFoll.UpdateTarget(getBoxWeapon);
 
 			canShoot = true;
 			Physics.IgnoreCollision ( GetComponent<Collider>(), getBoxWeapon.GetComponent<Collider>(), false );
@@ -414,6 +437,8 @@ public class PlayerController : MonoBehaviour
 
 		thisTrans.SetParent(getBoxWeapon);
 
+		thisTrans.DOKill ( );
+
 		thisTrans.DOLocalMove(Vector3.zero, 1f);
 		thisTrans.DOScale (Vector3.zero, 1f).OnComplete ( () => 
 		{
@@ -443,14 +468,12 @@ public class PlayerController : MonoBehaviour
 		{
 			lifePlayer --;
 
-			if ( lifePlayer <= 0 )
+			if ( lifePlayer <= 0 && !dead )
 			{
 				dead = true;
 				animeDead ( );
 			}
 		}
-		
-		
 	}
 	
 	void OnTriggerExit ( Collider thisColl )

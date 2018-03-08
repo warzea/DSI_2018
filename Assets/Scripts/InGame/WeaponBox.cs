@@ -49,7 +49,6 @@ public class WeaponBox : MonoBehaviour
 		}
 
 		updateWeapon[currId].CurrObj = newObj;
-		thisPlayer.SpeedReduce = updateWeapon[currId].CurrObj.GetComponent<WeaponAbstract>().SpeedReduce;
 
 		objTrans.DOScale ( Vector3.one, DelayNewWeapon );
 		DOVirtual.DelayedCall ( 0.1f, ( ) => 

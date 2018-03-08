@@ -170,8 +170,14 @@ public class AgentController : MonoBehaviour
     {
         if (other.tag == Constants._PlayerBullet && myEtatAgent == AgentEtat.aliveAgent)
         {
-            Destroy(other.gameObject);
-            lifeAgent = lifeAgent - 1;
+            BulletAbstract getBA = other.GetComponent<BulletAbstract>();
+            if ( !getBA.Through  )
+            {
+                Destroy(other.gameObject);
+            }
+            
+            lifeAgent -= getBA.BulletDamage;
+
             if (lifeAgent <= 0)
             {
                 myEtatAgent = AgentEtat.deadAgent;
