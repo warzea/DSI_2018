@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 136104577686423644}
   - component: {fileID: 23115064312379426}
   - component: {fileID: 114144007751756740}
+  - component: {fileID: 114865942321157514}
   m_Layer: 9
   m_Name: WeaponBasic
   m_TagString: Untagged
@@ -150,7 +151,7 @@ MonoBehaviour:
   canShoot: 1
 --- !u!114 &114865942321157514
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1093315411277202}
@@ -180,7 +181,6 @@ MonoBehaviour:
   WidthRange: 0
   SpeedZone: 0
   TimeDest: 0
-  Diameter: 0
   Bullet: {fileID: 1530796011795326, guid: 7debebcea0d258f4a9f5dc489d6103cf, type: 2}
   SpawnBullet: {fileID: 4108505727479514}
   canShoot: 1

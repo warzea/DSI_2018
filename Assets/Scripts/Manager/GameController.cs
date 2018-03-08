@@ -15,6 +15,8 @@ public class GameController : ManagerParent
     public WeaponBox WeaponB;
     public float TimerCheckPlayer = 1;
 
+    public CameraFollow GetCameraFollow;
+
     [HideInInspector]
     public Transform Garbage;
 
@@ -39,7 +41,8 @@ public class GameController : ManagerParent
         }
 
         SpawnPlayer();
-        MainCam.GetComponent<CameraFollow>().InitGame();
+        
+        GetCameraFollow.InitGame();
         checkPlayer();
     }
 

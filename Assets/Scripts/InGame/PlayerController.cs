@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
 	Transform thisTrans;
 	Transform getBoxWeapon;
 	Rigidbody thisRig;
-
+	CameraFollow GetCamFoll;
 	Player inputPlayer;
 
 	Camera getCam;
@@ -71,6 +71,7 @@ public class PlayerController : MonoBehaviour
 		
 		getBoxWeapon = Manager.GameCont.WeaponB.transform;
 		getCam = Manager.GameCont.MainCam;
+		GetCamFoll = Manager.GameCont.GetCameraFollow;
 	}
 	
 	void Update () 
@@ -341,7 +342,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if ( Manager.GameCont.WeaponB.CanControl )
 		{
-			getCam.GetComponent<CameraFollow>().UpdateTarget(thisTrans);
+			GetCamFoll.UpdateTarget(thisTrans);
 			WeaponPos.gameObject.SetActive ( false );
 
 			canShoot = false;
