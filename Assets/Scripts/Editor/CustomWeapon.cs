@@ -29,7 +29,7 @@ public class CustomWeapon : Editor
 	SerializedProperty WidthRange;
 	SerializedProperty SpeedZone;
 	SerializedProperty TimeDest;
-	//SerializedProperty Diameter;
+	SerializedProperty Diameter;
 	SerializedProperty Bullet;
 	SerializedProperty SpawnBullet;
 	GUIContent Empty;
@@ -88,7 +88,7 @@ public class CustomWeapon : Editor
 		// -- fin zone
 
 		// -- si explosion
-		//Diameter = serializedObject.FindProperty("Diameter");
+		Diameter = serializedObject.FindProperty("Diameter");
 		// -- fin explostion
 	}
 
@@ -272,14 +272,14 @@ public class CustomWeapon : Editor
 
 		EditorGUI.indentLevel = 2;
 		
-		/*if ( myTarget.Explosion )
+		if ( myTarget.Explosion )
 		{
 			// -- si explosion
 			EditorGUILayout.LabelField("Explosion -------", EditorStyles.boldLabel);
 			EditorGUILayout.PropertyField ( Diameter );
 			EditorGUILayout.LabelField("-------", EditorStyles.boldLabel);
 			// -- fin explostion
-		}	*/
+		}	
 
 		EditorGUI.indentLevel = 0;
 		EditorGUILayout.LabelField("-------", EditorStyles.boldLabel);

@@ -50,7 +50,7 @@ public class WeaponAbstract : MonoBehaviour
 	// -- fin zone
 	
 	// -- si Explosion
-	//public float Diameter;
+	public float Diameter;
 	// -- end Explosion
 
 	
@@ -95,16 +95,14 @@ public class WeaponAbstract : MonoBehaviour
 			PlayerController getPC = playerTrans.GetComponent<PlayerController>();
 			Transform getTrans = transform;
 			Vector3 getForward = playerTrans.forward;
-			Rigidbody getRigid;
 
 			transform.SetParent(null);
 			getPC.UpdateWeapon();
 
-			getRigid = gameObject.AddComponent<Rigidbody>();
-			getRigid.useGravity = false;
 			//getRigid.AddForce(getForward * ForceProjection, ForceMode.VelocityChange);
 			
 			GetComponent<Collider>().enabled = true;
+			GetComponent<Collider>().isTrigger = true;
 			getTrans.gameObject.AddComponent(typeof(BulletAbstract));
 			getTrans.GetComponent<BulletAbstract>().direction = playerTrans.forward;
 			
@@ -130,7 +128,7 @@ public class WeaponAbstract : MonoBehaviour
 		}
 		else
 		{
-			canShoot = true;
+			zoneShoot(thisPlayer);
 		}
 	}
 
@@ -140,6 +138,18 @@ public class WeaponAbstract : MonoBehaviour
 		thisBullet.BulletDamage = Damage;
 		thisBullet.BulletRange = Range;
 		thisBullet.Through = Through;
+		thisBullet.WidthRange = WidthRange;
+		thisBullet.SpeedZone = SpeedZone;
+		thisBullet.TimeStay = TimeDest;
+		thisBullet.Projectil = Projectile;
+	}
+
+	void zoneShoot ( Transform thisPlayer )
+	{
+		GameObject getBullet = ( GameObject ) Instantiate ( Bullet, SpawnBullet.position, thisPlayer.localRotation, getGargabe );
+
+		setNewProj ( getBullet.GetComponent<BulletAbstract>( ) );
+		StartCoroutine ( waitNewShoot ( ) );
 	}
 	
 	void gustProjectile ( int nbrLeft, Transform thisPlayer )
