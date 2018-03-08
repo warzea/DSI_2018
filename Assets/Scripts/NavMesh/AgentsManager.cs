@@ -34,6 +34,9 @@ public class AgentsManager : ManagerParent
     [Header("----INFO AGENT----")]
     [Header("------------------")]
 
+    [Header("Distance Max Spawn")]
+    public float distanceSave = 1;
+
     [Header("List Agent Focus Law")]
     public List<AgentController> lawpvAgents;
 
@@ -45,6 +48,8 @@ public class AgentsManager : ManagerParent
 
     [Header("List Agent Focus Other")]
     public List<AgentController> othersAgents;
+
+
 
 
     /// <summary> Private <summary>
@@ -89,18 +94,43 @@ public class AgentsManager : ManagerParent
 
     public Vector3 CheckBestcheckPoint(Transform posTarget)
     {
-        float distanceSave = 500;
         Vector3 bestSpawn = new Vector3();
+        float lastdist = 0;
+        List<Transform> bestSpawnlist = new List<Transform>();
+
         for (int i = 0; i < posRespawn.Length; i++)
         {
             float distanceAgent = Vector3.Distance(posRespawn[i].localPosition, posTarget.localPosition);
             if (distanceSave > distanceAgent)
             {
-                distanceSave = distanceAgent;
-                bestSpawn = posRespawn[i].position;
+                bestSpawnlist.Add(posRespawn[i]);
+                //distanceSave = distanceAgent;
+            }
+            else
+            {
+                if (lastdist == 0)
+                {
+                    lastdist = distanceAgent;
+                    bestSpawn = posRespawn[i].position;
+                }
+                else if (lastdist > distanceAgent)
+                {
+                    bestSpawn = posRespawn[i].position;
+                }
             }
         }
-        return bestSpawn;
+
+        int randomSpawnPlayer = Random.Range(0, bestSpawnlist.Count);
+
+        if (bestSpawnlist.Count != 0)
+        {
+            bestSpawn = bestSpawnlist[randomSpawnPlayer].position;
+            return bestSpawn;
+        }
+        else
+        {
+            return bestSpawn;
+        }
     }
 
     #region WhoFocus
@@ -241,7 +271,7 @@ public class AgentsManager : ManagerParent
         }
         else
         {
-            Debug.Log("Je suis Random");
+            //Debug.Log("Je suis Random");
         }
         CheckFocusIni();
     }

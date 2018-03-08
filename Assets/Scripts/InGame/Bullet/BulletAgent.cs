@@ -23,4 +23,9 @@ public class BulletAgent : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    void OnCollisionEnter(Collision other2)
+    {
+        Destroy(gameObject);
+    }
 }
