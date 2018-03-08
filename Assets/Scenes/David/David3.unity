@@ -2351,30 +2351,6 @@ Prefab:
       propertyPath: parentBullet
       value: 
       objectReference: {fileID: 1953648171}
-    - target: {fileID: 4119575178471908, guid: b475873df400d4f109fd46964cc99f7d, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -0.64
-      objectReference: {fileID: 0}
-    - target: {fileID: 114697099544342936, guid: b475873df400d4f109fd46964cc99f7d,
-        type: 2}
-      propertyPath: timeBeforeDepop
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114697099544342936, guid: b475873df400d4f109fd46964cc99f7d,
-        type: 2}
-      propertyPath: timeBeforeAlive
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114697099544342936, guid: b475873df400d4f109fd46964cc99f7d,
-        type: 2}
-      propertyPath: SpeedBulletAgent
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114697099544342936, guid: b475873df400d4f109fd46964cc99f7d,
-        type: 2}
-      propertyPath: timeLeftAgentshoot
-      value: 0.5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b475873df400d4f109fd46964cc99f7d, type: 2}
   m_IsPrefabParent: 0
@@ -3877,6 +3853,16 @@ Prefab:
         type: 2}
       propertyPath: distanceSave
       value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 114895754389165182, guid: 09c0fcd273fc2424693f3e4b734896bb,
+        type: 2}
+      propertyPath: pourcentCauldron
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 114895754389165182, guid: 09c0fcd273fc2424693f3e4b734896bb,
+        type: 2}
+      propertyPath: pourcentLead
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 09c0fcd273fc2424693f3e4b734896bb, type: 2}
