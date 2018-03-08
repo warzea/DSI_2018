@@ -6,6 +6,11 @@ using UnityEngine.AI;
 public class AgentsManager : ManagerParent
 {
 
+    [Header("------------------")]
+    [Header("----INFO Level----")]
+    [Header("------------------")]
+    public Transform[] posRespawn;
+
     /// <summary> Public <summary>
     [Header("-------------------")]
     [Header("----INFO PLAYER----")]
@@ -29,6 +34,9 @@ public class AgentsManager : ManagerParent
     [Header("----INFO AGENT----")]
     [Header("------------------")]
 
+    [Header("Distance Max Spawn")]
+    public float distanceSave = 1;
+
     [Header("List Agent Focus Law")]
     public List<AgentController> lawpvAgents;
 
@@ -40,6 +48,8 @@ public class AgentsManager : ManagerParent
 
     [Header("List Agent Focus Other")]
     public List<AgentController> othersAgents;
+
+
 
 
     /// <summary> Private <summary>
@@ -57,24 +67,69 @@ public class AgentsManager : ManagerParent
     private GameObject playerLead;
 
     //Timer
-    private float timeAgent = 5;
+    private float timeAgent = 0;
+    bool startCheck = false;
 
-	protected override void InitializeManager ( )
+    protected override void InitializeManager()
     {
         agents = GameObject.FindObjectsOfType<AgentController>();
-    }    
+    }
+
     private void Update()
     {
-
         timeAgent += Time.deltaTime;
-        if (timeAgent > timeLeftAgentLook)
+        if (startCheck && timeAgent > timeLeftAgentLook)
         {
             for (int i = 0; i < agents.Length; i++)
             {
-                float randStopDist = Random.Range(10, 20);
-                agents[i].TargetPlayer(randStopDist, maxPosPlayer);
+                if (agents[i].GetEtatAgent())
+                {
+                    float randStopDist = Random.Range(10, 20);
+                    agents[i].TargetPlayer(randStopDist, maxPosPlayer);
+                }
             }
             timeAgent = 0;
+        }
+    }
+
+    public Vector3 CheckBestcheckPoint(Transform posTarget)
+    {
+        Vector3 bestSpawn = new Vector3();
+        float lastdist = 0;
+        List<Transform> bestSpawnlist = new List<Transform>();
+
+        for (int i = 0; i < posRespawn.Length; i++)
+        {
+            float distanceAgent = Vector3.Distance(posRespawn[i].localPosition, posTarget.localPosition);
+            if (distanceSave > distanceAgent)
+            {
+                bestSpawnlist.Add(posRespawn[i]);
+                //distanceSave = distanceAgent;
+            }
+            else
+            {
+                if (lastdist == 0)
+                {
+                    lastdist = distanceAgent;
+                    bestSpawn = posRespawn[i].position;
+                }
+                else if (lastdist > distanceAgent)
+                {
+                    bestSpawn = posRespawn[i].position;
+                }
+            }
+        }
+
+        int randomSpawnPlayer = Random.Range(0, bestSpawnlist.Count);
+
+        if (bestSpawnlist.Count != 0)
+        {
+            bestSpawn = bestSpawnlist[randomSpawnPlayer].position;
+            return bestSpawn;
+        }
+        else
+        {
+            return bestSpawn;
         }
     }
 
@@ -84,15 +139,39 @@ public class AgentsManager : ManagerParent
         playerLaw = lawP;
         playerMax = maxP;
         playerLead = leadP;
+        ChangeFocusEtat();
     }
+
+
+    public void ChangeFocusEtat()
+    {
+        for (int i = 0; i < agents.Length; i++)
+        {
+            if (agents[i].myFocusEtatAgent.ToString() == "lawPlayer")
+            {
+                agents[i].SetFocusLawPlayer(playerLaw);
+            }
+            else if (agents[i].myFocusEtatAgent.ToString() == "maxPlayer")
+            {
+                agents[i].SetFocusMaxPlayer(playerMax);
+            }
+            else if (agents[i].myFocusEtatAgent.ToString() == "leadPlayer")
+            {
+                agents[i].SetFocusLeadPlayer(playerLead);
+            }
+        }
+    }
+
     #endregion
 
     #region IniGame
     public void InitGame()
     {
-        playerLaw = player[0].gameObject;
-        playerMax = player[0].gameObject;
-        playerLead = player[0].gameObject;
+        startCheck = true;
+
+        playerLaw = player[0];
+        playerMax = player[0];
+        playerLead = player[0];
 
         nbAgents = agents.Length;
 
@@ -192,7 +271,7 @@ public class AgentsManager : ManagerParent
         }
         else
         {
-            Debug.Log("Je suis Random");
+            //Debug.Log("Je suis Random");
         }
         CheckFocusIni();
     }

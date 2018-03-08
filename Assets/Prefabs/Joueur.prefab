@@ -39,9 +39,10 @@ GameObject:
   - component: {fileID: 23168446018781884}
   - component: {fileID: 54776822451888930}
   - component: {fileID: 114817249276159724}
+  - component: {fileID: 65653185573869840}
   m_Layer: 8
   m_Name: Joueur
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83,7 +84,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1528122427535438}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 420.3847, y: 243.12627, z: -11.465933}
+  m_LocalPosition: {x: 2.05, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4901489511786308}
@@ -187,6 +188,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!65 &65653185573869840
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1528122427535438}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65957413982049244
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -211,14 +224,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IdPlayer: 0
-  MoveSpeed: 10
+  LifePlayer: 1
+  MoveSpeed: 13
   DashDistance: 5
   DashTime: 1
-  DistToDropItem: 3
+  DistToDropItem: 10
   WeaponPos: {fileID: 4901489511786308}
   BagPos: {fileID: 4376964705229768}
   BoxPlace: {fileID: 4483543942768048}
+  GetSpeed: 0
   SpeedReduce: 0.5
-  SpeedReduceOnBox: 0.195
-  SmoothRotateOnBox: 2.5
+  SpeedReduceOnBox: 0.1
+  SmoothRotateOnBox: 0.4
   AllItem: []
+  driveBox: 0
+  dead: 0
