@@ -7,6 +7,8 @@ public class BulletAbstract : MonoBehaviour
 	#region Variables
 	public Trajectoir ThisTrajectoir;
 	public float MoveSpeed = 10;
+	[HideInInspector]
+	public Vector3 direction = Vector3.zero;
 	Transform thisTrans;
 	#endregion
 	
@@ -14,6 +16,12 @@ public class BulletAbstract : MonoBehaviour
 	protected virtual void Start ( ) 
 	{
 		thisTrans = transform;
+
+		if ( direction == Vector3.zero )
+		{
+			direction = thisTrans.forward;
+		}
+		
 		Destroy ( gameObject, 5 );
 	}
 	
@@ -25,7 +33,7 @@ public class BulletAbstract : MonoBehaviour
 		switch ( ThisTrajectoir )
 		{
 			case Trajectoir.Standard:
-				thisTrans.localPosition += thisTrans.forward * Time.deltaTime * MoveSpeed;
+				thisTrans.localPosition += direction * Time.deltaTime * MoveSpeed;
 			break;
 		}
 	}

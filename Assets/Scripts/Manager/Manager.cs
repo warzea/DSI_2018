@@ -35,7 +35,10 @@ public class Manager : MonoBehaviour
 			DontDestroyOnLoad ( gameObject );
 			mainManagerInstance = this;
 			InitializeManagers ( );
-		}  */     
+		}  */ 
+
+		mainManagerInstance = this;
+		InitializeManagers ( );    
 	}
 	#endregion
 

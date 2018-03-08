@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
 	
 	[HideInInspector]
 	public bool driveBox = false;
+	[HideInInspector]
+	public bool dead = false;
 	PlayerController thisPC;
 	WeaponAbstract thisWeapon;
 	Transform thisTrans;
@@ -49,7 +51,6 @@ public class PlayerController : MonoBehaviour
 	bool canDash = true;
 	bool canEnterBox = false;
 	bool canShoot = true;
-	bool dead = false;
 
 	#endregion
 	
@@ -432,10 +433,23 @@ public class PlayerController : MonoBehaviour
 
 	void OnTriggerEnter ( Collider thisColl )
 	{
+		string getTag = thisColl.tag;
 		if ( thisColl.tag == Constants._EnterCont )
 		{
 			canEnterBox = true;
 		}
+		else if ( getTag == Constants._EnemyBullet || getTag == Constants._Enemy )
+		{
+			lifePlayer --;
+
+			if ( lifePlayer <= 0 )
+			{
+				dead = true;
+				animeDead ( );
+			}
+		}
+		
+		
 	}
 	
 	void OnTriggerExit ( Collider thisColl )
@@ -448,7 +462,7 @@ public class PlayerController : MonoBehaviour
 
 	void OnCollisionEnter ( Collision thisColl )
 	{
-		string getTag = thisColl.collider.tag;
+		/*string getTag = thisColl.collider.tag;
 		
 		if ( getTag == Constants._EnemyBullet || getTag == Constants._Enemy )
 		{
@@ -459,7 +473,7 @@ public class PlayerController : MonoBehaviour
 				dead = true;
 				animeDead ( );
 			}
-		}
+		}*/
 	}
 	#endregion
 }

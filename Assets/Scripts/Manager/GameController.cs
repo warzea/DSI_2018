@@ -111,15 +111,27 @@ public class GameController : ManagerParent
 
 		for ( a = 0; a < playerCont.Length; a ++ )
 		{
-			if ( playerCont[a].LifePlayer < playerCont[getID].LifePlayer )
+			if ( playerCont[a].LifePlayer < playerCont[getID].LifePlayer && !playerCont[a].dead )
 			{
 				getID = a;
 			}
-			else if ( playerCont[a].LifePlayer == playerCont[getID].LifePlayer )
+			else if ( playerCont[a].LifePlayer == playerCont[getID].LifePlayer && playerCont[a].dead )
 			{
 				if(Random.Range(0,2) == 0)
 				{
 					getID = a;
+				}
+			}
+		}
+
+		if ( playerCont[getID].dead )
+		{
+			for ( a = 0; a < playerCont.Length; a ++ )
+			{
+				if ( !playerCont[a].dead )
+				{
+					getID = a;
+					break;
 				}
 			}
 		}
