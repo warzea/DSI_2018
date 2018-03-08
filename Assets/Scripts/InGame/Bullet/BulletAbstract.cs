@@ -5,6 +5,7 @@ using UnityEngine;
 public class BulletAbstract : MonoBehaviour 
 {
 	#region Variables
+	public GameObject GetEffect;
 	public Trajectoir ThisTrajectoir;
 	public float MoveSpeed = 10;
 	[HideInInspector]
@@ -14,9 +15,16 @@ public class BulletAbstract : MonoBehaviour
 	public int BulletDamage = 1;
 	[HideInInspector]
 	public float BulletRange = 10;
+
+	[HideInInspector]
+	public float TimeStay = 0;
+	
+	[HideInInspector]
+	public bool Through = false;
 	Transform thisTrans;
 	Vector3 startPos;
 	bool checkEnd = false;
+	bool canExplose = false;
 	#endregion
 	
 	#region Mono
@@ -49,15 +57,24 @@ public class BulletAbstract : MonoBehaviour
 		}
 		else if ( !checkEnd )
 		{
+			Destroy ( gameObject, TimeStay );
 			checkEnd = true;
 		}
 	}
 	#endregion
 
 	#region Private Methods
-	protected virtual void OnTriggerEnter(Collider collision)
+	void OnTriggerEnter(Collider collision)
 	{
-		Destroy ( gameObject );
+		if ( canExplose )
+		{
+			Instantiate (GetEffect, thisTrans.position, Quaternion.identity);
+		}
+		
+		if ( !Through || collision.tag == Constants._Untag )
+		{
+			Destroy ( gameObject );
+		}
 	}
 	#endregion
 }

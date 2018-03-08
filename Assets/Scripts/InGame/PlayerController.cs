@@ -51,6 +51,8 @@ public class PlayerController : MonoBehaviour
 	bool canDash = true;
 	bool canEnterBox = false;
 	bool canShoot = true;
+	bool autoShoot = true;
+	bool checkShoot = true;
 
 	#endregion
 	
@@ -94,6 +96,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if ( thisWeap != null )
 		{
+			autoShoot = thisWeap.AutoShoot;
 			SpeedReduce = thisWeap.SpeedReduce;
 			backShoot = thisWeap.BackPush;
 			thisWeapon = thisWeap;
@@ -238,6 +241,10 @@ public class PlayerController : MonoBehaviour
 	{
 		float shootInput = inputPlayer.GetAxis("Shoot");
 
+		if ( shootInput == 0 )
+		{
+			checkShoot = true;
+		}
 		/*if ( shootInput > 0 )
 		{
 			bool checkBox = false;
@@ -273,8 +280,13 @@ public class PlayerController : MonoBehaviour
 			shooting = true;
 		}*/
 
-		if ( shootInput > 0 && thisWeapon != null  )
+		if ( shootInput > 0 && thisWeapon != null && checkShoot )
 		{
+			if ( !autoShoot )
+			{
+				checkShoot = false;
+			}
+
 			thisWeapon.weaponShoot( thisTrans );
 
 			shooting = true;

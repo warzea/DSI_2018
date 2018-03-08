@@ -50,7 +50,7 @@ public class WeaponAbstract : MonoBehaviour
 	// -- fin zone
 	
 	// -- si Explosion
-	public float Diameter;
+	//public float Diameter;
 	// -- end Explosion
 
 	
@@ -63,15 +63,17 @@ public class WeaponAbstract : MonoBehaviour
 	[HideInInspector]
 	public bool canShoot = true;
 
+	bool blockShoot = false;
+
 	Transform getGargabe;
-	int nbrBullet;
+	int getCapacity;
 	
 	#endregion
 	
 	#region Mono
 	void Awake ( )
 	{
-		nbrBullet = BulletCapacity;
+		getCapacity = BulletCapacity;
 		getGargabe = Manager.GameCont.Garbage;
 	}
 	#endregion
@@ -79,22 +81,14 @@ public class WeaponAbstract : MonoBehaviour
 	#region Public Methods
 	public void weaponShoot ( Transform playerTrans )
 	{
-		if ( canShoot && nbrBullet > 0 )
+		if ( canShoot && getCapacity > 0 && !blockShoot )
 		{
-			nbrBullet --;
+			getCapacity --;
 			canShoot = false;
 
-			GameObject getBullet = ( GameObject ) Instantiate ( Bullet, SpawnBullet.position, playerTrans.localRotation, getGargabe );
-			BulletAbstract getScript = getBullet.GetComponent<BulletAbstract>();
-			//getBullet.GetComponent<Rigidbody>( ).AddForce ( getBullet.transform.forward * SpeedBullet, ForceMode.VelocityChange );
-			getScript.BulletDamage = Damage;
-			getScript.BulletRange = Range;
-			
-			customWeapon ( getBullet.transform, getScript );
-			
-			StartCoroutine ( waitNewShoot ( ) );
+			customWeapon ( playerTrans );
 		}
-		else if ( nbrBullet <= 0 )
+		else if ( getCapacity <= 0 )
 		{
 			canShoot = false;
 
@@ -120,23 +114,100 @@ public class WeaponAbstract : MonoBehaviour
 	#endregion
 
 	#region Private Methods
-	void customWeapon ( Transform getBullet, BulletAbstract scriptBullet )
+	void customWeapon ( Transform thisPlayer )
 	{
 		if ( Projectile )
 		{
-			getBullet.transform.localScale *= ScaleBullet;
-			scriptBullet.MoveSpeed = SpeedBullet;
-
 			if ( Gust )
 			{
-
+				blockShoot = true;
+				gustProjectile ( NbrBullet, thisPlayer );
 			}
 			else
 			{
-
+				spreadProjectile ( thisPlayer );
 			}
 		}
+		else
+		{
+			canShoot = true;
+		}
 	}
+
+	void setNewProj ( BulletAbstract thisBullet )
+	{
+		thisBullet.MoveSpeed = SpeedBullet;
+		thisBullet.BulletDamage = Damage;
+		thisBullet.BulletRange = Range;
+		thisBullet.Through = Through;
+	}
+	
+	void gustProjectile ( int nbrLeft, Transform thisPlayer )
+	{
+		GameObject getBullet = ( GameObject ) Instantiate ( Bullet, SpawnBullet.position, thisPlayer.localRotation, getGargabe );
+		getBullet.transform.localScale *= ScaleBullet;
+		setNewProj ( getBullet.GetComponent<BulletAbstract>() );
+
+		DOVirtual.DelayedCall ( SpaceBullet, () => 
+		{
+			nbrLeft --;
+			if ( nbrLeft > 0 )
+			{
+				gustProjectile ( nbrLeft, thisPlayer );
+			}
+			else
+			{
+				StartCoroutine ( waitNewShoot ( ) );
+				blockShoot = false;
+			}
+		} );
+	}
+	void spreadProjectile ( Transform playerTrans )
+	{
+		float getAngle = Angle / NbrBullet;
+		int nbrMidle = (int)(NbrBullet * 0.5f);
+		int addNumb = 0;
+		int addOnPair = 0;
+		bool getPair = true;
+
+		GameObject getBullet;
+		BulletAbstract getScript;
+
+		if ( NbrBullet % 2 != 0 )
+		{
+			addNumb ++;
+			getPair = false;
+		}
+		else 
+		{
+			addOnPair = 1;
+		}
+
+		for ( int a = addOnPair; a < NbrBullet + addOnPair; a ++ )
+		{
+			getBullet = ( GameObject ) Instantiate ( Bullet, SpawnBullet.position, playerTrans.localRotation, getGargabe );
+			getScript = getBullet.GetComponent<BulletAbstract> ( );
+			getBullet.transform.localScale *= ScaleBullet;
+			
+			setNewProj ( getScript );
+			
+			if ( a == 0 && !getPair )
+			{
+				getScript.direction = playerTrans.forward;
+			}
+			else if ( a < nbrMidle + addNumb + addOnPair )
+			{
+				getScript.direction = (playerTrans.forward * ( 75 - a * getAngle) + playerTrans.right * a * getAngle).normalized;
+			}
+			else
+			{
+				getScript.direction = (playerTrans.forward * ( 75 - ( a - nbrMidle ) * getAngle) - playerTrans.right * ( a - nbrMidle) * getAngle).normalized;
+			}
+		}
+
+		StartCoroutine ( waitNewShoot ( ) );
+	}
+
 	IEnumerator waitNewShoot ( )
 	{
 		yield return new WaitForSeconds ( FireRate );
