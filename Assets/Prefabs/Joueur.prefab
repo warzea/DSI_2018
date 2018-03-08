@@ -225,17 +225,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IdPlayer: 0
   LifePlayer: 1
-  MoveSpeed: 10
+  MoveSpeed: 18
   DashDistance: 5
   DashTime: 1
-  DistToDropItem: 3
+  DistToDropItem: 10
   WeaponPos: {fileID: 4901489511786308}
   BagPos: {fileID: 4376964705229768}
   BoxPlace: {fileID: 4483543942768048}
   GetSpeed: 0
   SpeedReduce: 0.5
-  SpeedReduceOnBox: 1
-  SmoothRotateOnBox: 2.5
+  SpeedReduceOnBox: 0.07
+  SmoothRotateOnBox: 0.3
   AllItem: []
   driveBox: 0
   dead: 0

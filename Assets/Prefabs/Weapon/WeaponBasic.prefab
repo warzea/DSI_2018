@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 136104577686423644}
   - component: {fileID: 23115064312379426}
   - component: {fileID: 114178872382902732}
+  - component: {fileID: 114865942321157514}
   m_Layer: 9
   m_Name: WeaponBasic
   m_TagString: Untagged
@@ -127,6 +128,42 @@ MonoBehaviour:
   BulletCapacity: 30
   FireRate: 0.00001
   SpeedReduce: 1
+  Bullet: {fileID: 1530796011795326, guid: 7debebcea0d258f4a9f5dc489d6103cf, type: 2}
+  SpawnBullet: {fileID: 4108505727479514}
+  canShoot: 1
+--- !u!114 &114865942321157514
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1093315411277202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c6bfe4600766d64c85f4f9c20b7243a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WeightRandom: 0
+  AutoShoot: 0
+  Projectile: 0
+  Through: 0
+  Explosion: 0
+  BulletCapacity: 200
+  FireRate: 0
+  CoolDown: 0
+  BackPush: 0
+  SpeedReduce: 0.6
+  Damage: 1
+  Range: 100
+  NbrBullet: 1
+  ScaleBullet: 1
+  SpeedBullet: 1
+  Gust: 1
+  SpaceBullet: 0
+  Angle: 0
+  WidthRange: 0
+  SpeedZone: 0
+  TimeDest: 0
+  Diameter: 0
   Bullet: {fileID: 1530796011795326, guid: 7debebcea0d258f4a9f5dc489d6103cf, type: 2}
   SpawnBullet: {fileID: 4108505727479514}
   canShoot: 1
