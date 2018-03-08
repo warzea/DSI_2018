@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
 
 	Camera getCam;
 
-
+	float backShoot = 0;
 	int lifePlayer;
 	bool shooting = false;
 	bool dashing = false;
@@ -94,6 +94,8 @@ public class PlayerController : MonoBehaviour
 	{
 		if ( thisWeap != null )
 		{
+			SpeedReduce = thisWeap.SpeedReduce;
+			backShoot = thisWeap.BackPush;
 			thisWeapon = thisWeap;
 		}
 		else 
@@ -414,6 +416,8 @@ public class PlayerController : MonoBehaviour
 
 		thisTrans.SetParent(getBoxWeapon);
 
+		thisTrans.DOKill ( );
+
 		thisTrans.DOLocalMove(Vector3.zero, 1f);
 		thisTrans.DOScale (Vector3.zero, 1f).OnComplete ( () => 
 		{
@@ -443,7 +447,7 @@ public class PlayerController : MonoBehaviour
 		{
 			lifePlayer --;
 
-			if ( lifePlayer <= 0 )
+			if ( lifePlayer <= 0 && !dead )
 			{
 				dead = true;
 				animeDead ( );

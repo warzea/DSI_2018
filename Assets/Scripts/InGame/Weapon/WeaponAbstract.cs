@@ -6,19 +6,63 @@ using DG.Tweening;
 public class WeaponAbstract : MonoBehaviour 
 {
 	#region Variables
-	public int BulletCapacity; 
+	public int WeightRandom = 0;
+	public bool AutoShoot = true;
+	public bool Projectile = false;
+	public bool Through = false;
+	public bool Explosion = false;
+
+	public int BulletCapacity;
+	// -- siAuto
 	public float FireRate;
-	//public float ForceProjection;
-	//public float SpeedBullet = 10;
+	// -- fin auto
+
+	// -- si manuel
+	public float CoolDown;
+	// -- fin manuel
+	public float BackPush;
+	
 	[Range(0,1)]
 	[Tooltip("Speed reduce pendant la phase de shoot")]
 	public float SpeedReduce = 0.5f;
+
+	public int Damage = 1;
+
+	public float Range;
+	// -- Si Projectile
+	public int NbrBullet = 1;
+	public float ScaleBullet = 1;
+	public float SpeedBullet = 1;
+	public bool Gust = true;
+		// -- si rafale
+		public float SpaceBullet = 0;
+		// -- fin rafale
+
+		// -- si spread
+		public float Angle = 0;
+		// -- fin spread
+	// -- fin Projectile
+	
+	// -- si Zone
+	public float WidthRange;
+	public float SpeedZone;
+	public float TimeDest;
+	// -- fin zone
+	
+	// -- si Explosion
+	public float Diameter;
+	// -- end Explosion
+
+	
+	//public float ForceProjection;
+	//public float SpeedBullet = 10;
+	
 	public GameObject Bullet;
 	public Transform SpawnBullet;
 
 	[HideInInspector]
 	public bool canShoot = true;
-	
+
 	Transform getGargabe;
 	int nbrBullet;
 	
@@ -41,8 +85,13 @@ public class WeaponAbstract : MonoBehaviour
 			canShoot = false;
 
 			GameObject getBullet = ( GameObject ) Instantiate ( Bullet, SpawnBullet.position, playerTrans.localRotation, getGargabe );
+			BulletAbstract getScript = getBullet.GetComponent<BulletAbstract>();
 			//getBullet.GetComponent<Rigidbody>( ).AddForce ( getBullet.transform.forward * SpeedBullet, ForceMode.VelocityChange );
-
+			getScript.BulletDamage = Damage;
+			getScript.BulletRange = Range;
+			
+			customWeapon ( getBullet.transform, getScript );
+			
 			StartCoroutine ( waitNewShoot ( ) );
 		}
 		else if ( nbrBullet <= 0 )
@@ -71,6 +120,23 @@ public class WeaponAbstract : MonoBehaviour
 	#endregion
 
 	#region Private Methods
+	void customWeapon ( Transform getBullet, BulletAbstract scriptBullet )
+	{
+		if ( Projectile )
+		{
+			getBullet.transform.localScale *= ScaleBullet;
+			scriptBullet.MoveSpeed = SpeedBullet;
+
+			if ( Gust )
+			{
+
+			}
+			else
+			{
+
+			}
+		}
+	}
 	IEnumerator waitNewShoot ( )
 	{
 		yield return new WaitForSeconds ( FireRate );
