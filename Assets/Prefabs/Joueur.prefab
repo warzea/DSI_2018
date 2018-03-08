@@ -234,8 +234,8 @@ MonoBehaviour:
   BoxPlace: {fileID: 4483543942768048}
   GetSpeed: 0
   SpeedReduce: 0.5
-  SpeedReduceOnBox: 0.1
-  SmoothRotateOnBox: 0.4
+  SpeedReduceOnBox: 0.4
+  SmoothRotateOnBox: 3
   AllItem: []
   driveBox: 0
   dead: 0
