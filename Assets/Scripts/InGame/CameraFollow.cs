@@ -18,11 +18,11 @@ public class CameraFollow : MonoBehaviour
         thisTrans = transform;
     }
 
-    void Update()
-    {
-        transform.position = Vector3.SmoothDamp(transform.position, Target.TransformPoint(new Vector3(0, 30, 0)), ref velocity, smoothTime * Time.deltaTime);
-    }
-    #endregion
+	void LateUpdate ( )
+	{
+        transform.position = Vector3.Lerp ( transform.position, Target.TransformPoint(new Vector3(0, 15, 0)), smoothTime * Time.deltaTime );
+	}
+	#endregion
 
     #region Public Methods
     public void InitGame(Transform setTarget = null)

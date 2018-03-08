@@ -63,6 +63,7 @@ public class AgentsManager : ManagerParent
 
     //Timer
     private float timeAgent = 0;
+    bool startCheck = false;
 
     protected override void InitializeManager()
     {
@@ -72,7 +73,7 @@ public class AgentsManager : ManagerParent
     private void Update()
     {
         timeAgent += Time.deltaTime;
-        if (timeAgent > timeLeftAgentLook)
+        if ( startCheck && timeAgent > timeLeftAgentLook)
         {
             for (int i = 0; i < agents.Length; i++)
             {
@@ -113,9 +114,11 @@ public class AgentsManager : ManagerParent
     #region IniGame
     public void InitGame()
     {
-        playerLaw = player[0].gameObject;
-        playerMax = player[0].gameObject;
-        playerLead = player[0].gameObject;
+        startCheck = true;
+
+        playerLaw = player[0];
+        playerMax = player[0];
+        playerLead = player[0];
 
         nbAgents = agents.Length;
 

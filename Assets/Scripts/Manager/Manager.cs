@@ -26,7 +26,7 @@ public class Manager : MonoBehaviour
 		Application.targetFrameRate = 60;
 
 		//Keep manager a singleton
-		if ( mainManagerInstance != null )
+		/*if ( mainManagerInstance != null )
 		{
 			Destroy ( gameObject );
 		}
@@ -35,7 +35,10 @@ public class Manager : MonoBehaviour
 			DontDestroyOnLoad ( gameObject );
 			mainManagerInstance = this;
 			InitializeManagers ( );
-		}       
+		}  */ 
+
+		mainManagerInstance = this;
+		InitializeManagers ( );    
 	}
 	#endregion
 

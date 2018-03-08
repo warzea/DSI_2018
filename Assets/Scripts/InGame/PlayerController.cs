@@ -17,9 +17,10 @@ public class PlayerController : MonoBehaviour
 	public Transform WeaponPos;
 	public Transform BagPos;
 	public Transform BoxPlace;
+	[HideInInspector]
+	public float GetSpeed = 0;
 
-	[Range(0,1)]
-	[Tooltip("Speed reduce pendant la phase de shoot")]
+	[HideInInspector]
 	public float SpeedReduce;
 	[Range(0,1)]
 	[Tooltip("Speed reduce pendant qu'on pousse la caisse")]
@@ -28,7 +29,11 @@ public class PlayerController : MonoBehaviour
 
 	[HideInInspector]
 	public List<GameObject> AllItem;
-
+	
+	[HideInInspector]
+	public bool driveBox = false;
+	[HideInInspector]
+	public bool dead = false;
 	PlayerController thisPC;
 	WeaponAbstract thisWeapon;
 	Transform thisTrans;
@@ -39,19 +44,20 @@ public class PlayerController : MonoBehaviour
 
 	Camera getCam;
 
+
+	int lifePlayer;
 	bool shooting = false;
 	bool dashing = false;
 	bool canDash = true;
 	bool canEnterBox = false;
 	bool canShoot = true;
 
-	bool DriveBox = false;
-
 	#endregion
 	
 	#region Mono
 	void Awake ( )
 	{
+		lifePlayer = LifePlayer;
 		thisPC = GetComponent<PlayerController>();
 	}
 	void Start ( ) 
@@ -68,8 +74,11 @@ public class PlayerController : MonoBehaviour
 	void Update () 
 	{
 		float getDeltaTime = Time.deltaTime;
-		
-		inputAction ( getDeltaTime );
+
+		if ( !dead )
+		{
+			inputAction ( getDeltaTime );
+		}
 
 		checkBorder ( );
 
@@ -124,8 +133,6 @@ public class PlayerController : MonoBehaviour
 			playerShoot ( getDeltaTime);
 		}
 
-		playerAim ( getDeltaTime);
-
 		if ( canDash )
 		{
 			//playerDash ( );
@@ -136,6 +143,8 @@ public class PlayerController : MonoBehaviour
 			interactPlayer ( );
 			playerMove ( getDeltaTime );
 		}
+
+		playerAim ( getDeltaTime);
 	}
 
 	void playerDash ( )
@@ -190,17 +199,19 @@ public class PlayerController : MonoBehaviour
 	{
 		float Xmove = inputPlayer.GetAxis("MoveX");
 		float Ymove = inputPlayer.GetAxis("MoveY");
+		float getSpeed = MoveSpeed;
 		
 		if ( shooting )
 		{
-			getDeltaTime *= SpeedReduce;
+			getSpeed *= SpeedReduce;
 		}
-		else if ( DriveBox )
+		else if ( driveBox )
 		{
-			getDeltaTime *= SpeedReduceOnBox;
+			getSpeed *= SpeedReduceOnBox;
 		}
 
-		thisRig.MovePosition ( thisTrans.position + getDeltaTime * MoveSpeed * new Vector3 ( Xmove, 0, Ymove )  );
+		//GetSpeed = getDeltaTime * MoveSpeed;
+		thisTrans.position += getDeltaTime * getSpeed * new Vector3 ( Xmove, 0, Ymove );
 	}
 
 	void playerAim ( float getDeltaTime )
@@ -210,13 +221,13 @@ public class PlayerController : MonoBehaviour
 
 		if ( Xaim != 0 && Yaim != 0 )
 		{
-			if ( DriveBox )
+			if ( driveBox )
 			{
-				thisRig.MoveRotation ( Quaternion.Slerp ( thisTrans.rotation, Quaternion.LookRotation ( new Vector3 ( Xaim, 0, Yaim ), thisTrans.up ), SmoothRotateOnBox * getDeltaTime ) );
+				thisTrans.localRotation = Quaternion.Slerp ( thisTrans.rotation, Quaternion.LookRotation ( new Vector3 ( Xaim, 0, Yaim ), thisTrans.up ), SmoothRotateOnBox * getDeltaTime );
 			}
 			else
 			{
-				thisRig.MoveRotation ( Quaternion.LookRotation ( new Vector3 ( Xaim, 0, Yaim ), thisTrans.up ) );
+				thisTrans.localRotation = Quaternion.LookRotation ( new Vector3 ( Xaim, 0, Yaim ), thisTrans.up );
 			}
 		}
 	}
@@ -278,7 +289,7 @@ public class PlayerController : MonoBehaviour
 
 		if ( interactInput )
 		{
-			if ( canEnterBox || DriveBox )
+			if ( canEnterBox || driveBox )
 			{
 				useBoxWeapon ( );
 				return;
@@ -294,8 +305,6 @@ public class PlayerController : MonoBehaviour
 
 				if ( getTag == Constants._BoxTag )
 				{		
-					useBoxWeapon ( );
-					
 					if ( thisWeapon != null )
 					{
 						Destroy (thisWeapon.gameObject);
@@ -329,10 +338,11 @@ public class PlayerController : MonoBehaviour
 			getBoxWeapon.DOLocalMove ( Vector3.zero, 0.5f );
 			getBoxWeapon.DOLocalRotateQuaternion ( Quaternion.identity, 0.5f );
 
-			DriveBox = true;
+			driveBox = true;
 		}
-		else if ( DriveBox )
+		else if ( driveBox )
 		{
+			getBoxWeapon.DOKill( );
 			WeaponPos.gameObject.SetActive ( true );
 			getCam.GetComponent<CameraFollow>().UpdateTarget(getBoxWeapon);
 
@@ -341,7 +351,7 @@ public class PlayerController : MonoBehaviour
 			Manager.GameCont.WeaponB.CanControl = true;
 			getBoxWeapon.SetParent ( null );
 
-			DriveBox = false;
+			driveBox = false;
 		}
 	}
 
@@ -384,12 +394,62 @@ public class PlayerController : MonoBehaviour
 		});
 	}
 
+	void animeDead ( )
+	{
+		if ( driveBox )
+		{
+			useBoxWeapon ( );
+		}
+		
+		WeaponPos.gameObject.SetActive(false);
+
+		GameObject[] getList = AllItem.ToArray ( );
+
+		for ( int a = 0; a < getList.Length; a ++ )
+		{
+			Destroy(getList[a]);
+		}
+
+		AllItem.Clear();
+
+		thisTrans.SetParent(getBoxWeapon);
+
+		thisTrans.DOLocalMove(Vector3.zero, 1f);
+		thisTrans.DOScale (Vector3.zero, 1f).OnComplete ( () => 
+		{
+			DOVirtual.DelayedCall ( 3, ( ) => 
+			{
+				thisTrans.SetParent ( null );
+				thisTrans.DOLocalMove( thisTrans.localPosition + Vector3.right, 0.25f);
+				thisTrans.DOScale ( Vector3.one, 0.25f).OnComplete ( () => 
+				{
+					WeaponPos.gameObject.SetActive(true);
+					lifePlayer = LifePlayer;
+					dead = false;
+				});
+			});
+		});
+	}
+
 	void OnTriggerEnter ( Collider thisColl )
 	{
+		string getTag = thisColl.tag;
 		if ( thisColl.tag == Constants._EnterCont )
 		{
 			canEnterBox = true;
 		}
+		else if ( getTag == Constants._EnemyBullet || getTag == Constants._Enemy )
+		{
+			lifePlayer --;
+
+			if ( lifePlayer <= 0 )
+			{
+				dead = true;
+				animeDead ( );
+			}
+		}
+		
+		
 	}
 	
 	void OnTriggerExit ( Collider thisColl )
@@ -402,8 +462,18 @@ public class PlayerController : MonoBehaviour
 
 	void OnCollisionEnter ( Collision thisColl )
 	{
-		string getTag = thisColl.collider.tag;
-		//if ( getTag == )
+		/*string getTag = thisColl.collider.tag;
+		
+		if ( getTag == Constants._EnemyBullet || getTag == Constants._Enemy )
+		{
+			lifePlayer --;
+
+			if ( lifePlayer <= 0 )
+			{
+				dead = true;
+				animeDead ( );
+			}
+		}*/
 	}
 	#endregion
 }

@@ -8,8 +8,8 @@ public class WeaponAbstract : MonoBehaviour
 	#region Variables
 	public int BulletCapacity; 
 	public float FireRate;
-	public float ForceProjection;
-	public float SpeedBullet = 10;
+	//public float ForceProjection;
+	//public float SpeedBullet = 10;
 	[Range(0,1)]
 	[Tooltip("Speed reduce pendant la phase de shoot")]
 	public float SpeedReduce = 0.5f;
@@ -38,7 +38,7 @@ public class WeaponAbstract : MonoBehaviour
 			canShoot = false;
 
 			GameObject getBullet = ( GameObject ) Instantiate ( Bullet, SpawnBullet.position, playerTrans.localRotation, getGargabe );
-			getBullet.GetComponent<Rigidbody>( ).AddForce ( getBullet.transform.forward * SpeedBullet, ForceMode.VelocityChange );
+			//getBullet.GetComponent<Rigidbody>( ).AddForce ( getBullet.transform.forward * SpeedBullet, ForceMode.VelocityChange );
 
 			StartCoroutine ( waitNewShoot ( ) );
 		}
@@ -56,11 +56,12 @@ public class WeaponAbstract : MonoBehaviour
 
 			getRigid = gameObject.AddComponent<Rigidbody>();
 			getRigid.useGravity = false;
-			getRigid.AddForce(getForward * ForceProjection, ForceMode.VelocityChange);
+			//getRigid.AddForce(getForward * ForceProjection, ForceMode.VelocityChange);
 			
 			GetComponent<Collider>().enabled = true;
 			getTrans.gameObject.AddComponent(typeof(BulletAbstract));
-
+			getTrans.GetComponent<BulletAbstract>().direction = playerTrans.forward;
+			
 			Manager.GameCont.WeaponB.NewWeapon(getPC);
 		}
 	}

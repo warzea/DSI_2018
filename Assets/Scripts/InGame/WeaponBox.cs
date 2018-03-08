@@ -39,6 +39,7 @@ public class WeaponBox : MonoBehaviour
 		GameObject newObj = (GameObject) Instantiate ( AllWeapon[Random.Range(0, AllWeapon.Length)], thisPlayer.WeaponPos );
 		Transform objTrans = newObj.transform;
 		objTrans.position = GetTrans.position;
+		objTrans.localScale = Vector3.zero;
 
 		int currId = thisPlayer.IdPlayer;
 
@@ -50,6 +51,7 @@ public class WeaponBox : MonoBehaviour
 		updateWeapon[currId].CurrObj = newObj;
 		thisPlayer.SpeedReduce = updateWeapon[currId].CurrObj.GetComponent<WeaponAbstract>().SpeedReduce;
 
+		objTrans.DOScale ( Vector3.one, DelayNewWeapon );
 		DOVirtual.DelayedCall ( 0.1f, ( ) => 
 		{
 			objTrans.DOLocalRotateQuaternion ( Quaternion.identity, DelayNewWeapon );

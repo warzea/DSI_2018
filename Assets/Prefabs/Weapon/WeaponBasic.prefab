@@ -128,6 +128,7 @@ MonoBehaviour:
   FireRate: 0.1
   ForceProjection: 10
   SpeedBullet: 10
+  SpeedReduce: 0.302
   Bullet: {fileID: 1530796011795326, guid: 7debebcea0d258f4a9f5dc489d6103cf, type: 2}
   SpawnBullet: {fileID: 4108505727479514}
 --- !u!136 &136104577686423644

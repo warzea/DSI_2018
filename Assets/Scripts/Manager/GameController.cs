@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Rewired;
+using DG.Tweening;
 
 public class GameController : ManagerParent 
 {
@@ -12,6 +13,7 @@ public class GameController : ManagerParent
 
 	public Camera MainCam;
 	public WeaponBox WeaponB;
+	public float TimerCheckPlayer = 1;
 
 	[HideInInspector]
 	public Transform Garbage;
@@ -21,6 +23,8 @@ public class GameController : ManagerParent
 
 	[HideInInspector]
 	public List<GameObject> Players;
+
+	List<PlayerController> getPlayerCont;
 	#endregion
 
 	#region Mono
@@ -49,6 +53,7 @@ public class GameController : ManagerParent
 	#region Private Methods
 	protected override void InitializeManager ( )
 	{
+		getPlayerCont = new List<PlayerController>();
 		Garbage = transform.Find("Garbage");
 		GetPlayersInput = new PlayerInfoInput[4];
 
@@ -86,11 +91,86 @@ public class GameController : ManagerParent
 
 				getPC.UpdateWeapon ( getWeapon.GetComponent<WeaponAbstract>() );
 				Players.Add ( getPlayer );
+				getPlayerCont.Add(getPlayer.GetComponent<PlayerController>());
 			}
 		}
 
 		Manager.AgentM.player = Players.ToArray ( );
 		Manager.AgentM.InitGame();
+	}
+
+	void checkPlayer ( ) 
+	{
+		PlayerController[] playerCont = getPlayerCont.ToArray();
+		GameObject lowLife = Players[0];
+		GameObject maxLife = Players[0];
+		GameObject boxWeapon = Players[0];
+
+		int getID = 0;
+		int a;
+
+		for ( a = 0; a < playerCont.Length; a ++ )
+		{
+			if ( playerCont[a].LifePlayer < playerCont[getID].LifePlayer && !playerCont[a].dead )
+			{
+				getID = a;
+			}
+			else if ( playerCont[a].LifePlayer == playerCont[getID].LifePlayer && playerCont[a].dead )
+			{
+				if(Random.Range(0,2) == 0)
+				{
+					getID = a;
+				}
+			}
+		}
+
+		if ( playerCont[getID].dead )
+		{
+			for ( a = 0; a < playerCont.Length; a ++ )
+			{
+				if ( !playerCont[a].dead )
+				{
+					getID = a;
+					break;
+				}
+			}
+		}
+
+		lowLife = playerCont[getID].gameObject;
+		
+		for ( a = 0; a < playerCont.Length; a ++ )
+		{
+			if ( playerCont[a].LifePlayer > playerCont[getID].LifePlayer )
+			{
+				getID = a;
+			}
+			else if ( playerCont[a].LifePlayer == playerCont[getID].LifePlayer )
+			{
+				if(Random.Range(0,2) == 0)
+				{
+					getID = a;
+				}
+			}
+		}
+
+		maxLife = playerCont[getID].gameObject;
+		
+		for ( a = 0; a < playerCont.Length; a ++ )
+		{
+			if ( playerCont[a].driveBox )
+			{
+				boxWeapon = playerCont[a].gameObject;
+				
+				break;
+			}
+		}
+
+		Manager.AgentM.ChangeEtatFocus(lowLife, maxLife, boxWeapon);
+
+		DOVirtual.DelayedCall(TimerCheckPlayer, () => 
+		{
+			checkPlayer();
+		});
 	}
 	#endregion
 }
