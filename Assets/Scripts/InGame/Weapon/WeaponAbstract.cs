@@ -83,6 +83,7 @@ public class WeaponAbstract : MonoBehaviour
 	{
 		if ( canShoot && getCapacity > 0 && !blockShoot )
 		{
+			playerTrans.localPosition -= playerTrans.forward * BackPush * Time.deltaTime;
 			getCapacity --;
 			canShoot = false;
 

@@ -44,7 +44,6 @@ public class PlayerController : MonoBehaviour
 
 	Camera getCam;
 
-	float backShoot = 0;
 	int lifePlayer;
 	bool shooting = false;
 	bool dashing = false;
@@ -99,12 +98,21 @@ public class PlayerController : MonoBehaviour
 		{
 			autoShoot = thisWeap.AutoShoot;
 			SpeedReduce = thisWeap.SpeedReduce;
-			backShoot = thisWeap.BackPush;
 			thisWeapon = thisWeap;
 		}
 		else 
 		{
 			thisWeapon = null;
+		}
+	}
+	public void GetDamage ( int intDmg = 1 )
+	{
+		lifePlayer -= intDmg;
+
+		if ( lifePlayer <= 0 && !dead )
+		{
+			dead = true;
+			animeDead ( );
 		}
 	}
 	#endregion
@@ -466,8 +474,6 @@ public class PlayerController : MonoBehaviour
 				animeDead ( );
 			}
 		}
-		
-		
 	}
 	
 	void OnTriggerExit ( Collider thisColl )
