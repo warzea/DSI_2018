@@ -225,7 +225,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IdPlayer: 0
   LifePlayer: 1
-  MoveSpeed: 18
+  MoveSpeed: 13
   DashDistance: 5
   DashTime: 1
   DistToDropItem: 10
@@ -234,8 +234,8 @@ MonoBehaviour:
   BoxPlace: {fileID: 4483543942768048}
   GetSpeed: 0
   SpeedReduce: 0.5
-  SpeedReduceOnBox: 0.07
-  SmoothRotateOnBox: 0.3
+  SpeedReduceOnBox: 0.1
+  SmoothRotateOnBox: 0.4
   AllItem: []
   driveBox: 0
   dead: 0
