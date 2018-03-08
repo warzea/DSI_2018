@@ -56,10 +56,12 @@ public class AgentControllerCac : MonoBehaviour
                     transform.LookAt(lookAtPosition);
                     if (focusPlayer.tag == "WeaponBox")
                     {
+                        Debug.Log("WeaponBox");
                         //Attaque WeaponBox
                     }
                     else if (focusPlayer.tag == "Player")
                     {
+                        Debug.Log("Player");
                         //Attaque Player
                     }
                 }
@@ -87,6 +89,7 @@ public class AgentControllerCac : MonoBehaviour
         transform.GetComponent<Renderer>().material = aliveMaterial;
         navAgent.Warp(agentsM.CheckBestcheckPoint(focusPlayer.transform));
         yield return new WaitForSeconds(1);
+        focusPlayer = targetCauldron;
         navAgent.isStopped = false;
         myEtatAgent = AgentEtat.aliveAgent;
         lifeAgent = 1;
