@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿//©Tom Kurcz 2018
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
@@ -6,6 +8,13 @@ using UnityEngine.UI;
 
 public class RainbowRotate : MonoBehaviour
 {
+    [System.Serializable]
+    public enum TypeRotate
+    {
+        Clockwise,
+        CounterClock
+    }
+
     int index = -1;
     public float time = .2f;
     public TypeRotate movesType;
