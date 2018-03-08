@@ -1118,46 +1118,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
-    - target: {fileID: 114615207581199468, guid: 09c0fcd273fc2424693f3e4b734896bb,
-        type: 2}
-      propertyPath: posRespawn.Array.data[0]
-      value: 
-      objectReference: {fileID: 2053915183}
-    - target: {fileID: 114615207581199468, guid: 09c0fcd273fc2424693f3e4b734896bb,
-        type: 2}
-      propertyPath: posRespawn.Array.data[1]
-      value: 
-      objectReference: {fileID: 2053915182}
-    - target: {fileID: 114615207581199468, guid: 09c0fcd273fc2424693f3e4b734896bb,
-        type: 2}
-      propertyPath: posRespawn.Array.data[2]
-      value: 
-      objectReference: {fileID: 2053915181}
-    - target: {fileID: 114615207581199468, guid: 09c0fcd273fc2424693f3e4b734896bb,
-        type: 2}
-      propertyPath: posRespawn.Array.data[3]
-      value: 
-      objectReference: {fileID: 2053915179}
-    - target: {fileID: 114940564612134464, guid: 09c0fcd273fc2424693f3e4b734896bb,
-        type: 2}
-      propertyPath: posRespawn.Array.data[0]
-      value: 
-      objectReference: {fileID: 2053915183}
-    - target: {fileID: 114940564612134464, guid: 09c0fcd273fc2424693f3e4b734896bb,
-        type: 2}
-      propertyPath: posRespawn.Array.data[1]
-      value: 
-      objectReference: {fileID: 2053915182}
-    - target: {fileID: 114940564612134464, guid: 09c0fcd273fc2424693f3e4b734896bb,
-        type: 2}
-      propertyPath: posRespawn.Array.data[2]
-      value: 
-      objectReference: {fileID: 2053915181}
-    - target: {fileID: 114940564612134464, guid: 09c0fcd273fc2424693f3e4b734896bb,
-        type: 2}
-      propertyPath: posRespawn.Array.data[3]
-      value: 
-      objectReference: {fileID: 2053915179}
     - target: {fileID: 114006546364699532, guid: 09c0fcd273fc2424693f3e4b734896bb,
         type: 2}
       propertyPath: PlayerPosSpawn
@@ -1178,6 +1138,52 @@ Prefab:
       propertyPath: GetCameraFollow
       value: 
       objectReference: {fileID: 2073317891}
+    - target: {fileID: 114940564612134464, guid: 09c0fcd273fc2424693f3e4b734896bb,
+        type: 2}
+      propertyPath: posRespawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 2053915183}
+    - target: {fileID: 114940564612134464, guid: 09c0fcd273fc2424693f3e4b734896bb,
+        type: 2}
+      propertyPath: posRespawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2053915182}
+    - target: {fileID: 114940564612134464, guid: 09c0fcd273fc2424693f3e4b734896bb,
+        type: 2}
+      propertyPath: posRespawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 2053915181}
+    - target: {fileID: 114940564612134464, guid: 09c0fcd273fc2424693f3e4b734896bb,
+        type: 2}
+      propertyPath: posRespawn.Array.data[3]
+      value: 
+      objectReference: {fileID: 2053915179}
+    - target: {fileID: 114615207581199468, guid: 09c0fcd273fc2424693f3e4b734896bb,
+        type: 2}
+      propertyPath: posRespawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 2053915183}
+    - target: {fileID: 114615207581199468, guid: 09c0fcd273fc2424693f3e4b734896bb,
+        type: 2}
+      propertyPath: posRespawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2053915182}
+    - target: {fileID: 114615207581199468, guid: 09c0fcd273fc2424693f3e4b734896bb,
+        type: 2}
+      propertyPath: posRespawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 2053915181}
+    - target: {fileID: 114615207581199468, guid: 09c0fcd273fc2424693f3e4b734896bb,
+        type: 2}
+      propertyPath: posRespawn.Array.data[3]
+      value: 
+      objectReference: {fileID: 2053915179}
+    - target: {fileID: 114006546364699532, guid: 09c0fcd273fc2424693f3e4b734896bb,
+        type: 2}
+      propertyPath: PlayerPrefab
+      value: 
+      objectReference: {fileID: 1550415525633366, guid: 937d3b462b9817747b2216f2faea9faa,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 09c0fcd273fc2424693f3e4b734896bb, type: 2}
   m_IsPrefabParent: 0
@@ -1882,7 +1888,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.33333334
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: 8365f471516f736478fdffb5322a131b, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: bf6dd188fca4ed9499be0cfc1817cdef, type: 2}
 --- !u!23 &894940342
 MeshRenderer:
   m_ObjectHideFlags: 0

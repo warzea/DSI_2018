@@ -1917,6 +1917,7 @@ MonoBehaviour:
   PotionsLess: {fileID: 1980759458752834, guid: 27b64611e89c0364b86b6257aea50a56,
     type: 2}
   Light: {fileID: 1117886021071272, guid: a92abc427ca628a4793b243fcdcf2072, type: 2}
+  Circle: {fileID: 0}
 --- !u!114 &114668411564510010
 MonoBehaviour:
   m_ObjectHideFlags: 1
