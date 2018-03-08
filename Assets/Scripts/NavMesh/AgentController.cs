@@ -157,6 +157,7 @@ public class AgentController : MonoBehaviour
                 myEtatAgent = AgentEtat.deadAgent;
                 DeadFonction();
                 StartCoroutine(WaitRespawn());
+                lifeAgent = 1;
             }
         }
     }

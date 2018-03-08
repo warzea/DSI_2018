@@ -4,193 +4,198 @@ using UnityEngine;
 using Rewired;
 using DG.Tweening;
 
-public class GameController : ManagerParent 
+public class GameController : ManagerParent
 {
-	#region Variables
-	public GameObject PlayerPrefab;
-	public GameObject StartWeapon;
-	public Transform PlayerPosSpawn;
+    #region Variables
+    public GameObject PlayerPrefab;
+    public GameObject StartWeapon;
+    public Transform PlayerPosSpawn;
 
-	public Camera MainCam;
-	public WeaponBox WeaponB;
-	public float TimerCheckPlayer = 1;
+    public Camera MainCam;
+    public WeaponBox WeaponB;
+    public float TimerCheckPlayer = 1;
 
-	[HideInInspector]
-	public Transform Garbage;
+    [HideInInspector]
+    public Transform Garbage;
 
-	[HideInInspector]
-	public PlayerInfoInput[] GetPlayersInput;
+    [HideInInspector]
+    public PlayerInfoInput[] GetPlayersInput;
 
-	[HideInInspector]
-	public List<GameObject> Players;
+    [HideInInspector]
+    public List<GameObject> Players;
 
-	List<PlayerController> getPlayerCont;
-	#endregion
+    List<PlayerController> getPlayerCont;
+    #endregion
 
-	#region Mono
-	#endregion
+    #region Mono
+    #endregion
 
-	#region Public Methods
-	public void StartGame ( )
-	{
-		if ( WeaponB == null )
-		{
-			WeaponB = (WeaponBox)FindObjectOfType(typeof(WeaponBox));
-		}
+    #region Public Methods
+    public void StartGame()
+    {
+        if (WeaponB == null)
+        {
+            WeaponB = (WeaponBox)FindObjectOfType(typeof(WeaponBox));
+        }
 
-		SpawnPlayer ( );
-		MainCam.GetComponent<CameraFollow>().InitGame();
-	}
+        SpawnPlayer();
+        MainCam.GetComponent<CameraFollow>().InitGame();
+        checkPlayer();
+    }
 
-	public void EndGame ( )
-	{
-		Players.Clear ( );
+    public void EndGame()
+    {
+        Players.Clear();
 
-		Manager.Ui.OpenThisMenu ( MenuType.SelectPlayer );
-	}
-	#endregion
+        Manager.Ui.OpenThisMenu(MenuType.SelectPlayer);
+    }
+    #endregion
 
-	#region Private Methods
-	protected override void InitializeManager ( )
-	{
-		getPlayerCont = new List<PlayerController>();
-		Garbage = transform.Find("Garbage");
-		GetPlayersInput = new PlayerInfoInput[4];
+    #region Private Methods
+    protected override void InitializeManager()
+    {
+        getPlayerCont = new List<PlayerController>();
+        Garbage = transform.Find("Garbage");
+        GetPlayersInput = new PlayerInfoInput[4];
 
-		for ( int a = 0; a < 4; a ++ )
-		{
-			GetPlayersInput[a] = new PlayerInfoInput ( );
-			GetPlayersInput[a].IdPlayer = a;
-			GetPlayersInput[a].InputPlayer = ReInput.players.GetPlayer ( a );
-			GetPlayersInput[a].EnablePlayer = false;
-		}
-	}
+        for (int a = 0; a < 4; a++)
+        {
+            GetPlayersInput[a] = new PlayerInfoInput();
+            GetPlayersInput[a].IdPlayer = a;
+            GetPlayersInput[a].InputPlayer = ReInput.players.GetPlayer(a);
+            GetPlayersInput[a].EnablePlayer = false;
+        }
+    }
 
-	void SpawnPlayer ( )
-	{
-		PlayerInfoInput[] getPlayers = GetPlayersInput;
-		PlayerController getPC;
-		GameObject getPlayer;
-		GameObject getWeapon;
+    void SpawnPlayer()
+    {
+        PlayerInfoInput[] getPlayers = GetPlayersInput;
+        PlayerController getPC;
+        GameObject getPlayer;
+        GameObject getWeapon;
 
-		for ( int a = 0; a < getPlayers.Length; a ++ )
-		{
-			getPlayers[a].ReadyPlayer = false;
-			
-			if ( getPlayers[a].EnablePlayer )
-			{
-				getPlayer = ( GameObject ) Instantiate ( PlayerPrefab );
+        for (int a = 0; a < getPlayers.Length; a++)
+        {
+            getPlayers[a].ReadyPlayer = false;
 
-				getPlayer.transform.position = PlayerPosSpawn.position + new Vector3 ( a * 1.5f, 0, 0 );
-				getPC = getPlayer.GetComponent<PlayerController>();
-				getPC.IdPlayer = getPlayers[a].IdPlayer;
+            if (getPlayers[a].EnablePlayer)
+            {
+                getPlayer = (GameObject)Instantiate(PlayerPrefab);
+                getPlayer.name = getPlayer.name + "+" + a.ToString();
 
-				getWeapon = ( GameObject ) Instantiate ( StartWeapon, getPC.WeaponPos.transform );
-				getWeapon.transform.localPosition = Vector3.zero;
-				getWeapon.transform.localRotation = Quaternion.identity;
+                getPlayer.transform.position = PlayerPosSpawn.position + new Vector3(a * 1.5f, 0, 0);
+                getPC = getPlayer.GetComponent<PlayerController>();
+                getPC.IdPlayer = getPlayers[a].IdPlayer;
 
-				getPC.UpdateWeapon ( getWeapon.GetComponent<WeaponAbstract>() );
-				Players.Add ( getPlayer );
-				getPlayerCont.Add(getPlayer.GetComponent<PlayerController>());
-			}
-		}
+                getWeapon = (GameObject)Instantiate(StartWeapon, getPC.WeaponPos.transform);
+                getWeapon.transform.localPosition = Vector3.zero;
+                getWeapon.transform.localRotation = Quaternion.identity;
 
-		Manager.AgentM.player = Players.ToArray ( );
-		Manager.AgentM.InitGame();
-	}
+                getPC.UpdateWeapon(getWeapon.GetComponent<WeaponAbstract>());
+                Players.Add(getPlayer);
+                getPlayerCont.Add(getPlayer.GetComponent<PlayerController>());
+            }
+        }
 
-	void checkPlayer ( ) 
-	{
-		PlayerController[] playerCont = getPlayerCont.ToArray();
-		GameObject lowLife = Players[0];
-		GameObject maxLife = Players[0];
-		GameObject boxWeapon = Players[0];
-			
-		bool check = false;
+        Manager.AgentM.player = Players.ToArray();
+        Manager.AgentM.InitGame();
+    }
 
-		int getID = 0;
-		int a;
+    void checkPlayer()
+    {
 
-		for ( a = 0; a < playerCont.Length; a ++ )
-		{
-			if ( playerCont[a].LifePlayer < playerCont[getID].LifePlayer && !playerCont[a].dead )
-			{
-				getID = a;
-			}
-			else if ( playerCont[a].LifePlayer == playerCont[getID].LifePlayer && playerCont[a].dead )
-			{
-				if(Random.Range(0,2) == 0)
-				{
-					getID = a;
-				}
-			}
-		}
+        Debug.Log("just ici");
+        PlayerController[] playerCont = getPlayerCont.ToArray();
+        GameObject lowLife = Players[0];
+        GameObject maxLife = Players[0];
+        GameObject boxWeapon = Players[0];
 
-		if ( playerCont[getID].dead )
-		{
-			check = false;
-			for ( a = 0; a < playerCont.Length; a ++ )
-			{
-				if ( !playerCont[a].dead )
-				{
-					getID = a;
-					check = true;
-					break;
-				}
-			}
+        bool check = false;
 
-			if ( !check ) 
-			{
-				DOVirtual.DelayedCall(TimerCheckPlayer, () => 
-				{
-					checkPlayer();
-				});
-				return;
-			}
-		}
+        int getID = 0;
+        int a;
 
-		lowLife = playerCont[getID].gameObject;
-		
-		for ( a = 0; a < playerCont.Length; a ++ )
-		{
-			if ( playerCont[a].LifePlayer > playerCont[getID].LifePlayer )
-			{
-				getID = a;
-			}
-			else if ( playerCont[a].LifePlayer == playerCont[getID].LifePlayer )
-			{
-				if(Random.Range(0,2) == 0)
-				{
-					getID = a;
-				}
-			}
-		}
+        for (a = 0; a < playerCont.Length; a++)
+        {
+            if (playerCont[a].LifePlayer < playerCont[getID].LifePlayer && !playerCont[a].dead)
+            {
+                getID = a;
+            }
+            else if (playerCont[a].LifePlayer == playerCont[getID].LifePlayer && !playerCont[a].dead)
+            {
+                if (Random.Range(0, 2) == 0)
+                {
+                    getID = a;
+                }
+            }
+        }
 
-		maxLife = playerCont[getID].gameObject;
-		
-		check = false;
-		for ( a = 0; a < playerCont.Length; a ++ )
-		{
-			if ( playerCont[a].driveBox )
-			{
-				boxWeapon = playerCont[a].gameObject;
-				check = true;
-				break;
-			}
-		}
+        if (playerCont[getID].dead)
+        {
+            check = false;
+            for (a = 0; a < playerCont.Length; a++)
+            {
+                if (!playerCont[a].dead)
+                {
+                    getID = a;
+                    check = true;
+                    break;
+                }
+            }
 
-		if ( !check )
-		{
-			boxWeapon = playerCont[Random.Range(0, playerCont.Length)].gameObject;
-		}
+            if (!check)
+            {
+                DOVirtual.DelayedCall(TimerCheckPlayer, () =>
+                {
+                    checkPlayer();
+                });
+                return;
+            }
+        }
 
-		Manager.AgentM.ChangeEtatFocus(lowLife, maxLife, boxWeapon);
+        lowLife = playerCont[getID].gameObject;
 
-		DOVirtual.DelayedCall(TimerCheckPlayer, () => 
-		{
-			checkPlayer();
-		});
-	}
-	#endregion
+        for (a = 0; a < playerCont.Length; a++)
+        {
+            if (playerCont[a].LifePlayer > playerCont[getID].LifePlayer)
+            {
+                getID = a;
+            }
+            else if (playerCont[a].LifePlayer == playerCont[getID].LifePlayer)
+            {
+                if (Random.Range(0, 2) == 0)
+                {
+                    getID = a;
+                }
+            }
+        }
+
+        maxLife = playerCont[getID].gameObject;
+
+        check = false;
+        for (a = 0; a < playerCont.Length; a++)
+        {
+            if (playerCont[a].driveBox)
+            {
+                Debug.Log(playerCont[a].gameObject.name);
+                boxWeapon = playerCont[a].gameObject;
+                check = true;
+                break;
+            }
+        }
+
+        if (!check)
+        {
+            boxWeapon = playerCont[Random.Range(0, playerCont.Length)].gameObject;
+        }
+
+        Manager.AgentM.ChangeEtatFocus(lowLife, maxLife, boxWeapon);
+
+        DOVirtual.DelayedCall(TimerCheckPlayer, () =>
+        {
+            checkPlayer();
+        });
+    }
+    #endregion
 }
 
