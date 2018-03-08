@@ -14,6 +14,8 @@ public class Manager : MonoBehaviour
 
 	static EventManager evnt;
 	public static EventManager Event { get { return evnt; } }
+	static AgentsManager agentM;
+	public static AgentsManager AgentM { get { return agentM; } }
 	#endregion
 	
 	#region Mono
@@ -24,7 +26,7 @@ public class Manager : MonoBehaviour
 		Application.targetFrameRate = 60;
 
 		//Keep manager a singleton
-		if ( mainManagerInstance != null )
+		/*if ( mainManagerInstance != null )
 		{
 			Destroy ( gameObject );
 		}
@@ -33,7 +35,10 @@ public class Manager : MonoBehaviour
 			DontDestroyOnLoad ( gameObject );
 			mainManagerInstance = this;
 			InitializeManagers ( );
-		}       
+		}  */ 
+
+		mainManagerInstance = this;
+		InitializeManagers ( );    
 	}
 	#endregion
 
@@ -46,6 +51,7 @@ public class Manager : MonoBehaviour
 		InitializeManager ( ref evnt );
 		InitializeManager ( ref gamecont );
 		InitializeManager ( ref ui );
+		InitializeManager ( ref agentM );
 	}
 
 	void InitializeManager<T>(ref T manager) where T : ManagerParent

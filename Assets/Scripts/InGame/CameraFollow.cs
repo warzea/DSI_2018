@@ -3,44 +3,45 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class CameraFollow : MonoBehaviour 
+public class CameraFollow : MonoBehaviour
 {
-	#region Variables
-	public Transform Target;
-	public float TimeGoTarget = 1;
+    #region Variables
+    public float DistFollow = 30;
+    public float DistFollowX = 30;
+    public float DistFollowZ = 30;
+    public Transform Target;
+    public float smoothTime = 0.3F;
+    Vector3 velocity = Vector3.zero;
+    Transform thisTrans;
+    #endregion
 
-	Transform thisTrans;
-	#endregion
+    #region Mono
+    void Start()
+    {
+        thisTrans = transform;
+    }
 
-	#region Mono
-	void Start ( )
-	{
-		thisTrans = transform;
-	}
-	#endregion
+    void LateUpdate()
+    {
+        transform.position = Vector3.Lerp(transform.position, Target.TransformPoint(new Vector3(DistFollowX, DistFollow, DistFollowZ)), smoothTime * Time.deltaTime);
+    }
+    #endregion
 
-	#region Public Methods
-	public void InitGame ( Transform setTarget = null )
-	{
-		if ( setTarget != null )
-		{
-			Target = setTarget;
-		}
+    #region Public Methods
+    public void InitGame(Transform setTarget = null)
+    {
+        if (setTarget != null)
+        {
+            Target = setTarget;
+        }
+    }
 
-		thisTrans.SetParent (Target);
-		thisTrans.localPosition = new Vector3 ( 0, thisTrans.localPosition.y, 0);
-	}
+    public void UpdateTarget(Transform newTarget)
+    {
+        Target = newTarget;
+    }
+    #endregion
 
-	public void UpdateTarget ( Transform newTarget )
-	{
-		Target = newTarget;
-		thisTrans.SetParent(newTarget);
-
-		thisTrans.DOLocalMoveX(0, TimeGoTarget, true);
-		thisTrans.DOLocalMoveZ(0, TimeGoTarget, true);
-	}
-	#endregion
-
-	#region Private Methods
-	#endregion
+    #region Private Methods
+    #endregion
 }
