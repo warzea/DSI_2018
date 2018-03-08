@@ -150,10 +150,10 @@ MonoBehaviour:
   BulletCapacity: 200
   FireRate: 0
   CoolDown: 0
-  BackPush: 0
+  BackPush: 10
   SpeedReduce: 0.6
   Damage: 1
-  Range: 100
+  Range: 1000
   NbrBullet: 1
   ScaleBullet: 1
   SpeedBullet: 1
