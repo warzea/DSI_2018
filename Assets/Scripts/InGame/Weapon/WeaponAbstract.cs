@@ -143,6 +143,8 @@ public class WeaponAbstract : MonoBehaviour
 		thisBullet.SpeedZone = SpeedZone;
 		thisBullet.TimeStay = TimeDest;
 		thisBullet.Projectil = Projectile;
+		thisBullet.canExplose = Explosion;
+		thisBullet.Diameter = Diameter;
 	}
 
 	void zoneShoot ( Transform thisPlayer )
