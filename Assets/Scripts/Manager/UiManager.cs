@@ -20,6 +20,7 @@ public class UiManager : ManagerParent
     public GameObject PotionsPlus;
     public GameObject PotionsLess;
     public GameObject Light;
+    public GameObject Circle;
 
 	Dictionary <MenuType, UiParent> AllMenu;
 	MenuType menuOpen;
@@ -78,8 +79,14 @@ public class UiManager : ManagerParent
         PlayersWeapon[PlayerId].transform.GetChild(0).GetComponent<Image>().DOFade(1, .25f).OnComplete(()=> {
             PlayersWeapon[PlayerId].transform.GetChild(0).GetComponent<Image>().DOFade(0, .25f);
         });
+
+        var circle = Instantiate(Circle, PlayersWeapon[PlayerId].transform.parent.position, Quaternion.identity, PlayersWeapon[PlayerId].transform.parent);
         PlayersWeapon[PlayerId].transform.DOLocalRotate(new Vector3(0, 0, 360), .5f, RotateMode.LocalAxisAdd).OnComplete(() => {
+
             var light = Instantiate(Light, PlayersWeapon[PlayerId].transform.position, Quaternion.identity, PlayersWeapon[PlayerId].transform);
+
+
+
         });
 
 
@@ -111,6 +118,10 @@ public class UiManager : ManagerParent
             ChangeWeapons(0);
         }
         if (Input.GetKeyDown(KeyCode.I))
+        {
+            ScorePlus();
+        }
+        if (Input.GetKeyDown(KeyCode.U))
         {
             ScorePlus();
         }
