@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33232647959024272}
   - component: {fileID: 135674131210696902}
   - component: {fileID: 23583078463115808}
-  - component: {fileID: 114755358873513388}
+  - component: {fileID: 114057979144987810}
   m_Layer: 9
   m_Name: BasicBullet
   m_TagString: BulletPlayer
@@ -84,7 +84,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1530796011795326}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &114755358873513388
+--- !u!114 &114057979144987810
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -97,6 +97,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ThisTrajectoir: 0
   MoveSpeed: 10
+  direction: {x: 0, y: 0, z: 0}
+  BulletDamage: 1
+  BulletRange: 10
 --- !u!135 &135674131210696902
 SphereCollider:
   m_ObjectHideFlags: 1
