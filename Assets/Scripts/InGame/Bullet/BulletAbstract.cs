@@ -159,7 +159,7 @@ public class BulletAbstract : MonoBehaviour
 				}
 			}
 		}
-		else if ( collision.tag == Constants._Untag )
+		else if ( collision.tag == Constants._Wall )
 		{
 			Destroy ( gameObject );
 		}
