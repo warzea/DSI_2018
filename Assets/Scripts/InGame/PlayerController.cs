@@ -367,7 +367,7 @@ public class PlayerController : MonoBehaviour
 		{
 			getBoxWeapon.DOKill( );
 			WeaponPos.gameObject.SetActive ( true );
-			getCam.GetComponent<CameraFollow>().UpdateTarget(getBoxWeapon);
+			GetCamFoll.UpdateTarget(getBoxWeapon);
 
 			canShoot = true;
 			Physics.IgnoreCollision ( GetComponent<Collider>(), getBoxWeapon.GetComponent<Collider>(), false );

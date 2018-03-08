@@ -16,6 +16,8 @@ public class Manager : MonoBehaviour
 	public static EventManager Event { get { return evnt; } }
 	static AgentsManager agentM;
 	public static AgentsManager AgentM { get { return agentM; } }
+	static AgentsManagerCac agentMC;
+	public static AgentsManagerCac AgentMC { get { return agentMC; } }
 	#endregion
 	
 	#region Mono
@@ -52,6 +54,7 @@ public class Manager : MonoBehaviour
 		InitializeManager ( ref gamecont );
 		InitializeManager ( ref ui );
 		InitializeManager ( ref agentM );
+		InitializeManager ( ref agentMC );
 	}
 
 	void InitializeManager<T>(ref T manager) where T : ManagerParent

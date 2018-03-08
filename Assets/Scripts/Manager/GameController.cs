@@ -41,7 +41,7 @@ public class GameController : ManagerParent
         }
 
         SpawnPlayer();
-        
+
         GetCameraFollow.InitGame();
         checkPlayer();
     }
