@@ -23,10 +23,10 @@ GameObject:
   - component: {fileID: 135674131210696902}
   - component: {fileID: 23583078463115808}
   - component: {fileID: 54020077464397524}
-  - component: {fileID: 114755358873513388}
+  - component: {fileID: 114554187885098640}
   m_Layer: 9
-  m_Name: BasicBullet
-  m_TagString: BulletPlayer
+  m_Name: BulletAgent
+  m_TagString: BulletEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -58,7 +58,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: d94b83cac2a54e64a8f814130e7c6246, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -99,8 +99,8 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &114755358873513388
+  m_CollisionDetection: 1
+--- !u!114 &114554187885098640
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -108,9 +108,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1530796011795326}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51940b2f41fda944aad732e12518a315, type: 3}
+  m_Script: {fileID: 11500000, guid: 66b655fb3924548e298d442b1918a79a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeBulletLife: 5
 --- !u!135 &135674131210696902
 SphereCollider:
   m_ObjectHideFlags: 1
