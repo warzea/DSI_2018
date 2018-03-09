@@ -151,6 +151,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AllWeapon:
   - {fileID: 1093315411277202, guid: ea26266d024e3cf4f8bc8992dc15534d, type: 2}
-  DelayNewWeapon: 1
+  DelayNewWeapon: 2.5
   NbrItem: 0
   CanControl: 1

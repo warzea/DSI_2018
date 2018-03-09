@@ -146,7 +146,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 2741fccb881bb4ae5af3f4ab766d03a4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -187,7 +187,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 116
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &65653185573869840
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -224,7 +224,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IdPlayer: 0
+<<<<<<< HEAD
+  LifePlayer: 5
+=======
   LifePlayer: 10000
+>>>>>>> Alexandre
   MoveSpeed: 13
   DashDistance: 5
   DashTime: 1
@@ -235,8 +239,8 @@ MonoBehaviour:
   BoxPlace: {fileID: 4483543942768048}
   GetSpeed: 0
   SpeedReduce: 0.5
-  SpeedReduceOnBox: 0.1
-  SmoothRotateOnBox: 0.4
+  SpeedReduceOnBox: 0.4
+  SmoothRotateOnBox: 3
   AllItem: []
   driveBox: 0
   dead: 0
