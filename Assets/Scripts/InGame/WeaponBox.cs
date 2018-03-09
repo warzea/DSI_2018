@@ -41,6 +41,12 @@ public class WeaponBox : MonoBehaviour
 		{
 			newObj = (GameObject) Instantiate ( AllWeapon[Random.Range(0, AllWeapon.Length)], thisPlayer.WeaponPos );
 		}
+		else
+		{
+			List<GameObject> getWeap = new List<GameObject>(AllWeapon);
+			getWeap.Add ( newObj );
+			AllWeapon = getWeap.ToArray();
+		}
 
 		Transform objTrans = newObj.transform;
 		objTrans.position = GetTrans.position;

@@ -59,7 +59,7 @@ public class BulletAbstract : MonoBehaviour
     {
         thisTrans = transform;
         playerTrans = thisPlayer.transform;
-        startPos = thisTrans.localPosition;
+        startPos = thisTrans.position;
         newPos = startPos;
 
         if (direction == Vector3.zero)
@@ -87,7 +87,7 @@ public class BulletAbstract : MonoBehaviour
 
         if (!Projectil )
         {
-            thisTrans.localPosition = newPos + thisTrans.forward * getDistScale;
+            thisTrans.position = newPos + thisTrans.forward * getDistScale;
             thisTrans.localScale = startPos;
             //getBox.center =  * 0.5f;
             //getBox.size = ;
@@ -106,7 +106,19 @@ public class BulletAbstract : MonoBehaviour
         else if (!checkEnd)
         {
             destObj ( 5 );
-            
+            if (canExplose)
+            {
+                blockUpdate = true;
+                if (GetEffect != null)
+                {
+                    Instantiate(GetEffect, thisTrans.position, Quaternion.identity);
+                }
+
+                SphereCollider thisSphere = gameObject.AddComponent<SphereCollider>();
+                //thisSphere.radius = Diameter;
+                thisSphere.isTrigger = true;
+                thisTrans.localScale = new Vector3(Diameter, Diameter, Diameter);
+            }
             //Destroy ( gameObject, TimeStay );
             checkEnd = true;
         }

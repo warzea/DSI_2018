@@ -49,10 +49,39 @@ public class GameController : ManagerParent
 
     public void EndGame()
     {
-        Players.Clear();
+        PlayerController thisPlayer = Players[0].GetComponent<PlayerController>();
+        PlayerController otherPlayer;
+      
+        int a;
+        int b;
+        int c;
 
+        int score = 0;
+        string text ="";
+        TypeMedail thisMedail = TypeMedail.easy;
+        
+        for ( a = 0; a < Players.Count; a ++ )
+        {
+            for ( b = 0; b < Players.Count; b ++ )
+            {
+                for ( c = 0; c < Players.Count; c ++ )
+                {
+                    otherPlayer = Players[a].GetComponent<PlayerController>();
+
+                    getCurrScore ( a, otherPlayer );
+                }
+            }
+
+
+            setMedail ( thisPlayer, score, text, thisMedail );
+        }
+		
+
+
+        Players.Clear();
         Manager.Ui.OpenThisMenu(MenuType.SelectPlayer);
     }
+
 
     #endregion
 
@@ -70,6 +99,41 @@ public class GameController : ManagerParent
             GetPlayersInput[a].InputPlayer = ReInput.players.GetPlayer(a);
             GetPlayersInput[a].EnablePlayer = false;
         }
+    }
+
+    void getCurrScore (int currIndex, PlayerController thisPlayer)
+    {
+        switch (currIndex)
+        {
+            case 0:
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+            case 8:
+                break;
+            case 9:
+                break;
+            case 10:
+                break;
+           
+        }
+    }
+
+    void setMedail ( PlayerController thisCont, int Score, string Text, TypeMedail thisMedail )
+    {
+
     }
 
     void SpawnPlayer()
