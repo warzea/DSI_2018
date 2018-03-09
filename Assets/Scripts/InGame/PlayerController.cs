@@ -428,7 +428,7 @@ public class PlayerController : MonoBehaviour
 		WeaponPos.gameObject.SetActive(false);
 
 		GameObject[] getList = AllItem.ToArray ( );
-		Transform thisObj;
+		ItemLost getItem;
 		int a;
 		/*for ( a = 0; a < getList.Length; a ++ )
 		{
@@ -438,15 +438,18 @@ public class PlayerController : MonoBehaviour
 		int getNbr = getList.Length / PourcLoose;
 		for ( a = getList.Length - 1; a > getNbr; a -- )
 		{
-			thisObj = getList[a].transform;
-			thisObj.SetParent(null);
-			thisObj.gameObject.SetActive(true);
+			getItem = getList[a].transform.GetComponent<ItemLost>();
 			
-
+			if ( !getItem )
+			{
+				getItem = getList[a].AddComponent<ItemLost>();
+			}
+			
+			getItem.EnableColl(true);
 			AllItem.RemoveAt(a);
 		}
 
-		AllItem.Clear();
+		//AllItem.Clear();
 
 		thisTrans.SetParent(getBoxWeapon);
 
