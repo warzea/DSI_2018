@@ -106,7 +106,19 @@ public class BulletAbstract : MonoBehaviour
         else if (!checkEnd)
         {
             destObj ( 5 );
-            
+            if (canExplose)
+            {
+                blockUpdate = true;
+                if (GetEffect != null)
+                {
+                    Instantiate(GetEffect, thisTrans.position, Quaternion.identity);
+                }
+
+                SphereCollider thisSphere = gameObject.AddComponent<SphereCollider>();
+                //thisSphere.radius = Diameter;
+                thisSphere.isTrigger = true;
+                thisTrans.localScale = new Vector3(Diameter, Diameter, Diameter);
+            }
             //Destroy ( gameObject, TimeStay );
             checkEnd = true;
         }
