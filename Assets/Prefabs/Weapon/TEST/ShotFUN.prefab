@@ -9,35 +9,35 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1093315411277202}
+  m_RootGameObject: {fileID: 1185264476275668}
   m_IsPrefabParent: 1
---- !u!1 &1093315411277202
+--- !u!1 &1185264476275668
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4692924994992048}
-  - component: {fileID: 33113795142810432}
-  - component: {fileID: 136104577686423644}
-  - component: {fileID: 23115064312379426}
-  - component: {fileID: 114865942321157514}
+  - component: {fileID: 4581351130189492}
+  - component: {fileID: 33346659226085424}
+  - component: {fileID: 136183609382409528}
+  - component: {fileID: 23312061245952828}
+  - component: {fileID: 114777977038383272}
   m_Layer: 9
-  m_Name: Wandgun
+  m_Name: ShotFUN
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1950566145582098
+--- !u!1 &1975000678228326
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4108505727479514}
+  - component: {fileID: 4541162032254496}
   m_Layer: 9
   m_Name: SpawnBullet
   m_TagString: Untagged
@@ -45,39 +45,39 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4108505727479514
+--- !u!4 &4541162032254496
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1950566145582098}
+  m_GameObject: {fileID: 1975000678228326}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4692924994992048}
+  m_Father: {fileID: 4581351130189492}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4692924994992048
+--- !u!4 &4581351130189492
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1093315411277202}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_GameObject: {fileID: 1185264476275668}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -3.6892376, y: -0.6875696, z: -7.923766}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4108505727479514}
+  - {fileID: 4541162032254496}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!23 &23115064312379426
+--- !u!23 &23312061245952828
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1093315411277202}
+  m_GameObject: {fileID: 1185264476275668}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -106,55 +106,57 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33113795142810432
+--- !u!33 &33346659226085424
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1093315411277202}
+  m_GameObject: {fileID: 1185264476275668}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &114865942321157514
+--- !u!114 &114777977038383272
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1093315411277202}
+  m_GameObject: {fileID: 1185264476275668}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c6bfe4600766d64c85f4f9c20b7243a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   WeightRandom: 0
-  AutoShoot: 1
-  Projectile: 1
-  Through: 1
+  AutoShoot: 0
+  Projectile: 0
+  Through: 0
   Explosion: 0
-  BulletCapacity: 50
-  FireRate: 0.1
-  CoolDown: 1
-  BackPush: 1.5
-  SpeedReduce: 0.136
+  BulletCapacity: 20
+  FireRate: 0
+  CoolDown: 0.75
+  BackPush: 30
+  SpeedReduce: 0.5
   Damage: 1
-  Range: 15
-  NbrBullet: 4
-  ScaleBullet: 0.5
-  SpeedBullet: 20
-  Gust: 1
-  SpaceBullet: 0.1
+  Range: 3
+  NbrBullet: 0
+  ScaleBullet: 0
+  SpeedBullet: 0
+  Gust: 0
+  SpaceBullet: 0
   Angle: 0
-  WidthRange: 5
-  SpeedZone: 0.2
-  TimeDest: 0.5
+  TimeFarEffect: 0.1
+  FarEffect: 1.25
+  WidthRange: 3.75
+  SpeedZone: 0.1
+  TimeDest: 0.1
   Diameter: 0
-  Bullet: {fileID: 1530796011795326, guid: 7debebcea0d258f4a9f5dc489d6103cf, type: 2}
-  SpawnBullet: {fileID: 4108505727479514}
+  Bullet: {fileID: 1530796011795326, guid: bc41063ebf29c6f44a009da8b3171b68, type: 2}
+  SpawnBullet: {fileID: 4541162032254496}
   canShoot: 1
---- !u!136 &136104577686423644
+--- !u!136 &136183609382409528
 CapsuleCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1093315411277202}
+  m_GameObject: {fileID: 1185264476275668}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 0

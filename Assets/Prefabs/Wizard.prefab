@@ -956,23 +956,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IdPlayer: 0
-  LifePlayer: 20
-  MoveSpeed: 13
+  LifePlayer: 5
+  MoveSpeed: 12.5
   DashDistance: 5
   DashTime: 1
-  DistToDropItem: 10
+  DistToDropItem: 7
   WeaponPos: {fileID: 4522346009082788}
   BagPos: {fileID: 4248657163601990}
   BoxPlace: {fileID: 4998498178062740}
-  DistProjDead: 20
-  TimeProjDead: 2
+  DistProjDead: 10
+  TimeProjDead: 0.8
+  TimeInvincible: 1.2
   GetSpeed: 0
   SpeedReduce: 0.5
-  SpeedReduceOnBox: 0.1
-  SmoothRotateOnBox: 0.4
+  SpeedReduceOnBox: 0.4
+  SmoothRotateOnBox: 3.5
   AllItem: []
   driveBox: 0
   dead: 0
+  CurrScore: 0
+  CurrLootScore: 0
+  CurrKillScore: 0
 --- !u!137 &137961011796681194
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
