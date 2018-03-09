@@ -22,6 +22,8 @@ public class UiManager : ManagerParent
     public Text Multiplier;
     public Image[] GaugeFeedback;
 
+    public GameObject[] PlayerText;
+
     public GameObject PotionsPlus;
     public GameObject PotionsLess;
     public GameObject Light;
