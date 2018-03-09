@@ -11,6 +11,7 @@ public class InteractAbstract : MonoBehaviour
 	public int NbrTouchToDrop = 2;
 	public GameObject[] ItemDrop;
 	Transform thisTrans;
+	bool checkItem = true;
 	#endregion
 	
 	#region Mono
@@ -55,6 +56,12 @@ public class InteractAbstract : MonoBehaviour
 					
 					NbrItem --;
 				}
+			}
+
+			if ( NbrItem == 0 && checkItem )
+			{
+				checkItem = false;
+				thisPlayer.NbrChest ++;
 			}
 		}
 	}

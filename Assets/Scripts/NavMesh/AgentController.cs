@@ -11,6 +11,7 @@ public class AgentController : MonoBehaviour
     [Header("------------------")]
     [Header("----INFO AGENT----")]
     [Header("------------------")]
+    public TypeEnemy ThisType;
     public GameObject myFocusPlayer;
     public int lifeAgent = 1;
     public float timeBeforeDepop = 2f;
