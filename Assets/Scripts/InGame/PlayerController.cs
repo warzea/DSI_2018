@@ -38,6 +38,12 @@ public class PlayerController : MonoBehaviour
 	public bool driveBox = false;
 	[HideInInspector]
 	public bool dead = false;
+	[HideInInspector]
+	public int CurrScore = 0;
+	[HideInInspector]
+	public int CurrLootScore = 0;
+	[HideInInspector]
+	public int CurrKillScore = 0;
 	PlayerController thisPC;
 	WeaponAbstract thisWeapon;
 	Transform thisTrans;
@@ -389,6 +395,8 @@ public class PlayerController : MonoBehaviour
 		Transform currTrans; 
 
 		Manager.GameCont.WeaponB.AddItem ( getBagItems.Length );
+		CurrScore += getBagItems.Length;
+		CurrLootScore += getBagItems.Length;
 
 		for ( int a = 0; a < getBagItems.Length; a ++ )
 		{

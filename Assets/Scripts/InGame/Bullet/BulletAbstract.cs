@@ -36,6 +36,8 @@ public class BulletAbstract : MonoBehaviour
     public float FarEffect = 1;
     [HideInInspector]
     public float TimeFarEffect = 1;
+    [HideInInspector]
+    public PlayerController thisPlayer;
     Transform thisTrans;
     Vector3 startPos;
     Vector3 newPos;
@@ -47,6 +49,7 @@ public class BulletAbstract : MonoBehaviour
     bool checkEnd = false;
     bool blockUpdate = false;
     float getDistScale = 0;
+    
     #endregion
     
     #region Mono
@@ -128,6 +131,9 @@ public class BulletAbstract : MonoBehaviour
 
         if ( collision.tag == Constants._Enemy )
         {
+            thisPlayer.CurrScore ++;
+            thisPlayer.CurrKillScore ++;
+            
             if ( canExplose )
             { 
                 blockUpdate = true;
