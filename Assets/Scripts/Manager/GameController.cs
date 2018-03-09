@@ -53,6 +53,7 @@ public class GameController : ManagerParent
 
         Manager.Ui.OpenThisMenu(MenuType.SelectPlayer);
     }
+
     #endregion
 
     #region Private Methods

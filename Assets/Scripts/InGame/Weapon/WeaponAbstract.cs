@@ -162,7 +162,7 @@ public class WeaponAbstract : MonoBehaviour
         GameObject getBullet = (GameObject)Instantiate(Bullet, SpawnBullet.position, thisPlayer.localRotation, getGargabe);
 
         setNewProj(getBullet.GetComponent<BulletAbstract>(), thisPlayer.GetComponent<PlayerController>());
-        StartCoroutine(waitNewShoot());
+        waitNewShoot();
     }
 
     void gustProjectile(int nbrLeft, Transform thisPlayer)
@@ -180,7 +180,7 @@ public class WeaponAbstract : MonoBehaviour
             }
             else
             {
-                StartCoroutine(waitNewShoot());
+                waitNewShoot();
                 blockShoot = false;
             }
         });
@@ -229,14 +229,16 @@ public class WeaponAbstract : MonoBehaviour
             }
         }
 
-        StartCoroutine(waitNewShoot());
+        
+        waitNewShoot();
     }
 
-    IEnumerator waitNewShoot()
+    void waitNewShoot( )
     {
-        yield return new WaitForSeconds(FireRate);
-
-        canShoot = true;
+        DOVirtual.DelayedCall(FireRate, () => 
+        {
+            canShoot = true;
+        });
     }
 
     void OnTriggerEnter ( Collider thisColl )

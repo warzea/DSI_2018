@@ -37,7 +37,7 @@ public class WeaponBox : MonoBehaviour
 	#region Public Methods
 	public void NewWeapon ( PlayerController thisPlayer, GameObject newObj = null )
 	{
-		if ( newObj != null )
+		if ( newObj == null )
 		{
 			newObj = (GameObject) Instantiate ( AllWeapon[Random.Range(0, AllWeapon.Length)], thisPlayer.WeaponPos );
 		}
