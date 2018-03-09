@@ -103,6 +103,7 @@ public class PlayerController : MonoBehaviour
 	bool canTakeDmg = true;
 	bool checkShootScore = true;
 	bool checkAward = false;
+	bool checkAuto = false;
 	#endregion
 	
 	#region Mono
@@ -393,14 +394,20 @@ public class PlayerController : MonoBehaviour
 			checkShootScore = true;
 		}
 
+		if ( shootInput == 0 && checkAuto )
+		{
+			checkShoot = true;
+		}
+
 		if ( shootInput > 0.3f && thisWeapon != null && checkShoot )
 		{
 			if ( !autoShoot )
 			{
+				checkAuto = false;
 				checkShoot = false;
 				DOVirtual.DelayedCall(CdShoot, () =>
 				{
-					checkShoot = true;
+					checkAuto = true;
 				});
 			}
 

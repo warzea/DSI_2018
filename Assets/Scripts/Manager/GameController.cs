@@ -52,36 +52,30 @@ public class GameController : ManagerParent
         PlayerController thisPlayer = Players[0].GetComponent<PlayerController>();
         PlayerController otherPlayer;
       
+        int a;
         int b;
+        int c;
 
-        for ( int a = 0; a < Players.Count; a ++ )
+        int score = 0;
+        string text ="";
+        TypeMedail thisMedail = TypeMedail.easy;
+        
+        for ( a = 0; a < Players.Count; a ++ )
         {
-            for ( b = 0; a < Players.Count; b ++ )
+            for ( b = 0; b < Players.Count; b ++ )
             {
-                otherPlayer = Players[a].GetComponent<PlayerController>();
+                for ( c = 0; c < Players.Count; c ++ )
+                {
+                    otherPlayer = Players[a].GetComponent<PlayerController>();
+
+                    getCurrScore ( a, otherPlayer );
+                }
             }
 
-            
 
+            setMedail ( thisPlayer, score, text, thisMedail );
         }
-		/*  
-        int CurrScore = 0;
-		int CurrLootScore = 0;
-		int CurrKillScore = 0;
-		int NbrDead = 0;
-		int WeaponSwitch = 0;
-		int WeaponThrow = 0;
-		int WeaponCatch = 0;
-		int ShootBullet = 0;
-		int ShootSucceed = 0;
-		float TimeWBox = 0;
-		int SpawmShoot = 0;
-		float TotalDist = 0;
-		int NbrTouchInteract = 0;
-		int NbrChest = 0;
-		int NbrEnemy = 0;
-		int currentEnemy = 0;
-		int LostItem = 0;*/
+		
 
 
         Players.Clear();
@@ -107,9 +101,39 @@ public class GameController : ManagerParent
         }
     }
 
-    void setMedail ( )
+    void getCurrScore (int currIndex, PlayerController thisPlayer)
     {
-        
+        switch (currIndex)
+        {
+            case 0:
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+            case 8:
+                break;
+            case 9:
+                break;
+            case 10:
+                break;
+           
+        }
+    }
+
+    void setMedail ( PlayerController thisCont, int Score, string Text, TypeMedail thisMedail )
+    {
+
     }
 
     void SpawnPlayer()

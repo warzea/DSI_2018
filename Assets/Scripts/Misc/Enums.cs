@@ -28,3 +28,11 @@ public enum TypeEnemy
 	Distance
 	
 }
+
+public enum TypeMedail 
+{
+	easy,
+	medium,
+	hard
+
+}
