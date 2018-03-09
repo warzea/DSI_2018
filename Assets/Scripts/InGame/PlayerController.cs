@@ -17,6 +17,10 @@ public class PlayerController : MonoBehaviour
 	public Transform WeaponPos;
 	public Transform BagPos;
 	public Transform BoxPlace;
+	public float DistProjDead;
+	public float TimeProjDead;
+	public float TimeInvincible;
+	
 	[HideInInspector]
 	public float GetSpeed = 0;
 
@@ -34,6 +38,12 @@ public class PlayerController : MonoBehaviour
 	public bool driveBox = false;
 	[HideInInspector]
 	public bool dead = false;
+	[HideInInspector]
+	public int CurrScore = 0;
+	[HideInInspector]
+	public int CurrLootScore = 0;
+	[HideInInspector]
+	public int CurrKillScore = 0;
 	PlayerController thisPC;
 	WeaponAbstract thisWeapon;
 	Transform thisTrans;
@@ -52,6 +62,7 @@ public class PlayerController : MonoBehaviour
 	bool canShoot = true;
 	bool autoShoot = true;
 	bool checkShoot = true;
+	bool canTakeDmg = true;
 
 	#endregion
 	
@@ -105,14 +116,13 @@ public class PlayerController : MonoBehaviour
 			thisWeapon = null;
 		}
 	}
-	public void GetDamage ( int intDmg = 1 )
+	public void GetDamage ( Transform thisEnemy, int intDmg = 1 )
 	{
 		lifePlayer -= intDmg;
 
 		if ( lifePlayer <= 0 && !dead )
 		{
-			dead = true;
-			animeDead ( );
+			animeDead ( thisEnemy.position );
 		}
 	}
 	#endregion
@@ -122,22 +132,22 @@ public class PlayerController : MonoBehaviour
 	{
 		Vector3 getCamPos = getCam.WorldToViewportPoint ( thisTrans.position );
 		
-		if ( getCamPos.x > 1 )
+		if ( getCamPos.x > 0.97f )
 		{
-			thisTrans.position = new Vector3 ( getCam.ViewportToWorldPoint ( new Vector3 ( 1, getCamPos.y, getCamPos.z ) ).x, thisTrans.position.y, thisTrans.position.z );
+			thisTrans.position = new Vector3 ( getCam.ViewportToWorldPoint ( new Vector3 ( 0.97f, getCamPos.y, getCamPos.z ) ).x, thisTrans.position.y, thisTrans.position.z );
 		}
-		else if ( getCamPos.x < 0 )
+		else if ( getCamPos.x < 0.03f )
 		{
-			thisTrans.position = new Vector3 ( getCam.ViewportToWorldPoint ( new Vector3 ( 0, getCamPos.y, getCamPos.z ) ).x, thisTrans.position.y, thisTrans.position.z );
+			thisTrans.position = new Vector3 ( getCam.ViewportToWorldPoint ( new Vector3 ( 0.03f, getCamPos.y, getCamPos.z ) ).x, thisTrans.position.y, thisTrans.position.z );
 		}
 
-		if ( getCamPos.y > 1 )
+		if ( getCamPos.y > 0.97f )
 		{
-			thisTrans.position = new Vector3 ( thisTrans.position.x, thisTrans.position.y, getCam.ViewportToWorldPoint ( new Vector3 ( getCamPos.x, 1, getCamPos.z ) ).z );
+			thisTrans.position = new Vector3 ( thisTrans.position.x, thisTrans.position.y, getCam.ViewportToWorldPoint ( new Vector3 ( getCamPos.x, 0.97f, getCamPos.z ) ).z );
 		}
-		else if ( getCamPos.y < 0 )
+		else if ( getCamPos.y < 0.03f )
 		{
-			thisTrans.position = new Vector3 ( thisTrans.position.x, thisTrans.position.y, getCam.ViewportToWorldPoint ( new Vector3 ( getCamPos.x, 0, getCamPos.z ) ).z );
+			thisTrans.position = new Vector3 ( thisTrans.position.x, thisTrans.position.y, getCam.ViewportToWorldPoint ( new Vector3 ( getCamPos.x, 0.03f, getCamPos.z ) ).z );
 		}
 	}
 	void inputAction ( float getDeltaTime )
@@ -385,6 +395,8 @@ public class PlayerController : MonoBehaviour
 		Transform currTrans; 
 
 		Manager.GameCont.WeaponB.AddItem ( getBagItems.Length );
+		CurrScore += getBagItems.Length;
+		CurrLootScore += getBagItems.Length;
 
 		for ( int a = 0; a < getBagItems.Length; a ++ )
 		{
@@ -417,29 +429,94 @@ public class PlayerController : MonoBehaviour
 		});
 	}
 
-	void animeDead ( )
+	void animeDead ( Vector3 pointColl )
 	{
+		canTakeDmg = false;
+		dead = true;
+		
 		if ( driveBox )
 		{
 			useBoxWeapon ( );
 		}
 		
 		WeaponPos.gameObject.SetActive(false);
+		GetComponent<Collider>().isTrigger = true;
 
 		GameObject[] getList = AllItem.ToArray ( );
+		ItemLost getItem;
+		Vector3 getDirect = Vector3.Normalize ( thisTrans.position - pointColl );
+		getDirect = new Vector3 ( getDirect.x, thisTrans.localPosition.y, getDirect.z);
+		GameObject newObj = (GameObject) Instantiate(new GameObject(), thisTrans.position, thisTrans.rotation);
+		
+		int a;
+		float getDist = DistProjDead;
+		float getTime = TimeProjDead;
+		string getTag;
+		
+		RaycastHit[] allHit;
+		allHit = Physics.RaycastAll ( thisTrans.position, getDirect, DistProjDead );
 
-		for ( int a = 0; a < getList.Length; a ++ )
+		foreach ( RaycastHit thisRay in allHit )
 		{
-			Destroy(getList[a]);
+			getTag = thisRay.collider.tag;
+			
+			if ( getTag == Constants._Wall )
+			{
+				if ( thisRay.distance < getDist )
+				{
+					getDist = thisRay.distance - 1;
+					getTime = TimeProjDead / (DistProjDead / getDist);
+				}
+			}
 		}
-
-		AllItem.Clear();
-
-		thisTrans.SetParent(getBoxWeapon);
 
 		thisTrans.DOKill ( );
 
-		thisTrans.DOLocalMove(Vector3.zero, 1f);
+		//thisTrans.SetParent(getBoxWeapon);
+		
+		thisTrans.DOLocalMove ( thisTrans.localPosition + getDirect * getDist, getTime).OnComplete ( () =>
+		{
+			DOVirtual.DelayedCall ( 2 + TimeProjDead - getTime, ( ) => 
+			{
+				GetComponent<Collider>().isTrigger = false;
+				WeaponPos.gameObject.SetActive(true);
+				lifePlayer = LifePlayer;
+				dead = false;
+				thisWeapon.canShoot = true;
+
+				DOVirtual.DelayedCall ( TimeInvincible, ( ) => 
+				{
+					canTakeDmg = true;
+				});
+			});
+		});
+
+		/*for ( a = 0; a < getList.Length; a ++ )
+		{
+			Destroy(getList[a]);	
+		}*/
+
+		for ( a = getList.Length - 1; a > 0; a -- )
+		{
+			getItem = getList[a].transform.GetComponent<ItemLost>();
+			
+			if ( !getItem )
+			{
+				getItem = getList[a].AddComponent<ItemLost>();
+			}
+
+			getItem.transform.SetParent(newObj.transform);
+			getItem.EnableColl(true);
+			AllItem.RemoveAt(a);
+		}
+
+		Destroy ( newObj, 10 );
+
+		//AllItem.Clear();
+
+		//thisTrans.DOKill ( );
+
+	/*	thisTrans.DOLocalMove(Vector3.zero, 1f);
 		thisTrans.DOScale (Vector3.zero, 1f).OnComplete ( () => 
 		{
 			DOVirtual.DelayedCall ( 3, ( ) => 
@@ -454,7 +531,7 @@ public class PlayerController : MonoBehaviour
 					thisWeapon.canShoot = true;
 				});
 			});
-		});
+		});*/
 	}
 
 	void OnTriggerEnter ( Collider thisColl )
@@ -464,14 +541,13 @@ public class PlayerController : MonoBehaviour
 		{
 			canEnterBox = true;
 		}
-		else if ( getTag == Constants._EnemyBullet || getTag == Constants._Enemy )
+		else if ( getTag == Constants._EnemyBullet && canTakeDmg /*|| getTag == Constants._Enemy*/ )
 		{
 			lifePlayer --;
 
 			if ( lifePlayer <= 0 && !dead )
 			{
-				dead = true;
-				animeDead ( );
+				animeDead ( thisColl.transform.position );
 			}
 		}
 	}

@@ -18,6 +18,9 @@ public class Manager : MonoBehaviour
 	public static AgentsManager AgentM { get { return agentM; } }
 	static AgentsManagerCac agentMC;
 	public static AgentsManagerCac AgentMC { get { return agentMC; } }
+
+	static VibrationManager vibM;
+	public static VibrationManager VibM { get { return vibM; } }
 	#endregion
 	
 	#region Mono
@@ -55,6 +58,7 @@ public class Manager : MonoBehaviour
 		InitializeManager ( ref ui );
 		InitializeManager ( ref agentM );
 		InitializeManager ( ref agentMC );
+		InitializeManager ( ref vibM );
 	}
 
 	void InitializeManager<T>(ref T manager) where T : ManagerParent

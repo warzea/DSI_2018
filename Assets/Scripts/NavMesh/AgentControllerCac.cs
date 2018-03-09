@@ -21,7 +21,7 @@ public class AgentControllerCac : MonoBehaviour
     private float timeAgent = -5;
 
     public float timeLeftAgentAttacCac = 1f;
-    void Awake()
+    void Start()
     {
         agentsM = GameObject.Find("ManagerNavMesh").GetComponent<AgentsManagerCac>();
         navAgent = transform.GetComponent<NavMeshAgent>();
@@ -99,7 +99,7 @@ public class AgentControllerCac : MonoBehaviour
     {
         if (other.tag == "BulletPlayer")
         {
-            Destroy(other.gameObject);
+            //Destroy(other.gameObject);
             lifeAgent = lifeAgent - 1;
             if (lifeAgent <= 0)
             {
