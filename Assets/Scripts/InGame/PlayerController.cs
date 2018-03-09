@@ -169,12 +169,16 @@ public class PlayerController : MonoBehaviour
 
 	public void GetDamage ( Transform thisEnemy, int intDmg = 1 )
 	{
-		lifePlayer -= intDmg;
-
-		if ( lifePlayer <= 0 && !dead )
+		if ( canTakeDmg )
 		{
-			animeDead ( thisEnemy.position );
+			lifePlayer -= intDmg;
+
+			if ( lifePlayer <= 0 && !dead )
+			{
+				animeDead ( thisEnemy.position );
+			}
 		}
+		
 	}
 	#endregion
 
