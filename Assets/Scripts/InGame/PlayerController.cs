@@ -11,16 +11,20 @@ public class PlayerController : MonoBehaviour
 	public int IdPlayer;
 	public int LifePlayer = 3;
 	public float MoveSpeed;
-	public float DashDistance = 5;
-	public float DashTime = 1;
+	//public float DashDistance = 5;
+	//public float DashTime = 1;
 	public float DistToDropItem = 1;
 	public Transform WeaponPos;
 	public Transform BagPos;
 	public Transform BoxPlace;
 	public float DistProjDead;
 	public float TimeProjDead;
+	public float TimeDead = 1;
 	public float TimeInvincible;
-	
+	public int PourcLootLost = 20;
+	[HideInInspector]
+	public float CdShoot = 0;
+
 	[HideInInspector]
 	public float GetSpeed = 0;
 
@@ -38,12 +42,46 @@ public class PlayerController : MonoBehaviour
 	public bool driveBox = false;
 	[HideInInspector]
 	public bool dead = false;
+
 	[HideInInspector]
-	public int CurrScore = 0;
-	[HideInInspector]
-	public int CurrLootScore = 0;
-	[HideInInspector]
-	public int CurrKillScore = 0;
+	public List<EnemyInfo> AllEnemy;
+
+	// ----- Score
+		[HideInInspector]
+		public int CurrScore = 0;
+		[HideInInspector]
+		public int CurrLootScore = 0;
+		[HideInInspector]
+		public int CurrKillScore = 0;
+		[HideInInspector]
+		public int NbrDead = 0;
+		[HideInInspector]
+		public int WeaponSwitch = 0;
+		[HideInInspector]
+		public int WeaponThrow = 0;
+		[HideInInspector]
+		public int WeaponCatch = 0;
+		[HideInInspector]
+		public int ShootBullet = 0;
+		[HideInInspector]
+		public int ShootSucceed = 0;
+		[HideInInspector]
+		public float TimeWBox = 0;
+		[HideInInspector]
+		public int SpawmShoot = 0;
+		[HideInInspector]
+		public float TotalDist = 0;
+		[HideInInspector]
+		public int NbrTouchInteract = 0;
+		[HideInInspector]
+		public int NbrChest = 0;
+		[HideInInspector]
+		public int NbrEnemy = 0;
+		[HideInInspector]
+		public int currentEnemy = 0;
+		[HideInInspector]
+		public int LostItem = 0;
+	// -----
 	PlayerController thisPC;
 	WeaponAbstract thisWeapon;
 	Transform thisTrans;
@@ -51,10 +89,10 @@ public class PlayerController : MonoBehaviour
 	Rigidbody thisRig;
 	CameraFollow GetCamFoll;
 	Player inputPlayer;
-
 	Camera getCam;
 
 	int lifePlayer;
+	
 	bool shooting = false;
 	bool dashing = false;
 	bool canDash = true;
@@ -63,14 +101,24 @@ public class PlayerController : MonoBehaviour
 	bool autoShoot = true;
 	bool checkShoot = true;
 	bool canTakeDmg = true;
-
+	bool checkShootScore = true;
+	bool checkAward = false;
 	#endregion
 	
 	#region Mono
 	void Awake ( )
 	{
+		AllEnemy = new List<EnemyInfo>();
 		lifePlayer = LifePlayer;
 		thisPC = GetComponent<PlayerController>();
+
+		System.Array thisArray = System.Enum.GetValues(typeof (TypeEnemy));
+
+		for (int a = 0; a < thisArray.Length; a++)
+		{
+			AllEnemy.Add ( new EnemyInfo ( ) );
+			AllEnemy[a].ThisType = (TypeEnemy) thisArray.GetValue(a);
+		}
 	}
 	void Start ( ) 
 	{
@@ -107,15 +155,18 @@ public class PlayerController : MonoBehaviour
 	{
 		if ( thisWeap != null )
 		{
+			thisWeap.OnFloor = false;
 			autoShoot = thisWeap.AutoShoot;
 			SpeedReduce = thisWeap.SpeedReduce;
 			thisWeapon = thisWeap;
+			CdShoot = thisWeap.CoolDown;
 		}
 		else 
 		{
 			thisWeapon = null;
 		}
 	}
+
 	public void GetDamage ( Transform thisEnemy, int intDmg = 1 )
 	{
 		lifePlayer -= intDmg;
@@ -150,6 +201,33 @@ public class PlayerController : MonoBehaviour
 			thisTrans.position = new Vector3 ( thisTrans.position.x, thisTrans.position.y, getCam.ViewportToWorldPoint ( new Vector3 ( getCamPos.x, 0.03f, getCamPos.z ) ).z );
 		}
 	}
+
+	float checkBorderDead ( Vector3 customPos )
+	{
+		Vector3 getCamPos = getCam.WorldToViewportPoint ( customPos );
+		Vector3 getDist = customPos;
+
+		if ( getCamPos.x > 0.97f )
+		{
+			customPos = new Vector3 ( getCam.ViewportToWorldPoint ( new Vector3 ( 0.97f, getCamPos.y, getCamPos.z ) ).x, customPos.y, customPos.z );
+		}
+		else if ( getCamPos.x < 0.03f )
+		{
+			customPos = new Vector3 ( getCam.ViewportToWorldPoint ( new Vector3 ( 0.03f, getCamPos.y, getCamPos.z ) ).x, customPos.y, customPos.z );
+		}
+
+		if ( getCamPos.y > 0.97f )
+		{
+			customPos = new Vector3 ( customPos.x, customPos.y, getCam.ViewportToWorldPoint ( new Vector3 ( getCamPos.x, 0.97f, getCamPos.z ) ).z );
+		}
+		else if ( getCamPos.y < 0.03f )
+		{
+			customPos = new Vector3 ( customPos.x, customPos.y, getCam.ViewportToWorldPoint ( new Vector3 ( getCamPos.x, 0.03f, getCamPos.z ) ).z );
+		}
+
+		return Vector3.Distance ( customPos, getDist );
+	}
+
 	void inputAction ( float getDeltaTime )
 	{
 		if ( canShoot )
@@ -171,7 +249,7 @@ public class PlayerController : MonoBehaviour
 		playerAim ( getDeltaTime);
 	}
 
-	void playerDash ( )
+	/*void playerDash ( )
 	{
 		bool getDash = inputPlayer.GetButtonDown ( "Dash" );
 
@@ -217,7 +295,7 @@ public class PlayerController : MonoBehaviour
 			canDash = true;
 			dashing = false;
 		});
-	}
+	}*/
 
 	void playerMove ( float getDeltaTime )
 	{
@@ -231,11 +309,14 @@ public class PlayerController : MonoBehaviour
 		}
 		else if ( driveBox )
 		{
+			TimeWBox += getDeltaTime;
 			getSpeed *= SpeedReduceOnBox;
 		}
 
+		getSpeed = getDeltaTime * getSpeed;
+		TotalDist += getSpeed;
 		//GetSpeed = getDeltaTime * MoveSpeed;
-		thisTrans.position += getDeltaTime * getSpeed * new Vector3 ( Xmove, 0, Ymove );
+		thisTrans.position += getSpeed * new Vector3 ( Xmove, 0, Ymove );
 	}
 
 	void playerAim ( float getDeltaTime )
@@ -260,10 +341,10 @@ public class PlayerController : MonoBehaviour
 	{
 		float shootInput = inputPlayer.GetAxis("Shoot");
 
-		if ( shootInput == 0 )
+		/*if ( shootInput == 0 )
 		{
 			checkShoot = true;
-		}
+		}*/
 		/*if ( shootInput > 0 )
 		{
 			bool checkBox = false;
@@ -298,12 +379,25 @@ public class PlayerController : MonoBehaviour
 
 			shooting = true;
 		}*/
+		if ( shootInput == 1 && checkShootScore )
+		{
+			checkShootScore = false;
+			SpawmShoot ++;
+		}
+		else if ( shootInput < 0.3f )
+		{
+			checkShootScore = true;
+		}
 
-		if ( shootInput > 0 && thisWeapon != null && checkShoot )
+		if ( shootInput > 0.3f && thisWeapon != null && checkShoot )
 		{
 			if ( !autoShoot )
 			{
 				checkShoot = false;
+				DOVirtual.DelayedCall(CdShoot, () =>
+				{
+					checkShoot = true;
+				});
 			}
 
 			thisWeapon.weaponShoot( thisTrans );
@@ -322,6 +416,7 @@ public class PlayerController : MonoBehaviour
 
 		if ( interactInput )
 		{
+			NbrTouchInteract ++;
 			if ( canEnterBox || driveBox )
 			{
 				useBoxWeapon ( );
@@ -398,6 +493,7 @@ public class PlayerController : MonoBehaviour
 		CurrScore += getBagItems.Length;
 		CurrLootScore += getBagItems.Length;
 
+
 		for ( int a = 0; a < getBagItems.Length; a ++ )
 		{
 			currTrans = getBagItems[a].transform;
@@ -431,6 +527,8 @@ public class PlayerController : MonoBehaviour
 
 	void animeDead ( Vector3 pointColl )
 	{
+		currentEnemy = 0;
+		NbrDead ++;
 		canTakeDmg = false;
 		dead = true;
 		
@@ -454,8 +552,11 @@ public class PlayerController : MonoBehaviour
 		string getTag;
 		
 		RaycastHit[] allHit;
-		allHit = Physics.RaycastAll ( thisTrans.position, getDirect, DistProjDead );
 
+		getDist -= checkBorderDead ( thisTrans.position + getDirect * DistProjDead );
+		allHit = Physics.RaycastAll ( thisTrans.position, getDirect, getDist );
+
+		
 		foreach ( RaycastHit thisRay in allHit )
 		{
 			getTag = thisRay.collider.tag;
@@ -476,7 +577,7 @@ public class PlayerController : MonoBehaviour
 		
 		thisTrans.DOLocalMove ( thisTrans.localPosition + getDirect * getDist, getTime).OnComplete ( () =>
 		{
-			DOVirtual.DelayedCall ( 2 + TimeProjDead - getTime, ( ) => 
+			DOVirtual.DelayedCall ( TimeDead + TimeProjDead - getTime, ( ) => 
 			{
 				GetComponent<Collider>().isTrigger = false;
 				WeaponPos.gameObject.SetActive(true);
@@ -495,8 +596,10 @@ public class PlayerController : MonoBehaviour
 		{
 			Destroy(getList[a]);	
 		}*/
+		int getNbr = (int) (getList.Length - ( getList.Length * PourcLootLost ) * 0.01f);
+		LostItem += getList.Length;
 
-		for ( a = getList.Length - 1; a > 0; a -- )
+		for ( a = getList.Length - 1; a > getNbr - 1; a -- )
 		{
 			getItem = getList[a].transform.GetComponent<ItemLost>();
 			
@@ -505,12 +608,20 @@ public class PlayerController : MonoBehaviour
 				getItem = getList[a].AddComponent<ItemLost>();
 			}
 
-			getItem.transform.SetParent(newObj.transform);
 			getItem.EnableColl(true);
+			getItem.transform.SetParent(newObj.transform);
 			AllItem.RemoveAt(a);
 		}
 
-		Destroy ( newObj, 10 );
+		getList = AllItem.ToArray();
+		for ( a = 0; a < getList.Length; a ++ )
+		{
+			Destroy(getList[a]);
+		}
+
+		AllItem.Clear();
+		Destroy ( newObj, 60 );
+
 
 		//AllItem.Clear();
 
@@ -562,6 +673,7 @@ public class PlayerController : MonoBehaviour
 
 	void OnCollisionEnter ( Collision thisColl )
 	{
+		Debug.Log("collide");
 		/*string getTag = thisColl.collider.tag;
 		
 		if ( getTag == Constants._EnemyBullet || getTag == Constants._Enemy )

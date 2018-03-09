@@ -21,3 +21,10 @@ public enum Trajectoir
 	Standard
 	
 }
+
+public enum TypeEnemy
+{
+	Cac,
+	Distance
+	
+}
