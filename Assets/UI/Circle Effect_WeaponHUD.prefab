@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114335510884620078}
   - component: {fileID: 225168667882028308}
   m_Layer: 0
-  m_Name: Circle Effect
+  m_Name: Circle Effect_WeaponHUD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
