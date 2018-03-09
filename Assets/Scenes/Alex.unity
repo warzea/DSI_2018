@@ -1087,6 +1087,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114006546364699532, guid: 09c0fcd273fc2424693f3e4b734896bb,
+        type: 2}
+      propertyPath: PlayerMaterial.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4707250982502558, guid: 09c0fcd273fc2424693f3e4b734896bb, type: 2}
       propertyPath: m_LocalPosition.x
       value: 431
@@ -1195,6 +1200,26 @@ Prefab:
       propertyPath: _userData.inputBehaviors.Array.data[0]._digitalAxisSensitivity
       value: 1000
       objectReference: {fileID: 0}
+    - target: {fileID: 114006546364699532, guid: 09c0fcd273fc2424693f3e4b734896bb,
+        type: 2}
+      propertyPath: PlayerMaterial.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7465077882926a3458f94a64d4a2e7bd, type: 2}
+    - target: {fileID: 114006546364699532, guid: 09c0fcd273fc2424693f3e4b734896bb,
+        type: 2}
+      propertyPath: PlayerMaterial.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2741fccb881bb4ae5af3f4ab766d03a4, type: 2}
+    - target: {fileID: 114006546364699532, guid: 09c0fcd273fc2424693f3e4b734896bb,
+        type: 2}
+      propertyPath: PlayerMaterial.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 59e060f7fec6a6242adb154aac5740f7, type: 2}
+    - target: {fileID: 114006546364699532, guid: 09c0fcd273fc2424693f3e4b734896bb,
+        type: 2}
+      propertyPath: PlayerMaterial.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1d8ec58938fe3954dbb2e3f0a151dec3, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 09c0fcd273fc2424693f3e4b734896bb, type: 2}
   m_IsPrefabParent: 0

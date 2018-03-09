@@ -79,7 +79,7 @@ public class BulletAbstract : MonoBehaviour
     #region Public Methods
     void Update()
     {
-        if (blockUpdate)
+        if (blockUpdate )
         {
             return;
         }
@@ -93,7 +93,7 @@ public class BulletAbstract : MonoBehaviour
             return;
         }
 
-        if (Vector3.Distance(startPos, thisTrans.position) < BulletRange)
+        if (Vector3.Distance(startPos, thisTrans.position) < BulletRange && Dest)
         {
             switch (ThisTrajectoir)
             {
@@ -166,7 +166,6 @@ public class BulletAbstract : MonoBehaviour
                         break;
                     }
                 }
-
             }
 
             if (canExplose)
