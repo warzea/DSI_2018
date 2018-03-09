@@ -42,27 +42,10 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public List<GameObject> AllItem;
 
-	int lifePlayer;
-	
-	bool shooting = false;
-	bool dashing = false;
-	bool canDash = true;
-	bool canEnterBox = false;
-	bool canShoot = true;
-	bool autoShoot = true;
-	bool checkShoot = true;
-	bool canTakeDmg = true;
-	bool checkShootScore = true;
-	bool checkAward = false;
-	bool checkAuto = false;
-	#endregion
-	
-	#region Mono
-	void Awake ( )
-	{
-		AllEnemy = new List<EnemyInfo>();
-		lifePlayer = LifePlayer;
-		thisPC = GetComponent<PlayerController>();
+    [HideInInspector]
+    public bool driveBox = false;
+    [HideInInspector]
+    public bool dead = false;
 
     [HideInInspector]
     public List<EnemyInfo> AllEnemy;
@@ -124,6 +107,7 @@ public class PlayerController : MonoBehaviour
     bool canTakeDmg = true;
     bool checkShootScore = true;
     bool checkAward = false;
+    bool checkAuto = false;
     #endregion
 
     #region Mono
@@ -419,32 +403,22 @@ public class PlayerController : MonoBehaviour
             checkShootScore = true;
         }
 
+        if ( shootInput == 0 && checkAuto )
+        {
+            checkShoot = true;
+        }
+
         if (shootInput > 0.3f && thisWeapon != null && checkShoot)
         {
             if (!autoShoot)
             {
+                checkAuto = false;
                 checkShoot = false;
                 DOVirtual.DelayedCall(CdShoot, () =>
                 {
-                    checkShoot = true;
+                    checkAuto = true;
                 });
             }
-		if ( shootInput == 0 && checkAuto )
-		{
-			checkShoot = true;
-		}
-
-		if ( shootInput > 0.3f && thisWeapon != null && checkShoot )
-		{
-			if ( !autoShoot )
-			{
-				checkAuto = false;
-				checkShoot = false;
-				DOVirtual.DelayedCall(CdShoot, () =>
-				{
-					checkAuto = true;
-				});
-			}
 
             thisWeapon.weaponShoot(thisTrans);
             animPlayer.SetBool("Attack", true);

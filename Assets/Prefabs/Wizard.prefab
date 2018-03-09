@@ -1018,14 +1018,15 @@ MonoBehaviour:
   LifePlayer: 5
   MoveSpeed: 13
   DistToDropItem: 10
+  nbItemBeforeBigBag: 10
   animPlayer: {fileID: 95255310504812768}
   WeaponPos: {fileID: 4522346009082788}
   BagPos: {fileID: 4248657163601990}
   BoxPlace: {fileID: 4998498178062740}
-  DistProjDead: 10
-  TimeProjDead: 0.8
+  DistProjDead: 0
+  TimeProjDead: 0
   TimeDead: 1
-  TimeInvincible: 1.2
+  TimeInvincible: 0
   PourcLootLost: 20
   CdShoot: 0
   GetSpeed: 0

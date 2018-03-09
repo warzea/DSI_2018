@@ -245,8 +245,7 @@ public class UiManager : ManagerParent
 
     private void FixedUpdate()
     {
-
-        PlayersAmmo[0].transform.position = Manager.GameCont.Players[0].transform.position;
+        //PlayersAmmo[0].transform.position = Manager.GameCont.Players[0].transform.position;
     }
 
     protected override void InitializeManager ( )
