@@ -329,7 +329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c427c687a2cc82448a9348a0fef4ffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerPrefab: {fileID: 1528122427535438, guid: 9b3404be833a47c44aeae862331dd09b,
+  PlayerPrefab: {fileID: 1550415525633366, guid: 937d3b462b9817747b2216f2faea9faa,
     type: 2}
   StartWeapon: {fileID: 1093315411277202, guid: ea26266d024e3cf4f8bc8992dc15534d,
     type: 2}
@@ -340,6 +340,11 @@ MonoBehaviour:
   GetCameraFollow: {fileID: 0}
   Garbage: {fileID: 0}
   Players: []
+  PlayerMaterial:
+  - {fileID: 2100000, guid: d07c4fd00b05ac74686a58856d7f7407, type: 2}
+  - {fileID: 2100000, guid: 2741fccb881bb4ae5af3f4ab766d03a4, type: 2}
+  - {fileID: 2100000, guid: 59e060f7fec6a6242adb154aac5740f7, type: 2}
+  - {fileID: 2100000, guid: 1d8ec58938fe3954dbb2e3f0a151dec3, type: 2}
 --- !u!114 &114024564094145676
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -421,7 +426,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fe8a820207086a4b9a2d2437c8685a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerID: 0
   ObsPower: 0.12
   ObsDuration: 0.2
   ShootLowPower: 0.15
