@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 33300959129897934}
   - component: {fileID: 114283222525115588}
   - component: {fileID: 64936806883449954}
+  - component: {fileID: 208689542821674992}
   m_Layer: 0
   m_Name: coffre
   m_TagString: Untagged
@@ -38,7 +39,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1361501749273284}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.93, y: 132.67813, z: -125.47645}
+  m_LocalPosition: {x: 8.121859, y: 132.67813, z: -119.16644}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -598,3 +599,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _entityType: 0
+--- !u!208 &208689542821674992
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1361501749273284}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2, y: 0.75000006, z: 1}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -2, y: 0.75000006, z: 1}
+  m_TimeToStationary: 0.5

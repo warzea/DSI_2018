@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 33674466893083414}
   - component: {fileID: 114120990487327214}
   - component: {fileID: 64947256762014994}
+  - component: {fileID: 208821575334059480}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
@@ -344,3 +345,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _entityType: 0
+--- !u!208 &208821575334059480
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1413011502485364}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
