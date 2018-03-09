@@ -3482,7 +3482,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 127
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1824076103567070
 GameObject:
   m_ObjectHideFlags: 1
@@ -4705,7 +4705,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1091342231564166}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -36.61457, y: -108.3, z: 59.865635}
+  m_LocalPosition: {x: -108.48, y: -108.3, z: 22.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4068154559936438}
@@ -5011,7 +5011,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1010124378210226}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 129.11053, y: 110.80968, z: -24.481071}
+  m_LocalPosition: {x: 129.11053, y: 109.4, z: -24.481071}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4181411186663750}
@@ -68431,8 +68431,8 @@ MonoBehaviour:
     type: 2}
   spawnBulletAgent: {fileID: 4068154559936438}
   parentBullet: {fileID: 1992327944556116}
-  SpeedBulletAgent: 4
-  timeLeftAgentshoot: 0.5
+  SpeedBulletAgent: 5
+  timeLeftAgentshoot: 1.4
   distanceShoot: 100
   myFocusEtatAgent: 0
   myEtatAgent: 0

@@ -1015,7 +1015,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IdPlayer: 0
-  LifePlayer: 1
+  LifePlayer: 5
   MoveSpeed: 13
   DistToDropItem: 10
   animPlayer: {fileID: 95255310504812768}
