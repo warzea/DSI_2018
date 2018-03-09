@@ -132,22 +132,22 @@ public class PlayerController : MonoBehaviour
 	{
 		Vector3 getCamPos = getCam.WorldToViewportPoint ( thisTrans.position );
 		
-		if ( getCamPos.x > 1 )
+		if ( getCamPos.x > 0.97f )
 		{
-			thisTrans.position = new Vector3 ( getCam.ViewportToWorldPoint ( new Vector3 ( 1, getCamPos.y, getCamPos.z ) ).x, thisTrans.position.y, thisTrans.position.z );
+			thisTrans.position = new Vector3 ( getCam.ViewportToWorldPoint ( new Vector3 ( 0.97f, getCamPos.y, getCamPos.z ) ).x, thisTrans.position.y, thisTrans.position.z );
 		}
-		else if ( getCamPos.x < 0 )
+		else if ( getCamPos.x < 0.03f )
 		{
-			thisTrans.position = new Vector3 ( getCam.ViewportToWorldPoint ( new Vector3 ( 0, getCamPos.y, getCamPos.z ) ).x, thisTrans.position.y, thisTrans.position.z );
+			thisTrans.position = new Vector3 ( getCam.ViewportToWorldPoint ( new Vector3 ( 0.03f, getCamPos.y, getCamPos.z ) ).x, thisTrans.position.y, thisTrans.position.z );
 		}
 
-		if ( getCamPos.y > 1 )
+		if ( getCamPos.y > 0.97f )
 		{
-			thisTrans.position = new Vector3 ( thisTrans.position.x, thisTrans.position.y, getCam.ViewportToWorldPoint ( new Vector3 ( getCamPos.x, 1, getCamPos.z ) ).z );
+			thisTrans.position = new Vector3 ( thisTrans.position.x, thisTrans.position.y, getCam.ViewportToWorldPoint ( new Vector3 ( getCamPos.x, 0.97f, getCamPos.z ) ).z );
 		}
-		else if ( getCamPos.y < 0 )
+		else if ( getCamPos.y < 0.03f )
 		{
-			thisTrans.position = new Vector3 ( thisTrans.position.x, thisTrans.position.y, getCam.ViewportToWorldPoint ( new Vector3 ( getCamPos.x, 0, getCamPos.z ) ).z );
+			thisTrans.position = new Vector3 ( thisTrans.position.x, thisTrans.position.y, getCam.ViewportToWorldPoint ( new Vector3 ( getCamPos.x, 0.03f, getCamPos.z ) ).z );
 		}
 	}
 	void inputAction ( float getDeltaTime )
