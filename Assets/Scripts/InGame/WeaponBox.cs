@@ -133,7 +133,7 @@ public class WeaponBox : MonoBehaviour
 		}
 		else
 		{
-			getFeedBack[currInd].DOKill(true);
+			getFeedBack[currInd].DOKill();
 			getFeedBack[currInd].DOFillAmount(getCal, getTime).OnComplete (() => 
 			{
 				currInd ++;
@@ -148,7 +148,7 @@ public class WeaponBox : MonoBehaviour
 
 	void resetFeed ( Image[] getFeedBack, int currInd )
 	{
-		getFeedBack[currInd].DOKill(true);
+		getFeedBack[currInd].DOKill();
 		getFeedBack[currInd].DOFillAmount(0, 0.1f).OnComplete (() => 
 		{
 			currInd --;
