@@ -25,6 +25,7 @@ public class GameController : ManagerParent
 
     [HideInInspector]
     public List<GameObject> Players;
+    public Material[] PlayerMaterial;
 
     List<PlayerController> getPlayerCont;
     #endregion
@@ -52,6 +53,7 @@ public class GameController : ManagerParent
 
         Manager.Ui.OpenThisMenu(MenuType.SelectPlayer);
     }
+
     #endregion
 
     #region Private Methods
@@ -86,6 +88,11 @@ public class GameController : ManagerParent
                 getPlayer = (GameObject)Instantiate(PlayerPrefab);
                 getPlayer.name = getPlayer.name + "+" + a.ToString();
 
+                foreach ( Renderer thisMat in getPlayer.GetComponentsInChildren<Renderer>())
+                {
+                   thisMat.material = PlayerMaterial[a];
+                }
+                
                 getPlayer.transform.position = PlayerPosSpawn.position + new Vector3(a * 1.5f, 0, 0);
                 getPC = getPlayer.GetComponent<PlayerController>();
                 getPC.IdPlayer = getPlayers[a].IdPlayer;

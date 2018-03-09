@@ -11,6 +11,7 @@ public class AgentController : MonoBehaviour
     [Header("------------------")]
     [Header("----INFO AGENT----")]
     [Header("------------------")]
+    public TypeEnemy ThisType;
     public GameObject myFocusPlayer;
     public int lifeAgent = 1;
     public float timeBeforeDepop = 2f;
@@ -82,7 +83,7 @@ public class AgentController : MonoBehaviour
                     }
                     else
                     {
-                        Debug.Log("I need Move");
+                        //  Debug.Log("I need Move");
                     }
                 }
             }
@@ -172,7 +173,7 @@ public class AgentController : MonoBehaviour
             {
                 Destroy(other.gameObject);
             }*/
-            
+
             lifeAgent -= getBA.BulletDamage;
 
             if (lifeAgent <= 0)

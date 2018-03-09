@@ -8,9 +8,13 @@ public class AgentControllerCac : MonoBehaviour
 {
     public enum AgentEtat { deadAgent, aliveAgent };
     public AgentEtat myEtatAgent;
+    public TypeEnemy ThisType;
+
     private GameObject targetCauldron;
     public int lifeAgent = 1;
 
+    public float speedVsCauldron = 20;
+    public float speedVsPlayer = 20;
     public Material deadMaterial;
     public Material aliveMaterial;
 
@@ -23,10 +27,13 @@ public class AgentControllerCac : MonoBehaviour
     public float timeLeftAgentAttacCac = 1f;
     void Start()
     {
-        agentsM = GameObject.Find("ManagerNavMesh").GetComponent<AgentsManagerCac>();
-        navAgent = transform.GetComponent<NavMeshAgent>();
         myEtatAgent = AgentEtat.aliveAgent;
         targetCauldron = Manager.GameCont.WeaponB.gameObject;
+    }
+    void Awake()
+    {
+        navAgent = transform.GetComponent<NavMeshAgent>();
+        agentsM = GameObject.Find("ManagerNavMesh").GetComponent<AgentsManagerCac>();
     }
 
     void Update()
@@ -56,13 +63,11 @@ public class AgentControllerCac : MonoBehaviour
                     transform.LookAt(lookAtPosition);
                     if (focusPlayer.tag == "WeaponBox")
                     {
-                        Debug.Log("WeaponBox");
-                        //Attaque WeaponBox
+                        focusPlayer.GetComponent<WeaponBox>().TakeHit();
                     }
                     else if (focusPlayer.tag == "Player")
                     {
-                        Debug.Log("Player");
-                        //Attaque Player
+                        focusPlayer.GetComponent<PlayerController>().GetDamage(transform);
                     }
                 }
             }
@@ -73,6 +78,13 @@ public class AgentControllerCac : MonoBehaviour
     public void SetTarget(GameObject focus)
     {
         focusPlayer = focus;
+        navAgent.speed = speedVsPlayer;
+    }
+
+    public void SwitchCauldron()
+    {
+        focusPlayer = targetCauldron;
+        navAgent.speed = speedVsCauldron;
     }
 
     public void TargetPlayer()
@@ -90,6 +102,7 @@ public class AgentControllerCac : MonoBehaviour
         navAgent.Warp(agentsM.CheckBestcheckPoint(focusPlayer.transform));
         yield return new WaitForSeconds(1);
         focusPlayer = targetCauldron;
+        navAgent.speed = speedVsCauldron;
         navAgent.isStopped = false;
         myEtatAgent = AgentEtat.aliveAgent;
         lifeAgent = 1;

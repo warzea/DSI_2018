@@ -39,3 +39,14 @@ public class ScoreInfo
 
 // ------- 
 
+
+// ------- PlayerController
+public class EnemyInfo
+{
+	public TypeEnemy ThisType;
+	public int NbrEnemy = 0;	
+}
+
+// -------
+
+
