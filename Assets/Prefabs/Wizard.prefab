@@ -1053,6 +1053,10 @@ MonoBehaviour:
   NbrEnemy: 0
   currentEnemy: 0
   LostItem: 0
+  AmmoUI: {fileID: 0}
+  UiAmmoX: 3
+  UiAmmoY: 2
+  UiAmmo: {fileID: 0}
 --- !u!137 &137183046641579486
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

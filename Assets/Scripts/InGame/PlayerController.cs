@@ -89,6 +89,8 @@ public class PlayerController : MonoBehaviour
     // -----
     [HideInInspector]
     public Transform AmmoUI;
+    [HideInInspector]
+    public Transform TextUI;
     public float UiAmmoX;
     public float UiAmmoY;
     [HideInInspector]
@@ -116,6 +118,7 @@ public class PlayerController : MonoBehaviour
     bool checkAward = false;
     bool checkAuto = false;
     bool checkUIBorder = false;
+    bool checkUIBorderY = false;
 
     #endregion
 
@@ -146,7 +149,6 @@ public class PlayerController : MonoBehaviour
         getBoxWeapon = Manager.GameCont.WeaponB.transform;
         getCam = Manager.GameCont.MainCam;
         GetCamFoll = Manager.GameCont.GetCameraFollow;
-
     }
 
     void Update()
@@ -171,6 +173,15 @@ public class PlayerController : MonoBehaviour
             AmmoUI.localScale = new Vector3(-1, 1, 1);
             
             AmmoUI.position = getCam.WorldToScreenPoint(thisTrans.position + Vector3.right * UiAmmoX + Vector3.up * UiAmmoY);
+        }
+
+        if ( !checkUIBorderY )
+        {          
+           // TextUI.position = getCam.WorldToScreenPoint(thisTrans.position + Vector3.up * 7 );
+        } 
+        else
+        {          
+          //  TextUI.position = getCam.WorldToScreenPoint(thisTrans.position - Vector3.up * 7 );
         }
 
         if (AllItem.Count > 0 && Vector3.Distance(thisTrans.position, getBoxWeapon.position) < DistToDropItem)
@@ -234,6 +245,15 @@ public class PlayerController : MonoBehaviour
         {
             checkUIBorder = false;
         }
+
+       /* if (getCam.WorldToViewportPoint(thisTrans.position + Vector3.up * 7).y > 0.97f)
+        {
+            checkUIBorderY = true;
+        }
+        else
+        {
+            checkUIBorderY = false;
+        }*/
 
         if (getCamPos.y > 0.97f)
         {
