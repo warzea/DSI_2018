@@ -108,6 +108,7 @@ public class WeaponAbstract : MonoBehaviour
             GetComponent<Collider>().isTrigger = true;
             getTrans.gameObject.AddComponent(typeof(BulletAbstract));
             getTrans.GetComponent<BulletAbstract>().direction = playerTrans.forward;
+            getTrans.GetComponent<BulletAbstract>().TimeStay = 0.2f;
 
             Manager.GameCont.WeaponB.NewWeapon(getPC);
         }
@@ -135,7 +136,7 @@ public class WeaponAbstract : MonoBehaviour
         }
     }
 
-    void setNewProj(BulletAbstract thisBullet)
+    void setNewProj(BulletAbstract thisBullet, PlayerController thisPlayer)
     {
         thisBullet.MoveSpeed = SpeedBullet;
         thisBullet.BulletDamage = Damage;
@@ -149,13 +150,14 @@ public class WeaponAbstract : MonoBehaviour
         thisBullet.Diameter = Diameter;
         thisBullet.FarEffect = FarEffect;
         thisBullet.TimeFarEffect = TimeFarEffect;
+        thisBullet.thisPlayer = thisPlayer;
     }
 
     void zoneShoot(Transform thisPlayer)
     {
         GameObject getBullet = (GameObject)Instantiate(Bullet, SpawnBullet.position, thisPlayer.localRotation, getGargabe);
 
-        setNewProj(getBullet.GetComponent<BulletAbstract>());
+        setNewProj(getBullet.GetComponent<BulletAbstract>(), thisPlayer.GetComponent<PlayerController>());
         StartCoroutine(waitNewShoot());
     }
 
@@ -163,7 +165,7 @@ public class WeaponAbstract : MonoBehaviour
     {
         GameObject getBullet = (GameObject)Instantiate(Bullet, SpawnBullet.position, thisPlayer.localRotation, getGargabe);
         getBullet.transform.localScale *= ScaleBullet;
-        setNewProj(getBullet.GetComponent<BulletAbstract>());
+        setNewProj(getBullet.GetComponent<BulletAbstract>(), thisPlayer.GetComponent<PlayerController>());
 
         DOVirtual.DelayedCall(SpaceBullet, () =>
       {
@@ -189,6 +191,7 @@ public class WeaponAbstract : MonoBehaviour
 
         GameObject getBullet;
         BulletAbstract getScript;
+        PlayerController thisPlayer = playerTrans.GetComponent<PlayerController>();
 
         if (NbrBullet % 2 != 0)
         {
@@ -206,7 +209,7 @@ public class WeaponAbstract : MonoBehaviour
             getScript = getBullet.GetComponent<BulletAbstract>();
             getBullet.transform.localScale *= ScaleBullet;
 
-            setNewProj(getScript);
+            setNewProj(getScript, thisPlayer);
 
             if (a == 0 && !getPair)
             {
