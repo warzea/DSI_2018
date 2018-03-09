@@ -11,6 +11,8 @@ public class AgentControllerCac : MonoBehaviour
     private GameObject targetCauldron;
     public int lifeAgent = 1;
 
+    public float speedVsCauldron = 20;
+    public float speedVsPlayer = 20;
     public Material deadMaterial;
     public Material aliveMaterial;
 
@@ -71,6 +73,13 @@ public class AgentControllerCac : MonoBehaviour
     public void SetTarget(GameObject focus)
     {
         focusPlayer = focus;
+        navAgent.speed = speedVsPlayer;
+    }
+
+    public void SwitchCauldron()
+    {
+        focusPlayer = targetCauldron;
+        navAgent.speed = speedVsCauldron;
     }
 
     public void TargetPlayer()
@@ -88,6 +97,7 @@ public class AgentControllerCac : MonoBehaviour
         navAgent.Warp(agentsM.CheckBestcheckPoint(focusPlayer.transform));
         yield return new WaitForSeconds(1);
         focusPlayer = targetCauldron;
+        navAgent.speed = speedVsCauldron;
         navAgent.isStopped = false;
         myEtatAgent = AgentEtat.aliveAgent;
         lifeAgent = 1;
