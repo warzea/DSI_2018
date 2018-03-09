@@ -35,13 +35,18 @@ public class WeaponBox : MonoBehaviour
 	#endregion
 	
 	#region Public Methods
-	public void NewWeapon ( PlayerController thisPlayer )
+	public void NewWeapon ( PlayerController thisPlayer, GameObject newObj = null )
 	{
-		GameObject newObj = (GameObject) Instantiate ( AllWeapon[Random.Range(0, AllWeapon.Length)], thisPlayer.WeaponPos );
+		if ( newObj != null )
+		{
+			newObj = (GameObject) Instantiate ( AllWeapon[Random.Range(0, AllWeapon.Length)], thisPlayer.WeaponPos );
+		}
+
 		Transform objTrans = newObj.transform;
 		objTrans.position = GetTrans.position;
 		objTrans.localScale = Vector3.zero;
 
+		thisPlayer.WeaponSwitch ++;
 		int currId = thisPlayer.IdPlayer;
 
 		if ( updateWeapon[currId] != null )

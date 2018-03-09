@@ -133,7 +133,23 @@ public class BulletAbstract : MonoBehaviour
         {
             thisPlayer.CurrScore ++;
             thisPlayer.CurrKillScore ++;
-            
+            thisPlayer.ShootSucceed ++;
+            thisPlayer.currentEnemy ++;
+
+            if ( thisPlayer.currentEnemy > thisPlayer.NbrEnemy )
+            {
+                thisPlayer.NbrEnemy = thisPlayer.currentEnemy;
+            }
+
+            for ( int a = 0; a < thisPlayer.AllEnemy.Count; a ++ )
+            {
+                if ( thisPlayer.AllEnemy[a].ThisType == collision.GetComponent<AgentController>().ThisType )
+                {
+                    thisPlayer.AllEnemy[a].NbrEnemy ++;
+                    break;
+                }
+            }
+
             if ( canExplose )
             { 
                 blockUpdate = true;

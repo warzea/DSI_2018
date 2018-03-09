@@ -25,6 +25,7 @@ public class GameController : ManagerParent
 
     [HideInInspector]
     public List<GameObject> Players;
+    public Material[] PlayerMaterial;
 
     List<PlayerController> getPlayerCont;
     #endregion

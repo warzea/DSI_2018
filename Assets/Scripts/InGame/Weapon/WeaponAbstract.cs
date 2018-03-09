@@ -66,6 +66,7 @@ public class WeaponAbstract : MonoBehaviour
     public bool canShoot = true;
 
     bool blockShoot = false;
+	public bool OnFloor = true;
 
     Transform getGargabe;
     int getCapacity;
@@ -96,6 +97,7 @@ public class WeaponAbstract : MonoBehaviour
             canShoot = false;
 
             PlayerController getPC = playerTrans.GetComponent<PlayerController>();
+            getPC.WeaponThrow ++;
             Transform getTrans = transform;
             Vector3 getForward = playerTrans.forward;
 
@@ -109,6 +111,7 @@ public class WeaponAbstract : MonoBehaviour
             getTrans.gameObject.AddComponent(typeof(BulletAbstract));
             getTrans.GetComponent<BulletAbstract>().direction = playerTrans.forward;
             getTrans.GetComponent<BulletAbstract>().TimeStay = 0.2f;
+            getTrans.GetComponent<BulletAbstract>().thisPlayer = getPC;
 
             Manager.GameCont.WeaponB.NewWeapon(getPC);
         }
@@ -151,6 +154,7 @@ public class WeaponAbstract : MonoBehaviour
         thisBullet.FarEffect = FarEffect;
         thisBullet.TimeFarEffect = TimeFarEffect;
         thisBullet.thisPlayer = thisPlayer;
+        thisPlayer.ShootBullet ++;
     }
 
     void zoneShoot(Transform thisPlayer)
@@ -168,18 +172,18 @@ public class WeaponAbstract : MonoBehaviour
         setNewProj(getBullet.GetComponent<BulletAbstract>(), thisPlayer.GetComponent<PlayerController>());
 
         DOVirtual.DelayedCall(SpaceBullet, () =>
-      {
-          nbrLeft--;
-          if (nbrLeft > 0)
-          {
-              gustProjectile(nbrLeft, thisPlayer);
-          }
-          else
-          {
-              StartCoroutine(waitNewShoot());
-              blockShoot = false;
-          }
-      });
+        {
+            nbrLeft--;
+            if (nbrLeft > 0)
+            {
+                gustProjectile(nbrLeft, thisPlayer);
+            }
+            else
+            {
+                StartCoroutine(waitNewShoot());
+                blockShoot = false;
+            }
+        });
     }
     void spreadProjectile(Transform playerTrans)
     {
@@ -234,5 +238,16 @@ public class WeaponAbstract : MonoBehaviour
 
         canShoot = true;
     }
+
+    void OnTriggerEnter ( Collider thisColl )
+	{
+		string tag = thisColl.tag;
+		if ( tag == Constants._Player && OnFloor )
+		{
+            PlayerController getPlayer = thisColl.GetComponent<PlayerController>();
+            getPlayer.WeaponCatch ++;
+			Manager.GameCont.WeaponB.NewWeapon( getPlayer, gameObject );
+		}
+	}
     #endregion
 }
