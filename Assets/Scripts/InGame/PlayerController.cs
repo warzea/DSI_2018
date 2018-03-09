@@ -486,6 +486,7 @@ public class PlayerController : MonoBehaviour
 
 	void OnCollisionEnter ( Collision thisColl )
 	{
+		Debug.Log("collide");
 		/*string getTag = thisColl.collider.tag;
 		
 		if ( getTag == Constants._EnemyBullet || getTag == Constants._Enemy )

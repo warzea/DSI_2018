@@ -305,6 +305,8 @@ MonoBehaviour:
   PlayerPosSpawn: {fileID: 0}
   MainCam: {fileID: 0}
   WeaponB: {fileID: 0}
+  TimerCheckPlayer: 1
+  GetCameraFollow: {fileID: 0}
   Garbage: {fileID: 0}
   Players: []
 --- !u!114 &114024564094145676
@@ -1046,6 +1048,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9b757fa7d3b8c04b886926f54c525cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  posRespawn:
+  - {fileID: 0}
+  - {fileID: 0}
   player:
   - {fileID: 0}
   - {fileID: 0}
@@ -1056,9 +1061,12 @@ MonoBehaviour:
   pourcentLowPV: 10
   pourcentMaxPV: 10
   pourcentLead: 40
+  pourcentCauldron: 0
+  distanceSave: 1
   lawpvAgents: []
   maxpvAgents: []
   leadAgents: []
+  cauldronAgent: []
   othersAgents: []
 --- !u!222 &222370504019046004
 CanvasRenderer:
