@@ -224,11 +224,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IdPlayer: 0
+<<<<<<< HEAD
   LifePlayer: 5
+=======
+  LifePlayer: 10000
+>>>>>>> Alexandre
   MoveSpeed: 13
   DashDistance: 5
   DashTime: 1
   DistToDropItem: 10
+  PourcLoose: 50
   WeaponPos: {fileID: 4901489511786308}
   BagPos: {fileID: 4376964705229768}
   BoxPlace: {fileID: 4483543942768048}
