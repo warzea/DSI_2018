@@ -32,12 +32,20 @@ public class BulletAbstract : MonoBehaviour
 	public float Diameter = 0;
 	[HideInInspector]
 	public bool Projectil = true;
+	[HideInInspector] 
+	public int FarEffect = 1;
+	[HideInInspector]
+	public float TimeFarEffect = 1;
 	Transform thisTrans;
 	Vector3 startPos;
+	Vector3 newPos;
 	BoxCollider getBox;
 	//bool checkEnd = false;
-	bool canExplose = false;
-
+	[HideInInspector]
+	public bool canExplose;
+	bool checkEnd = false;
+	bool blockUpdate = false;
+	float getDistScale = 0;
 	#endregion
 	
 	#region Mono
@@ -45,17 +53,17 @@ public class BulletAbstract : MonoBehaviour
 	{
 		thisTrans = transform;
 		startPos = thisTrans.position;
+		newPos = startPos;
 
 		if ( direction == Vector3.zero )
 		{
 			direction = thisTrans.forward;
 		}
-		
-		Destroy ( gameObject, 5 );
 
 		if (!Projectil)
 		{
 			getBox = gameObject.AddComponent<BoxCollider>();
+			getBox.isTrigger = true;
 			playZone ( );
 		}
 	}
@@ -65,14 +73,21 @@ public class BulletAbstract : MonoBehaviour
 	#region Public Methods
 	void Update ( )
 	{
-		if ( !Projectil )
-		{	
-			getBox.center = startPos * 0.5f;
-			getBox.size = startPos;
+		if ( blockUpdate )
+		{
 			return;
 		}
 
-		if ( Vector3.Distance ( startPos, thisTrans.position ) < BulletRange )
+		if ( !Projectil )
+		{	
+			thisTrans.position = newPos + thisTrans.forward * getDistScale;
+			thisTrans.localScale = startPos;
+			//getBox.center =  * 0.5f;
+			//getBox.size = ;
+			return;
+		}
+
+		if ( Vector3.Distance ( startPos , thisTrans.position ) < BulletRange )
 		{
 			switch ( ThisTrajectoir )
 			{
@@ -81,19 +96,23 @@ public class BulletAbstract : MonoBehaviour
 					break;
 			}
 		}
-		/*else if ( !checkEnd )
+		else if ( !checkEnd )
 		{
-			Destroy ( gameObject, TimeStay );
+			Destroy ( gameObject, 5 );
+			
+			//Destroy ( gameObject, TimeStay );
 			checkEnd = true;
-		}*/
+		}
 	}
 	#endregion
 
 	#region Private Methods
 	void playZone ( )
 	{
+		GetComponent<SphereCollider>().enabled = false;
 		startPos = Vector3.zero;
 
+		DOTween.To(()=> getDistScale, x=> getDistScale = x, WidthRange * 0.5f * FarEffect , TimeFarEffect);
 		DOTween.To(()=> startPos, x=> startPos = x, new Vector3(WidthRange, 5, BulletRange), SpeedZone).OnComplete ( () =>
 		{
 			Destroy(gameObject, TimeStay);
@@ -101,23 +120,48 @@ public class BulletAbstract : MonoBehaviour
 	}
 	void OnTriggerEnter(Collider collision)
 	{
-		if ( canExplose )
+		if (blockUpdate )
 		{
-			Instantiate (GetEffect, thisTrans.position, Quaternion.identity);
-			SphereCollider thisSphere =	gameObject.AddComponent<SphereCollider>();
-			thisSphere.radius = Diameter;
+			return;
 		}
-		
-		if ( !Through || collision.tag == Constants._Untag )
+		if ( collision.tag == Constants._Enemy )
 		{
 			if ( canExplose )
-			{
-				Destroy ( gameObject, GetEffect.GetComponent<ParticleSystem>().main.duration );
+			{	
+				blockUpdate = true;
+				if ( GetEffect != null )
+				{
+					Instantiate (GetEffect, thisTrans.position, Quaternion.identity);
+				}
+
+				SphereCollider thisSphere =	gameObject.AddComponent<SphereCollider>();
+				//thisSphere.radius = Diameter;
+				thisSphere.isTrigger = true;
+				thisTrans.localScale = new Vector3 ( Diameter, Diameter, Diameter );
 			}
-			else
+
+			if ( !Through )
 			{
-				Destroy ( gameObject );
+				if ( canExplose )
+				{
+					if ( GetEffect != null && GetEffect.GetComponent<ParticleSystem>() )
+					{
+						Destroy ( gameObject, GetEffect.GetComponent<ParticleSystem>().main.duration );
+					}
+					else
+					{
+						Destroy ( gameObject, 1.5f);	
+					}
+				}
+				else
+				{
+					Destroy ( gameObject );
+				}
 			}
+		}
+		else if ( collision.tag == Constants._Wall )
+		{
+			Destroy ( gameObject );
 		}
 	}
 	#endregion
