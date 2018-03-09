@@ -8,6 +8,8 @@ public class AgentControllerCac : MonoBehaviour
 {
     public enum AgentEtat { deadAgent, aliveAgent };
     public AgentEtat myEtatAgent;
+    public TypeEnemy ThisType;
+
     private GameObject targetCauldron;
     public int lifeAgent = 1;
 
