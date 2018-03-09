@@ -25,10 +25,13 @@ public class AgentControllerCac : MonoBehaviour
     public float timeLeftAgentAttacCac = 1f;
     void Start()
     {
-        agentsM = GameObject.Find("ManagerNavMesh").GetComponent<AgentsManagerCac>();
-        navAgent = transform.GetComponent<NavMeshAgent>();
         myEtatAgent = AgentEtat.aliveAgent;
         targetCauldron = Manager.GameCont.WeaponB.gameObject;
+    }
+    void Awake()
+    {
+        navAgent = transform.GetComponent<NavMeshAgent>();
+        agentsM = GameObject.Find("ManagerNavMesh").GetComponent<AgentsManagerCac>();
     }
 
     void Update()
