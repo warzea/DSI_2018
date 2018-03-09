@@ -39,8 +39,8 @@ public class BulletAbstract : MonoBehaviour
     [HideInInspector]
     public PlayerController thisPlayer;
     [HideInInspector]
-    public bool Dest = true;
     Transform thisTrans;
+    Transform playerTrans;
     Vector3 startPos;
     Vector3 newPos;
     BoxCollider getBox;
@@ -58,7 +58,8 @@ public class BulletAbstract : MonoBehaviour
     protected virtual void Start()
     {
         thisTrans = transform;
-        startPos = thisTrans.position;
+        playerTrans = thisPlayer.transform;
+        startPos = thisTrans.localPosition;
         newPos = startPos;
 
         if (direction == Vector3.zero)
@@ -84,16 +85,16 @@ public class BulletAbstract : MonoBehaviour
             return;
         }
 
-        if (!Projectil)
+        if (!Projectil )
         {
-            thisTrans.position = newPos + thisTrans.forward * getDistScale;
+            thisTrans.localPosition = newPos + thisTrans.forward * getDistScale;
             thisTrans.localScale = startPos;
             //getBox.center =  * 0.5f;
             //getBox.size = ;
             return;
         }
 
-        if (Vector3.Distance(startPos, thisTrans.position) < BulletRange && Dest)
+        if (Vector3.Distance(startPos, thisTrans.position) < BulletRange)
         {
             switch (ThisTrajectoir)
             {
@@ -209,10 +210,7 @@ public class BulletAbstract : MonoBehaviour
 
     void destObj ( float delay = 0 )
     {
-        if ( Dest )
-        {
-            Destroy (gameObject, delay);
-        }
+        Destroy (gameObject, delay);
     }
     #endregion
 }
