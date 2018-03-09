@@ -1015,7 +1015,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IdPlayer: 0
-  LifePlayer: 5
+  LifePlayer: 10000
   MoveSpeed: 13
   DistToDropItem: 10
   nbItemBeforeBigBag: 10

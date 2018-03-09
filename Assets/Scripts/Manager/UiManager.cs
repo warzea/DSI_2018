@@ -74,23 +74,10 @@ public class UiManager : ManagerParent
 		}
 	}
 
-
-
-    public void ScorePlus()
+    public void WeaponEmpty(int PlayerId)
     {
-        ScoreText.transform.DOKill(true);
-        ScoreText.transform.DOShakeScale(.4f, 1f, 12, 15);
-        ScoreText.GetComponent<RainbowColor>().enabled = true;
-        DOVirtual.DelayedCall(.4f, () => {
-            ScoreText.GetComponent<RainbowColor>().enabled = false;
-        });
-    }
-
-
-    public void WeaponEmpty()
-    {
-        PlayersAmmo[0].GetComponentsInChildren<RainbowColor>()[0].enabled = true;
-        PlayersAmmo[0].GetComponentInChildren<RainbowScale>().enabled = true;
+        PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[0].enabled = true;
+        PlayersAmmo[PlayerId].GetComponentInChildren<RainbowScale>().enabled = true;
     }
 
     public void ResetTween()
@@ -107,31 +94,31 @@ public class UiManager : ManagerParent
 
         //HUD INGAME
 
-        PlayersAmmo[0].GetComponentsInChildren<RainbowColor>()[0].enabled = false;
-        PlayersAmmo[0].GetComponentInChildren<RainbowScale>().enabled = false;
+        PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[0].enabled = false;
+        PlayersAmmo[PlayerId].GetComponentInChildren<RainbowScale>().enabled = false;
 
         float randomZrotate = UnityEngine.Random.Range(-17, 17);
-        ammoTwRot = PlayersAmmo[0].transform.DOPunchRotation(new Vector3(1, 1, randomZrotate), 0.6f, 10, 1);
+        ammoTwRot = PlayersAmmo[PlayerId].transform.DOPunchRotation(new Vector3(1, 1, randomZrotate), 0.6f, 10, 1);
 
         //LE CHARGEUR DISPARAIT
 
-        ammoTwScale1 = PlayersAmmo[0].transform.DOPunchScale((Vector3.one * .45f), 0.3f, 20, .1f);
-        ammoTwFade = PlayersAmmo[0].transform.GetComponent<CanvasGroup>().DOFade(0, .3f);
-        ammoTwScale2 = PlayersAmmo[0].transform.DOScale(0,.3f).OnComplete(()=> {
+        ammoTwScale1 = PlayersAmmo[PlayerId].transform.DOPunchScale((Vector3.one * .45f), 0.3f, 20, .1f);
+        ammoTwFade = PlayersAmmo[PlayerId].transform.GetComponent<CanvasGroup>().DOFade(0, .3f);
+        ammoTwScale2 = PlayersAmmo[PlayerId].transform.DOScale(0,.3f).OnComplete(()=> {
 
             //LE CHARGEUR REAPARAIT VISIBLE
 
-            ammoTwFade = PlayersAmmo[0].transform.GetComponent<CanvasGroup>().DOFade(1, .2f);
-            PlayersAmmo[0].transform.DOScale(3, 0);
-            ammoTwScale1 = PlayersAmmo[0].transform.DOScale(1, .2f);
+            ammoTwFade = PlayersAmmo[PlayerId].transform.GetComponent<CanvasGroup>().DOFade(1, .2f);
+            PlayersAmmo[PlayerId].transform.DOScale(3, 0);
+            ammoTwScale1 = PlayersAmmo[PlayerId].transform.DOScale(1, .2f);
 
 
             //COURT EFFET LUMINEUX DE COULEUR SUR LE OUTLINE
 
-            PlayersAmmo[0].GetComponentsInChildren<RainbowColor>()[1].enabled = true;
+            PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[1].enabled = true;
             ammoTwScale2 = DOVirtual.DelayedCall(.3f, () => {
-                PlayersAmmo[0].GetComponentsInChildren<RainbowColor>()[1].enabled = false;
-                PlayersAmmo[0].GetComponentsInChildren<RainbowColor>()[1].transform.GetComponent<Image>().color = PlayersAmmo[0].GetComponentsInChildren<RainbowColor>()[1].colors[1];
+                PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[1].enabled = false;
+                PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[1].transform.GetComponent<Image>().color = PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[1].colors[1];
             });
 
         });
@@ -169,9 +156,9 @@ public class UiManager : ManagerParent
 
     }
 
-    public void PopPotions(string type)
+    public void PopPotions(PotionType type) // poser ressource : 20 - 40 - 60 - 80 et 100
     {
-        if(type == "Plus")
+        if(type == PotionType.Plus)
         {
             var potion = Instantiate(PotionsPlus, GetInGame.position, Quaternion.identity, GetInGame);
 
@@ -208,6 +195,15 @@ public class UiManager : ManagerParent
     #endregion
 
     #region Private Methods
+    void ScorePlus()
+    {
+        ScoreText.transform.DOKill(true);
+        ScoreText.transform.DOShakeScale(.4f, 1f, 12, 15);
+        ScoreText.GetComponent<RainbowColor>().enabled = true;
+        DOVirtual.DelayedCall(.4f, () => {
+            ScoreText.GetComponent<RainbowColor>().enabled = false;
+        });
+    }
     private void Update()
     {
 
@@ -215,8 +211,8 @@ public class UiManager : ManagerParent
 
         if (Input.GetKeyDown(KeyCode.O))
         {
-            PopPotions("Plus");
-            WeaponEmpty();
+            PopPotions(PotionType.Plus);
+            WeaponEmpty(0);
         }
         if (Input.GetKeyDown(KeyCode.P))
         {

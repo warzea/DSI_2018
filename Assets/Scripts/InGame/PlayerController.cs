@@ -519,6 +519,7 @@ public class PlayerController : MonoBehaviour
 
     void emptyBag()
     {
+        Manager.Ui.PopPotions(PotionType.Plus);
         animPlayer.SetTrigger("BagUnfull");
         GameObject[] getBagItems = AllItem.ToArray();
         Transform getBoxTrans = getBoxWeapon;
@@ -547,16 +548,16 @@ public class PlayerController : MonoBehaviour
     void dropItem(Transform currTrans)
     {
         DOVirtual.DelayedCall(Random.Range(0, 0.2f), () =>
-   {
-       currTrans.DOLocalMove(Vector3.zero, 1.3f);
-       currTrans.DOScale(Vector3.one, 0.5f).OnComplete(() =>
         {
-            currTrans.DOScale(Vector3.zero, 0.7f).OnComplete(() =>
-             {
-                 Destroy(currTrans.gameObject);
-             });
+            currTrans.DOLocalMove(Vector3.zero, 1.3f);
+            currTrans.DOScale(Vector3.one, 0.5f).OnComplete(() =>
+            {
+                currTrans.DOScale(Vector3.zero, 0.7f).OnComplete(() =>
+                {
+                    Destroy(currTrans.gameObject);
+                });
+            });
         });
-   });
     }
 
     void animeDead(Vector3 pointColl)

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 
 public class WeaponBox : MonoBehaviour 
@@ -18,6 +19,7 @@ public class WeaponBox : MonoBehaviour
 	public bool CanControl = true;
 
 	List<PlayerWeapon> updateWeapon; 
+	int nbrTotalSlide = 0;
 	#endregion
 	
 	#region Mono
@@ -37,6 +39,8 @@ public class WeaponBox : MonoBehaviour
 	#region Public Methods
 	public void NewWeapon ( PlayerController thisPlayer, GameObject newObj = null )
 	{
+		Manager.Ui.WeaponChange(thisPlayer.IdPlayer);
+
 		if ( newObj == null )
 		{
 			newObj = (GameObject) Instantiate ( AllWeapon[Random.Range(0, AllWeapon.Length)], thisPlayer.WeaponPos );
@@ -79,7 +83,81 @@ public class WeaponBox : MonoBehaviour
 	{
 		NbrItem += lenghtItem;
 
+		int currNbr = NbrItem - nbrTotalSlide * 100;
+		Image[] getFeedBack = Manager.Ui.GaugeFeedback;
+		float getWait = 0;
+		bool checkCurr = false;
+
+		updateFeed ( getFeedBack, 0, currNbr );
+		
+		Manager.Ui.ScoreText.text = NbrItem.ToString();
 		Manager.Ui.GetScores.UpdateValue( lenghtItem, ScoreType.BoxWeapon );
+
+		while ( currNbr > 100 )
+		{
+			checkCurr = true;
+			nbrTotalSlide ++;
+			currNbr -=100;
+			
+			Manager.Ui.MultiplierNew();
+		}	
+		
+		if ( checkCurr )
+		{
+			DOVirtual.DelayedCall(0.5f, () => 
+			{
+				getWait = 0.5f;
+				resetFeed ( getFeedBack, getFeedBack.Length - 1);
+
+				DOVirtual.DelayedCall(0.5f, () => 
+				{
+					updateFeed ( getFeedBack, 0, currNbr );
+				});
+			});
+		}
+	}
+
+	void updateFeed ( Image[] getFeedBack, int currInd, int currNbr )
+	{
+		float getTime = 0.1f;
+		float getCal = (currNbr - 20 * currInd ) * 0.05f;
+
+		if ( getFeedBack[currInd].fillAmount == getCal )
+		{
+			currInd ++;
+
+			if ( currInd < getFeedBack.Length )
+			{
+				updateFeed ( getFeedBack, currInd, currNbr );
+			}
+		}
+		else
+		{
+			getFeedBack[currInd].DOKill(true);
+			getFeedBack[currInd].DOFillAmount(getCal, getTime).OnComplete (() => 
+			{
+				currInd ++;
+
+				if ( currInd < getFeedBack.Length )
+				{
+					updateFeed ( getFeedBack, currInd, currNbr );
+				}
+			});
+		}
+	}
+
+	void resetFeed ( Image[] getFeedBack, int currInd )
+	{
+		getFeedBack[currInd].DOKill(true);
+		getFeedBack[currInd].DOFillAmount(0, 0.1f).OnComplete (() => 
+		{
+			currInd --;
+
+			if ( currInd > 0 )
+			{
+				resetFeed ( getFeedBack, currInd );
+			}
+		});
 	}
 
 	public void TakeHit ( )

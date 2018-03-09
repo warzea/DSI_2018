@@ -78,11 +78,13 @@ public class GameController : ManagerParent
         PlayerController getPC;
         GameObject getPlayer;
         GameObject getWeapon;
+        GameObject[] getPlayerHud = Manager.Ui.PlayersHUD;
 
         for (int a = 0; a < getPlayers.Length; a++)
         {
             getPlayers[a].ReadyPlayer = false;
-
+            getPlayerHud[a].SetActive(getPlayers[a].EnablePlayer);
+            
             if (getPlayers[a].EnablePlayer)
             {
                 getPlayer = (GameObject)Instantiate(PlayerPrefab);

@@ -110,6 +110,11 @@ public class WeaponAbstract : MonoBehaviour
             getCapacity--;
             canShoot = false;
 
+            if ( getCapacity == 0 )
+            {
+                Manager.Ui.WeaponEmpty(playerTrans.GetComponent<PlayerController>().IdPlayer);
+            }
+
             customWeapon(playerTrans);
         }
         else if (getCapacity <= 0)

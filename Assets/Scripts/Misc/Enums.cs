@@ -29,6 +29,12 @@ public enum TypeEnemy
 	
 }
 
+public enum PotionType
+{
+	Plus
+	
+}
+
 public enum TypeMedail 
 {
 	easy,
