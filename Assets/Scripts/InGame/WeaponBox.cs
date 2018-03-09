@@ -68,6 +68,7 @@ public class WeaponBox : MonoBehaviour
 
 		updateWeapon[currId].CurrObj = newObj;
 
+		thisPlayer.UiAmmo.DOFillAmount (1, 0.1f + DelayNewWeapon);
 		objTrans.DOScale ( Vector3.one, DelayNewWeapon );
 		DOVirtual.DelayedCall ( 0.1f, ( ) => 
 		{

@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 114011123192196108}
   - component: {fileID: 114297918122055768}
   - component: {fileID: 225127637651694354}
+  - component: {fileID: 114090164583714530}
   m_Layer: 0
   m_Name: Player2 Text Pop
   m_TagString: Untagged
@@ -46,6 +47,19 @@ MonoBehaviour:
   popFadeInDuration: 0.1
   popFadeOutDuration: 0.5
   popDurationBeforeFadeOut: 5
+--- !u!114 &114090164583714530
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1271515614323310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15bfe642113140042bcd5b7892159806, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ThisPlayer: {fileID: 0}
+  getCam: {fileID: 0}
 --- !u!114 &114240414820915974
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -101,8 +101,9 @@ public class GameController : ManagerParent
                 getPC.AmmoUI = Manager.Ui.PlayersAmmo[a].transform;
 
                 getWeapon = (GameObject)Instantiate(Manager.Ui.PlayerText[a], Manager.Ui.GetInGame);
-                getPC.TextUI = getWeapon.transform;
-                
+                getWeapon.GetComponent<FollowPlayerUI>().getCam = MainCam;
+                getWeapon.GetComponent<FollowPlayerUI>().ThisPlayer = getPlayer.transform;
+
                 getWeapon = (GameObject)Instantiate(StartWeapon, getPC.WeaponPos.transform);
                 getWeapon.transform.localPosition = Vector3.zero;
                 getWeapon.transform.localRotation = Quaternion.identity;

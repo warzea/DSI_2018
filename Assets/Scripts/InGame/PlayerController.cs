@@ -89,8 +89,6 @@ public class PlayerController : MonoBehaviour
     // -----
     [HideInInspector]
     public Transform AmmoUI;
-    [HideInInspector]
-    public Transform TextUI;
     public float UiAmmoX;
     public float UiAmmoY;
     [HideInInspector]
@@ -175,15 +173,6 @@ public class PlayerController : MonoBehaviour
             AmmoUI.position = getCam.WorldToScreenPoint(thisTrans.position + Vector3.right * UiAmmoX + Vector3.up * UiAmmoY);
         }
 
-        if ( !checkUIBorderY )
-        {          
-           // TextUI.position = getCam.WorldToScreenPoint(thisTrans.position + Vector3.up * 7 );
-        } 
-        else
-        {          
-          //  TextUI.position = getCam.WorldToScreenPoint(thisTrans.position - Vector3.up * 7 );
-        }
-
         if (AllItem.Count > 0 && Vector3.Distance(thisTrans.position, getBoxWeapon.position) < DistToDropItem)
         {
             emptyBag();
@@ -245,15 +234,6 @@ public class PlayerController : MonoBehaviour
         {
             checkUIBorder = false;
         }
-
-       /* if (getCam.WorldToViewportPoint(thisTrans.position + Vector3.up * 7).y > 0.97f)
-        {
-            checkUIBorderY = true;
-        }
-        else
-        {
-            checkUIBorderY = false;
-        }*/
 
         if (getCamPos.y > 0.97f)
         {
