@@ -29,6 +29,7 @@ public class AgentsManager : ManagerParent
     public int pourcentLowPV;
     public int pourcentMaxPV;
     public int pourcentLead;
+    public int pourcentCauldron;
 
     [Header("------------------")]
     [Header("----INFO AGENT----")]
@@ -46,6 +47,9 @@ public class AgentsManager : ManagerParent
     [Header("List Agent Focus Lead")]
     public List<AgentController> leadAgents;
 
+    [Header("List Agent Focus Cauldron")]
+    public List<AgentController> cauldronAgent;
+
     [Header("List Agent Focus Other")]
     public List<AgentController> othersAgents;
 
@@ -60,11 +64,13 @@ public class AgentsManager : ManagerParent
     private int nbLawPv;
     private int nbMaxPv;
     private int nbLead;
+    private int nbCauldron;
 
     //AgentFocus;
     private GameObject playerLaw;
     private GameObject playerMax;
     private GameObject playerLead;
+    private GameObject playerCauldron;
 
     //Timer
     private float timeAgent = 0;
@@ -73,6 +79,8 @@ public class AgentsManager : ManagerParent
     protected override void InitializeManager()
     {
         agents = GameObject.FindObjectsOfType<AgentController>();
+        playerCauldron = Manager.GameCont.WeaponB.gameObject;
+        Debug.Log(playerCauldron);
     }
 
     private void Update()
@@ -92,6 +100,7 @@ public class AgentsManager : ManagerParent
         }
     }
 
+    #region CheckPoint
     public Vector3 CheckBestcheckPoint(Transform posTarget)
     {
         Vector3 bestSpawn = new Vector3();
@@ -104,7 +113,6 @@ public class AgentsManager : ManagerParent
             if (distanceSave > distanceAgent)
             {
                 bestSpawnlist.Add(posRespawn[i]);
-                //distanceSave = distanceAgent;
             }
             else
             {
@@ -132,6 +140,7 @@ public class AgentsManager : ManagerParent
             return bestSpawn;
         }
     }
+    #endregion
 
     #region WhoFocus
     public void ChangeEtatFocus(GameObject lawP, GameObject maxP, GameObject leadP)
@@ -159,6 +168,10 @@ public class AgentsManager : ManagerParent
             {
                 agents[i].SetFocusLeadPlayer(playerLead);
             }
+            else if (agents[i].myFocusEtatAgent.ToString() == "cauldron")
+            {
+                agents[i].SetFocusCauldron(playerCauldron);
+            }
         }
     }
 
@@ -178,6 +191,7 @@ public class AgentsManager : ManagerParent
         nbLawPv = (int)Mathf.Round(nbAgents * pourcentLowPV / 100);
         nbMaxPv = (int)Mathf.Round(nbAgents * pourcentMaxPV / 100);
         nbLead = (int)Mathf.Round(nbAgents * pourcentLead / 100);
+        nbCauldron = (int)Mathf.Round(nbAgents * pourcentCauldron / 100);
 
         for (int i = 0; i < agents.Length; i++)
         {
@@ -223,6 +237,16 @@ public class AgentsManager : ManagerParent
                 othersAgents.Remove(othersAgents[othersAgents.Count - 1]);
             }
         }
+        if (cauldronAgent.Count < nbCauldron)
+        {
+            int needAgent = nbCauldron - cauldronAgent.Count;
+            for (int i = 0; i < needAgent; i++)
+            {
+                cauldronAgent.Add(othersAgents[othersAgents.Count - 1]);
+                othersAgents[othersAgents.Count - 1].SetFocusCauldron(playerCauldron);
+                othersAgents.Remove(othersAgents[othersAgents.Count - 1]);
+            }
+        }
     }
     #endregion
 
@@ -265,6 +289,19 @@ public class AgentsManager : ManagerParent
                     othersAgents.Insert(0, leadAgents[i]);
                     leadAgents[i].SetFocusRandomPlayer(player[randomPlayer]);
                     leadAgents.Remove(leadAgents[i]);
+                    break;
+                }
+            }
+        }
+        else if (etatAgentDead == "cauldron")
+        {
+            for (int i = 0; i < cauldronAgent.Count; i++)
+            {
+                if (cauldronAgent[i].gameObject == agentDead)
+                {
+                    othersAgents.Insert(0, cauldronAgent[i]);
+                    cauldronAgent[i].SetFocusRandomPlayer(player[randomPlayer]);
+                    cauldronAgent.Remove(cauldronAgent[i]);
                     break;
                 }
             }

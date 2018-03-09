@@ -10,6 +10,7 @@ public static class Constants
     public const string _EnemyBullet = "BulletEnemy";
     public const string _PlayerBullet = "BulletPlayer";
     public const string _Enemy = "Enemy";
+    public const string _Untag = "Untagged";
     #endregion
 
     #region Layer

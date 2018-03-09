@@ -26,7 +26,7 @@ public class AgentController : MonoBehaviour
     public float distanceShoot = 20;
 
 
-    public enum CibleAgent { lawPlayer, maxPlayer, leadPlayer, randomPlayer, nothing };
+    public enum CibleAgent { lawPlayer, maxPlayer, leadPlayer, cauldron, randomPlayer, nothing };
     public enum AgentEtat { deadAgent, aliveAgent };
     public CibleAgent myFocusEtatAgent;
     public AgentEtat myEtatAgent;
@@ -73,7 +73,7 @@ public class AgentController : MonoBehaviour
 
                 if (Physics.Raycast(spawnBulletAgent.position, spawnBulletAgent.forward, out hit))
                 {
-                    if (hit.transform.tag == "Player")
+                    if (hit.transform.tag == "Player" || hit.transform.tag == "WeaponBox")
                     {
                         GameObject killeuse = (GameObject)Instantiate(bulletAgent, spawnBulletAgent.position, spawnBulletAgent.rotation, parentBullet.transform);
                     }
@@ -142,6 +142,12 @@ public class AgentController : MonoBehaviour
         myFocusPlayer = player;
     }
 
+    public void SetFocusCauldron(GameObject player)
+    {
+        myFocusEtatAgent = CibleAgent.cauldron;
+        myFocusPlayer = player;
+    }
+
     public void SetFocusRandomPlayer(GameObject player)
     {
         myFocusEtatAgent = CibleAgent.randomPlayer;
@@ -160,13 +166,18 @@ public class AgentController : MonoBehaviour
         lifeAgent = 1;
     }
 
-
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == Constants._PlayerBullet && myEtatAgent == AgentEtat.aliveAgent)
         {
-            Destroy(other.gameObject);
-            lifeAgent = lifeAgent - 1;
+            BulletAbstract getBA = other.GetComponent<BulletAbstract>();
+            if ( !getBA.Through  )
+            {
+                Destroy(other.gameObject);
+            }
+            
+            lifeAgent -= getBA.BulletDamage;
+
             if (lifeAgent <= 0)
             {
                 myEtatAgent = AgentEtat.deadAgent;

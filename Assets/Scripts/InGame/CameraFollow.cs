@@ -6,9 +6,6 @@ using DG.Tweening;
 public class CameraFollow : MonoBehaviour
 {
     #region Variables
-    public float DistFollow = 30;
-    public float DistFollowX = 30;
-    public float DistFollowZ = 30;
     public Transform Target;
     public float smoothTime = 0.3F;
     Vector3 velocity = Vector3.zero;
@@ -23,7 +20,7 @@ public class CameraFollow : MonoBehaviour
 
     void LateUpdate()
     {
-        transform.position = Vector3.Lerp(transform.position, Target.TransformPoint(new Vector3(DistFollowX, DistFollow, DistFollowZ)), smoothTime * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, Target.position, smoothTime * Time.deltaTime);
     }
     #endregion
 

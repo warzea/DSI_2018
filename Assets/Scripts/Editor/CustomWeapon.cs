@@ -24,7 +24,7 @@ public class CustomWeapon : Editor
 	SerializedProperty ScaleBullet;
 	SerializedProperty SpeedBullet;
 	SerializedProperty Gust;
-	SerializedProperty SpaceBullet;
+	SerializedProperty SpaceBulletTime;
 	SerializedProperty Angle;
 	SerializedProperty WidthRange;
 	SerializedProperty SpeedZone;
@@ -73,7 +73,7 @@ public class CustomWeapon : Editor
 		NbrBullet = serializedObject.FindProperty("NbrBullet");
 		Gust = serializedObject.FindProperty("Gust");
 			// -- si Gust 
-			SpaceBullet = serializedObject.FindProperty("SpaceBullet");
+			SpaceBulletTime = serializedObject.FindProperty("SpaceBullet");
 			// -- fin Gust
 
 			// -- si spread
@@ -248,7 +248,7 @@ public class CustomWeapon : Editor
 			if ( myTarget.Gust )
 			{
 				EditorGUILayout.LabelField("Gust -------", EditorStyles.boldLabel);
-				EditorGUILayout.PropertyField ( SpaceBullet );
+				EditorGUILayout.PropertyField ( SpaceBulletTime );
 				EditorGUILayout.LabelField("-------", EditorStyles.boldLabel);
 			} // -- fin Gust
 			else // -- si spread
@@ -279,7 +279,7 @@ public class CustomWeapon : Editor
 			EditorGUILayout.PropertyField ( Diameter );
 			EditorGUILayout.LabelField("-------", EditorStyles.boldLabel);
 			// -- fin explostion
-		}		
+		}	
 
 		EditorGUI.indentLevel = 0;
 		EditorGUILayout.LabelField("-------", EditorStyles.boldLabel);
