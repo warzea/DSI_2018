@@ -19,12 +19,14 @@ public class WeaponBox : MonoBehaviour
 	public bool CanControl = true;
 
 	List<PlayerWeapon> updateWeapon; 
+	List<Tween> getAllTween;
 	int nbrTotalSlide = 0;
 	#endregion
 	
 	#region Mono
 	void Awake ( )
 	{
+		getAllTween = new List<Tween>();
 		updateWeapon = new List<PlayerWeapon>();
 		GetTrans = transform;
 
@@ -88,6 +90,12 @@ public class WeaponBox : MonoBehaviour
 		float getWait = 0;
 		bool checkCurr = false;
 
+		for ( int a = 0; a < getAllTween.Count; a ++ )
+		{
+			getAllTween[a].Kill();
+		}
+		getAllTween.Clear();
+
 		updateFeed ( getFeedBack, 0, currNbr );
 		
 		Manager.Ui.ScoreText.text = NbrItem.ToString();
@@ -104,16 +112,20 @@ public class WeaponBox : MonoBehaviour
 		
 		if ( checkCurr )
 		{
-			DOVirtual.DelayedCall(0.5f, () => 
+			Tween getTween;
+			getTween = DOVirtual.DelayedCall(0.5f, () => 
 			{
 				getWait = 0.5f;
 				resetFeed ( getFeedBack, getFeedBack.Length - 1);
 
-				DOVirtual.DelayedCall(0.5f, () => 
+				getTween = DOVirtual.DelayedCall(0.5f, () => 
 				{
 					updateFeed ( getFeedBack, 0, currNbr );
 				});
+				getAllTween.Add ( getTween );
 			});
+
+			getAllTween.Add ( getTween );
 		}
 	}
 
@@ -133,8 +145,9 @@ public class WeaponBox : MonoBehaviour
 		}
 		else
 		{
+			Tween getTween;
 			getFeedBack[currInd].DOKill();
-			getFeedBack[currInd].DOFillAmount(getCal, getTime).OnComplete (() => 
+			getTween = getFeedBack[currInd].DOFillAmount(getCal, getTime).OnComplete (() => 
 			{
 				currInd ++;
 
@@ -143,13 +156,15 @@ public class WeaponBox : MonoBehaviour
 					updateFeed ( getFeedBack, currInd, currNbr );
 				}
 			});
+			getAllTween.Add(getTween);
 		}
 	}
 
 	void resetFeed ( Image[] getFeedBack, int currInd )
 	{
+		Tween getTween;
 		getFeedBack[currInd].DOKill();
-		getFeedBack[currInd].DOFillAmount(0, 0.1f).OnComplete (() => 
+		getTween = getFeedBack[currInd].DOFillAmount(0, 0.1f).OnComplete (() => 
 		{
 			currInd --;
 
@@ -158,6 +173,7 @@ public class WeaponBox : MonoBehaviour
 				resetFeed ( getFeedBack, currInd );
 			}
 		});
+		getAllTween.Add(getTween);
 	}
 
 	public void TakeHit ( )

@@ -31,8 +31,6 @@ public class UiManager : ManagerParent
     public GameObject CircleMultiplier;
 
 
-
-
     Dictionary <MenuType, UiParent> AllMenu;
 	MenuType menuOpen;
 	#endregion

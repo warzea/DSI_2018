@@ -79,12 +79,12 @@ public class GameController : ManagerParent
         GameObject getPlayer;
         GameObject getWeapon;
         GameObject[] getPlayerHud = Manager.Ui.PlayersHUD;
-
+        
         for (int a = 0; a < getPlayers.Length; a++)
         {
             getPlayers[a].ReadyPlayer = false;
             getPlayerHud[a].SetActive(getPlayers[a].EnablePlayer);
-            
+
             if (getPlayers[a].EnablePlayer)
             {
                 getPlayer = (GameObject)Instantiate(PlayerPrefab);
@@ -98,6 +98,7 @@ public class GameController : ManagerParent
                 getPlayer.transform.position = PlayerPosSpawn.position + new Vector3(a * 1.5f, 0, 0);
                 getPC = getPlayer.GetComponent<PlayerController>();
                 getPC.IdPlayer = getPlayers[a].IdPlayer;
+                getPC.AmmoUI = Manager.Ui.PlayersAmmo[a].transform;
 
                 getWeapon = (GameObject)Instantiate(StartWeapon, getPC.WeaponPos.transform);
                 getWeapon.transform.localPosition = Vector3.zero;

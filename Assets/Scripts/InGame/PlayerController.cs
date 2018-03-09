@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Rewired;
 using DG.Tweening;
 
@@ -86,6 +87,12 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public int LostItem = 0;
     // -----
+    [HideInInspector]
+    public Transform AmmoUI;
+    public float UiAmmoX;
+    public float UiAmmoY;
+    [HideInInspector]
+    public Image UiAmmo;
     PlayerController thisPC;
     WeaponAbstract thisWeapon;
     Transform thisTrans;
@@ -108,6 +115,8 @@ public class PlayerController : MonoBehaviour
     bool checkShootScore = true;
     bool checkAward = false;
     bool checkAuto = false;
+    bool checkUIBorder = false;
+
     #endregion
 
     #region Mono
@@ -130,6 +139,8 @@ public class PlayerController : MonoBehaviour
         thisTrans = transform;
         thisRig = GetComponent<Rigidbody>();
 
+        AmmoUI.gameObject.SetActive(true);
+        UiAmmo = AmmoUI.Find("Ammo Inside").GetComponent<Image>();
         inputPlayer = ReInput.players.GetPlayer(IdPlayer);
 
         getBoxWeapon = Manager.GameCont.WeaponB.transform;
@@ -148,6 +159,19 @@ public class PlayerController : MonoBehaviour
         }
 
         checkBorder();
+        
+        if ( !checkUIBorder )
+        {
+            AmmoUI.localScale = Vector3.one;
+            
+            AmmoUI.position = getCam.WorldToScreenPoint(thisTrans.position - Vector3.right * UiAmmoX + Vector3.up * UiAmmoY);
+        } 
+        else
+        {
+            AmmoUI.localScale = new Vector3(-1, 1, 1);
+            
+            AmmoUI.position = getCam.WorldToScreenPoint(thisTrans.position + Vector3.right * UiAmmoX + Vector3.up * UiAmmoY);
+        }
 
         if (AllItem.Count > 0 && Vector3.Distance(thisTrans.position, getBoxWeapon.position) < DistToDropItem)
         {
@@ -200,6 +224,15 @@ public class PlayerController : MonoBehaviour
         else if (getCamPos.x < 0.03f)
         {
             thisTrans.position = new Vector3(getCam.ViewportToWorldPoint(new Vector3(0.03f, getCamPos.y, getCamPos.z)).x, thisTrans.position.y, thisTrans.position.z);
+        }
+
+        if (getCam.WorldToViewportPoint(thisTrans.position - Vector3.right * UiAmmoX).x < 0.03f)
+        {
+            checkUIBorder = true;
+        }
+        else
+        {
+            checkUIBorder = false;
         }
 
         if (getCamPos.y > 0.97f)
