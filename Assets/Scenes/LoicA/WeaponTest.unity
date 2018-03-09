@@ -2087,6 +2087,56 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b475873df400d4f109fd46964cc99f7d, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &800738365
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 800738366}
+  - component: {fileID: 800738367}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &800738366
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 800738365}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2105741876}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &800738367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 800738365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fe8a820207086a4b9a2d2437c8685a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObsPower: 0.12
+  ObsDuration: 0.2
+  ShootLowPower: 0.15
+  ShootLowDuration: 0.25
+  ShootMediumPower: 0.5
+  ShootMediumDuration: 0.5
+  ShootHighPower: 0.5
+  ShootHighDuration: 0.5
+  StunPower: 2.5
+  StunDuration: 1
 --- !u!4 &802115143 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4172624450049298, guid: b475873df400d4f109fd46964cc99f7d,
@@ -2183,7 +2233,7 @@ Prefab:
         type: 2}
       propertyPath: AllWeapon.Array.data[0]
       value: 
-      objectReference: {fileID: 1093315411277202, guid: 9b701f1700e8d684299ad5dc62772311,
+      objectReference: {fileID: 1093315411277202, guid: 207135de87a14cc46a24666f80d076a5,
         type: 2}
     - target: {fileID: 114427052359867546, guid: 4937250a6dda9a844ac259531ecc0430,
         type: 2}
@@ -4810,6 +4860,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GetInGame: {fileID: 846140127}
   GetScores: {fileID: 212366494}
+  PlayersHUD: []
+  PlayersWeapon: []
+  ScoreText: {fileID: 0}
+  PotionsPlus: {fileID: 0}
+  PotionsLess: {fileID: 0}
+  Light: {fileID: 0}
+  Circle: {fileID: 0}
 --- !u!1 &1812375445
 GameObject:
   m_ObjectHideFlags: 0
@@ -5342,6 +5399,7 @@ Transform:
   - {fileID: 1806696500}
   - {fileID: 1956432152}
   - {fileID: 807780203}
+  - {fileID: 800738366}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

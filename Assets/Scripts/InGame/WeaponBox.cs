@@ -7,6 +7,7 @@ public class WeaponBox : MonoBehaviour
 {
 	#region Variables
 	Transform GetTrans;
+	public int pourcLoot = 10;
 	public GameObject[] AllWeapon;
 	public float DelayNewWeapon = 1;
 
@@ -69,9 +70,22 @@ public class WeaponBox : MonoBehaviour
 
 		Manager.Ui.GetScores.UpdateValue( lenghtItem, ScoreType.BoxWeapon );
 	}
+
+	public void TakeHit ( )
+	{
+		NbrItem /= pourcLoot;
+	}
 	#endregion
 
 	#region Private Methods
+	void OnTriggerEnter ( Collider thisColl )
+	{
+		string tag = thisColl.tag;
+		if ( tag == Constants._EnemyBullet )
+		{
+			TakeHit ();
+		}
+	}
 	#endregion
 
 }

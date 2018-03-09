@@ -4,11 +4,21 @@ using UnityEngine;
 
 public class AgentsManagerCac : ManagerParent
 {
-
+    [Header("------------------")]
+    [Header("----INFO Level----")]
+    [Header("------------------")]
     public Transform[] posRespawn;
+
+    [Header("------------------")]
+    [Header("----INFO AGENT----")]
+    [Header("------------------")]
     public AgentControllerCac[] agents;
+
+
+    [Header("Cauldron")]
     public GameObject playerCauldron;
 
+    [Header("Distance max checkpoints")]
     public float distanceSave = 200;
 
     void initialisation()
