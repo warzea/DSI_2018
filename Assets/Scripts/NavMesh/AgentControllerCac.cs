@@ -56,13 +56,11 @@ public class AgentControllerCac : MonoBehaviour
                     transform.LookAt(lookAtPosition);
                     if (focusPlayer.tag == "WeaponBox")
                     {
-                        Debug.Log("WeaponBox");
-                        //Attaque WeaponBox
+                        focusPlayer.GetComponent<WeaponBox>().TakeHit();
                     }
                     else if (focusPlayer.tag == "Player")
                     {
-                        Debug.Log("Player");
-                        //Attaque Player
+                        focusPlayer.GetComponent<PlayerController>().GetDamage(transform);
                     }
                 }
             }

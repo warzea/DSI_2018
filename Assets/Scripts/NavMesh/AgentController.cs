@@ -83,7 +83,7 @@ public class AgentController : MonoBehaviour
                     }
                     else
                     {
-                        Debug.Log("I need Move");
+                        //  Debug.Log("I need Move");
                     }
                 }
             }
@@ -173,7 +173,7 @@ public class AgentController : MonoBehaviour
             {
                 Destroy(other.gameObject);
             }*/
-            
+
             lifeAgent -= getBA.BulletDamage;
 
             if (lifeAgent <= 0)
