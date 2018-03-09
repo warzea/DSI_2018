@@ -75,6 +75,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1297790362064804
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4265074938997230}
+  - component: {fileID: 114363305410666460}
+  m_Layer: 0
+  m_Name: VibrationManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1339305852078688
 GameObject:
   m_ObjectHideFlags: 0
@@ -83,7 +99,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4966607110826706}
-  - component: {fileID: 114895754389165182}
+  - component: {fileID: 114940564612134464}
+  - component: {fileID: 114615207581199468}
   m_Layer: 0
   m_Name: ManagerNavMesh
   m_TagString: Untagged
@@ -216,6 +233,19 @@ Transform:
   m_Father: {fileID: 4707250982502558}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4265074938997230
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1297790362064804}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4707250982502558}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4348142322103540
 Transform:
   m_ObjectHideFlags: 1
@@ -258,6 +288,7 @@ Transform:
   - {fileID: 4106507351973786}
   - {fileID: 4348142322103540}
   - {fileID: 4477541246955844}
+  - {fileID: 4265074938997230}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -305,6 +336,8 @@ MonoBehaviour:
   PlayerPosSpawn: {fileID: 0}
   MainCam: {fileID: 0}
   WeaponB: {fileID: 0}
+  TimerCheckPlayer: 1
+  GetCameraFollow: {fileID: 0}
   Garbage: {fileID: 0}
   Players: []
 --- !u!114 &114024564094145676
@@ -377,6 +410,28 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+--- !u!114 &114363305410666460
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1297790362064804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fe8a820207086a4b9a2d2437c8685a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerID: 0
+  ObsPower: 0.12
+  ObsDuration: 0.2
+  ShootLowPower: 0.15
+  ShootLowDuration: 0.25
+  ShootMediumPower: 0.5
+  ShootMediumDuration: 0.5
+  ShootHighPower: 0.5
+  ShootHighDuration: 0.5
+  StunPower: 2.5
+  StunDuration: 1
 --- !u!114 &114397019127823932
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -390,6 +445,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GetInGame: {fileID: 224583677433064164}
   GetScores: {fileID: 114741718821197722}
+  PlayersHUD: []
+  PlayersWeapon: []
+  ScoreText: {fileID: 0}
+  PotionsPlus: {fileID: 0}
+  PotionsLess: {fileID: 0}
+  Light: {fileID: 0}
+  Circle: {fileID: 0}
 --- !u!114 &114533155146921874
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -401,7 +463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 581b3e3c96df0ef42aef16b63b27b87f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dontDestroyOnLoad: 1
+  _dontDestroyOnLoad: 0
   _userData:
     configVars:
       updateLoop: 1
@@ -526,11 +588,14 @@ MonoBehaviour:
         _categoryId: 0
         _layoutId: 0
       _defaultMouseMaps: []
-      _defaultKeyboardMaps: []
+      _defaultKeyboardMaps:
+      - _enabled: 1
+        _categoryId: 0
+        _layoutId: 0
       _defaultCustomControllerMaps: []
       _startingCustomControllers: []
       _assignMouseOnStart: 0
-      _assignKeyboardOnStart: 0
+      _assignKeyboardOnStart: 1
       _excludeFromControllerAutoAssignment: 0
     - _id: 2
       _name: Player1
@@ -541,11 +606,14 @@ MonoBehaviour:
         _categoryId: 0
         _layoutId: 0
       _defaultMouseMaps: []
-      _defaultKeyboardMaps: []
+      _defaultKeyboardMaps:
+      - _enabled: 1
+        _categoryId: 0
+        _layoutId: 1
       _defaultCustomControllerMaps: []
       _startingCustomControllers: []
       _assignMouseOnStart: 0
-      _assignKeyboardOnStart: 0
+      _assignKeyboardOnStart: 1
       _excludeFromControllerAutoAssignment: 0
     - _id: 3
       _name: Player2
@@ -556,11 +624,14 @@ MonoBehaviour:
         _categoryId: 0
         _layoutId: 0
       _defaultMouseMaps: []
-      _defaultKeyboardMaps: []
+      _defaultKeyboardMaps:
+      - _enabled: 1
+        _categoryId: 0
+        _layoutId: 2
       _defaultCustomControllerMaps: []
       _startingCustomControllers: []
       _assignMouseOnStart: 0
-      _assignKeyboardOnStart: 0
+      _assignKeyboardOnStart: 1
       _excludeFromControllerAutoAssignment: 0
     - _id: 4
       _name: Player3
@@ -571,11 +642,14 @@ MonoBehaviour:
         _categoryId: 0
         _layoutId: 0
       _defaultMouseMaps: []
-      _defaultKeyboardMaps: []
+      _defaultKeyboardMaps:
+      - _enabled: 1
+        _categoryId: 0
+        _layoutId: 3
       _defaultCustomControllerMaps: []
       _startingCustomControllers: []
       _assignMouseOnStart: 0
-      _assignKeyboardOnStart: 0
+      _assignKeyboardOnStart: 1
       _excludeFromControllerAutoAssignment: 0
     actions:
     - _id: 0
@@ -709,6 +783,15 @@ MonoBehaviour:
     - _name: Default
       _descriptiveName: Default
       _id: 0
+    - _name: Layout0
+      _descriptiveName: Layout0
+      _id: 1
+    - _name: Layout1
+      _descriptiveName: Layout1
+      _id: 2
+    - _name: Layout2
+      _descriptiveName: Layout2
+      _id: 3
     mouseLayouts:
     - _name: Default
       _descriptiveName: Default
@@ -978,7 +1061,310 @@ MonoBehaviour:
         _modifierKey1: 0
         _modifierKey2: 0
         _modifierKey3: 0
-    keyboardMaps: []
+    keyboardMaps:
+    - id: 0
+      categoryId: 0
+      layoutId: 0
+      name: 
+      hardwareGuidString: 
+      customControllerUid: 0
+      actionElementMaps:
+      - _actionCategoryId: 0
+        _actionId: 1
+        _elementType: 1
+        _elementIdentifierId: -1
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 0
+        _keyboardKeyCode: 100
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
+      - _actionCategoryId: 0
+        _actionId: 1
+        _elementType: 1
+        _elementIdentifierId: -1
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 1
+        _keyboardKeyCode: 113
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
+      - _actionCategoryId: 0
+        _actionId: 2
+        _elementType: 1
+        _elementIdentifierId: -1
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 0
+        _keyboardKeyCode: 122
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
+      - _actionCategoryId: 0
+        _actionId: 2
+        _elementType: 1
+        _elementIdentifierId: -1
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 1
+        _keyboardKeyCode: 115
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
+      - _actionCategoryId: 0
+        _actionId: 10
+        _elementType: 1
+        _elementIdentifierId: -1
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 0
+        _keyboardKeyCode: 13
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
+      - _actionCategoryId: 0
+        _actionId: 5
+        _elementType: 1
+        _elementIdentifierId: -1
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 0
+        _keyboardKeyCode: 101
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
+      - _actionCategoryId: 0
+        _actionId: 0
+        _elementType: 1
+        _elementIdentifierId: -1
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 0
+        _keyboardKeyCode: 97
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
+    - id: 1
+      categoryId: 0
+      layoutId: 1
+      name: 
+      hardwareGuidString: 
+      customControllerUid: 0
+      actionElementMaps:
+      - _actionCategoryId: 0
+        _actionId: 1
+        _elementType: 1
+        _elementIdentifierId: -1
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 0
+        _keyboardKeyCode: 104
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
+      - _actionCategoryId: 0
+        _actionId: 1
+        _elementType: 1
+        _elementIdentifierId: -1
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 1
+        _keyboardKeyCode: 102
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
+      - _actionCategoryId: 0
+        _actionId: 2
+        _elementType: 1
+        _elementIdentifierId: -1
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 0
+        _keyboardKeyCode: 116
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
+      - _actionCategoryId: 0
+        _actionId: 2
+        _elementType: 1
+        _elementIdentifierId: -1
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 1
+        _keyboardKeyCode: 103
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
+      - _actionCategoryId: 0
+        _actionId: 10
+        _elementType: 1
+        _elementIdentifierId: -1
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 0
+        _keyboardKeyCode: 13
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
+      - _actionCategoryId: 0
+        _actionId: 5
+        _elementType: 1
+        _elementIdentifierId: -1
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 0
+        _keyboardKeyCode: 121
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
+    - id: 2
+      categoryId: 0
+      layoutId: 2
+      name: 
+      hardwareGuidString: 
+      customControllerUid: 0
+      actionElementMaps:
+      - _actionCategoryId: 0
+        _actionId: 1
+        _elementType: 1
+        _elementIdentifierId: -1
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 0
+        _keyboardKeyCode: 109
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
+      - _actionCategoryId: 0
+        _actionId: 1
+        _elementType: 1
+        _elementIdentifierId: -1
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 1
+        _keyboardKeyCode: 107
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
+      - _actionCategoryId: 0
+        _actionId: 2
+        _elementType: 1
+        _elementIdentifierId: -1
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 0
+        _keyboardKeyCode: 111
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
+      - _actionCategoryId: 0
+        _actionId: 2
+        _elementType: 1
+        _elementIdentifierId: -1
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 1
+        _keyboardKeyCode: 108
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
+      - _actionCategoryId: 0
+        _actionId: 10
+        _elementType: 1
+        _elementIdentifierId: -1
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 0
+        _keyboardKeyCode: 13
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
+      - _actionCategoryId: 0
+        _actionId: 5
+        _elementType: 1
+        _elementIdentifierId: -1
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 0
+        _keyboardKeyCode: 112
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
+    - id: 3
+      categoryId: 0
+      layoutId: 3
+      name: 
+      hardwareGuidString: 
+      customControllerUid: 0
+      actionElementMaps:
+      - _actionCategoryId: 0
+        _actionId: 1
+        _elementType: 1
+        _elementIdentifierId: -1
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 0
+        _keyboardKeyCode: 262
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
+      - _actionCategoryId: 0
+        _actionId: 1
+        _elementType: 1
+        _elementIdentifierId: -1
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 1
+        _keyboardKeyCode: 260
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
+      - _actionCategoryId: 0
+        _actionId: 2
+        _elementType: 1
+        _elementIdentifierId: -1
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 0
+        _keyboardKeyCode: 264
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
+      - _actionCategoryId: 0
+        _actionId: 2
+        _elementType: 1
+        _elementIdentifierId: -1
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 1
+        _keyboardKeyCode: 261
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
+      - _actionCategoryId: 0
+        _actionId: 10
+        _elementType: 1
+        _elementIdentifierId: -1
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 0
+        _keyboardKeyCode: 13
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
+      - _actionCategoryId: 0
+        _actionId: 5
+        _elementType: 1
+        _elementIdentifierId: -1
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 0
+        _keyboardKeyCode: 265
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
     mouseMaps: []
     customControllerMaps: []
     customControllers: []
@@ -988,11 +1374,11 @@ MonoBehaviour:
     inputBehaviorIdCounter: 1
     mapCategoryIdCounter: 1
     joystickLayoutIdCounter: 1
-    keyboardLayoutIdCounter: 1
+    keyboardLayoutIdCounter: 4
     mouseLayoutIdCounter: 1
     customControllerLayoutIdCounter: 1
     joystickMapIdCounter: 1
-    keyboardMapIdCounter: 0
+    keyboardMapIdCounter: 4
     mouseMapIdCounter: 0
     customControllerMapIdCounter: 0
     customControllerIdCounter: 0
@@ -1009,6 +1395,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f300df02c0a9c384c8610adae50c59d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114615207581199468
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1339305852078688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3072392fb4aece145bc22fb295aa87fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  posRespawn:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  agents: []
+  playerCauldron: {fileID: 0}
+  distanceSave: 200
 --- !u!114 &114741718821197722
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1035,7 +1440,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60ef87f252ad54c47b0c3a0cd0422620, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114895754389165182
+--- !u!114 &114940564612134464
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1046,19 +1451,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9b757fa7d3b8c04b886926f54c525cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player:
+  posRespawn:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  maxPosPlayer: 20
-  timeLeftAgentLook: 0.1
-  pourcentLowPV: 10
-  pourcentMaxPV: 10
-  pourcentLead: 40
+  player: []
+  maxPosPlayer: 30
+  timeLeftAgentLook: 0.5
+  pourcentLowPV: 20
+  pourcentMaxPV: 20
+  pourcentLead: 20
+  pourcentCauldron: 20
+  distanceSave: 200
   lawpvAgents: []
   maxpvAgents: []
   leadAgents: []
+  cauldronAgent: []
   othersAgents: []
 --- !u!222 &222370504019046004
 CanvasRenderer:

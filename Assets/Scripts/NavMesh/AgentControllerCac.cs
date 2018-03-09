@@ -99,7 +99,7 @@ public class AgentControllerCac : MonoBehaviour
     {
         if (other.tag == "BulletPlayer")
         {
-            Destroy(other.gameObject);
+            //Destroy(other.gameObject);
             lifeAgent = lifeAgent - 1;
             if (lifeAgent <= 0)
             {

@@ -168,11 +168,11 @@ public class AgentController : MonoBehaviour
         if (other.tag == Constants._PlayerBullet && myEtatAgent == AgentEtat.aliveAgent)
         {
             BulletAbstract getBA = other.GetComponent<BulletAbstract>();
-            if (!getBA.Through)
+            /*if ( !getBA.Through  )
             {
                 Destroy(other.gameObject);
-            }
-
+            }*/
+            
             lifeAgent -= getBA.BulletDamage;
 
             if (lifeAgent <= 0)

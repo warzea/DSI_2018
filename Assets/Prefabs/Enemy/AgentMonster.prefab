@@ -142,7 +142,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49555ba341cab3f40a56b88d876f952f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dead: 0
   myFocusPlayer: {fileID: 0}
   lifeAgent: 1
   timeBeforeDepop: 0.1
