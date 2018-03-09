@@ -38,6 +38,8 @@ public class BulletAbstract : MonoBehaviour
     public float TimeFarEffect = 1;
     [HideInInspector]
     public PlayerController thisPlayer;
+    [HideInInspector]
+    public bool Dest = true;
     Transform thisTrans;
     Vector3 startPos;
     Vector3 newPos;
@@ -102,7 +104,7 @@ public class BulletAbstract : MonoBehaviour
         }
         else if ( !checkEnd )
         {
-            Destroy ( gameObject, 5 );
+            destObj ( 5 );
             
             //Destroy ( gameObject, TimeStay );
             checkEnd = true;
@@ -119,7 +121,7 @@ public class BulletAbstract : MonoBehaviour
         DOTween.To(()=> getDistScale, x=> getDistScale = x, BulletRange * 0.5f * FarEffect , TimeFarEffect);
         DOTween.To(()=> startPos, x=> startPos = x, new Vector3(WidthRange, 5, BulletRange), SpeedZone).OnComplete ( () =>
         {
-            Destroy(gameObject, TimeStay);
+            destObj ( TimeStay );
         });
     }
     void OnTriggerEnter(Collider collision)
@@ -170,22 +172,30 @@ public class BulletAbstract : MonoBehaviour
                 {
                     if ( GetEffect != null && GetEffect.GetComponent<ParticleSystem>() )
                     {
-                        Destroy ( gameObject, GetEffect.GetComponent<ParticleSystem>().main.duration );
+                        destObj ( GetEffect.GetComponent<ParticleSystem>().main.duration );
                     }
                     else
                     {
-                        Destroy ( gameObject, 1.5f); 
+                        destObj ( 1.5f ); 
                     }
                 }
                 else
                 {
-                    Destroy ( gameObject );
+                    destObj ( );
                 }
             }
         }
         else if ( collision.tag == Constants._Wall )
         {
-            Destroy ( gameObject );
+            destObj ( );
+        }
+    }
+
+    void destObj ( float delay = 0 )
+    {
+        if ( Dest )
+        {
+            Destroy (gameObject, delay);
         }
     }
     #endregion

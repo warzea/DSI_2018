@@ -70,6 +70,7 @@ public class WeaponAbstract : MonoBehaviour
 
     Transform getGargabe;
     int getCapacity;
+    bool checklLaser = false;
 
     #endregion
 
@@ -90,7 +91,14 @@ public class WeaponAbstract : MonoBehaviour
             getCapacity--;
             canShoot = false;
 
-            customWeapon(playerTrans);
+            if ( !checklLaser )
+            {
+                if ( FireRate == -1 )
+                {
+                    checklLaser = true;
+                }
+                customWeapon(playerTrans);
+            }
         }
         else if (getCapacity <= 0)
         {
@@ -154,7 +162,13 @@ public class WeaponAbstract : MonoBehaviour
         thisBullet.FarEffect = FarEffect;
         thisBullet.TimeFarEffect = TimeFarEffect;
         thisBullet.thisPlayer = thisPlayer;
+        thisBullet.Dest = false;
         thisPlayer.ShootBullet ++;
+
+        if ( checklLaser )
+        {
+            thisBullet.transform.SetParent(SpawnBullet);
+        }
     }
 
     void zoneShoot(Transform thisPlayer)
@@ -228,7 +242,6 @@ public class WeaponAbstract : MonoBehaviour
                 getScript.direction = (playerTrans.forward * (75 - (a - nbrMidle) * getAngle) - playerTrans.right * (a - nbrMidle) * getAngle).normalized;
             }
         }
-
         
         waitNewShoot();
     }
