@@ -112,7 +112,7 @@ public class BulletAbstract : MonoBehaviour
 		GetComponent<SphereCollider>().enabled = false;
 		startPos = Vector3.zero;
 
-		DOTween.To(()=> getDistScale, x=> getDistScale = x, WidthRange * 0.5f * FarEffect , TimeFarEffect);
+		DOTween.To(()=> getDistScale, x=> getDistScale = x, BulletRange * 0.5f * FarEffect , TimeFarEffect);
 		DOTween.To(()=> startPos, x=> startPos = x, new Vector3(WidthRange, 5, BulletRange), SpeedZone).OnComplete ( () =>
 		{
 			Destroy(gameObject, TimeStay);

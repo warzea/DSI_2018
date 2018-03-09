@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
 	public float DashDistance = 5;
 	public float DashTime = 1;
 	public float DistToDropItem = 1;
+	public int PourcLoose = 50;
 	public Transform WeaponPos;
 	public Transform BagPos;
 	public Transform BoxPlace;
@@ -427,10 +428,22 @@ public class PlayerController : MonoBehaviour
 		WeaponPos.gameObject.SetActive(false);
 
 		GameObject[] getList = AllItem.ToArray ( );
-
-		for ( int a = 0; a < getList.Length; a ++ )
+		Transform thisObj;
+		int a;
+		/*for ( a = 0; a < getList.Length; a ++ )
 		{
-			Destroy(getList[a]);
+			Destroy(getList[a]);	
+		}*/
+
+		int getNbr = getList.Length / PourcLoose;
+		for ( a = getList.Length - 1; a > getNbr; a -- )
+		{
+			thisObj = getList[a].transform;
+			thisObj.SetParent(null);
+			thisObj.gameObject.SetActive(true);
+			
+
+			AllItem.RemoveAt(a);
 		}
 
 		AllItem.Clear();
@@ -464,7 +477,7 @@ public class PlayerController : MonoBehaviour
 		{
 			canEnterBox = true;
 		}
-		else if ( getTag == Constants._EnemyBullet || getTag == Constants._Enemy )
+		else if ( getTag == Constants._EnemyBullet /*|| getTag == Constants._Enemy*/ )
 		{
 			lifePlayer --;
 
