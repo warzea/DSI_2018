@@ -31,7 +31,7 @@ public class ItemLost : MonoBehaviour
 	{
 		thisTrans.SetParent(null);
 		thisTrans.gameObject.SetActive(true);
-		thisTrans.DOLocalMove ( thisTrans.localPosition + new Vector3 ( Random.Range ( -1f, 1f ), 0, Random.Range ( -1f, 1f ) ), 0.5f );
+		//thisTrans.DOLocalMove ( thisTrans.localPosition + new Vector3 ( Random.Range ( -1f, 1f ), 0, Random.Range ( -1f, 1f ) ), 0.5f );
 		thisTrans.DOScale(getScale, 1f).OnComplete( ()=>
 		{
 			Collider thisColl = GetComponent<Collider>();

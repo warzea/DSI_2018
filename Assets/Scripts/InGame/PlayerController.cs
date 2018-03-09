@@ -14,10 +14,13 @@ public class PlayerController : MonoBehaviour
 	public float DashDistance = 5;
 	public float DashTime = 1;
 	public float DistToDropItem = 1;
-	public int PourcLoose = 50;
 	public Transform WeaponPos;
 	public Transform BagPos;
 	public Transform BoxPlace;
+	public float DistProjDead;
+	public float TimeProjDead;
+	public float TimeInvincible;
+	
 	[HideInInspector]
 	public float GetSpeed = 0;
 
@@ -53,6 +56,7 @@ public class PlayerController : MonoBehaviour
 	bool canShoot = true;
 	bool autoShoot = true;
 	bool checkShoot = true;
+	bool canTakeDmg = true;
 
 	#endregion
 	
@@ -106,14 +110,13 @@ public class PlayerController : MonoBehaviour
 			thisWeapon = null;
 		}
 	}
-	public void GetDamage ( int intDmg = 1 )
+	public void GetDamage ( Transform thisEnemy, int intDmg = 1 )
 	{
 		lifePlayer -= intDmg;
 
 		if ( lifePlayer <= 0 && !dead )
 		{
-			dead = true;
-			animeDead ( );
+			animeDead ( thisEnemy.position );
 		}
 	}
 	#endregion
@@ -418,25 +421,74 @@ public class PlayerController : MonoBehaviour
 		});
 	}
 
-	void animeDead ( )
+	void animeDead ( Vector3 pointColl )
 	{
+		canTakeDmg = false;
+		dead = true;
+		
 		if ( driveBox )
 		{
 			useBoxWeapon ( );
 		}
 		
 		WeaponPos.gameObject.SetActive(false);
+		GetComponent<Collider>().isTrigger = true;
 
 		GameObject[] getList = AllItem.ToArray ( );
 		ItemLost getItem;
+		Vector3 getDirect = Vector3.Normalize ( thisTrans.position - pointColl );
+		getDirect = new Vector3 ( getDirect.x, thisTrans.localPosition.y, getDirect.z);
+		GameObject newObj = (GameObject) Instantiate(new GameObject(), thisTrans.position, thisTrans.rotation);
+		
 		int a;
+		float getDist = DistProjDead;
+		float getTime = TimeProjDead;
+		string getTag;
+		
+		RaycastHit[] allHit;
+		allHit = Physics.RaycastAll ( thisTrans.position, getDirect, DistProjDead );
+
+		foreach ( RaycastHit thisRay in allHit )
+		{
+			getTag = thisRay.collider.tag;
+			
+			if ( getTag == Constants._Wall )
+			{
+				if ( thisRay.distance < getDist )
+				{
+					getDist = thisRay.distance - 1;
+					getTime = TimeProjDead / (DistProjDead / getDist);
+				}
+			}
+		}
+
+		thisTrans.DOKill ( );
+
+		//thisTrans.SetParent(getBoxWeapon);
+		
+		thisTrans.DOLocalMove ( thisTrans.localPosition + getDirect * getDist, getTime).OnComplete ( () =>
+		{
+			DOVirtual.DelayedCall ( 2 + TimeProjDead - getTime, ( ) => 
+			{
+				GetComponent<Collider>().isTrigger = false;
+				WeaponPos.gameObject.SetActive(true);
+				lifePlayer = LifePlayer;
+				dead = false;
+				thisWeapon.canShoot = true;
+
+				DOVirtual.DelayedCall ( TimeInvincible, ( ) => 
+				{
+					canTakeDmg = true;
+				});
+			});
+		});
+
 		/*for ( a = 0; a < getList.Length; a ++ )
 		{
 			Destroy(getList[a]);	
 		}*/
 
-		int getNbr = getList.Length / PourcLoose;
-		for ( a = getList.Length - 1; a > getNbr; a -- )
+		for ( a = getList.Length - 1; a > 0; a -- )
 		{
 			getItem = getList[a].transform.GetComponent<ItemLost>();
 			
@@ -444,18 +496,19 @@ public class PlayerController : MonoBehaviour
 			{
 				getItem = getList[a].AddComponent<ItemLost>();
 			}
-			
+
+			getItem.transform.SetParent(newObj.transform);
 			getItem.EnableColl(true);
 			AllItem.RemoveAt(a);
 		}
 
+		Destroy ( newObj, 10 );
+
 		//AllItem.Clear();
 
-		thisTrans.SetParent(getBoxWeapon);
+		//thisTrans.DOKill ( );
 
-		thisTrans.DOKill ( );
-
-		thisTrans.DOLocalMove(Vector3.zero, 1f);
+	/*	thisTrans.DOLocalMove(Vector3.zero, 1f);
 		thisTrans.DOScale (Vector3.zero, 1f).OnComplete ( () => 
 		{
 			DOVirtual.DelayedCall ( 3, ( ) => 
@@ -470,7 +523,7 @@ public class PlayerController : MonoBehaviour
 					thisWeapon.canShoot = true;
 				});
 			});
-		});
+		});*/
 	}
 
 	void OnTriggerEnter ( Collider thisColl )
@@ -480,14 +533,13 @@ public class PlayerController : MonoBehaviour
 		{
 			canEnterBox = true;
 		}
-		else if ( getTag == Constants._EnemyBullet /*|| getTag == Constants._Enemy*/ )
+		else if ( getTag == Constants._EnemyBullet && canTakeDmg /*|| getTag == Constants._Enemy*/ )
 		{
 			lifePlayer --;
 
 			if ( lifePlayer <= 0 && !dead )
 			{
-				dead = true;
-				animeDead ( );
+				animeDead ( thisColl.transform.position );
 			}
 		}
 	}
