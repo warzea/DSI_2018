@@ -148,7 +148,7 @@ MonoBehaviour:
   SpeedZone: 0.05
   TimeDest: 0
   Diameter: 1.5
-  Bullet: {fileID: 1530796011795326, guid: 7debebcea0d258f4a9f5dc489d6103cf, type: 2}
+  Bullet: {fileID: 1530796011795326, guid: bc41063ebf29c6f44a009da8b3171b68, type: 2}
   SpawnBullet: {fileID: 4204522224191706}
   canShoot: 1
   OnFloor: 1
