@@ -72,6 +72,8 @@ public class AgentsManager : ManagerParent
     private GameObject playerLead;
     private GameObject playerCauldron;
 
+    private Camera cam;
+
     //Timer
     private float timeAgent = 0;
     bool startCheck = false;
@@ -81,6 +83,7 @@ public class AgentsManager : ManagerParent
         agents = GameObject.FindObjectsOfType<AgentController>();
         playerCauldron = Manager.GameCont.WeaponB.gameObject;
         roomFight = GameObject.FindObjectsOfType<CheckRoom>();
+        cam = Manager.GameCont.MainCam;
     }
 
     private void Update()
@@ -107,15 +110,29 @@ public class AgentsManager : ManagerParent
         List<Transform> bestSpawnlist = new List<Transform>();
         Vector3 bestSpawn = new Vector3();
         bool inRoom = false;
+        List<Transform> inRoomList = new List<Transform>();
+
 
         for (int i = 0; i < roomFight.Length; i++)
         {
             if (roomFight[i].GetEtatRoom())
             {
-                Debug.Log("trouvé");
-                inRoom = true;
-                int randomPos = Random.Range(0, roomFight[i].checkPoint.Length);
-                bestSpawn = roomFight[i].checkPoint[randomPos].position;
+                for (int j = 0; j < roomFight[i].checkPoint.Length; j++)
+                {
+                    Vector3 getCamPos = cam.WorldToViewportPoint(roomFight[i].checkPoint[j].transform.position);
+
+                    if (getCamPos.x > 0.97f || getCamPos.x < 0.03f || getCamPos.y > 0.97f || getCamPos.y < 0.03f)
+                    {
+                        inRoomList.Add(roomFight[i].checkPoint[j]);
+                        inRoom = true;
+                    }
+                }
+
+                if (inRoom)
+                {
+                    int randomPos = Random.Range(0, inRoomList.Count);
+                    bestSpawn = roomFight[i].checkPoint[randomPos].position;
+                }
             }
         }
 
@@ -123,21 +140,27 @@ public class AgentsManager : ManagerParent
         {
             for (int i = 0; i < posRespawn.Length; i++)
             {
-                float distanceAgent = Vector3.Distance(posRespawn[i].localPosition, posTarget.localPosition);
-                if (distanceSave > distanceAgent)
+                Vector3 getCamPos = cam.WorldToViewportPoint(posRespawn[i].transform.position);
+
+                if (getCamPos.x > 0.97f || getCamPos.x < 0.03f || getCamPos.y > 0.97f || getCamPos.y < 0.03f)
                 {
-                    bestSpawnlist.Add(posRespawn[i]);
-                }
-                else
-                {
-                    if (lastdist == 0)
+                    float distanceAgent = Vector3.Distance(posRespawn[i].localPosition, posTarget.localPosition);
+
+                    if (distanceSave > distanceAgent)
                     {
-                        lastdist = distanceAgent;
-                        bestSpawn = posRespawn[i].position;
+                        bestSpawnlist.Add(posRespawn[i]);
                     }
-                    else if (lastdist > distanceAgent)
+                    else
                     {
-                        bestSpawn = posRespawn[i].position;
+                        if (lastdist == 0)
+                        {
+                            lastdist = distanceAgent;
+                            bestSpawn = posRespawn[i].position;
+                        }
+                        else if (lastdist > distanceAgent)
+                        {
+                            bestSpawn = posRespawn[i].position;
+                        }
                     }
                 }
             }
@@ -147,17 +170,9 @@ public class AgentsManager : ManagerParent
             if (bestSpawnlist.Count != 0)
             {
                 bestSpawn = bestSpawnlist[randomSpawnPlayer].position;
-                return bestSpawn;
-            }
-            else
-            {
-                return bestSpawn;
             }
         }
-        else
-        {
-            return bestSpawn;
-        }
+        return bestSpawn;
 
     }
     #endregion
