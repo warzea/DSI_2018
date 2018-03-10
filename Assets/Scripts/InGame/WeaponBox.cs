@@ -21,6 +21,7 @@ public class WeaponBox : MonoBehaviour
 
 	List<PlayerWeapon> updateWeapon; 
 	List<Tween> getAllTween;
+
 	int nbrTotalSlide = 1;
 	bool invc = false;
 	#endregion
@@ -104,7 +105,8 @@ public class WeaponBox : MonoBehaviour
 		}
 		getAllTween.Clear();
 
-		//Debug.Log( NbrItem + " / " + currNbr + " / " + currNbr * 0.01f);
+		Debug.Log( NbrItem + " / " + currNbr + " / " + currNbr * 0.01f);
+		Manager.Ui.GetGauge.DOFillAmount ( currNbr * 0.01f, 0.5f );
 		Manager.Ui.GetGauge.DOFillAmount ( currNbr * 0.01f, 0.5f );
 		
 		/*if ( !inv )
@@ -131,6 +133,14 @@ public class WeaponBox : MonoBehaviour
 		
 		if ( checkCurr )
 		{
+			Tween getTween = DOVirtual.DelayedCall(0.5f, () =>
+			{
+				Manager.Ui.GetGauge.DOKill(true);
+				Manager.Ui.GetGauge.DOFillAmount ( currNbr * 0.01f, 0.5f );
+			});
+			getAllTween.Add ( getTween );
+			
+			/*Tween getTween;
 			Tween getTween = DOVirtual.DelayedCall(0.5f, () =>
 			{
 				Manager.Ui.GetGauge.DOKill(true);
@@ -282,3 +292,5 @@ public class WeaponBox : MonoBehaviour
 	#endregion
 
 }
+
+		//Debug.Log( NbrItem + " / " + currNbr + " / " + currNbr * 0.01f);
