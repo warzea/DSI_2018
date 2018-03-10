@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public int IdPlayer;
     public int LifePlayer = 3;
+    public int TimeToRegen = 3;
     public float MoveSpeed;
     //public float DashDistance = 5;
     //public float DashTime = 1;
@@ -119,6 +120,7 @@ public class PlayerController : MonoBehaviour
     bool checkUIBorderY = false;
 
     public Text WeapText;
+    Tween tweenRegen;
 
     #endregion
 
@@ -153,6 +155,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        Debug.Log ( lifePlayer );
         thisRig.velocity = Vector3.zero;
         float getDeltaTime = Time.deltaTime;
 
@@ -749,6 +752,18 @@ public class PlayerController : MonoBehaviour
             if (lifePlayer <= 0 && !dead)
             {
                 animeDead(thisColl.transform.position);
+            }
+            else
+            {
+                if ( tweenRegen != null )
+                {
+                    tweenRegen.Kill();
+                }
+
+                DOVirtual.DelayedCall(TimeToRegen, ( ) => 
+                {
+                    lifePlayer = LifePlayer;
+                });
             }
         }
     }
