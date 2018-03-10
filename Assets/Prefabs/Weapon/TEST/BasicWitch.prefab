@@ -126,13 +126,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeightRandom: 0
   AutoShoot: 0
-  Projectile: 1
+  Projectile: 0
   Through: 0
   Explosion: 1
   BulletCapacity: 30
   FireRate: 0
   CoolDown: 0.1
-  BackPush: 200
+  BackPush: 300
   SpeedReduce: 0.564
   Damage: 1
   Range: 5
@@ -144,9 +144,9 @@ MonoBehaviour:
   Angle: 0
   TimeFarEffect: 0
   FarEffect: 0
-  WidthRange: 0
-  SpeedZone: 0
-  TimeDest: 0
+  WidthRange: 10
+  SpeedZone: 1
+  TimeDest: 0.1
   Diameter: 5
   Bullet: {fileID: 1530796011795326, guid: 7debebcea0d258f4a9f5dc489d6103cf, type: 2}
   SpawnBullet: {fileID: 4163464469092510}

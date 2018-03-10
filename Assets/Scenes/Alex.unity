@@ -872,6 +872,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114427052359867546, guid: 4937250a6dda9a844ac259531ecc0430,
+        type: 2}
+      propertyPath: InvincibleTime
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4937250a6dda9a844ac259531ecc0430, type: 2}
   m_IsPrefabParent: 0
@@ -2765,7 +2770,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerPrefab: {fileID: 1550415525633366, guid: 937d3b462b9817747b2216f2faea9faa,
     type: 2}
-  StartWeapon: {fileID: 1093315411277202, guid: ea26266d024e3cf4f8bc8992dc15534d,
+  StartWeapon: {fileID: 1921940652751508, guid: 221149f4acc2734429082ba34e34b516,
     type: 2}
   PlayerPosSpawn: {fileID: 221782917}
   MainCam: {fileID: 64722600}

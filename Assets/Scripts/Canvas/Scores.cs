@@ -25,15 +25,16 @@ public class Scores : MonoBehaviour
 			{
 				getScoreinf = getAllScore[a];
 				getScoreinf.ThisTween.Kill(true);
-				
 				if ( addValue )
 				{
-					getScoreinf.ThisTween = DOTween.To(()=> getScoreinf.ScoreValue, x=> getScoreinf.ScoreValue = x, scoreValue + getScoreinf.ScoreValue, 1);
+					getScoreinf.FinalScore = scoreValue + getScoreinf.ScoreValue;
+					getScoreinf.ThisTween = DOTween.To(()=> getScoreinf.ScoreValue, x=> getScoreinf.ScoreValue = x, getScoreinf.FinalScore, 1);
 					//getScoreinf.ScoreValue = scoreValue + getScoreinf.ScoreValue;
 					getScoreinf.ScoreText.text = getScoreinf.ScoreValue.ToString();
 				}
 				else
 				{
+					getScoreinf.FinalScore = scoreValue;
 					getScoreinf.ThisTween = DOTween.To(()=> getScoreinf.ScoreValue, x=> getScoreinf.ScoreValue = x, scoreValue, 1);
 					//getScoreinf.ScoreValue = scoreValue;
 					getScoreinf.ScoreText.text = scoreValue.ToString();
@@ -52,7 +53,7 @@ public class Scores : MonoBehaviour
 	{
 		yield return thisF;
 
-		if ( thisInfo.ScoreText.text != thisInfo.ScoreValue.ToString() )
+		if ( thisInfo.FinalScore != thisInfo.ScoreValue )
 		{
 			thisInfo.ScoreText.text = thisInfo.ScoreValue.ToString();
 

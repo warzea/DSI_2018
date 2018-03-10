@@ -21,7 +21,7 @@ public class WeaponBox : MonoBehaviour
 
 	List<PlayerWeapon> updateWeapon; 
 	List<Tween> getAllTween;
-	int nbrTotalSlide = 0;
+	int nbrTotalSlide = 1;
 	bool invc = false;
 	#endregion
 	
@@ -93,17 +93,18 @@ public class WeaponBox : MonoBehaviour
 	{
 		NbrItem += lenghtItem;
 
-		int currNbr = NbrItem - nbrTotalSlide * 100;
+		int currNbr = NbrItem - (nbrTotalSlide - 1) * 100;
 		Image[] getFeedBack = Manager.Ui.GaugeFeedback;
 		float getWait = 0;
 		bool checkCurr = false;
 
 		for ( int a = 0; a < getAllTween.Count; a ++ )
 		{
-			getAllTween[a].Kill();
+			getAllTween[a].Kill(true);
 		}
 		getAllTween.Clear();
 
+		Debug.Log( NbrItem + " / " + currNbr + " / " + currNbr * 0.01f);
 		Manager.Ui.GetGauge.DOFillAmount ( currNbr * 0.01f, 0.5f );
 		
 		/*if ( !inv )
@@ -133,7 +134,12 @@ public class WeaponBox : MonoBehaviour
 			Tween getTween = DOVirtual.DelayedCall(0.5f, () =>
 			{
 				Manager.Ui.GetGauge.DOKill(true);
-				Manager.Ui.GetGauge.DOFillAmount ( currNbr * 0.01f, 0.5f );
+				getTween = Manager.Ui.GetGauge.DOFillAmount ( 0, 0.5f ).OnComplete ( ( ) =>
+				{
+					getTween = Manager.Ui.GetGauge.DOFillAmount ( currNbr * 0.01f, 0.5f );
+					getAllTween.Add ( getTween );
+				});
+				getAllTween.Add ( getTween );
 			});
 			getAllTween.Add ( getTween );
 			

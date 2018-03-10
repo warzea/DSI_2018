@@ -272,8 +272,12 @@ public class CustomWeapon : Editor
 			EditorGUILayout.PropertyField ( TimeFarEffect );
 			EditorGUILayout.PropertyField ( WidthRange );
 			EditorGUILayout.PropertyField ( SpeedZone );
-			EditorGUILayout.PropertyField ( TimeDest );
 			// -- fin zone
+		}
+
+		if ( !myTarget.Projectile || myTarget.Explosion )
+		{
+			EditorGUILayout.PropertyField ( TimeDest );
 		}
 
 		EditorGUI.indentLevel = 2;
