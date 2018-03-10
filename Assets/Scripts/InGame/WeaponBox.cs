@@ -105,7 +105,7 @@ public class WeaponBox : MonoBehaviour
 		}
 		getAllTween.Clear();
 
-		Debug.Log( NbrItem + " / " + currNbr + " / " + currNbr * 0.01f);
+//		Debug.Log( NbrItem + " / " + currNbr + " / " + currNbr * 0.01f);
 		Manager.Ui.GetGauge.DOFillAmount ( currNbr * 0.01f, 0.5f );
 		Manager.Ui.GetGauge.DOFillAmount ( currNbr * 0.01f, 0.5f );
 		
