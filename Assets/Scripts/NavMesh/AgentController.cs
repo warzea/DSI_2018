@@ -54,9 +54,19 @@ public class AgentController : MonoBehaviour
 
     void Update()
     {
-        if (myEtatAgent == AgentEtat.aliveAgent)
+        if (myEtatAgent == AgentEtat.aliveAgent && myFocusPlayer != null)
         {
-            ShootAgent();
+            NavMeshPath path = new NavMeshPath();
+
+            navAgent.CalculatePath(myFocusPlayer.transform.position, path);
+            if (path.status == NavMeshPathStatus.PathPartial)
+            {
+                DeadFonction();
+            }
+            else
+            {
+                ShootAgent();
+            }
         }
     }
 
@@ -65,7 +75,6 @@ public class AgentController : MonoBehaviour
         timeAgent += Time.deltaTime;
         if (timeAgent > timeLeftAgentshoot)
         {
-
             float distance = Vector3.Distance(transform.position, myFocusPlayer.transform.position);
 
             if (distance < distanceShoot)
@@ -107,7 +116,11 @@ public class AgentController : MonoBehaviour
     #region ChangeEtat
     public void DeadFonction()
     {
+        myEtatAgent = AgentEtat.deadAgent;
+        navAgent.isStopped = true;
+        transform.GetComponent<Renderer>().material = deadMaterial;
         agentsManager.DeadAgent(myFocusEtatAgent.ToString(), this.gameObject);
+        StartCoroutine(WaitRespawn());
     }
 
     public bool GetEtatAgent()
@@ -158,9 +171,9 @@ public class AgentController : MonoBehaviour
         yield return new WaitForSeconds(timeBeforeDepop);
         transform.GetComponent<Renderer>().material = aliveMaterial;
         navAgent.Warp(agentsManager.CheckBestcheckPoint(myFocusPlayer.transform));
-        // transform.position = agentsManager.CheckBestcheckPoint(myFocusPlayer.transform);
         yield return new WaitForSeconds(timeBeforeAlive);
         myEtatAgent = AgentEtat.aliveAgent;
+        navAgent.isStopped = false;
         lifeAgent = 1;
     }
 
@@ -169,19 +182,12 @@ public class AgentController : MonoBehaviour
         if (other.tag == Constants._PlayerBullet && myEtatAgent == AgentEtat.aliveAgent)
         {
             BulletAbstract getBA = other.GetComponent<BulletAbstract>();
-            /*if ( !getBA.Through  )
-            {
-                Destroy(other.gameObject);
-            }*/
 
             lifeAgent -= getBA.BulletDamage;
 
-            if (lifeAgent <= 0)
+            if (lifeAgent <= 0 && AgentEtat.aliveAgent == myEtatAgent)
             {
-                myEtatAgent = AgentEtat.deadAgent;
-                transform.GetComponent<Renderer>().material = deadMaterial;
                 DeadFonction();
-                StartCoroutine(WaitRespawn());
             }
         }
     }

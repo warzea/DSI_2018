@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public int IdPlayer;
     public int LifePlayer = 3;
+    public int TimeToRegen = 3;
     public float MoveSpeed;
     //public float DashDistance = 5;
     //public float DashTime = 1;
@@ -118,6 +119,9 @@ public class PlayerController : MonoBehaviour
     bool checkUIBorder = false;
     bool checkUIBorderY = false;
 
+    public Text WeapText;
+    Tween tweenRegen;
+
     #endregion
 
     #region Mono
@@ -151,6 +155,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        Debug.Log ( lifePlayer );
         thisRig.velocity = Vector3.zero;
         float getDeltaTime = Time.deltaTime;
 
@@ -277,7 +282,6 @@ public class PlayerController : MonoBehaviour
         if (canShoot)
         {
             playerShoot(getDeltaTime);
-            Debug.Log(thisWeapon.name);
         }
 
         if (canDash)
@@ -462,9 +466,6 @@ public class PlayerController : MonoBehaviour
             thisWeapon.weaponShoot(thisTrans);
             animPlayer.SetBool("Attack", true);
             shooting = true;
-
-            Manager.Ui.ScreenShake();
-
             if (thisWeapon != null) //&& thisWeapon.Damage == 1)
             {
                 //Debug.Log("Shoot");
@@ -590,7 +591,7 @@ public class PlayerController : MonoBehaviour
             currTrans.SetParent(null);
             currTrans.SetParent(getBoxTrans);
 
-            currTrans.position = BagPos.position + new Vector3(Random.Range(-0.2f, 0.21f), 0, Random.Range(-0.2f, 0.21f));
+            currTrans.position = BagPos.position + new Vector3(Random.Range(-0.2f, 0.21f), 3, Random.Range(-0.2f, 0.21f));
 
             dropItem(currTrans);
         }
@@ -601,14 +602,19 @@ public class PlayerController : MonoBehaviour
     {
         DOVirtual.DelayedCall(Random.Range(0, 0.2f), () =>
         {
-            currTrans.DOLocalMove(Vector3.zero, 1.3f);
-            currTrans.DOScale(Vector3.one, 0.5f).OnComplete(() =>
+            currTrans.DOLocalMove(Vector3.zero + Vector3.up * 3, 1f).OnComplete ( () => 
             {
-                currTrans.DOScale(Vector3.zero, 0.7f).OnComplete(() =>
+                currTrans.DOLocalMove ( Vector3.zero, 0.5f );
+                currTrans.DOScale(Vector3.one, 0.5f).OnComplete(() =>
                 {
-                    Destroy(currTrans.gameObject);
+                    currTrans.DOScale(Vector3.zero, 0.7f).OnComplete(() =>
+                    {
+                        Destroy(currTrans.gameObject);
+                    });
                 });
             });
+
+           
         });
     }
 
@@ -662,23 +668,21 @@ public class PlayerController : MonoBehaviour
 
         //thisTrans.SetParent(getBoxWeapon);
 
-        thisTrans.DOLocalMove(thisTrans.localPosition + getDirect * getDist, getTime).OnComplete(() =>
-    {
-        DOVirtual.DelayedCall(TimeDead + TimeProjDead - getTime, () =>
-          {
-              GetComponent<Collider>().isTrigger = false;
-              WeaponPos.gameObject.SetActive(true);
-              lifePlayer = LifePlayer;
-              dead = false;
-              thisWeapon.canShoot = true;
+        thisTrans.DOLocalMove(thisTrans.localPosition + getDirect * getDist, getTime);
 
-              DOVirtual.DelayedCall(TimeInvincible, () =>
-                {
-                    canTakeDmg = true;
-                });
-          });
-    });
+        DOVirtual.DelayedCall( getTime + TimeDead + TimeProjDead - getTime, () =>
+        {
+            GetComponent<Collider>().isTrigger = false;
+            WeaponPos.gameObject.SetActive(true);
+            lifePlayer = LifePlayer;
+            dead = false;
+            thisWeapon.canShoot = true;
 
+            DOVirtual.DelayedCall(TimeInvincible, () =>
+            {
+                canTakeDmg = true;
+            });
+        });
         /*for ( a = 0; a < getList.Length; a ++ )
 		{
 			Destroy(getList[a]);	
@@ -749,6 +753,18 @@ public class PlayerController : MonoBehaviour
             {
                 animeDead(thisColl.transform.position);
             }
+            else
+            {
+                if ( tweenRegen != null )
+                {
+                    tweenRegen.Kill();
+                }
+
+                DOVirtual.DelayedCall(TimeToRegen, ( ) => 
+                {
+                    lifePlayer = LifePlayer;
+                });
+            }
         }
     }
 
@@ -778,3 +794,16 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 }
+
+
+            Manager.Ui.ScreenShake();
+
+            if (thisWeapon != null) //&& thisWeapon.Damage == 1)
+            {
+                //Debug.Log("Shoot");
+                if(thisWeapon.Damage <= Manager.VibM.DamagesLow)
+                    Manager.VibM.ShootLowVibration(inputPlayer);
+                else if(thisWeapon.Damage > Manager.VibM.DamagesLow && thisWeapon.Damage <= Manager.VibM.DamagesMedium)
+                    Manager.VibM.ShootMediumVibration(inputPlayer);
+                else if (thisWeapon.Damage > Manager.VibM.DamagesLow && thisWeapon.Damage <= Manager.VibM.DamagesMedium)
+                    Manager.VibM.ShootHighVibration(inputPlayer);

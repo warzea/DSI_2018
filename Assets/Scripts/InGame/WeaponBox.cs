@@ -84,6 +84,8 @@ public class WeaponBox : MonoBehaviour
 			AllWeapon = getWeap.ToArray();
 		}
 
+		thisPlayer.WeapText.text = newObj.name;
+
 		Transform objTrans = newObj.transform;
 		objTrans.position = GetTrans.position;
 		objTrans.localScale = Vector3.zero;
@@ -117,7 +119,7 @@ public class WeaponBox : MonoBehaviour
 		});
 	}
 
-	public void AddItem ( int lenghtItem/*, bool inv = false*/ )
+	public void AddItem ( int lenghtItem, bool inv = false )
 	{
 		NbrItem += lenghtItem;
 
@@ -125,14 +127,15 @@ public class WeaponBox : MonoBehaviour
 		Image[] getFeedBack = Manager.Ui.GaugeFeedback;
 		float getWait = 0;
 		bool checkCurr = false;
-
+		
 		for ( int a = 0; a < getAllTween.Count; a ++ )
 		{
 			getAllTween[a].Kill(true);
 		}
 		getAllTween.Clear();
 
-		Manager.Ui.GetGauge.DOFillAmount ( currNbr * 0.01f, 0.5f );
+		Manager.Ui.GetGauge.DOKill(true);
+//		Debug.Log( NbrItem + " / " + currNbr + " / " + currNbr * 0.01f);
 		Manager.Ui.GetGauge.DOFillAmount ( currNbr * 0.01f, 0.5f );
 		
 		/*if ( !inv )
@@ -152,9 +155,8 @@ public class WeaponBox : MonoBehaviour
 		{
 			checkCurr = true;
 			nbrTotalSlide ++;
+			Manager.Ui.MultiplierNew( nbrTotalSlide );
 			currNbr -=100;
-			
-			Manager.Ui.MultiplierNew(nbrTotalSlide);
 		}	
 		
 		if ( checkCurr )
@@ -302,15 +304,19 @@ public class WeaponBox : MonoBehaviour
 
 		//Manager.Ui.ScoreText.text = NbrItem.ToString();
 		
-		int getMult = (int)NbrItem / 100;
-		if ( getMult < nbrTotalSlide )
+		int getMult = (int)NbrItem / 100 + 1;
+		if ( getMult > nbrTotalSlide )
 		{
 			Manager.Ui.MultiplierNew(getMult);
 			nbrTotalSlide = getMult;
 		}
+		else if ( getMult < nbrTotalSlide )
+		{
+			nbrTotalSlide = getMult;
+		}
 		
 		
-		AddItem(0);
+		AddItem(0, true);
 	}
 	#endregion
 
@@ -326,3 +332,5 @@ public class WeaponBox : MonoBehaviour
 	#endregion
 
 }
+
+		//Debug.Log( NbrItem + " / " + currNbr + " / " + currNbr * 0.01f);

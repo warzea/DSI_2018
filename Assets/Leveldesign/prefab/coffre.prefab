@@ -25,9 +25,10 @@ GameObject:
   - component: {fileID: 114283222525115588}
   - component: {fileID: 64936806883449954}
   - component: {fileID: 208689542821674992}
+  - component: {fileID: 114653082073803896}
   m_Layer: 0
   m_Name: coffre
-  m_TagString: Untagged
+  m_TagString: Container
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 127
@@ -587,6 +588,22 @@ MonoBehaviour:
   m_selectedFaces: 
   m_SelectedEdges: []
   m_selectedTriangles: 
+--- !u!114 &114653082073803896
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1361501749273284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59cb39f3416b44543bda58fb7328bc5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NbrItem: 10
+  NbrDropByDrop: 2
+  NbrTouchToDrop: 2
+  ItemDrop:
+  - {fileID: 1090906710411644, guid: 5b5f54211795c3c48bf567180a7d600f, type: 2}
 --- !u!114 &114733910743078584
 MonoBehaviour:
   m_ObjectHideFlags: 1

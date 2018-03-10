@@ -562,7 +562,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1550415525633366}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.477393, y: -0.5, z: 1.377232}
+  m_LocalPosition: {x: -6.969139, y: -0.5, z: -11.743847}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4522346009082788}
@@ -1031,7 +1031,7 @@ MonoBehaviour:
   CdShoot: 0
   GetSpeed: 0
   SpeedReduce: 0.5
-  SpeedReduceOnBox: 0.4
+  SpeedReduceOnBox: 0.3
   SmoothRotateOnBox: 3.5
   AllItem: []
   driveBox: 0
@@ -1054,8 +1054,8 @@ MonoBehaviour:
   currentEnemy: 0
   LostItem: 0
   AmmoUI: {fileID: 0}
-  UiAmmoX: 1.25
-  UiAmmoY: 4
+  UiAmmoX: 3
+  UiAmmoY: 2
   UiAmmo: {fileID: 0}
 --- !u!137 &137183046641579486
 SkinnedMeshRenderer:

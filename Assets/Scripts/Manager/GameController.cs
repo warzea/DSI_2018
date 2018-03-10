@@ -104,9 +104,15 @@ public class GameController : ManagerParent
                 getWeapon.GetComponent<FollowPlayerUI>().getCam = MainCam;
                 getWeapon.GetComponent<FollowPlayerUI>().ThisPlayer = getPlayer.transform;
 
+                getWeapon = (GameObject)Instantiate(Manager.Ui.PotionGet, Manager.Ui.GetInGame);
+                getWeapon.GetComponent<PotionFollowP>().getCam = MainCam;
+                getWeapon.GetComponent<PotionFollowP>().ThisPlayer = getPlayer.transform;
+
                 getWeapon = (GameObject)Instantiate(StartWeapon, getPC.WeaponPos.transform);
                 getWeapon.transform.localPosition = Vector3.zero;
                 getWeapon.transform.localRotation = Quaternion.identity;
+
+                getPlayer.GetComponent<PlayerController>().WeapText = Manager.Ui.textWeapon[a];
 
                 getPC.UpdateWeapon(getWeapon.GetComponent<WeaponAbstract>());
                 Players.Add(getPlayer);

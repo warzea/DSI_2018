@@ -15,6 +15,8 @@ public class UiManager : ManagerParent
     public GameObject[] PlayersHUD;
     public Image[] PlayersWeaponHUD;
     public GameObject[] PlayersAmmo;
+    public Text[] textWeapon;
+    public GameObject PotionGet;
 
     Tween ammoTwRot, ammoTwScale1, ammoTwScale2, ammoTwFade, ammoTwWait;
 
@@ -162,6 +164,13 @@ public class UiManager : ManagerParent
 
             ScorePlus();
 
+            //potion.GetComponent<RainbowMove>().ObjectTransform = ici;
+        }
+        else if(type == PotionType.Less)
+        {
+            var potion = Instantiate(PotionsLess, GetInGame.position, Quaternion.identity, GetInGame);
+
+            ScorePlus();
             //potion.GetComponent<RainbowMove>().ObjectTransform = ici;
         }
     }
