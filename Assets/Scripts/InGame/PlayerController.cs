@@ -586,7 +586,7 @@ public class PlayerController : MonoBehaviour
             currTrans.SetParent(null);
             currTrans.SetParent(getBoxTrans);
 
-            currTrans.position = BagPos.position + new Vector3(Random.Range(-0.2f, 0.21f), 0, Random.Range(-0.2f, 0.21f));
+            currTrans.position = BagPos.position + new Vector3(Random.Range(-0.2f, 0.21f), 3, Random.Range(-0.2f, 0.21f));
 
             dropItem(currTrans);
         }
@@ -597,14 +597,19 @@ public class PlayerController : MonoBehaviour
     {
         DOVirtual.DelayedCall(Random.Range(0, 0.2f), () =>
         {
-            currTrans.DOLocalMove(Vector3.zero, 1.3f);
-            currTrans.DOScale(Vector3.one, 0.5f).OnComplete(() =>
+            currTrans.DOLocalMove(Vector3.zero + Vector3.up * 3, 1f).OnComplete ( () => 
             {
-                currTrans.DOScale(Vector3.zero, 0.7f).OnComplete(() =>
+                currTrans.DOLocalMove ( Vector3.zero, 0.5f );
+                currTrans.DOScale(Vector3.one, 0.5f).OnComplete(() =>
                 {
-                    Destroy(currTrans.gameObject);
+                    currTrans.DOScale(Vector3.zero, 0.7f).OnComplete(() =>
+                    {
+                        Destroy(currTrans.gameObject);
+                    });
                 });
             });
+
+           
         });
     }
 
