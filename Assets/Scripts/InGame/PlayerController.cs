@@ -155,7 +155,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Debug.Log ( lifePlayer );
         thisRig.velocity = Vector3.zero;
         float getDeltaTime = Time.deltaTime;
 
@@ -241,9 +240,9 @@ public class PlayerController : MonoBehaviour
             checkUIBorder = false;
         }
 
-        if (getCamPos.y > 0.97f)
+        if (getCamPos.y > 0.85f)
         {
-            thisTrans.position = new Vector3(thisTrans.position.x, thisTrans.position.y, getCam.ViewportToWorldPoint(new Vector3(getCamPos.x, 0.97f, getCamPos.z)).z);
+            thisTrans.position = new Vector3(thisTrans.position.x, thisTrans.position.y, getCam.ViewportToWorldPoint(new Vector3(getCamPos.x, 0.85f, getCamPos.z)).z);
         }
         else if (getCamPos.y < 0.03f)
         {
@@ -796,4 +795,4 @@ public class PlayerController : MonoBehaviour
 }
 
 
-            
+            
