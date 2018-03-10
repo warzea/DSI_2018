@@ -50,7 +50,6 @@ public class AgentsManagerCac : ManagerParent
         bool inRoom = false;
         List<Transform> inRoomList = new List<Transform>();
 
-        Debug.Log(roomFight.Length);
 
         for (int i = 0; i < roomFight.Length; i++)
         {
