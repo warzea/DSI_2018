@@ -1031,7 +1031,7 @@ MonoBehaviour:
   CdShoot: 0
   GetSpeed: 0
   SpeedReduce: 0.5
-  SpeedReduceOnBox: 0.4
+  SpeedReduceOnBox: 0.3
   SmoothRotateOnBox: 3.5
   AllItem: []
   driveBox: 0
