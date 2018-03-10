@@ -35,9 +35,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4254846544420062}
   - component: {fileID: 33646162442162222}
-  - component: {fileID: 136019165438189050}
   - component: {fileID: 23400340013335258}
   - component: {fileID: 114904129455551610}
+  - component: {fileID: 136974726491360106}
   m_Layer: 9
   m_Name: BasicWitch
   m_TagString: Untagged
@@ -154,7 +154,7 @@ MonoBehaviour:
   OnFloor: 1
 --- !u!136 &136974726491360106
 CapsuleCollider:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1519234766589048}
