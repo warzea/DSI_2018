@@ -1431,11 +1431,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4070923493568338, guid: 4937250a6dda9a844ac259531ecc0430, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -10.51
+      value: 1.91
       objectReference: {fileID: 0}
     - target: {fileID: 4070923493568338, guid: 4937250a6dda9a844ac259531ecc0430, type: 2}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: -0.7070035
       objectReference: {fileID: 0}
     - target: {fileID: 4070923493568338, guid: 4937250a6dda9a844ac259531ecc0430, type: 2}
       propertyPath: m_LocalRotation.y
@@ -1447,11 +1447,62 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4070923493568338, guid: 4937250a6dda9a844ac259531ecc0430, type: 2}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7072101
       objectReference: {fileID: 0}
     - target: {fileID: 4070923493568338, guid: 4937250a6dda9a844ac259531ecc0430, type: 2}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 33193824621133796, guid: 4937250a6dda9a844ac259531ecc0430,
+        type: 2}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: 5c6d7ec83a05f6e429398533ab71cca7, type: 3}
+    - target: {fileID: 4070923493568338, guid: 4937250a6dda9a844ac259531ecc0430, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90.00001
+      objectReference: {fileID: 0}
+    - target: {fileID: 4070923493568338, guid: 4937250a6dda9a844ac259531ecc0430, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1.387688
+      objectReference: {fileID: 0}
+    - target: {fileID: 4070923493568338, guid: 4937250a6dda9a844ac259531ecc0430, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 1.387688
+      objectReference: {fileID: 0}
+    - target: {fileID: 4070923493568338, guid: 4937250a6dda9a844ac259531ecc0430, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1.3876879
+      objectReference: {fileID: 0}
+    - target: {fileID: 65400283961105054, guid: 4937250a6dda9a844ac259531ecc0430,
+        type: 2}
+      propertyPath: m_Size.z
+      value: 3.3018203
+      objectReference: {fileID: 0}
+    - target: {fileID: 65400283961105054, guid: 4937250a6dda9a844ac259531ecc0430,
+        type: 2}
+      propertyPath: m_Center.y
+      value: -0.01743682
+      objectReference: {fileID: 0}
+    - target: {fileID: 65400283961105054, guid: 4937250a6dda9a844ac259531ecc0430,
+        type: 2}
+      propertyPath: m_Center.z
+      value: 1.3509089
+      objectReference: {fileID: 0}
+    - target: {fileID: 65400283961105054, guid: 4937250a6dda9a844ac259531ecc0430,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 2.1200862
+      objectReference: {fileID: 0}
+    - target: {fileID: 65400283961105054, guid: 4937250a6dda9a844ac259531ecc0430,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 2.729833
+      objectReference: {fileID: 0}
+    - target: {fileID: 65400283961105054, guid: 4937250a6dda9a844ac259531ecc0430,
+        type: 2}
+      propertyPath: m_Center.x
+      value: -0.12802641
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4937250a6dda9a844ac259531ecc0430, type: 2}
@@ -1965,7 +2016,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: x2
+  m_Text: x1
 --- !u!222 &301387242
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5598,8 +5649,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fe8a820207086a4b9a2d2437c8685a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObsPower: 0.12
-  ObsDuration: 0.2
+  ShootPower: 0
+  ShootDuration: 0
   ShootLowPower: 0.1
   ShootLowDuration: 0.5
   ShootMediumPower: 0.2
@@ -5608,6 +5659,9 @@ MonoBehaviour:
   ShootHighDuration: 0.2
   StunPower: 2.5
   StunDuration: 1
+  DamagesLow: 1
+  DamagesMedium: 5
+  DamagesHigh: 10
 --- !u!1 &1374349518
 GameObject:
   m_ObjectHideFlags: 0
@@ -7161,6 +7215,7 @@ MonoBehaviour:
   - {fileID: 350651369}
   ScoreText: {fileID: 1022293085}
   Multiplier: {fileID: 301387241}
+  GetGauge: {fileID: 263508695}
   GaugeFeedback:
   - {fileID: 637089103}
   - {fileID: 1002134588}

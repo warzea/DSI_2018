@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Rewired;
+using DG.Tweening;
 
 // ------- GameController
 public class PlayerInfoInput 
@@ -35,6 +36,7 @@ public class ScoreInfo
 
 	public Text ScoreText;
 	public ScoreType ScoreTpe;
+	public Tween ThisTween;
 }
 
 // ------- 

@@ -7,6 +7,7 @@ using DG.Tweening;
 public class WeaponBox : MonoBehaviour 
 {
 	#region Variables
+	public float InvincibleTime = 1;
 	Transform GetTrans;
 	public int pourcLoot = 10;
 	public GameObject[] AllWeapon;
@@ -20,7 +21,9 @@ public class WeaponBox : MonoBehaviour
 
 	List<PlayerWeapon> updateWeapon; 
 	List<Tween> getAllTween;
-	int nbrTotalSlide = 0;
+
+    int nbrTotalSlide = 1;
+    bool invc = false;
 	#endregion
 	
 	#region Mono
@@ -87,7 +90,7 @@ public class WeaponBox : MonoBehaviour
 		});
 	}
 
-	public void AddItem ( int lenghtItem )
+	public void AddItem ( int lenghtItem/*, bool inv = false*/ )
 	{
 		NbrItem += lenghtItem;
 
@@ -102,10 +105,20 @@ public class WeaponBox : MonoBehaviour
 		}
 		getAllTween.Clear();
 
-		updateFeed ( getFeedBack, 0, currNbr );
+		Manager.Ui.GetGauge.DOFillAmount ( currNbr * 0.01f, 0.5f );
 		
-		Manager.Ui.ScoreText.text = NbrItem.ToString();
-		Manager.Ui.GetScores.UpdateValue( lenghtItem, ScoreType.BoxWeapon );
+		/*if ( !inv )
+		{
+			//updateFeed ( getFeedBack, 0, currNbr, inv );
+		}
+		else
+		{
+			//updateFeed ( getFeedBack, getFeedBack.Length - 1, currNbr, inv );
+		}*/
+		
+		//Manager.Ui.ScoreText.text = NbrItem.ToString();
+
+		Manager.Ui.GetScores.UpdateValue( NbrItem, ScoreType.BoxWeapon, false );
 
 		while ( currNbr > 100 )
 		{
@@ -113,12 +126,19 @@ public class WeaponBox : MonoBehaviour
 			nbrTotalSlide ++;
 			currNbr -=100;
 			
-			Manager.Ui.MultiplierNew();
+			Manager.Ui.MultiplierNew(nbrTotalSlide);
 		}	
 		
 		if ( checkCurr )
 		{
-			Tween getTween;
+			Tween getTween = DOVirtual.DelayedCall(0.5f, () =>
+			{
+				Manager.Ui.GetGauge.DOKill(true);
+				Manager.Ui.GetGauge.DOFillAmount ( currNbr * 0.01f, 0.5f );
+			});
+			getAllTween.Add ( getTween );
+			
+			/*Tween getTween;
 			getTween = DOVirtual.DelayedCall(0.5f, () => 
 			{
 				getWait = 0.5f;
@@ -126,27 +146,47 @@ public class WeaponBox : MonoBehaviour
 
 				getTween = DOVirtual.DelayedCall(0.5f, () => 
 				{
-					updateFeed ( getFeedBack, 0, currNbr );
+					if ( !inv )
+					{
+						updateFeed ( getFeedBack, 0, currNbr, inv );
+					}
+					else
+					{
+						updateFeed ( getFeedBack, getFeedBack.Length - 1, currNbr, inv );
+					}
 				});
 				getAllTween.Add ( getTween );
 			});
 
-			getAllTween.Add ( getTween );
+			getAllTween.Add ( getTween );*/
 		}
 	}
 
-	void updateFeed ( Image[] getFeedBack, int currInd, int currNbr )
+	void updateFeed ( Image[] getFeedBack, int currInd, int currNbr, bool inv = false )
 	{
 		float getTime = 0.1f;
 		float getCal = (currNbr - 20 * currInd ) * 0.05f;
-
+		if ( getCal < 0 )
+		{
+			getCal = 0;
+		}
 		if ( getFeedBack[currInd].fillAmount == getCal )
 		{
-			currInd ++;
-
-			if ( currInd < getFeedBack.Length )
+			if ( !inv )
 			{
-				updateFeed ( getFeedBack, currInd, currNbr );
+				currInd ++;
+				if ( currInd < getFeedBack.Length )
+				{
+					updateFeed ( getFeedBack, currInd, currNbr, inv );
+				}
+			}
+			else
+			{
+				currInd --;
+				if ( currInd >= 0 )
+				{
+					updateFeed ( getFeedBack, currInd, currNbr, inv );
+				}
 			}
 		}
 		else
@@ -155,12 +195,25 @@ public class WeaponBox : MonoBehaviour
 			getFeedBack[currInd].DOKill();
 			getTween = getFeedBack[currInd].DOFillAmount(getCal, getTime).OnComplete (() => 
 			{
-				currInd ++;
-
-				if ( currInd < getFeedBack.Length )
+				if ( !inv )
 				{
-					updateFeed ( getFeedBack, currInd, currNbr );
+					currInd ++;
+
+					if ( currInd < getFeedBack.Length )
+					{
+						updateFeed ( getFeedBack, currInd, currNbr, inv );
+					}
 				}
+				else
+				{
+					currInd --;
+
+					if ( currInd >= 0 )
+					{
+						updateFeed ( getFeedBack, currInd, currNbr, inv );
+					}
+				}
+				
 			});
 			getAllTween.Add(getTween);
 		}
@@ -174,7 +227,7 @@ public class WeaponBox : MonoBehaviour
 		{
 			currInd --;
 
-			if ( currInd > 0 )
+			if ( currInd >= 0 )
 			{
 				resetFeed ( getFeedBack, currInd );
 			}
@@ -184,7 +237,31 @@ public class WeaponBox : MonoBehaviour
 
 	public void TakeHit ( )
 	{
-		NbrItem /= pourcLoot;
+		if ( invc )
+		{
+			return;
+		}
+
+		invc = true;
+
+		DOVirtual.DelayedCall(InvincibleTime, () =>
+		{
+			invc = false;
+		});
+
+		NbrItem -= (int)((NbrItem * pourcLoot) * 0.01f);
+
+		//Manager.Ui.ScoreText.text = NbrItem.ToString();
+		
+		int getMult = (int)NbrItem / 100;
+		if ( getMult < nbrTotalSlide )
+		{
+			Manager.Ui.MultiplierNew(getMult);
+			nbrTotalSlide = getMult;
+		}
+		
+		
+		AddItem(0);
 	}
 	#endregion
 

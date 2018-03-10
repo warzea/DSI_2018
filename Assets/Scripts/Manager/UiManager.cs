@@ -20,6 +20,7 @@ public class UiManager : ManagerParent
 
     public Text ScoreText;
     public Text Multiplier;
+    public Image GetGauge;
     public Image[] GaugeFeedback;
 
     public GameObject[] PlayerText;
@@ -165,9 +166,9 @@ public class UiManager : ManagerParent
         }
     }
 
-    public void MultiplierNew()
+    public void MultiplierNew( int value = 0 )
     {
-
+        Multiplier.GetComponent<Text>().text = "x"+ value.ToString();
         Multiplier.GetComponent<RainbowColor>().enabled = true;
         Multiplier.GetComponent<RainbowMove>().enabled = true;
         Multiplier.GetComponent<RainbowScale>().enabled = true;
