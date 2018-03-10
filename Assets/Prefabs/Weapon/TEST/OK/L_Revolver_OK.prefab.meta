@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 06be9e275b0584e419d58ac97101d576
 timeCreated: 1520689003
+=======
+guid: 56b6a77cd695d2e40a4390df7a3fe605
+timeCreated: 1520690336
+>>>>>>> LoicTolinos
 licenseType: Free
 NativeFormatImporter:
   externalObjects: {}

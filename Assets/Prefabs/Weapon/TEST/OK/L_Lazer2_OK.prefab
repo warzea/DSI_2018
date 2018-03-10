@@ -9,30 +9,51 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
+<<<<<<< HEAD
   m_RootGameObject: {fileID: 1941229272249318}
   m_IsPrefabParent: 1
 --- !u!1 &1672821172011512
+=======
+  m_RootGameObject: {fileID: 1501280208847304}
+  m_IsPrefabParent: 1
+--- !u!1 &1501280208847304
+>>>>>>> LoicTolinos
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
+<<<<<<< HEAD
   - component: {fileID: 4404334397808728}
   m_Layer: 9
   m_Name: SpawnBullet
+=======
+  - component: {fileID: 4093195263678432}
+  - component: {fileID: 33496907201146574}
+  - component: {fileID: 136933916040948692}
+  - component: {fileID: 23652747875301942}
+  - component: {fileID: 114115041364491548}
+  m_Layer: 9
+  m_Name: L_Lazer2_OK
+>>>>>>> LoicTolinos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!1 &1941229272249318
+=======
+--- !u!1 &1568224494676716
+>>>>>>> LoicTolinos
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
+<<<<<<< HEAD
   - component: {fileID: 4627631752973048}
   - component: {fileID: 33136639193518086}
   - component: {fileID: 136429961646874396}
@@ -40,16 +61,26 @@ GameObject:
   - component: {fileID: 114765877359097388}
   m_Layer: 9
   m_Name: L_Lazer2_OK
+=======
+  - component: {fileID: 4170697244135870}
+  m_Layer: 9
+  m_Name: SpawnBullet
+>>>>>>> LoicTolinos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &4404334397808728
+=======
+--- !u!4 &4093195263678432
+>>>>>>> LoicTolinos
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
+<<<<<<< HEAD
   m_GameObject: {fileID: 1672821172011512}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -59,10 +90,23 @@ Transform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4627631752973048
+=======
+  m_GameObject: {fileID: 1501280208847304}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -375.09732, y: -136.4569, z: -6.366711}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4170697244135870}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!4 &4170697244135870
+>>>>>>> LoicTolinos
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
+<<<<<<< HEAD
   m_GameObject: {fileID: 1941229272249318}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -3.6892376, y: -0.6875696, z: -7.923766}
@@ -73,11 +117,26 @@ Transform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!23 &23389994294699760
+=======
+  m_GameObject: {fileID: 1568224494676716}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4093195263678432}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &23652747875301942
+>>>>>>> LoicTolinos
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
+<<<<<<< HEAD
   m_GameObject: {fileID: 1941229272249318}
+=======
+  m_GameObject: {fileID: 1501280208847304}
+>>>>>>> LoicTolinos
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -106,19 +165,33 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+<<<<<<< HEAD
 --- !u!33 &33136639193518086
+=======
+--- !u!33 &33496907201146574
+>>>>>>> LoicTolinos
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
+<<<<<<< HEAD
   m_GameObject: {fileID: 1941229272249318}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &114765877359097388
+=======
+  m_GameObject: {fileID: 1501280208847304}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114115041364491548
+>>>>>>> LoicTolinos
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
+<<<<<<< HEAD
   m_GameObject: {fileID: 1941229272249318}
+=======
+  m_GameObject: {fileID: 1501280208847304}
+>>>>>>> LoicTolinos
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c6bfe4600766d64c85f4f9c20b7243a, type: 3}
@@ -149,15 +222,26 @@ MonoBehaviour:
   TimeDest: 0
   Diameter: 0
   Bullet: {fileID: 1530796011795326, guid: bc41063ebf29c6f44a009da8b3171b68, type: 2}
+<<<<<<< HEAD
   SpawnBullet: {fileID: 4404334397808728}
   canShoot: 1
   OnFloor: 1
 --- !u!136 &136429961646874396
+=======
+  SpawnBullet: {fileID: 4170697244135870}
+  canShoot: 1
+  OnFloor: 1
+--- !u!136 &136933916040948692
+>>>>>>> LoicTolinos
 CapsuleCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
+<<<<<<< HEAD
   m_GameObject: {fileID: 1941229272249318}
+=======
+  m_GameObject: {fileID: 1501280208847304}
+>>>>>>> LoicTolinos
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 0
