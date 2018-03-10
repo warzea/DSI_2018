@@ -54,9 +54,19 @@ public class AgentController : MonoBehaviour
 
     void Update()
     {
-        if (myEtatAgent == AgentEtat.aliveAgent)
+        if (myEtatAgent == AgentEtat.aliveAgent && myFocusPlayer != null)
         {
-            ShootAgent();
+            NavMeshPath path = new NavMeshPath();
+
+            navAgent.CalculatePath(myFocusPlayer.transform.position, path);
+            if (path.status == NavMeshPathStatus.PathPartial)
+            {
+                DeadFonction();
+            }
+            else
+            {
+                ShootAgent();
+            }
         }
     }
 
@@ -65,7 +75,6 @@ public class AgentController : MonoBehaviour
         timeAgent += Time.deltaTime;
         if (timeAgent > timeLeftAgentshoot)
         {
-
             float distance = Vector3.Distance(transform.position, myFocusPlayer.transform.position);
 
             if (distance < distanceShoot)
@@ -107,7 +116,11 @@ public class AgentController : MonoBehaviour
     #region ChangeEtat
     public void DeadFonction()
     {
+        myEtatAgent = AgentEtat.deadAgent;
+        navAgent.isStopped = true;
+        transform.GetComponent<Renderer>().material = deadMaterial;
         agentsManager.DeadAgent(myFocusEtatAgent.ToString(), this.gameObject);
+        StartCoroutine(WaitRespawn());
     }
 
     public bool GetEtatAgent()
@@ -174,11 +187,7 @@ public class AgentController : MonoBehaviour
 
             if (lifeAgent <= 0 && AgentEtat.aliveAgent == myEtatAgent)
             {
-                myEtatAgent = AgentEtat.deadAgent;
-                navAgent.isStopped = true;
-                transform.GetComponent<Renderer>().material = deadMaterial;
                 DeadFonction();
-                StartCoroutine(WaitRespawn());
             }
         }
     }
