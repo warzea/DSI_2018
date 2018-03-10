@@ -1736,10 +1736,10 @@ MonoBehaviour:
   Garbage: {fileID: 0}
   Players: []
   PlayerMaterial:
-  - {fileID: 2100000, guid: 7465077882926a3458f94a64d4a2e7bd, type: 2}
-  - {fileID: 2100000, guid: 2741fccb881bb4ae5af3f4ab766d03a4, type: 2}
+  - {fileID: 2100000, guid: d94b83cac2a54e64a8f814130e7c6246, type: 2}
   - {fileID: 2100000, guid: 59e060f7fec6a6242adb154aac5740f7, type: 2}
-  - {fileID: 2100000, guid: 1d8ec58938fe3954dbb2e3f0a151dec3, type: 2}
+  - {fileID: 2100000, guid: 2741fccb881bb4ae5af3f4ab766d03a4, type: 2}
+  - {fileID: 2100000, guid: 7465077882926a3458f94a64d4a2e7bd, type: 2}
 --- !u!114 &114014207730499492
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4231,6 +4231,12 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   agents: []
   playerCauldron: {fileID: 0}
   distanceSave: 200
@@ -4988,6 +4994,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   posRespawn:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

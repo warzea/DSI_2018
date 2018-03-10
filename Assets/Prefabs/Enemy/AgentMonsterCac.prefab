@@ -203,7 +203,7 @@ MonoBehaviour:
   speedVsCauldron: 12
   speedVsPlayer: 6
   deadMaterial: {fileID: 2100000, guid: d94b83cac2a54e64a8f814130e7c6246, type: 2}
-  aliveMaterial: {fileID: 2100000, guid: b3c5b584d913be7408a3092db24ce67f, type: 2}
+  aliveMaterial: {fileID: 2100000, guid: 59e060f7fec6a6242adb154aac5740f7, type: 2}
   focusPlayer: {fileID: 0}
   timeLeftAgentAttacCac: 0.1
 --- !u!135 &135595202935105828
