@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class Scores : MonoBehaviour 
 {
@@ -34,7 +35,7 @@ public class Scores : MonoBehaviour
 					getScoreinf.ScoreValue = scoreValue;
 					getScoreinf.ScoreText.text = scoreValue.ToString();
 				}
-				
+
 				break;
 			}
 		}	

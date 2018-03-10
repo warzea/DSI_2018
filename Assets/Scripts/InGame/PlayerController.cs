@@ -151,6 +151,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        thisRig.velocity = Vector3.zero;
         float getDeltaTime = Time.deltaTime;
 
         if (!dead)

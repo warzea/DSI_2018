@@ -128,14 +128,14 @@ MonoBehaviour:
   AutoShoot: 0
   Projectile: 1
   Through: 0
-  Explosion: 0
-  BulletCapacity: 35
+  Explosion: 1
+  BulletCapacity: 30
   FireRate: 0
   CoolDown: 0.1
-  BackPush: 12.5
-  SpeedReduce: 0.75
+  BackPush: 200
+  SpeedReduce: 0.564
   Damage: 1
-  Range: 25
+  Range: 5
   NbrBullet: 1
   ScaleBullet: 3
   SpeedBullet: 17
@@ -147,12 +147,12 @@ MonoBehaviour:
   WidthRange: 0
   SpeedZone: 0
   TimeDest: 0
-  Diameter: 0
+  Diameter: 5
   Bullet: {fileID: 1530796011795326, guid: 7debebcea0d258f4a9f5dc489d6103cf, type: 2}
   SpawnBullet: {fileID: 4352674247326138}
   canShoot: 1
   OnFloor: 1
---- !u!136 &136019165438189050
+--- !u!136 &136974726491360106
 CapsuleCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
