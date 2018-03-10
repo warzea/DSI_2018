@@ -20,6 +20,9 @@ public class AgentsManagerCac : ManagerParent
 
     [Header("Distance max checkpoints")]
     public float distanceSave = 200;
+    private CheckRoom[] roomFight;
+
+    private Camera cam;
 
     void initialisation()
     {
@@ -33,6 +36,9 @@ public class AgentsManagerCac : ManagerParent
     {
         agents = GameObject.FindObjectsOfType<AgentControllerCac>();
         playerCauldron = Manager.GameCont.WeaponB.gameObject;
+        roomFight = GameObject.FindObjectsOfType<CheckRoom>();
+        cam = Manager.GameCont.MainCam;
+
         initialisation();
     }
 
@@ -41,38 +47,69 @@ public class AgentsManagerCac : ManagerParent
         Vector3 bestSpawn = new Vector3();
         float lastdist = 0;
         List<Transform> bestSpawnlist = new List<Transform>();
+        bool inRoom = false;
+        List<Transform> inRoomList = new List<Transform>();
 
-        for (int i = 0; i < posRespawn.Length; i++)
+        Debug.Log(roomFight.Length);
+
+        for (int i = 0; i < roomFight.Length; i++)
         {
-            float distanceAgent = Vector3.Distance(posRespawn[i].localPosition, posTarget.localPosition);
-            if (distanceSave > distanceAgent)
+            if (roomFight[i].GetEtatRoom())
             {
-                bestSpawnlist.Add(posRespawn[i]);
+                for (int j = 0; j < roomFight[i].checkPoint.Length; j++)
+                {
+                    Vector3 getCamPos = cam.WorldToViewportPoint(roomFight[i].checkPoint[j].transform.position);
+
+                    if (getCamPos.x > 0.97f || getCamPos.x < 0.03f || getCamPos.y > 0.97f || getCamPos.y < 0.03f)
+                    {
+                        inRoomList.Add(roomFight[i].checkPoint[j]);
+                        inRoom = true;
+                    }
+                }
+                if (inRoom)
+                {
+                    int randomPos = Random.Range(0, inRoomList.Count);
+                    bestSpawn = roomFight[i].checkPoint[randomPos].position;
+                }
             }
-            else
+        }
+
+        if (!inRoom)
+        {
+            for (int i = 0; i < posRespawn.Length; i++)
             {
-                if (lastdist == 0)
+                Vector3 getCamPos = cam.WorldToViewportPoint(posRespawn[i].transform.position);
+
+                if (getCamPos.x > 0.97f || getCamPos.x < 0.03f || getCamPos.y > 0.97f || getCamPos.y < 0.03f)
                 {
-                    lastdist = distanceAgent;
-                    bestSpawn = posRespawn[i].position;
-                }
-                else if (lastdist > distanceAgent)
-                {
-                    bestSpawn = posRespawn[i].position;
+                    float distanceAgent = Vector3.Distance(posRespawn[i].localPosition, posTarget.localPosition);
+
+                    if (distanceSave > distanceAgent)
+                    {
+                        bestSpawnlist.Add(posRespawn[i]);
+                    }
+                    else
+                    {
+                        if (lastdist == 0)
+                        {
+                            lastdist = distanceAgent;
+                            bestSpawn = posRespawn[i].position;
+                        }
+                        else if (lastdist > distanceAgent)
+                        {
+                            bestSpawn = posRespawn[i].position;
+                        }
+                    }
                 }
             }
-        }
 
-        int randomSpawnPlayer = Random.Range(0, bestSpawnlist.Count);
+            int randomSpawnPlayer = Random.Range(0, bestSpawnlist.Count);
 
-        if (bestSpawnlist.Count != 0)
-        {
-            bestSpawn = bestSpawnlist[randomSpawnPlayer].position;
-            return bestSpawn;
+            if (bestSpawnlist.Count != 0)
+            {
+                bestSpawn = bestSpawnlist[randomSpawnPlayer].position;
+            }
         }
-        else
-        {
-            return bestSpawn;
-        }
+        return bestSpawn;
     }
 }
