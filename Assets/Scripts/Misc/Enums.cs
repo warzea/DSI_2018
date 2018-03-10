@@ -31,7 +31,8 @@ public enum TypeEnemy
 
 public enum PotionType
 {
-	Plus
+	Plus,
+	Less
 	
 }
 

@@ -115,12 +115,11 @@ public class AgentControllerCac : MonoBehaviour
     {
         if (other.tag == "BulletPlayer")
         {
-            //Destroy(other.gameObject);
             lifeAgent = lifeAgent - 1;
-            if (lifeAgent <= 0)
+            if (lifeAgent <= 0 && AgentEtat.aliveAgent == myEtatAgent)
             {
-                navAgent.isStopped = true;
                 myEtatAgent = AgentEtat.deadAgent;
+                navAgent.isStopped = true;
                 transform.GetComponent<Renderer>().material = deadMaterial;
                 StartCoroutine(WaitRespawn());
             }

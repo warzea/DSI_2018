@@ -158,9 +158,9 @@ public class AgentController : MonoBehaviour
         yield return new WaitForSeconds(timeBeforeDepop);
         transform.GetComponent<Renderer>().material = aliveMaterial;
         navAgent.Warp(agentsManager.CheckBestcheckPoint(myFocusPlayer.transform));
-        // transform.position = agentsManager.CheckBestcheckPoint(myFocusPlayer.transform);
         yield return new WaitForSeconds(timeBeforeAlive);
         myEtatAgent = AgentEtat.aliveAgent;
+        navAgent.isStopped = false;
         lifeAgent = 1;
     }
 
@@ -169,16 +169,13 @@ public class AgentController : MonoBehaviour
         if (other.tag == Constants._PlayerBullet && myEtatAgent == AgentEtat.aliveAgent)
         {
             BulletAbstract getBA = other.GetComponent<BulletAbstract>();
-            /*if ( !getBA.Through  )
-            {
-                Destroy(other.gameObject);
-            }*/
 
             lifeAgent -= getBA.BulletDamage;
 
-            if (lifeAgent <= 0)
+            if (lifeAgent <= 0 && AgentEtat.aliveAgent == myEtatAgent)
             {
                 myEtatAgent = AgentEtat.deadAgent;
+                navAgent.isStopped = true;
                 transform.GetComponent<Renderer>().material = deadMaterial;
                 DeadFonction();
                 StartCoroutine(WaitRespawn());

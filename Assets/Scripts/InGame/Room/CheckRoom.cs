@@ -12,6 +12,8 @@ public class CheckRoom : MonoBehaviour
     int nbrPlayer = 0;
     bool CauldronInside = false;
     public bool launch = false;
+
+    private bool isUse = false;
     #endregion
 
     #region Mono
@@ -23,7 +25,7 @@ public class CheckRoom : MonoBehaviour
     #region Private
     void launchRoom()
     {
-        if (!launch)
+        if (!launch && !isUse)
         {
             launch = true;
             for (int a = 0; a < AllDoor.Length; a++)
@@ -36,6 +38,8 @@ public class CheckRoom : MonoBehaviour
                 for (int a = 0; a < AllDoor.Length; a++)
                 {
                     AllDoor[a].gameObject.SetActive(false);
+                    isUse = true;
+                    launch = false;
                 }
             });
         }
