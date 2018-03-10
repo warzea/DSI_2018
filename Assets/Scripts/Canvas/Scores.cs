@@ -24,17 +24,23 @@ public class Scores : MonoBehaviour
 			if ( getAllScore[a].ScoreTpe == thisType )
 			{
 				getScoreinf = getAllScore[a];
-				
+				getScoreinf.ThisTween.Kill(true);
 				if ( addValue )
 				{
-					getScoreinf.ScoreValue = scoreValue + getScoreinf.ScoreValue;
+					getScoreinf.FinalScore = scoreValue + getScoreinf.ScoreValue;
+					getScoreinf.ThisTween = DOTween.To(()=> getScoreinf.ScoreValue, x=> getScoreinf.ScoreValue = x, getScoreinf.FinalScore, 1);
+					//getScoreinf.ScoreValue = scoreValue + getScoreinf.ScoreValue;
 					getScoreinf.ScoreText.text = getScoreinf.ScoreValue.ToString();
 				}
 				else
 				{
-					getScoreinf.ScoreValue = scoreValue;
+					getScoreinf.FinalScore = scoreValue;
+					getScoreinf.ThisTween = DOTween.To(()=> getScoreinf.ScoreValue, x=> getScoreinf.ScoreValue = x, scoreValue, 1);
+					//getScoreinf.ScoreValue = scoreValue;
 					getScoreinf.ScoreText.text = scoreValue.ToString();
 				}
+
+				StartCoroutine(updateValue(new WaitForEndOfFrame(), getScoreinf));
 
 				break;
 			}
@@ -43,6 +49,17 @@ public class Scores : MonoBehaviour
 	#endregion
 
 	#region Private Methods
+	IEnumerator updateValue ( WaitForEndOfFrame thisF, ScoreInfo thisInfo )
+	{
+		yield return thisF;
+
+		if ( thisInfo.FinalScore != thisInfo.ScoreValue )
+		{
+			thisInfo.ScoreText.text = thisInfo.ScoreValue.ToString();
+
+			StartCoroutine(updateValue ( thisF, thisInfo ) );
+		}
+	}
 	#endregion
 
 }

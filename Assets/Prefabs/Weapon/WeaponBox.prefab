@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 23078710354756746}
   - component: {fileID: 65437087482648390}
   - component: {fileID: 114427052359867546}
+  - component: {fileID: 208955959018643798}
   m_Layer: 0
   m_Name: WeaponBox
   m_TagString: WeaponBox
@@ -53,7 +54,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1362042216562444}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10.51}
+  m_LocalPosition: {x: 4.26, y: 0.6, z: -10.51}
   m_LocalScale: {x: 1, y: 1, z: 2}
   m_Children:
   - {fileID: 4279158102363542}
@@ -149,8 +150,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 672714512d1fa2a4486e6b66b7172795, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pourcLoot: 10
   AllWeapon:
-  - {fileID: 1093315411277202, guid: ea26266d024e3cf4f8bc8992dc15534d, type: 2}
+  - {fileID: 1438907408466806, guid: de8fd46e3c2ee064aae9c0f1bdbd986c, type: 2}
   DelayNewWeapon: 2.5
   NbrItem: 0
   CanControl: 1
+--- !u!208 &208955959018643798
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1362042216562444}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.00001, y: 0.00001, z: 0.25}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5

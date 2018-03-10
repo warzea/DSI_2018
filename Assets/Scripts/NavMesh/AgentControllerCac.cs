@@ -6,118 +6,125 @@ using UnityEngine.AI;
 
 public class AgentControllerCac : MonoBehaviour
 {
-	public enum AgentEtat
-	{
-		deadAgent,
-		aliveAgent}
+    public enum AgentEtat { deadAgent, aliveAgent };
+    public AgentEtat myEtatAgent;
+    public TypeEnemy ThisType;
 
-	;
+    private GameObject targetCauldron;
+    public int lifeAgent = 1;
 
-	public AgentEtat myEtatAgent;
-	public TypeEnemy ThisType;
+    public float speedVsCauldron = 20;
+    public float speedVsPlayer = 20;
+    public Material deadMaterial;
+    public Material aliveMaterial;
 
-	private GameObject targetCauldron;
-	public int lifeAgent = 1;
+    private NavMeshAgent navAgent;
+    public GameObject focusPlayer;
+    private AgentsManagerCac agentsM;
 
-	public float speedVsCauldron = 20;
-	public float speedVsPlayer = 20;
-	public Material deadMaterial;
-	public Material aliveMaterial;
+    private float timeAgent = -5;
 
-	private NavMeshAgent navAgent;
-	public GameObject focusPlayer;
-	private AgentsManagerCac agentsM;
+    public float timeLeftAgentAttacCac = 1f;
+    void Start()
+    {
+        myEtatAgent = AgentEtat.aliveAgent;
+        targetCauldron = Manager.GameCont.WeaponB.gameObject;
+    }
+    void Awake()
+    {
+        navAgent = transform.GetComponent<NavMeshAgent>();
+        agentsM = GameObject.Find("ManagerNavMesh").GetComponent<AgentsManagerCac>();
+    }
 
-	private float timeAgent = -5;
+    void Update()
+    {
+        if (myEtatAgent == AgentEtat.aliveAgent)
+        {
+            ShootCac();
+        }
+    }
 
-	public float timeLeftAgentAttacCac = 1f;
+    public void ShootCac()
+    {
+        timeAgent += Time.deltaTime;
 
-	void Start ()
-	{
-		myEtatAgent = AgentEtat.aliveAgent;
-		targetCauldron = Manager.GameCont.WeaponB.gameObject;
-	}
+        if (timeAgent > timeLeftAgentAttacCac)
+        {
+            if (targetCauldron != null)
+            {
+                float dist = Vector3.Distance(transform.position, focusPlayer.transform.position);
+                Vector3 lookAtPosition = new Vector3(focusPlayer.transform.transform.position.x, this.transform.position.y, focusPlayer.transform.transform.position.z);
+                if (dist > 2f)
+                {
+                    navAgent.SetDestination(focusPlayer.transform.position);
+                }
+                else
+                {
+                    transform.LookAt(lookAtPosition);
+                    if (focusPlayer.tag == "WeaponBox")
+                    {
+                        focusPlayer.GetComponent<WeaponBox>().TakeHit();
+                    }
+                    else if (focusPlayer.tag == "Player")
+                    {
+                        focusPlayer.GetComponent<PlayerController>().GetDamage(transform);
+                    }
+                }
+            }
+            timeAgent = 0;
+        }
+    }
 
-	void Awake ()
-	{
-		navAgent = transform.GetComponent<NavMeshAgent> ();
-		agentsM = GameObject.Find ("ManagerNavMesh").GetComponent<AgentsManagerCac> ();
-	}
+    public void SetTarget(GameObject focus)
+    {
+        focusPlayer = focus;
+        if (navAgent != null)
+        {
+            navAgent.speed = speedVsPlayer;
+        }
+    }
 
-	void Update ()
-	{
-		if (myEtatAgent == AgentEtat.aliveAgent) {
-			ShootCac ();
-		}
-	}
+    public void SwitchCauldron()
+    {
+        focusPlayer = targetCauldron;
+        navAgent.speed = speedVsCauldron;
+    }
 
-	public void ShootCac ()
-	{
-		timeAgent += Time.deltaTime;
+    public void TargetPlayer()
+    {
+        if (targetCauldron != null)
+        {
+            navAgent.SetDestination(targetCauldron.transform.position);
+        }
+    }
 
-		if (timeAgent > timeLeftAgentAttacCac) {
-			if (targetCauldron != null) {
-				float dist = Vector3.Distance (transform.position, focusPlayer.transform.position);
-				Vector3 lookAtPosition = new Vector3 (focusPlayer.transform.transform.position.x, this.transform.position.y, focusPlayer.transform.transform.position.z);
-				if (dist > 2f) {
-					navAgent.SetDestination (focusPlayer.transform.position);
-				} else {
-					transform.LookAt (lookAtPosition);
-					if (focusPlayer.tag == "WeaponBox") {
-						focusPlayer.GetComponent<WeaponBox> ().TakeHit ();
-					} else if (focusPlayer.tag == "Player") {
-						focusPlayer.GetComponent<PlayerController> ().GetDamage (transform);
-					}
-				}
-			}
-			timeAgent = 0;
-		}
-	}
+    IEnumerator WaitRespawn()
+    {
+        yield return new WaitForSeconds(1);
+        transform.GetComponent<Renderer>().material = aliveMaterial;
+        navAgent.Warp(agentsM.CheckBestcheckPoint(focusPlayer.transform));
+        yield return new WaitForSeconds(1);
+        focusPlayer = targetCauldron;
+        navAgent.speed = speedVsCauldron;
+        navAgent.isStopped = false;
+        myEtatAgent = AgentEtat.aliveAgent;
+        lifeAgent = 1;
+    }
 
-	public void SetTarget (GameObject focus)
-	{
-		focusPlayer = focus;
-		navAgent.speed = speedVsPlayer;
-	}
-
-	public void SwitchCauldron ()
-	{
-		focusPlayer = targetCauldron;
-		navAgent.speed = speedVsCauldron;
-	}
-
-	public void TargetPlayer ()
-	{
-		if (targetCauldron != null) {
-			navAgent.SetDestination (targetCauldron.transform.position);
-		}
-	}
-
-	IEnumerator WaitRespawn ()
-	{
-		yield return new WaitForSeconds (1);
-		transform.GetComponent<Renderer> ().material = aliveMaterial;
-		navAgent.Warp (agentsM.CheckBestcheckPoint (focusPlayer.transform));
-		yield return new WaitForSeconds (1);
-		focusPlayer = targetCauldron;
-		navAgent.speed = speedVsCauldron;
-		navAgent.isStopped = false;
-		myEtatAgent = AgentEtat.aliveAgent;
-		lifeAgent = 1;
-	}
-
-	void OnTriggerEnter (Collider other)
-	{
-		if (other.tag == "BulletPlayer") {
-			//Destroy(other.gameObject);
-			lifeAgent = lifeAgent - 1;
-			if (lifeAgent <= 0) {
-				navAgent.isStopped = true;
-				myEtatAgent = AgentEtat.deadAgent;
-				transform.GetComponent<Renderer> ().material = deadMaterial;
-				StartCoroutine (WaitRespawn ());
-			}
-		}
-	}
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "BulletPlayer")
+        {
+            //Destroy(other.gameObject);
+            lifeAgent = lifeAgent - 1;
+            if (lifeAgent <= 0)
+            {
+                navAgent.isStopped = true;
+                myEtatAgent = AgentEtat.deadAgent;
+                transform.GetComponent<Renderer>().material = deadMaterial;
+                StartCoroutine(WaitRespawn());
+            }
+        }
+    }
 
 }

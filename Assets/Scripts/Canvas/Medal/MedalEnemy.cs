@@ -19,10 +19,23 @@ public class MedalEnemy : AbstractMedal
 	public override void StartCheck ( PlayerController[] allPlayer )
 	{
 		PlayerController thisPlayer = allPlayer[0];
-		for ( int a = 0; a < allPlayer.Length; a ++ )
+		bool equality = false;
+		int getEqua = 0;
+		if ( allPlayer.Length > 1 )
 		{
+			for ( int a = 1; a < allPlayer.Length; a ++ )
+			{
+				if ( thisPlayer.NbrEnemy > allPlayer[a].NbrEnemy )
+				{
 
+				}
+				else if ( thisPlayer.NbrEnemy == allPlayer[a].NbrEnemy  )
+				{
+					
+				}
+			}
 		}
+		
 	}
 	#endregion
 
