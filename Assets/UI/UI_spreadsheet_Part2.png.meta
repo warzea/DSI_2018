@@ -20,6 +20,7 @@ TextureImporter:
     21300026: UI_Score_Gauge_3
     21300028: UI_Score_Gauge_4
     21300030: UI_Score_Gauge_5
+    21300032: UI_Potions_Get
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -258,7 +259,7 @@ TextureImporter:
         width: 327
         height: 243
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -272,7 +273,7 @@ TextureImporter:
         width: 575
         height: 248
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -286,7 +287,7 @@ TextureImporter:
         width: 644
         height: 248
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -300,7 +301,7 @@ TextureImporter:
         width: 491
         height: 253
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -313,6 +314,20 @@ TextureImporter:
         y: 4095
         width: 508
         height: 251
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UI_Potions_Get
+      rect:
+        serializedVersion: 2
+        x: 1581
+        y: 3698
+        width: 129
+        height: 145
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

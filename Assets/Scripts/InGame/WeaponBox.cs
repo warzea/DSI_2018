@@ -22,9 +22,6 @@ public class WeaponBox : MonoBehaviour
 	List<PlayerWeapon> updateWeapon; 
 	List<Tween> getAllTween;
 
-    int nbrTotalSlide = 1;
-    bool invc = false;
-	List<Tween> getAllTween;
 	int nbrTotalSlide = 1;
 	bool invc = false;
 	#endregion
