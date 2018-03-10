@@ -796,14 +796,4 @@ public class PlayerController : MonoBehaviour
 }
 
 
-            Manager.Ui.ScreenShake();
-
-            if (thisWeapon != null) //&& thisWeapon.Damage == 1)
-            {
-                //Debug.Log("Shoot");
-                if(thisWeapon.Damage <= Manager.VibM.DamagesLow)
-                    Manager.VibM.ShootLowVibration(inputPlayer);
-                else if(thisWeapon.Damage > Manager.VibM.DamagesLow && thisWeapon.Damage <= Manager.VibM.DamagesMedium)
-                    Manager.VibM.ShootMediumVibration(inputPlayer);
-                else if (thisWeapon.Damage > Manager.VibM.DamagesLow && thisWeapon.Damage <= Manager.VibM.DamagesMedium)
-                    Manager.VibM.ShootHighVibration(inputPlayer);
+            
