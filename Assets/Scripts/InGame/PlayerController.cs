@@ -118,6 +118,8 @@ public class PlayerController : MonoBehaviour
     bool checkUIBorder = false;
     bool checkUIBorderY = false;
 
+    public Text WeapText;
+
     #endregion
 
     #region Mono
@@ -277,7 +279,6 @@ public class PlayerController : MonoBehaviour
         if (canShoot)
         {
             playerShoot(getDeltaTime);
-            Debug.Log(thisWeapon.name);
         }
 
         if (canDash)
