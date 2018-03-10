@@ -389,6 +389,8 @@ public class PlayerController : MonoBehaviour
     {
         float shootInput = inputPlayer.GetAxis("Shoot");
 
+
+
         /*if ( shootInput == 0 )
 		{
 			checkShoot = true;
@@ -431,6 +433,8 @@ public class PlayerController : MonoBehaviour
         {
             checkShootScore = false;
             SpawmShoot++;
+
+            
         }
         else if (shootInput < 0.3f)
         {
@@ -457,6 +461,16 @@ public class PlayerController : MonoBehaviour
             thisWeapon.weaponShoot(thisTrans);
             animPlayer.SetBool("Attack", true);
             shooting = true;
+            if (thisWeapon != null) //&& thisWeapon.Damage == 1)
+            {
+                //Debug.Log("Shoot");
+                if(thisWeapon.Damage <= Manager.VibM.DamagesLow)
+                    Manager.VibM.ShootLowVibration(inputPlayer);
+                else if(thisWeapon.Damage > Manager.VibM.DamagesLow && thisWeapon.Damage <= Manager.VibM.DamagesMedium)
+                    Manager.VibM.ShootMediumVibration(inputPlayer);
+                else if (thisWeapon.Damage > Manager.VibM.DamagesLow && thisWeapon.Damage <= Manager.VibM.DamagesMedium)
+                    Manager.VibM.ShootHighVibration(inputPlayer);
+            }
         }
         else
         {
@@ -724,6 +738,8 @@ public class PlayerController : MonoBehaviour
         else if (getTag == Constants._EnemyBullet && canTakeDmg /*|| getTag == Constants._Enemy*/ )
         {
             lifePlayer--;
+
+            Manager.VibM.StunVibration(inputPlayer);
 
             if (lifePlayer <= 0 && !dead)
             {
