@@ -163,13 +163,13 @@ public class PlayerController : MonoBehaviour
         
         if ( !checkUIBorder )
         {
-            AmmoUI.localScale = Vector3.one;
+            //AmmoUI.localScale = Vector3.one;
             
             AmmoUI.position = getCam.WorldToScreenPoint(thisTrans.position - Vector3.right * UiAmmoX + Vector3.up * UiAmmoY);
         } 
         else
         {
-            AmmoUI.localScale = new Vector3(-1, 1, 1);
+            //AmmoUI.localScale = new Vector3(-1, 1, 1);
             
             AmmoUI.position = getCam.WorldToScreenPoint(thisTrans.position + Vector3.right * UiAmmoX + Vector3.up * UiAmmoY);
         }
