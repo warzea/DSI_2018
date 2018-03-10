@@ -31,8 +31,8 @@ public class PlayerWeapon
 [System.Serializable]
 public class ScoreInfo
 {
-	[HideInInspector]
 	public int ScoreValue;
+	public int FinalScore;
 
 	public Text ScoreText;
 	public ScoreType ScoreTpe;
