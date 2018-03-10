@@ -68,9 +68,6 @@ public class WeaponBox : MonoBehaviour
             });
         });
 
-
-
-
         Manager.Ui.WeaponChange(thisPlayer.IdPlayer);
 
 		if ( newObj == null )
@@ -83,7 +80,6 @@ public class WeaponBox : MonoBehaviour
 			getWeap.Add ( newObj );
 			AllWeapon = getWeap.ToArray();
 		}
-
 		//thisPlayer.WeapText.text = newObj.name;
 
 		Transform objTrans = newObj.transform;
@@ -118,7 +114,6 @@ public class WeaponBox : MonoBehaviour
 			});
 		});
 	}
-
 	public void AddItem ( int lenghtItem, bool inv = false )
 	{
 		NbrItem += lenghtItem;
@@ -163,8 +158,10 @@ public class WeaponBox : MonoBehaviour
 		{
 			Tween getTween = DOVirtual.DelayedCall(0.5f, () =>
 			{
-				Manager.Ui.GetGauge.DOKill(true);
-				Manager.Ui.GetGauge.DOFillAmount ( currNbr * 0.01f, 0.5f );
+				getTween = Manager.Ui.GetGauge.DOFillAmount ( 0, 0.5f ).OnComplete ( () =>
+				{
+					getTween = Manager.Ui.GetGauge.DOFillAmount ( currNbr * 0.01f, 0.5f );
+				});
 			});
 			getAllTween.Add ( getTween );
 			
