@@ -155,6 +155,7 @@ public class WeaponBox : MonoBehaviour
 		{
 			checkCurr = true;
 			nbrTotalSlide ++;
+			Manager.Ui.MultiplierNew( nbrTotalSlide );
 			currNbr -=100;
 		}	
 		
