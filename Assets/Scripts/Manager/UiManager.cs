@@ -15,6 +15,7 @@ public class UiManager : ManagerParent
     public GameObject[] PlayersHUD;
     public Image[] PlayersWeaponHUD;
     public GameObject[] PlayersAmmo;
+    public Text[] textWeapon;
     public GameObject PotionGet;
 
     Tween ammoTwRot, ammoTwScale1, ammoTwScale2, ammoTwFade, ammoTwWait;
