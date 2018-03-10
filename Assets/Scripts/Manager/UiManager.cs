@@ -20,6 +20,7 @@ public class UiManager : ManagerParent
 
     public Text ScoreText;
     public Text Multiplier;
+    public Image GetGauge;
     public Image[] GaugeFeedback;
 
     public GameObject[] PlayerText;

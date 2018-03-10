@@ -89,7 +89,7 @@ public class WeaponBox : MonoBehaviour
 		});
 	}
 
-	public void AddItem ( int lenghtItem, bool inv = false )
+	public void AddItem ( int lenghtItem/*, bool inv = false*/ )
 	{
 		NbrItem += lenghtItem;
 
@@ -104,14 +104,16 @@ public class WeaponBox : MonoBehaviour
 		}
 		getAllTween.Clear();
 
-		if ( !inv )
+		Manager.Ui.GetGauge.DOFillAmount ( currNbr * 0.01f, 0.5f );
+		
+		/*if ( !inv )
 		{
-			updateFeed ( getFeedBack, 0, currNbr, inv );
+			//updateFeed ( getFeedBack, 0, currNbr, inv );
 		}
 		else
 		{
-			updateFeed ( getFeedBack, getFeedBack.Length - 1, currNbr, inv );
-		}
+			//updateFeed ( getFeedBack, getFeedBack.Length - 1, currNbr, inv );
+		}*/
 		
 		//Manager.Ui.ScoreText.text = NbrItem.ToString();
 
@@ -128,7 +130,14 @@ public class WeaponBox : MonoBehaviour
 		
 		if ( checkCurr )
 		{
-			Tween getTween;
+			Tween getTween = DOVirtual.DelayedCall(0.5f, () =>
+			{
+				Manager.Ui.GetGauge.DOKill(true);
+				Manager.Ui.GetGauge.DOFillAmount ( currNbr * 0.01f, 0.5f );
+			});
+			getAllTween.Add ( getTween );
+			
+			/*Tween getTween;
 			getTween = DOVirtual.DelayedCall(0.5f, () => 
 			{
 				getWait = 0.5f;
@@ -148,7 +157,7 @@ public class WeaponBox : MonoBehaviour
 				getAllTween.Add ( getTween );
 			});
 
-			getAllTween.Add ( getTween );
+			getAllTween.Add ( getTween );*/
 		}
 	}
 
@@ -239,7 +248,7 @@ public class WeaponBox : MonoBehaviour
 			invc = false;
 		});
 
-		NbrItem /= pourcLoot;
+		NbrItem -= (int)((NbrItem * pourcLoot) * 0.01f);
 
 		//Manager.Ui.ScoreText.text = NbrItem.ToString();
 		
@@ -251,7 +260,7 @@ public class WeaponBox : MonoBehaviour
 		}
 		
 		
-		AddItem(0, true);
+		AddItem(0);
 	}
 	#endregion
 
