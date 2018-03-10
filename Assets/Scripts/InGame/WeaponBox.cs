@@ -84,7 +84,7 @@ public class WeaponBox : MonoBehaviour
 			AllWeapon = getWeap.ToArray();
 		}
 
-		thisPlayer.WeapText.text = newObj.name;
+		//thisPlayer.WeapText.text = newObj.name;
 
 		Transform objTrans = newObj.transform;
 		objTrans.position = GetTrans.position;
