@@ -1416,6 +1416,12 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   agents: []
   playerCauldron: {fileID: 0}
   distanceSave: 200
@@ -1474,6 +1480,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   posRespawn:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
