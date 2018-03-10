@@ -78,7 +78,10 @@ public class AgentControllerCac : MonoBehaviour
     public void SetTarget(GameObject focus)
     {
         focusPlayer = focus;
-        navAgent.speed = speedVsPlayer;
+        if (navAgent != null)
+        {
+            navAgent.speed = speedVsPlayer;
+        }
     }
 
     public void SwitchCauldron()
