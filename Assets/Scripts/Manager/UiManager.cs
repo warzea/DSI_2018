@@ -191,6 +191,7 @@ public class UiManager : ManagerParent
 
     public void ScreenShake()
     {
+        /*
         float rdmX = UnityEngine.Random.Range(-1, 1);
         float rdmZ = UnityEngine.Random.Range(-1, 1);
 
@@ -198,7 +199,7 @@ public class UiManager : ManagerParent
         UnityEngine.Debug.Log(Camera.main.transform.localPosition);
 
 
-        Camera.main.transform.DOPunchPosition(Camera.main.transform.localPosition + new Vector3(1 * rdmX, 0, -5 * rdmZ), .1f, 15, 1);
+        Camera.main.transform.DOPunchPosition(Camera.main.transform.localPosition + new Vector3(1 * rdmX, 0, -5 * rdmZ), .1f, 15, 1);*/
     }
 
     void ScorePlus()
