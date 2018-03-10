@@ -181,13 +181,8 @@ public class UiManager : ManagerParent
         Multiplier.GetComponent<RainbowMove>().enabled = true;
         Multiplier.GetComponent<RainbowScale>().enabled = true;
 
-        for (int i = 0; i < 4; i++)
-        {
-            DOVirtual.DelayedCall(.1f * i, () => {
-
-                var circle = Instantiate(CircleMultiplier, Multiplier.transform.position, Quaternion.identity, Multiplier.transform);
-            });
-        }
+                var circle = Instantiate(CircleMultiplier, Multiplier.transform.position, Quaternion.identity, Multiplier.transform.parent);
+        circle.transform.SetSiblingIndex(0);
 
         DOVirtual.DelayedCall(.8f, () => {
 

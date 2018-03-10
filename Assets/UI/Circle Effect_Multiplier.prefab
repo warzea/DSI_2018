@@ -42,9 +42,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 649fefe4a2e17314d90106d1b4e9fb89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 0.7
+  time: 0.8
   scales:
-  - {x: 30, y: 30, z: 30}
+  - {x: 8, y: 8, z: 8}
   easeType: 1
 --- !u!114 &114702114824043592
 MonoBehaviour:
@@ -58,14 +58,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.19215688, b: 0.3137255, a: 1}
+  m_Color: {r: 0.7205882, g: 0.28081748, b: 0.37854436, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 738ffa073784c884988424e19facd9cb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8a31f11fc8c662f468a5c4b7ef68406b, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -84,9 +84,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5463210e5c20ec2439f37794b3419bc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  popFadeInDuration: 0.1
-  popFadeOutDuration: 0.05
-  popDurationBeforeFadeOut: 0.3
+  popFadeInDuration: 0.15
+  popFadeOutDuration: 0.1
+  popDurationBeforeFadeOut: 0.4
 --- !u!222 &222376484635252318
 CanvasRenderer:
   m_ObjectHideFlags: 1
