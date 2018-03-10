@@ -197,6 +197,19 @@ public class UiManager : ManagerParent
     #endregion
 
     #region Private Methods
+
+    public void ScreenShake()
+    {
+        float rdmX = UnityEngine.Random.Range(-1, 1);
+        float rdmZ = UnityEngine.Random.Range(-1, 1);
+
+        UnityEngine.Debug.Log(Camera.main.transform.position);
+        UnityEngine.Debug.Log(Camera.main.transform.localPosition);
+
+
+        Camera.main.transform.DOPunchPosition(Camera.main.transform.localPosition + new Vector3(1 * rdmX, 0, -5 * rdmZ), .1f, 15, 1);
+    }
+
     void ScorePlus()
     {
         ScoreText.transform.DOKill(true);
