@@ -277,6 +277,7 @@ public class PlayerController : MonoBehaviour
         if (canShoot)
         {
             playerShoot(getDeltaTime);
+            Debug.Log(thisWeapon.name);
         }
 
         if (canDash)
