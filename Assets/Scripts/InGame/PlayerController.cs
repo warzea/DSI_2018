@@ -462,6 +462,9 @@ public class PlayerController : MonoBehaviour
             thisWeapon.weaponShoot(thisTrans);
             animPlayer.SetBool("Attack", true);
             shooting = true;
+
+            Manager.Ui.ScreenShake();
+
             if (thisWeapon != null) //&& thisWeapon.Damage == 1)
             {
                 //Debug.Log("Shoot");
