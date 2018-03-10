@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 114638388816060628}
   - component: {fileID: 114573752761534306}
   - component: {fileID: 225346709705313580}
+  - component: {fileID: 114461139873885816}
   m_Layer: 0
   m_Name: Player3 Text Pop
   m_TagString: Untagged
@@ -79,6 +80,19 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: Player 3
+--- !u!114 &114461139873885816
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1875400269504394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15bfe642113140042bcd5b7892159806, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ThisPlayer: {fileID: 0}
+  getCam: {fileID: 0}
 --- !u!114 &114573752761534306
 MonoBehaviour:
   m_ObjectHideFlags: 1

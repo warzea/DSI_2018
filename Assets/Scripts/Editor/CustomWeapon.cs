@@ -15,6 +15,8 @@ public class CustomWeapon : Editor
 	SerializedProperty Explosion;
 	SerializedProperty BulletCapacity;
 	SerializedProperty FireRate;
+	SerializedProperty TimeFarEffect;
+	SerializedProperty FarEffect;
 	SerializedProperty CoolDown;
 	SerializedProperty BackPush;
 	SerializedProperty SpeedReduce;
@@ -29,7 +31,7 @@ public class CustomWeapon : Editor
 	SerializedProperty WidthRange;
 	SerializedProperty SpeedZone;
 	SerializedProperty TimeDest;
-	//SerializedProperty Diameter;
+	SerializedProperty Diameter;
 	SerializedProperty Bullet;
 	SerializedProperty SpawnBullet;
 	GUIContent Empty;
@@ -82,13 +84,15 @@ public class CustomWeapon : Editor
 		// -- fin projectile
 
 		// -- si zone
+		FarEffect = serializedObject.FindProperty("FarEffect");
+		TimeFarEffect = serializedObject.FindProperty("TimeFarEffect");
 		WidthRange = serializedObject.FindProperty("WidthRange");
 		SpeedZone = serializedObject.FindProperty("SpeedZone");
 		TimeDest = serializedObject.FindProperty("TimeDest");
 		// -- fin zone
 
 		// -- si explosion
-		//Diameter = serializedObject.FindProperty("Diameter");
+		Diameter = serializedObject.FindProperty("Diameter");
 		// -- fin explostion
 	}
 
@@ -264,6 +268,8 @@ public class CustomWeapon : Editor
 		else // -- fin projectile
 		{
 			// -- si zone
+			EditorGUILayout.PropertyField ( FarEffect );
+			EditorGUILayout.PropertyField ( TimeFarEffect );
 			EditorGUILayout.PropertyField ( WidthRange );
 			EditorGUILayout.PropertyField ( SpeedZone );
 			EditorGUILayout.PropertyField ( TimeDest );
@@ -272,14 +278,14 @@ public class CustomWeapon : Editor
 
 		EditorGUI.indentLevel = 2;
 		
-		/*if ( myTarget.Explosion )
+		if ( myTarget.Explosion )
 		{
 			// -- si explosion
 			EditorGUILayout.LabelField("Explosion -------", EditorStyles.boldLabel);
 			EditorGUILayout.PropertyField ( Diameter );
 			EditorGUILayout.LabelField("-------", EditorStyles.boldLabel);
 			// -- fin explostion
-		}	*/
+		}	
 
 		EditorGUI.indentLevel = 0;
 		EditorGUILayout.LabelField("-------", EditorStyles.boldLabel);

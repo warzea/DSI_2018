@@ -95,14 +95,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25f8eb5ac5a78614fbd08d2188f0a0cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GetEffect: {fileID: 0}
+  GetEffect: {fileID: 142746, guid: a183756d778416d4d885ecf041d1acda, type: 2}
   ThisTrajectoir: 0
-  MoveSpeed: 10
+  MoveSpeed: 1
   direction: {x: 0, y: 0, z: 0}
   BulletDamage: 1
   BulletRange: 10
   TimeStay: 0
+  WidthRange: 0
+  SpeedZone: 0
   Through: 0
+  Diameter: 0
+  Projectil: 1
+  FarEffect: 1
+  TimeFarEffect: 1
+  thisPlayer: {fileID: 0}
+  canExplose: 0
 --- !u!135 &135674131210696902
 SphereCollider:
   m_ObjectHideFlags: 1

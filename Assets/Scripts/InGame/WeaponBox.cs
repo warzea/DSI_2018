@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 
 public class WeaponBox : MonoBehaviour 
 {
 	#region Variables
 	Transform GetTrans;
+	public int pourcLoot = 10;
 	public GameObject[] AllWeapon;
 	public float DelayNewWeapon = 1;
 
@@ -17,11 +19,14 @@ public class WeaponBox : MonoBehaviour
 	public bool CanControl = true;
 
 	List<PlayerWeapon> updateWeapon; 
+	List<Tween> getAllTween;
+	int nbrTotalSlide = 0;
 	#endregion
 	
 	#region Mono
 	void Awake ( )
 	{
+		getAllTween = new List<Tween>();
 		updateWeapon = new List<PlayerWeapon>();
 		GetTrans = transform;
 
@@ -34,13 +39,26 @@ public class WeaponBox : MonoBehaviour
 	#endregion
 	
 	#region Public Methods
-	public void NewWeapon ( PlayerController thisPlayer )
+	public void NewWeapon ( PlayerController thisPlayer, GameObject newObj = null )
 	{
-		GameObject newObj = (GameObject) Instantiate ( AllWeapon[Random.Range(0, AllWeapon.Length)], thisPlayer.WeaponPos );
+		Manager.Ui.WeaponChange(thisPlayer.IdPlayer);
+
+		if ( newObj == null )
+		{
+			newObj = (GameObject) Instantiate ( AllWeapon[Random.Range(0, AllWeapon.Length)], thisPlayer.WeaponPos );
+		}
+		else
+		{
+			List<GameObject> getWeap = new List<GameObject>(AllWeapon);
+			getWeap.Add ( newObj );
+			AllWeapon = getWeap.ToArray();
+		}
+
 		Transform objTrans = newObj.transform;
 		objTrans.position = GetTrans.position;
 		objTrans.localScale = Vector3.zero;
 
+		thisPlayer.WeaponSwitch ++;
 		int currId = thisPlayer.IdPlayer;
 
 		if ( updateWeapon[currId] != null )
@@ -50,6 +68,7 @@ public class WeaponBox : MonoBehaviour
 
 		updateWeapon[currId].CurrObj = newObj;
 
+		thisPlayer.UiAmmo.DOFillAmount (1, 0.1f + DelayNewWeapon);
 		objTrans.DOScale ( Vector3.one, DelayNewWeapon );
 		DOVirtual.DelayedCall ( 0.1f, ( ) => 
 		{
@@ -67,11 +86,112 @@ public class WeaponBox : MonoBehaviour
 	{
 		NbrItem += lenghtItem;
 
+		int currNbr = NbrItem - nbrTotalSlide * 100;
+		Image[] getFeedBack = Manager.Ui.GaugeFeedback;
+		float getWait = 0;
+		bool checkCurr = false;
+
+		for ( int a = 0; a < getAllTween.Count; a ++ )
+		{
+			getAllTween[a].Kill();
+		}
+		getAllTween.Clear();
+
+		updateFeed ( getFeedBack, 0, currNbr );
+		
+		Manager.Ui.ScoreText.text = NbrItem.ToString();
 		Manager.Ui.GetScores.UpdateValue( lenghtItem, ScoreType.BoxWeapon );
+
+		while ( currNbr > 100 )
+		{
+			checkCurr = true;
+			nbrTotalSlide ++;
+			currNbr -=100;
+			
+			Manager.Ui.MultiplierNew();
+		}	
+		
+		if ( checkCurr )
+		{
+			Tween getTween;
+			getTween = DOVirtual.DelayedCall(0.5f, () => 
+			{
+				getWait = 0.5f;
+				resetFeed ( getFeedBack, getFeedBack.Length - 1);
+
+				getTween = DOVirtual.DelayedCall(0.5f, () => 
+				{
+					updateFeed ( getFeedBack, 0, currNbr );
+				});
+				getAllTween.Add ( getTween );
+			});
+
+			getAllTween.Add ( getTween );
+		}
+	}
+
+	void updateFeed ( Image[] getFeedBack, int currInd, int currNbr )
+	{
+		float getTime = 0.1f;
+		float getCal = (currNbr - 20 * currInd ) * 0.05f;
+
+		if ( getFeedBack[currInd].fillAmount == getCal )
+		{
+			currInd ++;
+
+			if ( currInd < getFeedBack.Length )
+			{
+				updateFeed ( getFeedBack, currInd, currNbr );
+			}
+		}
+		else
+		{
+			Tween getTween;
+			getFeedBack[currInd].DOKill();
+			getTween = getFeedBack[currInd].DOFillAmount(getCal, getTime).OnComplete (() => 
+			{
+				currInd ++;
+
+				if ( currInd < getFeedBack.Length )
+				{
+					updateFeed ( getFeedBack, currInd, currNbr );
+				}
+			});
+			getAllTween.Add(getTween);
+		}
+	}
+
+	void resetFeed ( Image[] getFeedBack, int currInd )
+	{
+		Tween getTween;
+		getFeedBack[currInd].DOKill();
+		getTween = getFeedBack[currInd].DOFillAmount(0, 0.1f).OnComplete (() => 
+		{
+			currInd --;
+
+			if ( currInd > 0 )
+			{
+				resetFeed ( getFeedBack, currInd );
+			}
+		});
+		getAllTween.Add(getTween);
+	}
+
+	public void TakeHit ( )
+	{
+		NbrItem /= pourcLoot;
 	}
 	#endregion
 
 	#region Private Methods
+	void OnTriggerEnter ( Collider thisColl )
+	{
+		string tag = thisColl.tag;
+		if ( tag == Constants._EnemyBullet )
+		{
+			TakeHit ();
+		}
+	}
 	#endregion
 
 }

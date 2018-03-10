@@ -11,6 +11,7 @@ public class InteractAbstract : MonoBehaviour
 	public int NbrTouchToDrop = 2;
 	public GameObject[] ItemDrop;
 	Transform thisTrans;
+	bool checkItem = true;
 	#endregion
 	
 	#region Mono
@@ -38,12 +39,16 @@ public class InteractAbstract : MonoBehaviour
 						GameObject newItem = (GameObject) Instantiate (ItemDrop[Random.Range(0, ItemDrop.Length - 1)], thisPlayer.BagPos);
 						Transform getTrans = newItem.transform;
 
-						getTrans.position = thisTrans.position + new Vector3 ( Random.Range(-0.2f, 0.21f), 0, Random.Range(-0.2f, 0.21f) );
+						getTrans.position = thisTrans.position + new Vector3 ( Random.Range(-0.5f, 0.51f), 0, Random.Range(-0.5f, 0.51f) );
 						
-						getTrans.DOLocalMove(Vector3.zero, 1);
-						getTrans.DOScale(Vector3.zero,1).OnComplete( () => 
+						getTrans.DOLocalMove(Vector3.zero + Vector3.up * 3, 0.5f).OnComplete ( () => 
 						{
-							newItem.SetActive(false);
+							getTrans.DOScale(Vector3.zero, 0.5f).OnComplete( () => 
+							{
+								newItem.SetActive(false);
+							});
+							
+							getTrans.DOLocalMove(Vector3.zero, 0.5f);
 						});
 
 						thisPlayer.AllItem.Add(newItem);
@@ -51,6 +56,12 @@ public class InteractAbstract : MonoBehaviour
 					
 					NbrItem --;
 				}
+			}
+
+			if ( NbrItem == 0 && checkItem )
+			{
+				checkItem = false;
+				thisPlayer.NbrChest ++;
 			}
 		}
 	}

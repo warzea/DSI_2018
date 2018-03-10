@@ -8,16 +8,18 @@ public class AgentController : MonoBehaviour
 {
     /// <summary> Public <summary>
 
-    [Header("Info Agent")]
-    public bool dead = false;
+    [Header("------------------")]
+    [Header("----INFO AGENT----")]
+    [Header("------------------")]
+    public TypeEnemy ThisType;
     public GameObject myFocusPlayer;
     public int lifeAgent = 1;
-
     public float timeBeforeDepop = 2f;
     public float timeBeforeAlive = 1f;
 
-
-    [Header("Info Bullet")]
+    [Header("------------------")]
+    [Header("----INFO SHOOT----")]
+    [Header("------------------")]
     public GameObject bulletAgent;
     public Transform spawnBulletAgent;
     public GameObject parentBullet;
@@ -26,14 +28,16 @@ public class AgentController : MonoBehaviour
     public float distanceShoot = 20;
 
 
-    public enum CibleAgent { lawPlayer, maxPlayer, leadPlayer, randomPlayer, nothing };
+    public enum CibleAgent { lawPlayer, maxPlayer, leadPlayer, cauldron, randomPlayer, nothing };
     public enum AgentEtat { deadAgent, aliveAgent };
+
+    [Header("Info Agent")]
     public CibleAgent myFocusEtatAgent;
     public AgentEtat myEtatAgent;
-
     private AgentsManager agentsManager;
     private NavMeshAgent navAgent;
 
+    [Header("Materials dead/alive")]
     public Material deadMaterial;
     public Material aliveMaterial;
 
@@ -73,23 +77,17 @@ public class AgentController : MonoBehaviour
 
                 if (Physics.Raycast(spawnBulletAgent.position, spawnBulletAgent.forward, out hit))
                 {
-                    if (hit.transform.tag == "Player")
+                    if (hit.transform.tag == "Player" || hit.transform.tag == "WeaponBox")
                     {
                         GameObject killeuse = (GameObject)Instantiate(bulletAgent, spawnBulletAgent.position, spawnBulletAgent.rotation, parentBullet.transform);
                     }
                     else
                     {
-                        Debug.Log("I need Move");
+                        //  Debug.Log("I need Move");
                     }
                 }
             }
             timeAgent = 0;
-        }
-
-        if (dead)
-        {
-            DeadFonction();
-            dead = false;
         }
     }
 
@@ -142,6 +140,12 @@ public class AgentController : MonoBehaviour
         myFocusPlayer = player;
     }
 
+    public void SetFocusCauldron(GameObject player)
+    {
+        myFocusEtatAgent = CibleAgent.cauldron;
+        myFocusPlayer = player;
+    }
+
     public void SetFocusRandomPlayer(GameObject player)
     {
         myFocusEtatAgent = CibleAgent.randomPlayer;
@@ -165,11 +169,11 @@ public class AgentController : MonoBehaviour
         if (other.tag == Constants._PlayerBullet && myEtatAgent == AgentEtat.aliveAgent)
         {
             BulletAbstract getBA = other.GetComponent<BulletAbstract>();
-            if ( !getBA.Through  )
+            /*if ( !getBA.Through  )
             {
                 Destroy(other.gameObject);
-            }
-            
+            }*/
+
             lifeAgent -= getBA.BulletDamage;
 
             if (lifeAgent <= 0)
