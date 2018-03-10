@@ -164,6 +164,11 @@ public class BulletAbstract : MonoBehaviour
         {
             getExplo.TimeStay = TimeStay;
         }
+
+        if ( !getExplo.GetEffect )
+        {
+            getExplo.GetEffect = GetEffect;
+        }
         getExplo.ScaleExplo = Diameter;
     }
 
