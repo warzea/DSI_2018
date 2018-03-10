@@ -49,41 +49,6 @@ public class GameController : ManagerParent
 
     public void EndGame()
     {
-        PlayerController thisPlayer = Players[0].GetComponent<PlayerController>();
-        PlayerController otherPlayer;
-      
-        int b;
-
-        for ( int a = 0; a < Players.Count; a ++ )
-        {
-            for ( b = 0; a < Players.Count; b ++ )
-            {
-                otherPlayer = Players[a].GetComponent<PlayerController>();
-            }
-
-            
-
-        }
-		/*  
-        int CurrScore = 0;
-		int CurrLootScore = 0;
-		int CurrKillScore = 0;
-		int NbrDead = 0;
-		int WeaponSwitch = 0;
-		int WeaponThrow = 0;
-		int WeaponCatch = 0;
-		int ShootBullet = 0;
-		int ShootSucceed = 0;
-		float TimeWBox = 0;
-		int SpawmShoot = 0;
-		float TotalDist = 0;
-		int NbrTouchInteract = 0;
-		int NbrChest = 0;
-		int NbrEnemy = 0;
-		int currentEnemy = 0;
-		int LostItem = 0;*/
-
-
         Players.Clear();
         Manager.Ui.OpenThisMenu(MenuType.SelectPlayer);
     }
@@ -107,21 +72,18 @@ public class GameController : ManagerParent
         }
     }
 
-    void setMedail ( )
-    {
-        
-    }
-
     void SpawnPlayer()
     {
         PlayerInfoInput[] getPlayers = GetPlayersInput;
         PlayerController getPC;
         GameObject getPlayer;
         GameObject getWeapon;
-
+        GameObject[] getPlayerHud = Manager.Ui.PlayersHUD;
+        
         for (int a = 0; a < getPlayers.Length; a++)
         {
             getPlayers[a].ReadyPlayer = false;
+            getPlayerHud[a].SetActive(getPlayers[a].EnablePlayer);
 
             if (getPlayers[a].EnablePlayer)
             {
@@ -136,6 +98,11 @@ public class GameController : ManagerParent
                 getPlayer.transform.position = PlayerPosSpawn.position + new Vector3(a * 1.5f, 0, 0);
                 getPC = getPlayer.GetComponent<PlayerController>();
                 getPC.IdPlayer = getPlayers[a].IdPlayer;
+                getPC.AmmoUI = Manager.Ui.PlayersAmmo[a].transform;
+
+                getWeapon = (GameObject)Instantiate(Manager.Ui.PlayerText[a], Manager.Ui.GetInGame);
+                getWeapon.GetComponent<FollowPlayerUI>().getCam = MainCam;
+                getWeapon.GetComponent<FollowPlayerUI>().ThisPlayer = getPlayer.transform;
 
                 getWeapon = (GameObject)Instantiate(StartWeapon, getPC.WeaponPos.transform);
                 getWeapon.transform.localPosition = Vector3.zero;

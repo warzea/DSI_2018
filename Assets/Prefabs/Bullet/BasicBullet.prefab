@@ -97,7 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GetEffect: {fileID: 142746, guid: a183756d778416d4d885ecf041d1acda, type: 2}
   ThisTrajectoir: 0
-  MoveSpeed: 10
+  MoveSpeed: 1
   direction: {x: 0, y: 0, z: 0}
   BulletDamage: 1
   BulletRange: 10
@@ -109,6 +109,7 @@ MonoBehaviour:
   Projectil: 1
   FarEffect: 1
   TimeFarEffect: 1
+  thisPlayer: {fileID: 0}
   canExplose: 0
 --- !u!135 &135674131210696902
 SphereCollider:

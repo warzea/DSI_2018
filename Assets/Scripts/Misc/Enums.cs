@@ -28,3 +28,17 @@ public enum TypeEnemy
 	Distance
 	
 }
+
+public enum PotionType
+{
+	Plus
+	
+}
+
+public enum TypeMedail 
+{
+	easy,
+	medium,
+	hard
+
+}

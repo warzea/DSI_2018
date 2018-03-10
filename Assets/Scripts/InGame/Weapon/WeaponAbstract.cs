@@ -71,6 +71,8 @@ public class WeaponAbstract : MonoBehaviour
     Transform getGargabe;
     int getCapacity;
 
+    IEnumerator GetEnumerator;
+
     #endregion
 
     #region Mono
@@ -82,13 +84,39 @@ public class WeaponAbstract : MonoBehaviour
     #endregion
 
     #region Public Methods
+
     public void weaponShoot(Transform playerTrans)
     {
         if (canShoot && getCapacity > 0 && !blockShoot)
         {
-            playerTrans.localPosition -= playerTrans.forward * BackPush * Time.deltaTime;
+            //playerTrans.localPosition -= playerTrans.forward * BackPush * Time.deltaTime;
+            string getTag;
+            float getDist = BackPush * Time.deltaTime;
+            RaycastHit[] allHit;
+
+            allHit = Physics.RaycastAll ( playerTrans.position, - playerTrans.forward, getDist );
+            
+            foreach ( RaycastHit thisRay in allHit )
+            {
+                getTag = thisRay.collider.tag;
+                
+                if ( getTag == Constants._Wall && thisRay.distance < getDist )
+                {
+                    getDist = thisRay.distance - 0.5f;
+                }
+            }
+            playerTrans.DOLocalMove ( playerTrans.localPosition - playerTrans.forward * getDist, 0.1f );
+
             getCapacity--;
             canShoot = false;
+
+            PlayerController getPC = playerTrans.GetComponent<PlayerController>();
+            getPC.UiAmmo.fillAmount = (float) getCapacity / BulletCapacity;
+
+            if ( getCapacity == 0 )
+            {
+                Manager.Ui.WeaponEmpty(getPC.IdPlayer);
+            }
 
             customWeapon(playerTrans);
         }
