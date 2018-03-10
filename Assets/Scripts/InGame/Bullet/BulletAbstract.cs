@@ -145,7 +145,7 @@ public class BulletAbstract : MonoBehaviour
     #region Private Methods
     void playZone()
     {
-        GetComponent<SphereCollider>().enabled = false;
+        GetComponent<Collider>().enabled = false;
         startPos = Vector3.zero;
 
         DOTween.To(() => getDistScale, x => getDistScale = x, BulletRange * 0.5f * FarEffect, TimeFarEffect);

@@ -136,10 +136,11 @@ public class WeaponAbstract : MonoBehaviour
 
             GetComponent<Collider>().enabled = true;
             GetComponent<Collider>().isTrigger = true;
-            getTrans.gameObject.AddComponent(typeof(BulletAbstract));
-            getTrans.GetComponent<BulletAbstract>().direction = playerTrans.forward;
-            getTrans.GetComponent<BulletAbstract>().TimeStay = 0.2f;
-            getTrans.GetComponent<BulletAbstract>().thisPlayer = getPC;
+            BulletAbstract thisBA = getTrans.gameObject.AddComponent<BulletAbstract>();
+            thisBA.direction = playerTrans.forward;
+            thisBA.TimeStay = 0.2f;
+            thisBA.thisPlayer = getPC;
+            thisBA.Projectil = Projectile;
 
             Manager.GameCont.WeaponB.NewWeapon(getPC);
         }

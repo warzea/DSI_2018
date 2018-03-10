@@ -658,23 +658,21 @@ public class PlayerController : MonoBehaviour
 
         //thisTrans.SetParent(getBoxWeapon);
 
-        thisTrans.DOLocalMove(thisTrans.localPosition + getDirect * getDist, getTime).OnComplete(() =>
-    {
-        DOVirtual.DelayedCall(TimeDead + TimeProjDead - getTime, () =>
-          {
-              GetComponent<Collider>().isTrigger = false;
-              WeaponPos.gameObject.SetActive(true);
-              lifePlayer = LifePlayer;
-              dead = false;
-              thisWeapon.canShoot = true;
+        thisTrans.DOLocalMove(thisTrans.localPosition + getDirect * getDist, getTime);
 
-              DOVirtual.DelayedCall(TimeInvincible, () =>
-                {
-                    canTakeDmg = true;
-                });
-          });
-    });
+        DOVirtual.DelayedCall( getTime + TimeDead + TimeProjDead - getTime, () =>
+        {
+            GetComponent<Collider>().isTrigger = false;
+            WeaponPos.gameObject.SetActive(true);
+            lifePlayer = LifePlayer;
+            dead = false;
+            thisWeapon.canShoot = true;
 
+            DOVirtual.DelayedCall(TimeInvincible, () =>
+            {
+                canTakeDmg = true;
+            });
+        });
         /*for ( a = 0; a < getList.Length; a ++ )
 		{
 			Destroy(getList[a]);	
