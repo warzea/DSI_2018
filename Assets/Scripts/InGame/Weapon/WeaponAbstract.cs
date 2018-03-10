@@ -110,6 +110,14 @@ public class WeaponAbstract : MonoBehaviour
             getCapacity--;
             canShoot = false;
 
+            PlayerController getPC = playerTrans.GetComponent<PlayerController>();
+            getPC.UiAmmo.fillAmount = (float) getCapacity / BulletCapacity;
+
+            if ( getCapacity == 0 )
+            {
+                Manager.Ui.WeaponEmpty(getPC.IdPlayer);
+            }
+
             customWeapon(playerTrans);
         }
         else if (getCapacity <= 0)

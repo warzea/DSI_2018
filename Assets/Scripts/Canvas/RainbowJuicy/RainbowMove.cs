@@ -29,6 +29,8 @@ public class RainbowMove : MonoBehaviour
     public float[] moves;
     public Transform[] ObjectTransform;
     public Ease easeType;
+    public bool breakMove;
+    public int breakNumber;
     /*
     [Header("POP DATA")]
     public TypePop popType;
@@ -37,6 +39,7 @@ public class RainbowMove : MonoBehaviour
     public float popDurationBeforeFadeOut;
     */
     Transform currT;
+    Transform stockedPos;
     private float LocalY;
 
 	Vector3 startPos;
@@ -45,6 +48,20 @@ public class RainbowMove : MonoBehaviour
 	{
 		index = - 1;
 	}
+
+    private void Update()
+    {
+        if (transform.name == "2D Light Effect")
+        {
+            Debug.Log(startPos);
+            Debug.Log(index);
+        }
+    }
+
+    private void Start()
+    {
+        stockedPos = transform;
+    }
 
     void OnEnable()
     {
@@ -69,29 +86,47 @@ public class RainbowMove : MonoBehaviour
 
     void Next()
     {
-        if(movesType == TypeMoves.ObjectTransform)
-            index = (index + 1) % ObjectTransform.Length;
-        else
-            index = (index + 1) % moves.Length;
 
-        if (movesType == TypeMoves.ObjectTransform)
-            currT.DOLocalMove(ObjectTransform[index].localPosition, time).SetEase(easeType).OnComplete(() => Next());
+        //if(breakNumber != index)
+        //{
 
-        if (movesType == TypeMoves.LocalHorizontal)
-			currT.DOLocalMoveX(moves[index], time).SetEase(easeType).OnComplete(() => Next());
+            if (movesType == TypeMoves.ObjectTransform)
+                index = (index + 1) % ObjectTransform.Length;
+            else
+                index = (index + 1) % moves.Length;
 
-        if (movesType == TypeMoves.LocalVertical)
-			currT.DOLocalMoveY(moves[index], time).SetEase(easeType).OnComplete(() => Next());
 
-        if (movesType == TypeMoves.GlobalHorizontal)
-			currT.DOMoveX(moves[index], time).SetEase(easeType).OnComplete(() => Next());
+            if (movesType == TypeMoves.ObjectTransform)
+                currT.DOLocalMove(ObjectTransform[index].localPosition, time).SetEase(easeType).OnComplete(() => Next());
 
-        if (movesType == TypeMoves.GlobalVertical)
-			currT.DOMoveY(moves[index], time).SetEase(easeType).OnComplete(() => Next());
+            if (movesType == TypeMoves.LocalHorizontal)
+                currT.DOLocalMoveX(moves[index], time).SetEase(easeType).OnComplete(() => Next());
 
-        if (movesType == TypeMoves.ShakePosition)
-            currT.DOShakePosition(time, moves[index]).SetEase(easeType).OnComplete(() => Next());
+            if (movesType == TypeMoves.LocalVertical)
+                currT.DOLocalMoveY(moves[index], time).SetEase(easeType).OnComplete(() => Next());
 
+            if (movesType == TypeMoves.GlobalHorizontal)
+                currT.DOMoveX(moves[index], time).SetEase(easeType).OnComplete(() => Next());
+
+            if (movesType == TypeMoves.GlobalVertical)
+                currT.DOMoveY(moves[index], time).SetEase(easeType).OnComplete(() => Next());
+
+            if (movesType == TypeMoves.ShakePosition)
+                currT.DOShakePosition(time, moves[index]).SetEase(easeType).OnComplete(() => Next());
+
+        //}
+
+
+        if (breakMove && breakNumber == index)
+        {
+            if (transform.name == "2D Light Effect")
+                Debug.Log("Yes");
+            currT.DOKill(true);
+            currT.DOLocalMove(stockedPos.localPosition, 0);
+            currT.localPosition = startPos;
+            index = 0;
+            //reStart();
+        }
     }
 
     void OnDisable()

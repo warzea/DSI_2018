@@ -49,35 +49,6 @@ public class GameController : ManagerParent
 
     public void EndGame()
     {
-        PlayerController thisPlayer = Players[0].GetComponent<PlayerController>();
-        PlayerController otherPlayer;
-      
-        int a;
-        int b;
-        int c;
-
-        int score = 0;
-        string text ="";
-        TypeMedail thisMedail = TypeMedail.easy;
-        
-        for ( a = 0; a < Players.Count; a ++ )
-        {
-            for ( b = 0; b < Players.Count; b ++ )
-            {
-                for ( c = 0; c < Players.Count; c ++ )
-                {
-                    otherPlayer = Players[a].GetComponent<PlayerController>();
-
-                    getCurrScore ( a, otherPlayer );
-                }
-            }
-
-
-            setMedail ( thisPlayer, score, text, thisMedail );
-        }
-		
-
-
         Players.Clear();
         Manager.Ui.OpenThisMenu(MenuType.SelectPlayer);
     }
@@ -101,51 +72,18 @@ public class GameController : ManagerParent
         }
     }
 
-    void getCurrScore (int currIndex, PlayerController thisPlayer)
-    {
-        switch (currIndex)
-        {
-            case 0:
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            case 6:
-                break;
-            case 7:
-                break;
-            case 8:
-                break;
-            case 9:
-                break;
-            case 10:
-                break;
-           
-        }
-    }
-
-    void setMedail ( PlayerController thisCont, int Score, string Text, TypeMedail thisMedail )
-    {
-
-    }
-
     void SpawnPlayer()
     {
         PlayerInfoInput[] getPlayers = GetPlayersInput;
         PlayerController getPC;
         GameObject getPlayer;
         GameObject getWeapon;
-
+        GameObject[] getPlayerHud = Manager.Ui.PlayersHUD;
+        
         for (int a = 0; a < getPlayers.Length; a++)
         {
             getPlayers[a].ReadyPlayer = false;
+            getPlayerHud[a].SetActive(getPlayers[a].EnablePlayer);
 
             if (getPlayers[a].EnablePlayer)
             {
@@ -160,6 +98,11 @@ public class GameController : ManagerParent
                 getPlayer.transform.position = PlayerPosSpawn.position + new Vector3(a * 1.5f, 0, 0);
                 getPC = getPlayer.GetComponent<PlayerController>();
                 getPC.IdPlayer = getPlayers[a].IdPlayer;
+                getPC.AmmoUI = Manager.Ui.PlayersAmmo[a].transform;
+
+                getWeapon = (GameObject)Instantiate(Manager.Ui.PlayerText[a], Manager.Ui.GetInGame);
+                getWeapon.GetComponent<FollowPlayerUI>().getCam = MainCam;
+                getWeapon.GetComponent<FollowPlayerUI>().ThisPlayer = getPlayer.transform;
 
                 getWeapon = (GameObject)Instantiate(StartWeapon, getPC.WeaponPos.transform);
                 getWeapon.transform.localPosition = Vector3.zero;
