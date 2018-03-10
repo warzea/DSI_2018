@@ -74,6 +74,21 @@ public class BulletAbstract : MonoBehaviour
             getBox.isTrigger = true;
             playZone();
         }
+
+        RaycastHit[] allHit;
+        string getTag;
+
+        allHit = Physics.RaycastAll ( playerTrans.position, playerTrans.forward, BulletRange );
+    
+        foreach ( RaycastHit thisRay in allHit )
+        {
+            getTag = thisRay.collider.tag;
+            
+            if ( getTag == Constants._Wall && thisRay.distance < BulletRange )
+            {
+                BulletRange = thisRay.distance - 0.5f;
+            }
+        }
     }
     #endregion
 

@@ -21,7 +21,7 @@ public class WeaponBox : MonoBehaviour
 
 	List<PlayerWeapon> updateWeapon; 
 	List<Tween> getAllTween;
-
+	Transform getChild;
 	int nbrTotalSlide = 1;
 	bool invc = false;
 	#endregion
@@ -32,7 +32,7 @@ public class WeaponBox : MonoBehaviour
 		getAllTween = new List<Tween>();
 		updateWeapon = new List<PlayerWeapon>();
 		GetTrans = transform;
-
+		getChild = GetTrans.Find("Inside");
 		for ( int a = 0; a < 4; a ++)
 		{
 			updateWeapon.Add ( new PlayerWeapon () );
@@ -44,26 +44,26 @@ public class WeaponBox : MonoBehaviour
 	#region Public Methods
 	public void NewWeapon ( PlayerController thisPlayer, GameObject newObj = null )
 	{
+
         //TRANSFO CANON
         //transform.DOScaleX(1, .15f).SetEase(Ease.InSine);
 
         //transform.DOScaleY(1, .15f).SetEase(Ease.InSine);
 
         //transform.DOScaleZ(2.5f, .15f).SetEase(Ease.InSine).OnComplete(()=> {
-        transform.DOShakeScale(.15f, .8f, 25, 0).OnComplete(() => { 
+		getChild.DOKill(true);
+        getChild.DOShakeScale(.15f, .8f, 25, 0).OnComplete(() => { 
 
-            transform.DOScaleZ(1.75f, .1f).SetEase(Ease.Linear).OnComplete(() => {
+            getChild.DOScaleZ(1.75f, .1f).SetEase(Ease.Linear).OnComplete(() => {
 
-                transform.DOScaleZ(4.5f, .1f).SetEase(Ease.Linear);
+                getChild.DOScaleZ(3.5f, .1f).SetEase(Ease.Linear);
 
                 DOVirtual.DelayedCall(.1f, () => {
 
-                    transform.DOScaleZ(1.38f, .1f).SetEase(Ease.OutSine).OnComplete(()=> {
+                    getChild.DOScaleZ(1.3f, .1f).SetEase(Ease.OutSine).OnComplete(()=> {
 
-                        transform.DOShakeScale(.2f, .3f, 18, 0);
-
+                        getChild.DOShakeScale(.2f, .3f, 18, 0);
                     });
-
                 });
             });
         });

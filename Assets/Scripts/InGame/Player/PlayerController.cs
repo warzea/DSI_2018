@@ -94,6 +94,9 @@ public class PlayerController : MonoBehaviour
     public float UiAmmoY;
     [HideInInspector]
     public Image UiAmmo;
+    [HideInInspector]
+    public InteractAbstract currInt;
+    public bool canCauldron = false;
     PlayerController thisPC;
     WeaponAbstract thisWeapon;
     Transform thisTrans;
@@ -102,6 +105,7 @@ public class PlayerController : MonoBehaviour
     CameraFollow GetCamFoll;
     Player inputPlayer;
     Camera getCam;
+   
 
     int lifePlayer;
 
@@ -278,10 +282,7 @@ public class PlayerController : MonoBehaviour
 
     void inputAction(float getDeltaTime)
     {
-        if (canShoot)
-        {
-            playerShoot(getDeltaTime);
-        }
+        playerShoot(getDeltaTime);
 
         if (canDash)
         {
@@ -296,54 +297,6 @@ public class PlayerController : MonoBehaviour
 
         playerAim(getDeltaTime);
     }
-
-    /*void playerDash ( )
-	{
-		bool getDash = inputPlayer.GetButtonDown ( "Dash" );
-
-		if ( !getDash )
-		{
-			return;
-		}		
-
-		float Xmove = inputPlayer.GetAxis("MoveX");
-		float Ymove = inputPlayer.GetAxis("MoveY");
-
-		Vector3 getDirect = new Vector3 ( Xmove, 0, Ymove );
-
-		if ( getDirect == Vector3.zero )
-		{
-			return;
-		}
-
-		float getDist = DashDistance;
-		string getTag;
-		
-		RaycastHit[] allHit;
-		allHit = Physics.RaycastAll ( thisTrans.position, getDirect, DashDistance );
-
-		foreach ( RaycastHit thisRay in allHit )
-		{
-			getTag = LayerMask.LayerToName (  thisRay.collider.gameObject.layer );
-			
-			if ( getTag != Constants._BulletPlayer && getTag != Constants._Charct )
-			{
-				if ( thisRay.distance < getDist )
-				{
-					getDist = thisRay.distance;
-				}
-			}
-		}
-
-		canDash = false;
-		dashing = true;
-		
-		thisTrans.DOMove ( thisTrans.position + getDirect * getDist, DashTime * ( getDist / DashDistance) ).OnComplete ( () =>
-		{
-			canDash = true;
-			dashing = false;
-		});
-	}*/
 
     void playerMove(float getDeltaTime)
     {
@@ -367,7 +320,7 @@ public class PlayerController : MonoBehaviour
 
         getSpeed = getDeltaTime * getSpeed;
         TotalDist += getSpeed;
-        //GetSpeed = getDeltaTime * MoveSpeed;
+
         thisTrans.position += getSpeed * new Vector3(Xmove, 0, Ymove);
     }
 
@@ -393,52 +346,22 @@ public class PlayerController : MonoBehaviour
     {
         float shootInput = inputPlayer.GetAxis("Shoot");
 
+        if ( !canShoot )
+        {
+            if ( shootInput > 0 &&  driveBox )
+            {
+                useBoxWeapon();
+            }
+            else
+            {
+                return;
+            }
+        }
 
-
-        /*if ( shootInput == 0 )
-		{
-			checkShoot = true;
-		}*/
-        /*if ( shootInput > 0 )
-		{
-			bool checkBox = false;
-			if ( shooting == false )
-			{
-				RaycastHit[] allHit;
-				string getTag;
-
-				allHit = Physics.RaycastAll ( thisTrans.position, thisTrans.forward, 2 );
-				foreach ( RaycastHit thisRay in allHit )
-				{
-					getTag = thisRay.collider.tag;
-
-					if ( getTag == Constants._BoxTag )
-					{
-						if ( thisWeapon != null )
-						{
-							Destroy (thisWeapon.gameObject);
-						}
-						
-						checkBox = true;
-						Manager.GameCont.WeaponB.NewWeapon ( thisPC );
-						break;
-					}
-				}
-			}
-			
-			if ( !checkBox && thisWeapon != null )
-			{
-				thisWeapon.weaponShoot( thisTrans );
-			}
-
-			shooting = true;
-		}*/
         if (shootInput == 1 && checkShootScore)
         {
             checkShootScore = false;
-            SpawmShoot++;
-
-            
+            SpawmShoot++;           
         }
         else if (shootInput < 0.3f)
         {
@@ -507,33 +430,21 @@ public class PlayerController : MonoBehaviour
                 useBoxWeapon();
                 return;
             }
-
-            RaycastHit[] allHit;
-            string getTag;
-
-            allHit = Physics.RaycastAll(thisTrans.position, thisTrans.forward, 1);
-            foreach (RaycastHit thisRay in allHit)
+            else if ( currInt != null )
             {
-                getTag = thisRay.collider.tag;
-
-                if (getTag == Constants._BoxTag)
-                {
-                    if (thisWeapon != null)
-                    {
-                        Destroy(thisWeapon.gameObject);
-                    }
-
-                    Manager.GameCont.WeaponB.NewWeapon(thisPC);
-
-                    break;
-                }
-                else if (getTag == Constants._ContainerItem)
-                {
-                    thisRay.collider.GetComponent<InteractAbstract>().OnInteract(thisPC);
-                    AddItem();
-                    break;
-                }
+                currInt.OnInteract(thisPC);
+                AddItem();
             }
+        }
+        Debug.Log(inputPlayer.GetButtonDown("Cauldron") );
+        if ( canCauldron && inputPlayer.GetButtonDown("Cauldron") )
+        {
+            if (thisWeapon != null)
+            {
+                Destroy(thisWeapon.gameObject);
+            }
+
+            Manager.GameCont.WeaponB.NewWeapon(thisPC);
         }
     }
 
@@ -543,7 +454,7 @@ public class PlayerController : MonoBehaviour
         {
             GetCamFoll.UpdateTarget(thisTrans);
             WeaponPos.gameObject.SetActive(false);
-
+            AmmoUI.GetComponent<CanvasGroup>().alpha = 0;            
             canShoot = false;
             Physics.IgnoreCollision(GetComponent<Collider>(), getBoxWeapon.GetComponent<Collider>(), true);
             Manager.GameCont.WeaponB.CanControl = false;
@@ -556,6 +467,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (driveBox)
         {
+            AmmoUI.GetComponent<CanvasGroup>().alpha = 1;            
             getBoxWeapon.DOKill();
             WeaponPos.gameObject.SetActive(true);
             GetCamFoll.UpdateTarget(getBoxWeapon);
@@ -585,6 +497,7 @@ public class PlayerController : MonoBehaviour
         for (int a = 0; a < getBagItems.Length; a++)
         {
             currTrans = getBagItems[a].transform;
+            currTrans.DOKill();
 
             currTrans.gameObject.SetActive(true);
             currTrans.SetParent(null);

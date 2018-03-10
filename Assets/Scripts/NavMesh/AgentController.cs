@@ -22,7 +22,7 @@ public class AgentController : MonoBehaviour
     [Header("------------------")]
     public GameObject bulletAgent;
     public Transform spawnBulletAgent;
-    public GameObject parentBullet;
+    Transform parentBullet;
     public float SpeedBulletAgent = 10f;
     public float timeLeftAgentshoot = 2f;
     public float distanceShoot = 20;
@@ -50,6 +50,11 @@ public class AgentController : MonoBehaviour
         myFocusEtatAgent = CibleAgent.nothing;
         myEtatAgent = AgentEtat.aliveAgent;
         timeLeftAgentshoot = Random.Range(timeLeftAgentshoot - 0.3f, timeLeftAgentshoot + 0.3f);
+    }
+
+    void Start ( )
+    {
+         parentBullet = Manager.GameCont.Garbage;
     }
 
     void Update()
@@ -88,7 +93,7 @@ public class AgentController : MonoBehaviour
                 {
                     if (hit.transform.tag == "Player" || hit.transform.tag == "WeaponBox")
                     {
-                        GameObject killeuse = (GameObject)Instantiate(bulletAgent, spawnBulletAgent.position, spawnBulletAgent.rotation, parentBullet.transform);
+                        GameObject killeuse = (GameObject)Instantiate(bulletAgent, spawnBulletAgent.position, spawnBulletAgent.rotation, parentBullet);
                     }
                     else
                     {
