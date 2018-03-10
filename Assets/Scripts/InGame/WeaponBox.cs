@@ -44,7 +44,34 @@ public class WeaponBox : MonoBehaviour
 	#region Public Methods
 	public void NewWeapon ( PlayerController thisPlayer, GameObject newObj = null )
 	{
-		Manager.Ui.WeaponChange(thisPlayer.IdPlayer);
+        //TRANSFO CANON
+        //transform.DOScaleX(1, .15f).SetEase(Ease.InSine);
+
+        //transform.DOScaleY(1, .15f).SetEase(Ease.InSine);
+
+        //transform.DOScaleZ(2.5f, .15f).SetEase(Ease.InSine).OnComplete(()=> {
+        transform.DOShakeScale(.15f, .8f, 25, 0).OnComplete(() => { 
+
+            transform.DOScaleZ(1.75f, .1f).SetEase(Ease.Linear).OnComplete(() => {
+
+                transform.DOScaleZ(4.5f, .1f).SetEase(Ease.Linear);
+
+                DOVirtual.DelayedCall(.1f, () => {
+
+                    transform.DOScaleZ(1.38f, .1f).SetEase(Ease.OutSine).OnComplete(()=> {
+
+                        transform.DOShakeScale(.2f, .3f, 18, 0);
+
+                    });
+
+                });
+            });
+        });
+
+
+
+
+        Manager.Ui.WeaponChange(thisPlayer.IdPlayer);
 
 		if ( newObj == null )
 		{
@@ -176,9 +203,17 @@ public class WeaponBox : MonoBehaviour
 		}
 	}
 
-	void updateFeed ( Image[] getFeedBack, int currInd, int currNbr, bool inv = false )
+    /*
+    private void Update()
+    {
+    }
+    */
+
+    void updateFeed ( Image[] getFeedBack, int currInd, int currNbr, bool inv = false )
 	{
-		float getTime = 0.1f;
+
+
+        float getTime = 0.1f;
 		float getCal = (currNbr - 20 * currInd ) * 0.05f;
 		if ( getCal < 0 )
 		{

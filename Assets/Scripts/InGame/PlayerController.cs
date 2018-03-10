@@ -547,7 +547,7 @@ public class PlayerController : MonoBehaviour
             getBoxWeapon.SetParent(BoxPlace);
 
             getBoxWeapon.DOLocalMove(Vector3.zero, 0.5f);
-            getBoxWeapon.DOLocalRotateQuaternion(Quaternion.identity, 0.5f);
+            //getBoxWeapon.DOLocalRotateQuaternion(Quaternion.identity, 0.5f);
 
             driveBox = true;
         }
