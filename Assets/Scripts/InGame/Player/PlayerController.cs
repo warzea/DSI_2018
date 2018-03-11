@@ -122,6 +122,7 @@ public class PlayerController : MonoBehaviour
     bool checkAuto = false;
     bool checkUIBorder = false;
     bool checkUIBorderY = false;
+    bool checkUpdate = true;
 
     public Text WeapText;
     Tween tweenRegen;
@@ -160,6 +161,12 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         thisRig.velocity = Vector3.zero;
+
+        if ( !checkUpdate )
+        {
+            return;
+        }
+
         float getDeltaTime = Time.deltaTime;
 
         if (!dead)
@@ -208,7 +215,7 @@ public class PlayerController : MonoBehaviour
 
     public void GetDamage(Transform thisEnemy, int intDmg = 1)
     {
-        if (canTakeDmg)
+        if (canTakeDmg && checkUpdate )
         {
             lifePlayer -= intDmg;
 
@@ -225,13 +232,16 @@ public class PlayerController : MonoBehaviour
     void checkBorder()
     {
         Vector3 getCamPos = getCam.WorldToViewportPoint(thisTrans.position);
+        Vector3 getDir = Vector3.zero;
 
         if (getCamPos.x > 0.97f)
         {
+            getDir -= Vector3.right;
             thisTrans.position = new Vector3(getCam.ViewportToWorldPoint(new Vector3(0.97f, getCamPos.y, getCamPos.z)).x, thisTrans.position.y, thisTrans.position.z);
         }
         else if (getCamPos.x < 0.03f)
         {
+            getDir += Vector3.right;
             thisTrans.position = new Vector3(getCam.ViewportToWorldPoint(new Vector3(0.03f, getCamPos.y, getCamPos.z)).x, thisTrans.position.y, thisTrans.position.z);
         }
 
@@ -246,11 +256,39 @@ public class PlayerController : MonoBehaviour
 
         if (getCamPos.y > 0.85f)
         {
+            getDir -= Vector3.up;
             thisTrans.position = new Vector3(thisTrans.position.x, thisTrans.position.y, getCam.ViewportToWorldPoint(new Vector3(getCamPos.x, 0.85f, getCamPos.z)).z);
         }
         else if (getCamPos.y < 0.03f)
         {
+            getDir += Vector3.up;
             thisTrans.position = new Vector3(thisTrans.position.x, thisTrans.position.y, getCam.ViewportToWorldPoint(new Vector3(getCamPos.x, 0.03f, getCamPos.z)).z);
+        }
+
+        if ( getDir != Vector3.zero )
+        {
+            RaycastHit[] allHit;
+            string getTag;
+
+            allHit = Physics.RaycastAll(thisTrans.position, getDir, 0.5f);
+
+            foreach (RaycastHit thisRay in allHit)
+            {
+                getTag = thisRay.collider.tag;
+
+                if (getTag == Constants._Wall)
+                {
+
+                    checkUpdate = false;
+                    
+                    thisTrans.DOKill(true);
+                    thisTrans.DOMove ( getBoxWeapon.position, 0.5f, true ).OnComplete ( () =>
+                    {
+                        checkUpdate = true;
+                    });
+                    break;
+                }
+            }
         }
     }
 
@@ -655,7 +693,7 @@ public class PlayerController : MonoBehaviour
         {
             canEnterBox = true;
         }
-        else if (getTag == Constants._EnemyBullet && canTakeDmg /*|| getTag == Constants._Enemy*/ )
+        else if (getTag == Constants._EnemyBullet && canTakeDmg && checkUpdate/*|| getTag == Constants._Enemy*/ )
         {
             lifePlayer--;
 
