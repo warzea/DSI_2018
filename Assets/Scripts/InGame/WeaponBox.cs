@@ -120,6 +120,9 @@ public class WeaponBox : MonoBehaviour
 			});
 		} );
 	}
+
+	int lastNbr = 1;
+
 	public void AddItem ( int lenghtItem, bool inv = false )
 	{
 		NbrItem += lenghtItem;
@@ -151,9 +154,20 @@ public class WeaponBox : MonoBehaviour
 		//Manager.Ui.ScoreText.text = NbrItem.ToString();
 
 		Manager.Ui.GetScores.UpdateValue( NbrItem, ScoreType.BoxWeapon, false );
-
+		int getCal = lastNbr;
+		while ( currNbr >= lastNbr * 20 && lastNbr * 20 <= 100 )
+		{
+			int thisNbr = lastNbr;
+			DOVirtual.DelayedCall (0.1f * lastNbr - getCal, () => 
+			{
+				Manager.Ui.GaugeLevelGet(thisNbr - 1);
+			});
+			lastNbr++;
+		}
+	
 		while ( currNbr > 100 )
 		{
+			lastNbr = 1;
 			checkCurr = true;
 			nbrTotalSlide ++;
 			Manager.Ui.MultiplierNew( nbrTotalSlide );
@@ -162,11 +176,24 @@ public class WeaponBox : MonoBehaviour
 		
 		if ( checkCurr )
 		{
-			Tween getTween = DOVirtual.DelayedCall(0.5f, () =>
+			Tween getTween;
+			getTween = DOVirtual.DelayedCall(0.5f, () =>
 			{
 				getTween = Manager.Ui.GetGauge.DOFillAmount ( 0, 0.5f ).OnComplete ( () =>
 				{
+					lastNbr = 1;
+					while ( currNbr >= lastNbr * 20 )
+					{
+						int thisNbr = lastNbr;
+						getTween = DOVirtual.DelayedCall (0.1f * lastNbr, () => 
+						{
+							Manager.Ui.GaugeLevelGet(thisNbr - 1);
+						});
+						lastNbr++;
+					}
+			
 					getTween = Manager.Ui.GetGauge.DOFillAmount ( currNbr * 0.01f, 0.5f );
+
 				});
 			});
 			getAllTween.Add ( getTween );
