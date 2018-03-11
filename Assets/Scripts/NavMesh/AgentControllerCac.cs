@@ -77,6 +77,7 @@ public class AgentControllerCac : MonoBehaviour
                     }
                     else if (focusPlayer.tag == "Player")
                     {
+						Debug.Log ("Shhooottt");
                         focusPlayer.GetComponent<PlayerController>().GetDamage(transform);
                     }
                 }
