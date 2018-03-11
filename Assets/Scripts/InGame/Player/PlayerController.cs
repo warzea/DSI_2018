@@ -474,7 +474,6 @@ public class PlayerController : MonoBehaviour
                 AddItem();
             }
         }
-        Debug.Log(inputPlayer.GetButtonDown("Cauldron") );
         if ( canCauldron && inputPlayer.GetButtonDown("Cauldron") )
         {
             if (thisWeapon != null)

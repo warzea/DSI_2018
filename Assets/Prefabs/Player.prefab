@@ -1026,7 +1026,7 @@ Animator:
   m_GameObject: {fileID: 1882302494956052}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 84befd8f8effa9649a436c0b0e7f2025, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2efd11304747300438efd39fc88e4ac6, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1105,6 +1105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisPC: {fileID: 114134106334906588}
   getPlayer: {fileID: 4111334567357604}
+  cauldron: {fileID: 0}
 --- !u!135 &135318390101510292
 SphereCollider:
   m_ObjectHideFlags: 1
