@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+<<<<<<< HEAD
+<<<<<<< HEAD:Assets/WorldBuilding.meta
+guid: dcfdc8279a915fa45822881669a5e2a2
+folderAsset: yes
+timeCreated: 1520352568
+=======
+guid: 73319f765f1c3e14a9c88962974c615e
+folderAsset: yes
+timeCreated: 1520717780
+>>>>>>> hugo:Assets/StreamingAssets/PackFx/Particles.meta
+licenseType: Free
+=======
+guid: 0fb6fb5fa1e69614d953a727eabc2aed
+folderAsset: yes
+>>>>>>> Alexandre
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

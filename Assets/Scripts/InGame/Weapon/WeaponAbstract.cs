@@ -92,19 +92,29 @@ public class WeaponAbstract : MonoBehaviour
             //playerTrans.localPosition -= playerTrans.forward * BackPush * Time.deltaTime;
             string getTag;
             float getDist = BackPush * Time.deltaTime;
+            int getDir = 1;
+            if ( getDist < 0 )
+            {
+                getDir = -1;
+                getDist = - getDist;
+            }
             RaycastHit[] allHit;
 
-            allHit = Physics.RaycastAll ( playerTrans.position, - playerTrans.forward, getDist );
-            
-            foreach ( RaycastHit thisRay in allHit )
+            if ( getDist > 0 )
             {
-                getTag = thisRay.collider.tag;
-                
-                if ( getTag == Constants._Wall && thisRay.distance < getDist )
+                allHit = Physics.RaycastAll ( playerTrans.position, - playerTrans.forward * getDir, getDist );
+            
+                foreach ( RaycastHit thisRay in allHit )
                 {
-                    getDist = thisRay.distance - 0.5f;
+                    getTag = thisRay.collider.tag;
+                    
+                    if ( getTag == Constants._Wall && thisRay.distance < getDist )
+                    {
+                        getDist = thisRay.distance - 0.5f;
+                    }
                 }
             }
+            
             playerTrans.DOLocalMove ( playerTrans.localPosition - playerTrans.forward * getDist, 0.1f );
 
             getCapacity--;
@@ -116,6 +126,11 @@ public class WeaponAbstract : MonoBehaviour
             if ( getCapacity == 0 )
             {
                 Manager.Ui.WeaponEmpty(getPC.IdPlayer);
+            }
+            else if ( getCapacity == 1 )
+            {
+                playerTrans.GetComponent<PlayerController>().autoShoot = false;
+                playerTrans.GetComponent<PlayerController>().CdShoot = 0;
             }
 
             customWeapon(playerTrans);
@@ -129,19 +144,24 @@ public class WeaponAbstract : MonoBehaviour
             Transform getTrans = transform;
             Vector3 getForward = playerTrans.forward;
 
-            transform.SetParent(null);
+            getTrans.SetParent(null);
             getPC.UpdateWeapon();
 
             //getRigid.AddForce(getForward * ForceProjection, ForceMode.VelocityChange);
 
             GetComponent<Collider>().enabled = true;
             GetComponent<Collider>().isTrigger = true;
+            
             BulletAbstract thisBA = getTrans.gameObject.AddComponent<BulletAbstract>();
             thisBA.direction = playerTrans.forward;
             thisBA.TimeStay = 0.2f;
             thisBA.thisPlayer = getPC;
-            thisBA.Projectil = Projectile;
-
+            thisBA.Projectil = true;
+            thisBA.canExplose = true;
+            thisBA.Diameter = 3;
+            thisBA.BulletRange = Range;
+            thisBA.gameObject.tag = Constants._BulletPlayer;
+            Destroy(GetComponent<WeaponAbstract>());
             Manager.GameCont.WeaponB.NewWeapon(getPC);
         }
     }
