@@ -158,7 +158,7 @@ public class WeaponBox : MonoBehaviour
 		while ( currNbr >= lastNbr * 20 && lastNbr * 20 <= 100 )
 		{
 			int thisNbr = lastNbr;
-			DOVirtual.DelayedCall (0.1f * lastNbr - getCal, () => 
+			DOVirtual.DelayedCall (0.1f * (lastNbr - getCal + 0.5f), () => 
 			{
 				Manager.Ui.GaugeLevelGet(thisNbr - 1);
 			});
