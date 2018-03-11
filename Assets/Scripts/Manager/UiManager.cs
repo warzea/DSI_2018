@@ -13,16 +13,28 @@ public class UiManager : ManagerParent
 	public Scores GetScores;
 
     public GameObject[] PlayersHUD;
-    public Image[] PlayersWeapon;
+    public Image[] PlayersWeaponHUD;
+    public GameObject[] PlayersAmmo;
+    public Text[] textWeapon;
+    public GameObject PotionGet;
+
+    Tween ammoTwRot, ammoTwScale1, ammoTwScale2, ammoTwFade, ammoTwWait;
 
     public Text ScoreText;
+    public Text Multiplier;
+    public Image GetGauge;
+    public Image[] GaugeFeedback;
+
+    public GameObject[] PlayerText;
 
     public GameObject PotionsPlus;
     public GameObject PotionsLess;
     public GameObject Light;
     public GameObject Circle;
+    public GameObject CircleMultiplier;
 
-	Dictionary <MenuType, UiParent> AllMenu;
+
+    Dictionary <MenuType, UiParent> AllMenu;
 	MenuType menuOpen;
 	#endregion
 
@@ -63,7 +75,143 @@ public class UiManager : ManagerParent
 		}
 	}
 
-    public void ScorePlus()
+    public void WeaponEmpty(int PlayerId)
+    {
+        PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[0].enabled = true;
+        PlayersAmmo[PlayerId].GetComponentInChildren<RainbowScale>().enabled = true;
+    }
+
+    public void ResetTween()
+    {
+        ammoTwFade.Kill(true);
+        ammoTwRot.Kill(true);
+        ammoTwScale1.Kill(true);
+        ammoTwScale2.Kill(true);
+        ammoTwWait.Kill(true);
+    }
+
+    public void WeaponChange(int PlayerId)
+    {
+        ResetTween();
+
+        //HUD INGAME
+
+        PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[0].enabled = false;
+        PlayersAmmo[PlayerId].GetComponentInChildren<RainbowScale>().enabled = false;
+
+        float randomZrotate = UnityEngine.Random.Range(-17, 17);
+        ammoTwRot = PlayersAmmo[PlayerId].transform.DOPunchRotation(new Vector3(1, 1, randomZrotate), 0.6f, 10, 1);
+
+        //LE CHARGEUR DISPARAIT
+
+        ammoTwScale1 = PlayersAmmo[PlayerId].transform.DOPunchScale((Vector3.one * .45f), 0.3f, 20, .1f);
+        ammoTwFade = PlayersAmmo[PlayerId].transform.GetComponent<CanvasGroup>().DOFade(0, .3f);
+        ammoTwScale2 = PlayersAmmo[PlayerId].transform.DOScale(0, .3f);
+        
+        //HUD ABOVE ALL
+        
+        PlayersWeaponHUD[PlayerId].transform.DOKill(true);
+        PlayersWeaponHUD[PlayerId].transform.GetChild(0).GetComponent<Image>().DOFade(1, .25f).OnComplete(()=> {
+            PlayersWeaponHUD[PlayerId].transform.GetChild(0).GetComponent<Image>().DOFade(0, .25f);
+        });
+
+        var circle = Instantiate(Circle, PlayersWeaponHUD[PlayerId].transform.parent.position, Quaternion.identity, PlayersWeaponHUD[PlayerId].transform.parent.GetChild(0));
+        PlayersWeaponHUD[PlayerId].transform.DOLocalRotate(new Vector3(0, 0, 360), .5f, RotateMode.LocalAxisAdd).OnComplete(() => {
+
+            var light = Instantiate(Light, PlayersWeaponHUD[PlayerId].transform.position, Quaternion.identity, PlayersWeaponHUD[PlayerId].transform);
+        });
+
+
+    }
+
+    public void WeaponNew(int PlayerId)
+    {
+        //LE CHARGEUR REAPARAIT VISIBLE
+
+        ammoTwFade = PlayersAmmo[PlayerId].transform.GetComponent<CanvasGroup>().DOFade(1, .2f);
+        PlayersAmmo[PlayerId].transform.DOScale(3, 0);
+        ammoTwScale1 = PlayersAmmo[PlayerId].transform.DOScale(1, .2f);
+
+
+        //COURT EFFET LUMINEUX DE COULEUR SUR LE OUTLINE
+
+        PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[1].enabled = true;
+        ammoTwWait = DOVirtual.DelayedCall(.3f, () =>
+        {
+            PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[1].enabled = false;
+            PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[1].transform.GetComponent<Image>().color = PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[1].colors[1];
+        });
+    }
+
+
+    public void GaugeLevelGet(int whichLevel)
+    {
+        GaugeFeedback[whichLevel].transform.DOScale(4, 0);
+        GaugeFeedback[whichLevel].transform.DOScale(1, .4f);
+        GaugeFeedback[whichLevel].DOFade(1, .1f);
+        DOVirtual.DelayedCall(.3f, () => {
+        
+            GaugeFeedback[whichLevel].DOFade(0, .4f);
+        });
+    }
+
+
+    public void PopPotions(PotionType type) // poser ressource : 20 - 40 - 60 - 80 et 100
+    {
+        if(type == PotionType.Plus)
+        {
+            var potion = Instantiate(PotionsPlus, GetInGame.position, Quaternion.identity, GetInGame);
+
+            ScorePlus();
+
+            //potion.GetComponent<RainbowMove>().ObjectTransform = ici;
+        }
+        else if(type == PotionType.Less)
+        {
+            var potion = Instantiate(PotionsLess, GetInGame.position, Quaternion.identity, GetInGame);
+
+            ScorePlus();
+            //potion.GetComponent<RainbowMove>().ObjectTransform = ici;
+        }
+    }
+
+    public void MultiplierNew( int value = 0 )
+    {
+        Multiplier.GetComponent<Text>().text = "x"+ value.ToString();
+        Multiplier.GetComponent<RainbowColor>().enabled = true;
+        Multiplier.GetComponent<RainbowMove>().enabled = true;
+        Multiplier.GetComponent<RainbowScale>().enabled = true;
+
+                var circle = Instantiate(CircleMultiplier, Multiplier.transform.position, Quaternion.identity, Multiplier.transform.parent);
+        circle.transform.SetSiblingIndex(0);
+
+        DOVirtual.DelayedCall(.8f, () => {
+
+            Multiplier.GetComponent<RainbowColor>().enabled = false;
+            Multiplier.GetComponent<RainbowMove>().enabled = false;
+            Multiplier.GetComponent<RainbowScale>().enabled = false;
+
+        });
+    }
+
+    #endregion
+
+    #region Private Methods
+
+    public void ScreenShake()
+    {
+        /*
+        float rdmX = UnityEngine.Random.Range(-1, 1);
+        float rdmZ = UnityEngine.Random.Range(-1, 1);
+
+        UnityEngine.Debug.Log(Camera.main.transform.position);
+        UnityEngine.Debug.Log(Camera.main.transform.localPosition);
+
+
+        Camera.main.transform.DOPunchPosition(Camera.main.transform.localPosition + new Vector3(1 * rdmX, 0, -5 * rdmZ), .1f, 15, 1);*/
+    }
+
+    void ScorePlus()
     {
         ScoreText.transform.DOKill(true);
         ScoreText.transform.DOShakeScale(.4f, 1f, 12, 15);
@@ -72,38 +220,6 @@ public class UiManager : ManagerParent
             ScoreText.GetComponent<RainbowColor>().enabled = false;
         });
     }
-
-    public void ChangeWeapons(int PlayerId)
-    {
-        PlayersWeapon[PlayerId].transform.DOKill(true);
-        PlayersWeapon[PlayerId].transform.GetChild(0).GetComponent<Image>().DOFade(1, .25f).OnComplete(()=> {
-            PlayersWeapon[PlayerId].transform.GetChild(0).GetComponent<Image>().DOFade(0, .25f);
-        });
-
-        var circle = Instantiate(Circle, PlayersWeapon[PlayerId].transform.parent.position, Quaternion.identity, PlayersWeapon[PlayerId].transform.parent);
-        PlayersWeapon[PlayerId].transform.DOLocalRotate(new Vector3(0, 0, 360), .5f, RotateMode.LocalAxisAdd).OnComplete(() => {
-
-            var light = Instantiate(Light, PlayersWeapon[PlayerId].transform.position, Quaternion.identity, PlayersWeapon[PlayerId].transform);
-
-
-
-        });
-
-
-    }
-
-    public void PopPotions(string type)
-    {
-        if(type == "Plus")
-        {
-            var potion = Instantiate(PotionsPlus, GetInGame.position, Quaternion.identity, GetInGame);
-            //potion.GetComponent<RainbowMove>().ObjectTransform = ici;
-        }
-    }
-
-    #endregion
-
-    #region Private Methods
     private void Update()
     {
 
@@ -111,11 +227,12 @@ public class UiManager : ManagerParent
 
         if (Input.GetKeyDown(KeyCode.O))
         {
-            PopPotions("Plus");
+            PopPotions(PotionType.Plus);
+            WeaponEmpty(0);
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
-            ChangeWeapons(0);
+            WeaponChange(0);
         }
         if (Input.GetKeyDown(KeyCode.I))
         {
@@ -123,11 +240,24 @@ public class UiManager : ManagerParent
         }
         if (Input.GetKeyDown(KeyCode.U))
         {
-            ScorePlus();
+            MultiplierNew();
+            GaugeLevelGet(2);
+        }
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            GaugeLevelGet(0);
+        }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
         }
 
 #endif
 
+    }
+
+    private void FixedUpdate()
+    {
+        //PlayersAmmo[0].transform.position = Manager.GameCont.Players[0].transform.position;
     }
 
     protected override void InitializeManager ( )

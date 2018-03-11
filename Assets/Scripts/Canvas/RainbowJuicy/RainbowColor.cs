@@ -25,7 +25,9 @@ public class RainbowColor : MonoBehaviour
 
     void OnEnable ()
 	{
-		Next ();
+        index = -1;
+        GetComponent<Image>().DOKill(true);
+        Next ();
 	}
 
 	void Next ()
@@ -55,30 +57,30 @@ public class RainbowColor : MonoBehaviour
     void OnDisable ()
 	{
         if (ComponentType == Type.Image) { 
-            GetComponent<Image> ().DOKill ();
+            GetComponent<Image> ().DOKill (true);
 		    //GetComponent<Image> ().DOColor (Color.white, time * 2f);
         }
 
         if (ComponentType == Type.Material)
         {
-            GetComponent<Material>().DOKill();
+            GetComponent<Material>().DOKill(true);
             GetComponent<Material>().DOColor(Color.white, time * 2f);
         }
 
         if (ComponentType == Type.MaterialFont)
         {
-            GetComponent<Font>().material.DOKill();
+            GetComponent<Font>().material.DOKill(true);
             GetComponent<Font>().material.DOColor(Color.white, time * 2f);
         }
 
         if (ComponentType == Type.Sprite)
         {
-            GetComponent<SpriteRenderer>().DOKill();
+            GetComponent<SpriteRenderer>().DOKill(true);
             GetComponent<SpriteRenderer>().DOColor(Color.white, time * 2f);
         }
         if (ComponentType == Type.Text)
         {
-            GetComponent<Text>().DOKill();
+            GetComponent<Text>().DOKill(true);
             GetComponent<Text>().DOColor(Color.white, time * 2f);
         }
 

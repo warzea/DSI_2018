@@ -25,7 +25,7 @@ public class RainbowPop : MonoBehaviour
                 GetComponent<CanvasGroup>().DOFade(0, popFadeOutDuration).OnComplete(() =>
                 {
                     Destroy(transform.gameObject);
-                    Debug.Log(transform.gameObject);
+//Z                    Debug.Log(transform.gameObject);
                 });
             });
         }

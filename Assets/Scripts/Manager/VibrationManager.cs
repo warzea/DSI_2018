@@ -9,7 +9,9 @@ using DG.Tweening;
 public class VibrationManager : ManagerParent
 {
     [Range(0, 3)]
-    public float ObsPower = .12f, ObsDuration = .2f, ShootLowPower = .15f, ShootLowDuration = .25f, ShootMediumPower = .5f, ShootMediumDuration = .5f, ShootHighPower = .5f, ShootHighDuration = .5f, StunPower = 2.5f, StunDuration = 1f;
+    public float ShootPower, ShootDuration, ShootLowPower = .15f, ShootLowDuration = .25f, ShootMediumPower = .5f, ShootMediumDuration = .5f, ShootHighPower = .5f, ShootHighDuration = .5f, StunPower = 2.5f, StunDuration = 1f;
+
+    public float DamagesLow = 1, DamagesMedium = 5, DamagesHigh = 10;
 
     protected override void InitializeManager ( )
 	{
@@ -17,6 +19,19 @@ public class VibrationManager : ManagerParent
     }
 
     public void StunVibration( Player thisPlayer )
+    {
+        foreach (Joystick j in thisPlayer.controllers.Joysticks)
+        {
+            j.StopVibration();
+            j.SetVibration(0, StunPower, true);
+            DOVirtual.DelayedCall(StunDuration, () =>
+            {
+                j.StopVibration();
+            });
+        }
+    }
+
+    public void ShootVibration(Player thisPlayer)
     {
         foreach (Joystick j in thisPlayer.controllers.Joysticks)
         {

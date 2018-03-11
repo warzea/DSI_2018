@@ -6,6 +6,7 @@ using DG.Tweening;
 public class BulletAbstract : MonoBehaviour
 {
     #region Variables
+    public GameObject PrefabExplosion;
     [Tooltip("Only for explosion")]
     public GameObject GetEffect;
     public Trajectoir ThisTrajectoir;
@@ -73,8 +74,22 @@ public class BulletAbstract : MonoBehaviour
             getBox.isTrigger = true;
             playZone();
         }
-    }
 
+        RaycastHit[] allHit;
+        string getTag;
+
+        allHit = Physics.RaycastAll ( playerTrans.position, playerTrans.forward, BulletRange );
+    
+        foreach ( RaycastHit thisRay in allHit )
+        {
+            getTag = thisRay.collider.tag;
+            
+            if ( getTag == Constants._Wall && thisRay.distance < BulletRange )
+            {
+                BulletRange = thisRay.distance - 0.5f;
+            }
+        }
+    }
     #endregion
 
     #region Public Methods
@@ -104,9 +119,38 @@ public class BulletAbstract : MonoBehaviour
             }
         }
         else if (!checkEnd)
-        {
-            destObj ( 5 );
-            
+        {   
+            if (canExplose )
+            {
+                if ( Projectil )
+                {
+                    destObj ( TimeStay );
+                
+                    blockUpdate = true;
+                    if (GetEffect != null)
+                    {
+                        Instantiate(GetEffect, thisTrans.position, Quaternion.identity);
+                    }
+
+                    SphereCollider thisSphere = gameObject.AddComponent<SphereCollider>();
+                    //thisSphere.radius = Diameter;
+                    thisSphere.isTrigger = true;
+                    thisTrans.localScale = new Vector3(Diameter, Diameter, Diameter);
+                } 
+                else
+                {
+                    instExplo( thisTrans.position );
+                    destObj ( 0 );
+                }
+            }
+            else if ( Projectil )
+            {
+                destObj ( 0 );
+            }
+            else
+            {
+                destObj ( TimeStay );
+            }
             //Destroy ( gameObject, TimeStay );
             checkEnd = true;
         }
@@ -116,7 +160,7 @@ public class BulletAbstract : MonoBehaviour
     #region Private Methods
     void playZone()
     {
-        GetComponent<SphereCollider>().enabled = false;
+        GetComponent<Collider>().enabled = false;
         startPos = Vector3.zero;
 
         DOTween.To(() => getDistScale, x => getDistScale = x, BulletRange * 0.5f * FarEffect, TimeFarEffect);
@@ -125,6 +169,24 @@ public class BulletAbstract : MonoBehaviour
             destObj ( TimeStay );
         });
     }
+
+    void instExplo ( Vector3 thisPos )
+    {
+        GameObject thisObj = (GameObject) Instantiate ( PrefabExplosion, thisPos, thisTrans.rotation );
+        ExploScript getExplo = thisObj.GetComponent<ExploScript>();
+
+        if ( getExplo.TimeStay == 0 )
+        {
+            getExplo.TimeStay = TimeStay;
+        }
+
+        if ( !getExplo.GetEffect )
+        {
+            getExplo.GetEffect = GetEffect;
+        }
+        getExplo.ScaleExplo = Diameter;
+    }
+
     void OnTriggerEnter(Collider collision)
     {
         if (blockUpdate)
@@ -169,31 +231,41 @@ public class BulletAbstract : MonoBehaviour
                 }
             }
 
-            if (canExplose)
+            if (canExplose )
             {
-                blockUpdate = true;
-                if (GetEffect != null)
+                if ( Projectil)
                 {
-                    Instantiate(GetEffect, thisTrans.position, Quaternion.identity);
-                }
+                    blockUpdate = true;
+                    if (GetEffect != null)
+                    {
+                        Instantiate(GetEffect, thisTrans.position, Quaternion.identity);
+                    }
 
-                SphereCollider thisSphere = gameObject.AddComponent<SphereCollider>();
-                //thisSphere.radius = Diameter;
-                thisSphere.isTrigger = true;
-                thisTrans.localScale = new Vector3(Diameter, Diameter, Diameter);
+                    SphereCollider thisSphere = gameObject.AddComponent<SphereCollider>();
+                    //thisSphere.radius = Diameter;
+                    thisSphere.isTrigger = true;
+                    thisTrans.localScale = new Vector3(Diameter, Diameter, Diameter);
+                }
+                else
+                {
+                    instExplo( collision.ClosestPoint ( thisTrans.position ) );
+                }
             }
 
             if (!Through)
             {
-                if (canExplose)
+                if (canExplose )
                 {
-                    if (GetEffect != null && GetEffect.GetComponent<ParticleSystem>())
+                    if ( Projectil )
                     {
-                        destObj ( GetEffect.GetComponent<ParticleSystem>().main.duration );
-                    }
-                    else
-                    {
-                        destObj ( 1.5f ); 
+                        if (GetEffect != null && GetEffect.GetComponent<ParticleSystem>())
+                        {
+                            destObj ( GetEffect.GetComponent<ParticleSystem>().main.duration );
+                        }
+                        else
+                        {
+                            destObj ( 1.5f ); 
+                        }
                     }
                 }
                 else
@@ -202,7 +274,7 @@ public class BulletAbstract : MonoBehaviour
                 }
             }
         }
-        else if (collision.tag == Constants._Wall)
+        else if (collision.tag == Constants._Wall && Projectil )
         {
             destObj ( );
         }
