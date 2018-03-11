@@ -72,7 +72,7 @@ public class WeaponBox : MonoBehaviour
 
 		if ( newObj == null )
 		{
-			newObj = (GameObject) Instantiate ( AllWeapon[Random.Range(0, AllWeapon.Length)], thisPlayer.WeaponPos );
+			newObj = (GameObject) Instantiate ( AllWeapon[Random.Range(0, AllWeapon.Length)], GetTrans );
 		}
 		else
 		{
@@ -102,17 +102,23 @@ public class WeaponBox : MonoBehaviour
             thisPlayer.UiAmmo.fillAmount = 1;
             Manager.Ui.WeaponNew(thisPlayer.IdPlayer);
         });
-		objTrans.DOScale ( Vector3.one, DelayNewWeapon );
-		DOVirtual.DelayedCall ( 0.1f, ( ) => 
-		{
-			objTrans.DOLocalRotateQuaternion ( Quaternion.identity, DelayNewWeapon );
-			objTrans.DOLocalMove(Vector3.zero, DelayNewWeapon).OnComplete ( () =>
-			{
-				thisPlayer.UpdateWeapon ( newObj.GetComponent<WeaponAbstract>() );
 
-				updateWeapon[currId].CurrObj = null;
+		DOVirtual.DelayedCall ( DelayNewWeapon * 0.25f, () =>
+		{
+			objTrans.DOScale ( Vector3.one, DelayNewWeapon * 0.5f );
+			objTrans.DOLocalRotateQuaternion ( Quaternion.identity, DelayNewWeapon * 0.65f );
+			objTrans.DOLocalMove ( Vector3.zero + Vector3.up * 5, DelayNewWeapon * 0.65f).OnComplete ( () =>
+			{
+				objTrans.SetParent(thisPlayer.WeaponPos);
+				objTrans.DOLocalRotateQuaternion ( Quaternion.identity, DelayNewWeapon * 0.1f );
+				objTrans.DOLocalMove ( Vector3.zero, DelayNewWeapon * 0.1f ).OnComplete ( () =>
+				{
+					thisPlayer.UpdateWeapon ( newObj.GetComponent<WeaponAbstract>() );
+
+					updateWeapon[currId].CurrObj = null;
+				});
 			});
-		});
+		} );
 	}
 	public void AddItem ( int lenghtItem, bool inv = false )
 	{
