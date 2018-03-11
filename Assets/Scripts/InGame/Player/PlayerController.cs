@@ -96,6 +96,8 @@ public class PlayerController : MonoBehaviour
     public Image UiAmmo;
     [HideInInspector]
     public InteractAbstract currInt;
+    [HideInInspector]
+    public bool autoShoot = true;
     public bool canCauldron = false;
     PlayerController thisPC;
     WeaponAbstract thisWeapon;
@@ -114,7 +116,6 @@ public class PlayerController : MonoBehaviour
     bool canDash = true;
     bool canEnterBox = false;
     bool canShoot = true;
-    bool autoShoot = true;
     bool checkShoot = true;
     bool canTakeDmg = true;
     bool checkShootScore = true;
@@ -383,7 +384,7 @@ public class PlayerController : MonoBehaviour
     void playerShoot(float getDeltaTime)
     {
         float shootInput = inputPlayer.GetAxis("Shoot");
-
+        Debug.Log(shootInput);
         if ( !canShoot )
         {
             if ( shootInput > 0 &&  driveBox )

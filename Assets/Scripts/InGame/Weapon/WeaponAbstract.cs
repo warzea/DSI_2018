@@ -127,6 +127,11 @@ public class WeaponAbstract : MonoBehaviour
             {
                 Manager.Ui.WeaponEmpty(getPC.IdPlayer);
             }
+            else if ( getCapacity == 1 )
+            {
+                playerTrans.GetComponent<PlayerController>().autoShoot = false;
+                playerTrans.GetComponent<PlayerController>().CdShoot = 0;
+            }
 
             customWeapon(playerTrans);
         }
