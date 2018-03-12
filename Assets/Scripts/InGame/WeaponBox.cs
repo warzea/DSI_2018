@@ -7,7 +7,7 @@ using DG.Tweening;
 public class WeaponBox : MonoBehaviour 
 {
 	#region Variables
-	public GameObject ThisGauge;
+	public Slider ThisGauge;
 	public GameObject AttackZone;
 	public float DelayAttack = 1;
 	public float DelayStay = 1;
@@ -64,7 +64,7 @@ public class WeaponBox : MonoBehaviour
 		if ( !checkAttack )
 		{
 			checkAttack = true;
-			ThisGauge.SetActive(true);
+			AttackZone.SetActive(true);
 
 			DOVirtual.DelayedCall(DelayAttack, ( ) => 
 			{
@@ -73,7 +73,7 @@ public class WeaponBox : MonoBehaviour
 
 			DOVirtual.DelayedCall(DelayStay, ( ) => 
 			{
-				ThisGauge.SetActive(false);
+				AttackZone.SetActive(false);
 			});
 		}
 	}

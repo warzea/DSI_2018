@@ -115,7 +115,6 @@ public class PlayerController : MonoBehaviour
     Camera getCam;
     WeaponBox thisWB;
 
-
     int lifePlayer;
 
     bool shooting = false;
@@ -362,6 +361,7 @@ public class PlayerController : MonoBehaviour
         else if (driveBox)
         {
             thisWB.CurrTime += getDeltaTime;
+            thisWB.ThisGauge.value = thisWB.CurrTime;
             TimeWBox += getDeltaTime;
             getSpeed *= SpeedReduceOnBox;
         }
@@ -412,7 +412,8 @@ public class PlayerController : MonoBehaviour
         {
             if ( driveBox )
             {
-                
+                thisWB.AttackCauld();
+                return;
             }
             else if (shootInput > 0 )
             {
@@ -503,14 +504,21 @@ public class PlayerController : MonoBehaviour
                 AddItem();
             }
         }
-        if (canCauldron && inputPlayer.GetButtonDown("Cauldron"))
-        {
-            if (thisWeapon != null)
+        if (inputPlayer.GetButtonDown("Cauldron"))
+        {   
+            if ( canCauldron )
             {
-                Destroy(thisWeapon.gameObject);
-            }
+                if (thisWeapon != null)
+                {
+                    Destroy(thisWeapon.gameObject);
+                }
 
-            Manager.GameCont.WeaponB.NewWeapon(thisPC);
+                Manager.GameCont.WeaponB.NewWeapon(thisPC);
+            }
+            else if ( driveBox )
+            {
+                thisWB.ActionSpe();
+            }
         }
     }
 
@@ -518,7 +526,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Manager.GameCont.WeaponB.CanControl)
         {
-            thisWB.ThisGauge.SetActive(true);
+            thisWB.ThisGauge.gameObject.SetActive(true);
             Manager.Ui.CauldronButtons(true);
             GetCamFoll.UpdateTarget(thisTrans);
             WeaponPos.gameObject.SetActive(false);
@@ -535,7 +543,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (driveBox)
         {
-            thisWB.ThisGauge.SetActive(false);
+            thisWB.ThisGauge.gameObject.SetActive(false);
             Manager.Ui.checkDrive = false;
             Manager.Ui.CauldronButtons(false);
             AmmoUI.GetComponent<CanvasGroup>().alpha = 1;
