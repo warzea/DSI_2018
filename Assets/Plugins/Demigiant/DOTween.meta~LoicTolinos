@@ -1,11 +1,7 @@
 fileFormatVersion: 2
-<<<<<<< HEAD
-guid: 3185ec1cb0fc0a64c9e4c0d54df4ad11
-=======
-guid: d027895447cba3b46b7df35dce1a962d
->>>>>>> Alexandre
+guid: 72b799cdee5febc409ffdda9cf601628
 folderAsset: yes
-timeCreated: 1520506543
+timeCreated: 1520844123
 licenseType: Free
 DefaultImporter:
   externalObjects: {}

@@ -115,7 +115,7 @@ public class WeaponAbstract : MonoBehaviour
                 }
             }
             
-            playerTrans.DOLocalMove ( playerTrans.localPosition - playerTrans.forward * getDist, 0.1f );
+            playerTrans.DOLocalMove ( playerTrans.localPosition - playerTrans.forward * getDist * getDir, 0.1f );
 
             getCapacity--;
             canShoot = false;
