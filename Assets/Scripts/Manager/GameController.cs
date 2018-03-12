@@ -58,7 +58,7 @@ public class GameController : ManagerParent
         var newEtat = new AgentEvent ( );
         newEtat.AgentChecking = thisEtat;
         newEtat.Raise ( );
-       /* System.Action <AgentEvent> thisAct = new delegate( AgentEvent thisEvnt )
+       /* System.Action <AgentEvent> thisAct = delegate( AgentEvent thisEvnt )
         {
             thisEvnt.AgentChecking = thisEtat;
         };
