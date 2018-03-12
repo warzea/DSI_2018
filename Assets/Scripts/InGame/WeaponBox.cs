@@ -42,15 +42,27 @@ public class WeaponBox : MonoBehaviour
 	#endregion
 	
 	#region Public Methods
-	public void NewWeapon ( PlayerController thisPlayer, GameObject newObj = null )
+
+    public void GetWeapon (PlayerController thisPlayer, GameObject newObj = null)
+    {
+        getChild.DOKill(true);
+        getChild.DORotate(new Vector3(0,0,1080), 2, RotateMode.LocalAxisAdd).SetEase(Ease.InSine);
+        getChild.DOLocalMoveY(3, 2).SetEase(Ease.InSine).OnComplete(()=> {
+            getChild.DOShakeScale(.5f, .3f, 18, 0);
+            getChild.DOLocalMoveY(0.5f, .6f).SetEase(Ease.InElastic).OnComplete(()=> {
+
+                getChild.DOShakeScale(1f, .4f, 18, 0);
+            });
+        });
+
+    }
+
+
+    public void NewWeapon ( PlayerController thisPlayer, GameObject newObj = null )
 	{
 
         //TRANSFO CANON
-        //transform.DOScaleX(1, .15f).SetEase(Ease.InSine);
 
-        //transform.DOScaleY(1, .15f).SetEase(Ease.InSine);
-
-        //transform.DOScaleZ(2.5f, .15f).SetEase(Ease.InSine).OnComplete(()=> {
 		getChild.DOKill(true);
         getChild.DOShakeScale(.15f, .8f, 25, 0).OnComplete(() => { 
 
@@ -125,7 +137,11 @@ public class WeaponBox : MonoBehaviour
 
 	public void AddItem ( int lenghtItem, bool inv = false )
 	{
-		NbrItem += lenghtItem;
+
+        if(inv)
+            Manager.Ui.PopPotions(PotionType.Less);
+
+        NbrItem += lenghtItem;
 
 		int currNbr = NbrItem - (nbrTotalSlide - 1) * 100;
 		Image[] getFeedBack = Manager.Ui.GaugeFeedback;
@@ -353,6 +369,7 @@ public class WeaponBox : MonoBehaviour
 	#region Private Methods
 	void OnTriggerEnter ( Collider thisColl )
 	{
+
 		string tag = thisColl.tag;
 		if ( tag == Constants._EnemyBullet )
 		{

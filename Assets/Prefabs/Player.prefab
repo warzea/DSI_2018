@@ -822,7 +822,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1792556986729784}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.5, y: 0, z: 0.5}
+  m_LocalPosition: {x: 0.37, y: 0.943, z: 0.5}
   m_LocalScale: {x: 1, y: 1.0000005, z: 1.0000005}
   m_Children: []
   m_Father: {fileID: 4111334567357604}
@@ -1088,8 +1088,8 @@ MonoBehaviour:
   LostItem: 0
   checkAward: 0
   AmmoUI: {fileID: 0}
-  UiAmmoX: 3
-  UiAmmoY: 2
+  UiAmmoX: 2
+  UiAmmoY: 4
   UiAmmo: {fileID: 0}
   currInt: {fileID: 0}
   autoShoot: 1

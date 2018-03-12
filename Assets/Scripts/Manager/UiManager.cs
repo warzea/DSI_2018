@@ -198,7 +198,9 @@ public class UiManager : ManagerParent
         {
             var potion = Instantiate(PotionsLess, GetInGame.position, Quaternion.identity, GetInGame);
 
-            ScorePlus();
+            //potion.transform.DOLocalMove(Manager.GameCont.WeaponB.transform.position, 0);
+            //potion.transform.DOLocalMoveY(Manager.GameCont.WeaponB.transform.localPosition.y + 220, 0);
+            ScoreLess();
             //potion.GetComponent<RainbowMove>().ObjectTransform = ici;
         }
     }
@@ -248,6 +250,17 @@ public class UiManager : ManagerParent
             ScoreText.GetComponent<RainbowColor>().enabled = false;
         });
     }
+
+    void ScoreLess()
+    {
+        ScoreText.transform.DOKill(true);
+        ScoreText.transform.DOShakeScale(.4f, 1f, 12, 15);
+        ScoreText.GetComponentsInChildren<RainbowColor>()[1].enabled = true;
+        DOVirtual.DelayedCall(.4f, () => {
+            ScoreText.GetComponentsInChildren<RainbowColor>()[1].enabled = false;
+        });
+    }
+
     private void Update()
     {
 
@@ -273,7 +286,7 @@ public class UiManager : ManagerParent
         }
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            GaugeLevelGet(0);
+            PopPotions(PotionType.Less);
         }
         if (Input.GetKeyDown(KeyCode.T))
         {

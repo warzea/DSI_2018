@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: c8babafafa6392b41901a79d3c0cdbae
 timeCreated: 1520852457
+=======
+guid: 4e7619f09b7977549bf698092b572bc7
+timeCreated: 1520859651
+>>>>>>> Tom
 licenseType: Free
 DefaultImporter:
   externalObjects: {}
