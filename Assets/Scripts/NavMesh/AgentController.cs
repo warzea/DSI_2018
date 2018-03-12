@@ -84,23 +84,21 @@ public class AgentController : MonoBehaviour
                 transform.LookAt(lookAtPosition2);
             }
 
+            NavMeshPath path = new NavMeshPath();
 
-
-            Vector3 getCamPos = cam.WorldToViewportPoint(transform.position);
-
-            if (getCamPos.x > 1f || getCamPos.x < 0f || getCamPos.y > 1f || getCamPos.y < 0f)
+            navAgent.CalculatePath(myFocusPlayer.transform.position, path);
+            if (path.status == NavMeshPathStatus.PathPartial)
             {
-                NavMeshPath path = new NavMeshPath();
+                Vector3 getCamPos = cam.WorldToViewportPoint(transform.position);
 
-                navAgent.CalculatePath(myFocusPlayer.transform.position, path);
-                if (path.status == NavMeshPathStatus.PathPartial)
+                if (getCamPos.x > 1f || getCamPos.x < 0f || getCamPos.y > 1f || getCamPos.y < 0f)
                 {
                     DeadFonction();
                 }
-                else
-                {
-                    ShootAgent();
-                }
+            }
+            else
+            {
+                ShootAgent();
             }
         }
     }
