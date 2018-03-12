@@ -162,6 +162,11 @@ public class PlayerController : MonoBehaviour
     {
         thisRig.velocity = Vector3.zero;
 
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Manager.GameCont.WeaponB.GetWeapon(thisPC);
+        }
+
         if ( !checkUpdate )
         {
             return;
