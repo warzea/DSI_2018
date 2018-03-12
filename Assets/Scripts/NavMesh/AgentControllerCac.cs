@@ -41,6 +41,7 @@ public class AgentControllerCac : MonoBehaviour
         cam = Manager.GameCont.MainCam;
 
         Manager.Event.Register(thisAct);
+        navAgent.speed = speedVsPlayer;
     }
     void Awake()
     {

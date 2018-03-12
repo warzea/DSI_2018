@@ -639,12 +639,6 @@ public class PlayerController : MonoBehaviour
         ItemLost getItem;
         Vector3 getDirect = Vector3.Normalize(thisTrans.position - pointColl);
         getDirect = new Vector3(getDirect.x, thisTrans.localPosition.y, getDirect.z);
-        GameObject newObj = (GameObject)Instantiate(ItemLostObj, thisTrans.position, thisTrans.rotation);
-        GameObject newObjUi = (GameObject)Instantiate(Manager.Ui.PotionGet, Manager.Ui.GetInGame);
-        PotionFollowP thisPFP = newObjUi.GetComponent<PotionFollowP>();
-        newObj.GetComponent<ItemObjLost>().ThisObj = newObjUi;
-        thisPFP.ThisPlayer = newObj.transform;
-        thisPFP.getCam = getCam;
 
         int a;
         float getDist = DistProjDead;
@@ -691,35 +685,46 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(getList[a]);	
         }*/
-        int getNbr = (int)(getList.Length - (getList.Length * PourcLootLost) * 0.01f);
-        LostItem += getList.Length;
-        thisPFP.Nbr = getNbr;
-        thisPFP.GetComponent<CanvasGroup>().DOFade(1,0.1f);
 
-        for (a = getList.Length - 1; a > getNbr - 1; a--)
+        if ( getList.Length > 0 )
         {
-            getItem = getList[a].transform.GetComponent<ItemLost>();
-            getItem.gameObject.SetActive(true);
-            getItem.transform.localScale = Vector3.one;
-            getItem.transform.localPosition = Vector3.zero;
-            if (!getItem)
+            GameObject newObj = (GameObject)Instantiate(ItemLostObj, thisTrans.position, thisTrans.rotation);
+            GameObject newObjUi = (GameObject)Instantiate(Manager.Ui.PotionGet, Manager.Ui.GetInGame);
+            PotionFollowP thisPFP = newObjUi.GetComponent<PotionFollowP>();
+            newObj.GetComponent<ItemObjLost>().ThisObj = newObjUi;
+            thisPFP.ThisPlayer = newObj.transform;
+            thisPFP.getCam = getCam;
+
+            int getNbr = (int)(getList.Length - (getList.Length * PourcLootLost) * 0.01f);
+            LostItem += getList.Length;
+            thisPFP.Nbr = getNbr;
+            thisPFP.GetComponent<CanvasGroup>().DOFade(1,0.1f);
+
+            for (a = getList.Length - 1; a > getNbr - 1; a--)
             {
-                getItem = getList[a].AddComponent<ItemLost>();
+                getItem = getList[a].transform.GetComponent<ItemLost>();
+                getItem.gameObject.SetActive(true);
+                getItem.transform.localScale = Vector3.one;
+                getItem.transform.localPosition = Vector3.zero;
+                if (!getItem)
+                {
+                    getItem = getList[a].AddComponent<ItemLost>();
+                }
+
+                //getItem.EnableColl(true);
+                getItem.transform.SetParent(newObj.transform);
+                AllItem.RemoveAt(a);
             }
 
-            //getItem.EnableColl(true);
-            getItem.transform.SetParent(newObj.transform);
-            AllItem.RemoveAt(a);
-        }
+            getList = AllItem.ToArray();
+            for (a = 0; a < getList.Length; a++)
+            {
+                Destroy(getList[a]);
+            }
 
-        getList = AllItem.ToArray();
-        for (a = 0; a < getList.Length; a++)
-        {
-            Destroy(getList[a]);
+            AllItem.Clear();
+            Destroy(newObj, 60);
         }
-
-        AllItem.Clear();
-        Destroy(newObj, 60);
     }
 
     void OnTriggerEnter(Collider thisColl)
