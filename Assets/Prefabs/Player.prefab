@@ -1071,6 +1071,7 @@ MonoBehaviour:
   SpeedReduceOnBox: 0.3
   SmoothRotateOnBox: 3.5
   SmoothRotatePlayer: 10
+  SmoothRotatePlayerWithFocus: 2
   AllItem: []
   driveBox: 0
   dead: 0
