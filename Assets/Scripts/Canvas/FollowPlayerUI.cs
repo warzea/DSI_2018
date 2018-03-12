@@ -15,7 +15,19 @@ public class FollowPlayerUI : MonoBehaviour
 	#region Mono
 	void Awake ( )
 	{
-		thisTrans = transform;
+		thisTrans = transform;		
+	}
+	void Start ( )
+	{
+		if ( getCam == null )
+		{
+			getCam = Manager.GameCont.MainCam;
+		}
+
+		if ( ThisPlayer == null )
+		{
+			ThisPlayer = Manager.GameCont.WeaponB.transform;
+		}
 	}
 	#endregion
 	

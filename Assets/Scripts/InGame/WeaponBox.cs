@@ -7,6 +7,7 @@ using DG.Tweening;
 public class WeaponBox : MonoBehaviour 
 {
 	#region Variables
+	[HideInInspector]
 	public Slider ThisGauge;
 	public GameObject AttackZone;
 	public float DelayAttack = 1;
@@ -55,6 +56,24 @@ public class WeaponBox : MonoBehaviour
 		if ( DelayStay < DelayAttack )
 		{
 			DelayStay = DelayAttack;
+		}
+	}
+
+	void Start ( )
+	{
+		if ( ThisGauge == null )
+		{
+			ThisGauge = Manager.Ui.CauldronGauge.GetComponent<Slider>();
+		}
+
+		if ( AttackZone == null )
+		{
+			AttackZone = GetTrans.Find("AttackZone").gameObject;
+
+			if ( AttackZone == null )
+			{
+				AttackZone = (GameObject) Instantiate(new GameObject(), GetTrans);
+			}
 		}
 	}
 	#endregion

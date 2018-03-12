@@ -22,6 +22,7 @@ public class UiManager : ManagerParent
 
     public Text ScoreText;
     public Text Multiplier;
+    public GameObject CauldronGauge;
     public Image GetGauge;
     public Image[] GaugeFeedback;
     public CanvasGroup ButtonsInteract;
@@ -320,6 +321,8 @@ public class UiManager : ManagerParent
 			setAllMenu.Add ( thisUi.ThisMenu, thisUi );
 		}
 
+        CauldronGauge = (GameObject) Instantiate(CauldronGauge, GetInGame);
+        CauldronGauge.SetActive(false);
 		AllMenu = setAllMenu;
 
 		OpenThisMenu(MenuType.SelectPlayer);

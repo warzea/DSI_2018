@@ -83,6 +83,11 @@ public class GameController : ManagerParent
             GetPlayersInput[a].InputPlayer = ReInput.players.GetPlayer(a);
             GetPlayersInput[a].EnablePlayer = false;
         }
+
+        if ( StartWeapon == null)
+        {
+            StartWeapon = WeaponB.AllWeapon[0];
+        }
     }
 
     void SpawnPlayer()
