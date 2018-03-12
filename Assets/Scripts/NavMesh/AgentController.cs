@@ -41,6 +41,9 @@ public class AgentController : MonoBehaviour
 
     private float timeAgent = -5;
 
+    private Camera cam;
+
+
     void Awake()
     {
         agentsManager = GameObject.Find("ManagerNavMesh").GetComponent<AgentsManager>();
@@ -54,6 +57,7 @@ public class AgentController : MonoBehaviour
     {
         parentBullet = Manager.GameCont.Garbage;
         navAgent.stoppingDistance = distanceShoot;
+        cam = Manager.GameCont.MainCam;
     }
 
     void Update()
@@ -81,16 +85,22 @@ public class AgentController : MonoBehaviour
             }
 
 
-            NavMeshPath path = new NavMeshPath();
 
-            navAgent.CalculatePath(myFocusPlayer.transform.position, path);
-            if (path.status == NavMeshPathStatus.PathPartial)
+            Vector3 getCamPos = cam.WorldToViewportPoint(transform.position);
+
+            if (getCamPos.x > 1f || getCamPos.x < 0f || getCamPos.y > 1f || getCamPos.y < 0f)
             {
-                DeadFonction();
-            }
-            else
-            {
-                ShootAgent();
+                NavMeshPath path = new NavMeshPath();
+
+                navAgent.CalculatePath(myFocusPlayer.transform.position, path);
+                if (path.status == NavMeshPathStatus.PathPartial)
+                {
+                    DeadFonction();
+                }
+                else
+                {
+                    ShootAgent();
+                }
             }
         }
     }

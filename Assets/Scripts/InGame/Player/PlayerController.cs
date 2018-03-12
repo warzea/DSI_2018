@@ -107,7 +107,7 @@ public class PlayerController : MonoBehaviour
     CameraFollow GetCamFoll;
     Player inputPlayer;
     Camera getCam;
-   
+
 
     int lifePlayer;
 
@@ -163,7 +163,7 @@ public class PlayerController : MonoBehaviour
     {
         thisRig.velocity = Vector3.zero;
 
-        if ( !checkUpdate )
+        if (!checkUpdate)
         {
             return;
         }
@@ -176,17 +176,17 @@ public class PlayerController : MonoBehaviour
         }
 
         checkBorder();
-        
-        if ( !checkUIBorder )
+
+        if (!checkUIBorder)
         {
             //AmmoUI.localScale = Vector3.one;
-            
+
             AmmoUI.position = getCam.WorldToScreenPoint(thisTrans.position - Vector3.right * UiAmmoX + Vector3.up * UiAmmoY);
-        } 
+        }
         else
         {
             //AmmoUI.localScale = new Vector3(-1, 1, 1);
-            
+
             AmmoUI.position = getCam.WorldToScreenPoint(thisTrans.position + Vector3.right * UiAmmoX + Vector3.up * UiAmmoY);
         }
 
@@ -216,7 +216,7 @@ public class PlayerController : MonoBehaviour
 
     public void GetDamage(Transform thisEnemy, int intDmg = 1)
     {
-        if (canTakeDmg && checkUpdate )
+        if (canTakeDmg && checkUpdate)
         {
             lifePlayer -= intDmg;
 
@@ -266,7 +266,7 @@ public class PlayerController : MonoBehaviour
             thisTrans.position = new Vector3(thisTrans.position.x, thisTrans.position.y, getCam.ViewportToWorldPoint(new Vector3(getCamPos.x, 0.03f, getCamPos.z)).z);
         }
 
-        if ( getDir != Vector3.zero )
+        if (getDir != Vector3.zero)
         {
             RaycastHit[] allHit;
             string getTag;
@@ -281,12 +281,12 @@ public class PlayerController : MonoBehaviour
                 {
 
                     checkUpdate = false;
-                    
+
                     thisTrans.DOKill(true);
-                    thisTrans.DOMove ( getBoxWeapon.position, 0.5f, true ).OnComplete ( () =>
-                    {
-                        checkUpdate = true;
-                    });
+                    thisTrans.DOMove(getBoxWeapon.position, 0.5f, true).OnComplete(() =>
+               {
+                   checkUpdate = true;
+               });
                     break;
                 }
             }
@@ -384,9 +384,9 @@ public class PlayerController : MonoBehaviour
     void playerShoot(float getDeltaTime)
     {
         float shootInput = inputPlayer.GetAxis("Shoot");
-        if ( !canShoot )
+        if (!canShoot)
         {
-            if ( shootInput > 0 &&  driveBox )
+            if (shootInput > 0 && driveBox)
             {
                 useBoxWeapon();
             }
@@ -399,14 +399,14 @@ public class PlayerController : MonoBehaviour
         if (shootInput == 1 && checkShootScore)
         {
             checkShootScore = false;
-            SpawmShoot++;           
+            SpawmShoot++;
         }
         else if (shootInput < 0.3f)
         {
             checkShootScore = true;
         }
 
-        if ( shootInput == 0 && checkAuto )
+        if (shootInput == 0 && checkAuto)
         {
             checkShoot = true;
         }
@@ -429,9 +429,9 @@ public class PlayerController : MonoBehaviour
             if (thisWeapon != null) //&& thisWeapon.Damage == 1)
             {
                 //Debug.Log("Shoot");
-                if(thisWeapon.Damage <= Manager.VibM.DamagesLow)
+                if (thisWeapon.Damage <= Manager.VibM.DamagesLow)
                     Manager.VibM.ShootLowVibration(inputPlayer);
-                else if(thisWeapon.Damage > Manager.VibM.DamagesLow && thisWeapon.Damage <= Manager.VibM.DamagesMedium)
+                else if (thisWeapon.Damage > Manager.VibM.DamagesLow && thisWeapon.Damage <= Manager.VibM.DamagesMedium)
                     Manager.VibM.ShootMediumVibration(inputPlayer);
                 else if (thisWeapon.Damage > Manager.VibM.DamagesLow && thisWeapon.Damage <= Manager.VibM.DamagesMedium)
                     Manager.VibM.ShootHighVibration(inputPlayer);
@@ -468,13 +468,13 @@ public class PlayerController : MonoBehaviour
                 useBoxWeapon();
                 return;
             }
-            else if ( currInt != null )
+            else if (currInt != null)
             {
                 currInt.OnInteract(thisPC);
                 AddItem();
             }
         }
-        if ( canCauldron && inputPlayer.GetButtonDown("Cauldron") )
+        if (canCauldron && inputPlayer.GetButtonDown("Cauldron"))
         {
             if (thisWeapon != null)
             {
@@ -491,7 +491,7 @@ public class PlayerController : MonoBehaviour
         {
             GetCamFoll.UpdateTarget(thisTrans);
             WeaponPos.gameObject.SetActive(false);
-            AmmoUI.GetComponent<CanvasGroup>().alpha = 0;            
+            AmmoUI.GetComponent<CanvasGroup>().alpha = 0;
             canShoot = false;
             Physics.IgnoreCollision(GetComponent<Collider>(), getBoxWeapon.GetComponent<Collider>(), true);
             Manager.GameCont.WeaponB.CanControl = false;
@@ -504,7 +504,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (driveBox)
         {
-            AmmoUI.GetComponent<CanvasGroup>().alpha = 1;            
+            AmmoUI.GetComponent<CanvasGroup>().alpha = 1;
             getBoxWeapon.DOKill();
             WeaponPos.gameObject.SetActive(true);
             GetCamFoll.UpdateTarget(getBoxWeapon);
@@ -551,19 +551,19 @@ public class PlayerController : MonoBehaviour
     {
         DOVirtual.DelayedCall(Random.Range(0, 0.2f), () =>
         {
-            currTrans.DOLocalMove(Vector3.zero + Vector3.up * 3, 1f).OnComplete ( () => 
-            {
-                currTrans.DOLocalMove ( Vector3.zero, 0.5f );
-                currTrans.DOScale(Vector3.one, 0.5f).OnComplete(() =>
-                {
-                    currTrans.DOScale(Vector3.zero, 0.7f).OnComplete(() =>
-                    {
-                        Destroy(currTrans.gameObject);
-                    });
-                });
-            });
+            currTrans.DOLocalMove(Vector3.zero + Vector3.up * 3, 1f).OnComplete(() =>
+          {
+              currTrans.DOLocalMove(Vector3.zero, 0.5f);
+              currTrans.DOScale(Vector3.one, 0.5f).OnComplete(() =>
+              {
+                  currTrans.DOScale(Vector3.zero, 0.7f).OnComplete(() =>
+                  {
+                      Destroy(currTrans.gameObject);
+                  });
+              });
+          });
 
-           
+
         });
     }
 
@@ -619,19 +619,19 @@ public class PlayerController : MonoBehaviour
 
         thisTrans.DOLocalMove(thisTrans.localPosition + getDirect * getDist, getTime);
 
-        DOVirtual.DelayedCall( getTime + TimeDead + TimeProjDead - getTime, () =>
-        {
-            GetComponent<Collider>().isTrigger = false;
-            WeaponPos.gameObject.SetActive(true);
-            lifePlayer = LifePlayer;
-            dead = false;
-            thisWeapon.canShoot = true;
+        DOVirtual.DelayedCall(getTime + TimeDead + TimeProjDead - getTime, () =>
+       {
+           GetComponent<Collider>().isTrigger = false;
+           WeaponPos.gameObject.SetActive(true);
+           lifePlayer = LifePlayer;
+           dead = false;
+           thisWeapon.canShoot = true;
 
-            DOVirtual.DelayedCall(TimeInvincible, () =>
-            {
-                canTakeDmg = true;
-            });
-        });
+           DOVirtual.DelayedCall(TimeInvincible, () =>
+           {
+               canTakeDmg = true;
+           });
+       });
         /*for ( a = 0; a < getList.Length; a ++ )
 		{
 			Destroy(getList[a]);	
@@ -704,12 +704,12 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                if ( tweenRegen != null )
+                if (tweenRegen != null)
                 {
                     tweenRegen.Kill();
                 }
 
-                DOVirtual.DelayedCall(TimeToRegen, ( ) => 
+                DOVirtual.DelayedCall(TimeToRegen, () =>
                 {
                     lifePlayer = LifePlayer;
                 });
@@ -727,7 +727,6 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter(Collision thisColl)
     {
-        Debug.Log("collide");
         /*string getTag = thisColl.collider.tag;
 		
 		if ( getTag == Constants._EnemyBullet || getTag == Constants._Enemy )
@@ -745,4 +744,4 @@ public class PlayerController : MonoBehaviour
 }
 
 
-            
+

@@ -68,7 +68,7 @@ public class AgentsManagerCac : ManagerParent
                 if (inRoom)
                 {
                     int randomPos = Random.Range(0, inRoomList.Count);
-                    bestSpawn = roomFight[i].checkPoint[randomPos].position;
+                    bestSpawn = inRoomList[randomPos].position;
                 }
             }
         }
