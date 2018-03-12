@@ -91,7 +91,7 @@ public class AgentsManager : ManagerParent
         timeAgent += Time.deltaTime;
         if (startCheck && timeAgent > timeLeftAgentLook)
         {
-            
+
             timeAgent = 0;
         }
     }
@@ -124,7 +124,7 @@ public class AgentsManager : ManagerParent
                 if (inRoom)
                 {
                     int randomPos = Random.Range(0, inRoomList.Count);
-                    bestSpawn = roomFight[i].checkPoint[randomPos].position;
+                    bestSpawn = inRoomList[randomPos].position;
                 }
             }
         }
@@ -228,14 +228,14 @@ public class AgentsManager : ManagerParent
             agents[i].SetFocusRandomPlayer(player[randomPlayer]);
         }
 
-//		for (int i = 0; i < agents.Length; i++)
-//		{
-//			if (agents[i].GetEtatAgent())
-//			{
-//				float randStopDist = Random.Range(10, 15);
-//				agents[i].TargetPlayer(randStopDist, maxPosPlayer);
-//			}
-//		}
+        //		for (int i = 0; i < agents.Length; i++)
+        //		{
+        //			if (agents[i].GetEtatAgent())
+        //			{
+        //				float randStopDist = Random.Range(10, 15);
+        //				agents[i].TargetPlayer(randStopDist, maxPosPlayer);
+        //			}
+        //		}
         CheckFocusIni();
     }
     #endregion
