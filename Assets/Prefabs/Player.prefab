@@ -1050,6 +1050,7 @@ MonoBehaviour:
   LifePlayer: 10000
   TimeToRegen: 3
   MoveSpeed: 13
+  radialDeadZone: 0.3
   DistToDropItem: 10
   nbItemBeforeBigBag: 10
   animPlayer: {fileID: 95255310504812768}
@@ -1066,6 +1067,7 @@ MonoBehaviour:
   SpeedReduce: 0.5
   SpeedReduceOnBox: 0.3
   SmoothRotateOnBox: 3.5
+  SmoothRotatePlayer: 10
   AllItem: []
   driveBox: 0
   dead: 0
@@ -1086,6 +1088,7 @@ MonoBehaviour:
   NbrEnemy: 0
   currentEnemy: 0
   LostItem: 0
+  checkAward: 0
   AmmoUI: {fileID: 0}
   UiAmmoX: 3
   UiAmmoY: 2
