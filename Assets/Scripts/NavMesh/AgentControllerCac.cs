@@ -143,7 +143,6 @@ public class AgentControllerCac : MonoBehaviour
         lifeAgent = 1;
     }
 
-
     public void DeadFonction()
     {
         myEtatAgent = AgentEtat.deadAgent;
@@ -151,8 +150,6 @@ public class AgentControllerCac : MonoBehaviour
         transform.GetComponent<Renderer>().material = deadMaterial;
         StartCoroutine(WaitRespawn());
     }
-
-
 
     void OnTriggerEnter(Collider other)
     {
