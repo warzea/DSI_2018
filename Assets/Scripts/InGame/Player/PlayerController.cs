@@ -43,7 +43,8 @@ public class PlayerController : MonoBehaviour
     public float SpeedReduceOnBox = 0.1f;
     public float SmoothRotateOnBox = 10;
 
-    public float SmoothRotatePlayer = 1;
+    public float SmoothRotatePlayer = 10;
+    public float SmoothRotatePlayerWithFocus = 2;
 
     [HideInInspector]
     public List<GameObject> AllItem;
@@ -380,6 +381,16 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            float actuFocus = SmoothRotatePlayer;
+            RaycastHit hit;
+            if (Physics.Raycast(thisWeapon.SpawnBullet.position, thisTrans.forward, out hit))
+            {
+                if (hit.transform.tag == Constants._Enemy)
+                {
+                    actuFocus = SmoothRotatePlayerWithFocus;
+                }
+            }
+
             Quaternion newAngle = Quaternion.LookRotation(new Vector3(Xaim, 0, Yaim), thisTrans.up);
 
             float difAngle = Quaternion.Angle(thisTrans.rotation, newAngle);
@@ -392,7 +403,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    thisTrans.localRotation = Quaternion.Slerp(thisTrans.rotation, newAngle, SmoothRotatePlayer * getDeltaTime);
+                    thisTrans.localRotation = Quaternion.Slerp(thisTrans.rotation, newAngle, actuFocus * getDeltaTime);
                     // thisTrans.localRotation = Quaternion.LookRotation(new Vector3(Xaim, 0, Yaim), thisTrans.up);
                 }
             }
