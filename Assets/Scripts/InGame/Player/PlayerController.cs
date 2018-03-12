@@ -509,11 +509,6 @@ public class PlayerController : MonoBehaviour
                 useBoxWeapon();
                 return;
             }
-            else if (currInt != null)
-            {
-                currInt.OnInteract(thisPC);
-                AddItem();
-            }
         }
         if (inputPlayer.GetButtonDown("Cauldron"))
         {   
@@ -529,6 +524,11 @@ public class PlayerController : MonoBehaviour
             else if ( driveBox )
             {
                 thisWB.ActionSpe();
+            }
+            else if (currInt != null)
+            {
+                currInt.OnInteract(thisPC);
+                AddItem();
             }
         }
     }
