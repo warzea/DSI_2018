@@ -1239,8 +1239,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000030517578, y: -2}
-  m_SizeDelta: {x: 358.8, y: 155.5}
+  m_AnchoredPosition: {x: 0.000030517578, y: 19.400047}
+  m_SizeDelta: {x: 344.34, y: 113.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &139930017
 MonoBehaviour:
@@ -1324,7 +1324,7 @@ Prefab:
     - target: {fileID: 114427052359867546, guid: 4937250a6dda9a844ac259531ecc0430,
         type: 2}
       propertyPath: AllWeapon.Array.size
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4070923493568338, guid: 4937250a6dda9a844ac259531ecc0430, type: 2}
       propertyPath: m_LocalPosition.x
@@ -1362,31 +1362,49 @@ Prefab:
         type: 2}
       propertyPath: AllWeapon.Array.data[0]
       value: 
-      objectReference: {fileID: 1509122289724188, guid: 6faf6d452e98c124ab3de0bf8773fd30,
+      objectReference: {fileID: 1314208115975702, guid: 9e537c0ffddff9248b8d488acd4c88b9,
         type: 2}
     - target: {fileID: 114427052359867546, guid: 4937250a6dda9a844ac259531ecc0430,
         type: 2}
       propertyPath: AllWeapon.Array.data[1]
       value: 
-      objectReference: {fileID: 1559736636736308, guid: 87b437a1c10e3e0488c6c73195a1a2eb,
+      objectReference: {fileID: 1816746975589726, guid: 9f39bc799258c874e94d822387524985,
         type: 2}
     - target: {fileID: 114427052359867546, guid: 4937250a6dda9a844ac259531ecc0430,
         type: 2}
       propertyPath: AllWeapon.Array.data[2]
       value: 
-      objectReference: {fileID: 1092635991050510, guid: 73fd845b02ab9d4479adf3e01e1afd5a,
+      objectReference: {fileID: 1840050940889570, guid: 59e29fb570b191c42a4fda2b01a0aa32,
         type: 2}
     - target: {fileID: 114427052359867546, guid: 4937250a6dda9a844ac259531ecc0430,
         type: 2}
       propertyPath: AllWeapon.Array.data[3]
       value: 
-      objectReference: {fileID: 1764146296769658, guid: 0372d945f9215144684664f64033ab1b,
+      objectReference: {fileID: 1076790922585890, guid: 805d0df3037a9bf43b55b0e915a65eee,
         type: 2}
     - target: {fileID: 114427052359867546, guid: 4937250a6dda9a844ac259531ecc0430,
         type: 2}
       propertyPath: AllWeapon.Array.data[4]
       value: 
-      objectReference: {fileID: 1440639309290938, guid: 4b0dabc1dd172ad409651219820bc3cd,
+      objectReference: {fileID: 1107662970764652, guid: 8a6dc1e2e3bbad14189e95e460ab8c2b,
+        type: 2}
+    - target: {fileID: 114427052359867546, guid: 4937250a6dda9a844ac259531ecc0430,
+        type: 2}
+      propertyPath: AllWeapon.Array.data[5]
+      value: 
+      objectReference: {fileID: 1084613991706082, guid: c02548164cfaf7645ab6e5f2a5d2eb36,
+        type: 2}
+    - target: {fileID: 114427052359867546, guid: 4937250a6dda9a844ac259531ecc0430,
+        type: 2}
+      propertyPath: AllWeapon.Array.data[6]
+      value: 
+      objectReference: {fileID: 1196108527433766, guid: f5de41277b861c04bb366c198f1da51c,
+        type: 2}
+    - target: {fileID: 114427052359867546, guid: 4937250a6dda9a844ac259531ecc0430,
+        type: 2}
+      propertyPath: AllWeapon.Array.data[7]
+      value: 
+      objectReference: {fileID: 1295235881022704, guid: 67ccdcadbf94d7e4682d0a58a343252e,
         type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4937250a6dda9a844ac259531ecc0430, type: 2}
@@ -3766,7 +3784,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 181}
+  m_AnchoredPosition: {x: 0, y: 210}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &719804010
@@ -3784,7 +3802,7 @@ MonoBehaviour:
   time: 0.4
   movesType: 0
   moves:
-  - -30
+  - 190
   ObjectTransform: []
   easeType: 1
   breakMove: 0
@@ -6325,7 +6343,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerPrefab: {fileID: 1550415525633366, guid: 937d3b462b9817747b2216f2faea9faa,
     type: 2}
-  StartWeapon: {fileID: 1751569402159540, guid: 06be9e275b0584e419d58ac97101d576,
+  StartWeapon: {fileID: 1840050940889570, guid: 59e29fb570b191c42a4fda2b01a0aa32,
     type: 2}
   PlayerPosSpawn: {fileID: 1312571624}
   MainCam: {fileID: 64722600}
@@ -7932,8 +7950,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -6}
-  m_SizeDelta: {x: 335.7, y: 117.6}
+  m_AnchoredPosition: {x: 0, y: 19.3}
+  m_SizeDelta: {x: 335.7, y: 92.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1773189737
 MonoBehaviour:
@@ -9987,7 +10005,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00000166893}
+  m_AnchoredPosition: {x: 0, y: 121.8}
   m_SizeDelta: {x: 100, y: 0.6500001}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1985084758
@@ -10012,10 +10030,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 490a180fba9cad845880e0b421997c51, type: 3}
-    m_FontSize: 54
+    m_FontSize: 47
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 4
     m_MaxSize: 54
     m_Alignment: 4
     m_AlignByGeometry: 0
