@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     public int LifePlayer = 3;
     public int TimeToRegen = 3;
     public float MoveSpeed;
+
+    public float radialDeadZone = 0.3f;
     //public float DashDistance = 5;
     //public float DashTime = 1;
     public float DistToDropItem = 1;
@@ -120,7 +122,7 @@ public class PlayerController : MonoBehaviour
     bool checkShoot = true;
     bool canTakeDmg = true;
     bool checkShootScore = true;
-    
+
     bool checkAuto = false;
     bool checkUIBorder = false;
     bool checkUIBorderY = false;
@@ -369,7 +371,12 @@ public class PlayerController : MonoBehaviour
         float Xaim = inputPlayer.GetAxis("AimX");
         float Yaim = inputPlayer.GetAxis("AimY");
 
-        if (Xaim != 0 && Yaim != 0)
+        Vector2 stickInput = new Vector2(Xaim, Yaim);
+        if (stickInput.magnitude < radialDeadZone)
+        {
+            stickInput = Vector2.zero;
+        }
+        else
         {
             if (driveBox)
             {
@@ -380,6 +387,7 @@ public class PlayerController : MonoBehaviour
                 thisTrans.localRotation = Quaternion.LookRotation(new Vector3(Xaim, 0, Yaim), thisTrans.up);
             }
         }
+
     }
 
     void playerShoot(float getDeltaTime)
@@ -637,9 +645,9 @@ public class PlayerController : MonoBehaviour
            });
        });
         /*for ( a = 0; a < getList.Length; a ++ )
-		{
-			Destroy(getList[a]);	
-		}*/
+        {
+            Destroy(getList[a]);	
+        }*/
         int getNbr = (int)(getList.Length - (getList.Length * PourcLootLost) * 0.01f);
         LostItem += getList.Length;
 
@@ -732,17 +740,17 @@ public class PlayerController : MonoBehaviour
     void OnCollisionEnter(Collision thisColl)
     {
         /*string getTag = thisColl.collider.tag;
-		
-		if ( getTag == Constants._EnemyBullet || getTag == Constants._Enemy )
-		{
-			lifePlayer --;
 
-			if ( lifePlayer <= 0 )
-			{
-				dead = true;
-				animeDead ( );
-			}
-		}*/
+        if ( getTag == Constants._EnemyBullet || getTag == Constants._Enemy )
+        {
+            lifePlayer --;
+
+            if ( lifePlayer <= 0 )
+            {
+                dead = true;
+                animeDead ( );
+            }
+        }*/
     }
     #endregion
 }
