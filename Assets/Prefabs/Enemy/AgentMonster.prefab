@@ -1410,7 +1410,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ThisType: 1
   myFocusPlayer: {fileID: 0}
-  lifeAgent: 10
+  lifeAgent: 1
   timeBeforeDepop: 3
   timeBeforeAlive: 2
   animAgent: {fileID: 95878518960813642}
