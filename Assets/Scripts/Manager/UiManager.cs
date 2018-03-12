@@ -18,14 +18,16 @@ public class UiManager : ManagerParent
     public Text[] textWeapon;
     public GameObject PotionGet;
 
-    Tween ammoTwRot, ammoTwScale1, ammoTwScale2, ammoTwFade, ammoTwWait;
+    Tween ammoTwRot, ammoTwScale1, ammoTwScale2, ammoTwFade, ammoTwWait, shakeTwPos, shakeTwRot;
 
     public Text ScoreText;
     public Text Multiplier;
     public GameObject CauldronGauge;
     public Image GetGauge;
+    public Image GaugeBackground;
     public Image[] GaugeFeedback;
     public CanvasGroup ButtonsInteract;
+    public Image WhiteBackground;
 
     public GameObject[] PlayerText;
 
@@ -34,6 +36,15 @@ public class UiManager : ManagerParent
     public GameObject Light;
     public GameObject Circle;
     public GameObject CircleMultiplier;
+
+
+    [Header("SCREENSHAKE")]
+    public float ShakeMinPos;
+    public float ShakeMaxPos;
+    public float ShakeMinRot;
+    public float ShakeMaxRot;
+    public float ShakeDurationPos;
+    public float ShakeDurationRot;
 
     [HideInInspector]
     public GameObject[] AllPotGet;
@@ -66,6 +77,25 @@ public class UiManager : ManagerParent
 			menuOpen = thisType;
 			thisUi.OpenThis ( GetTok );
 		}
+
+
+
+        DOVirtual.DelayedCall(22, () => {
+            WeaponChange(3);
+        }).SetLoops(-1, LoopType.Restart);
+
+        DOVirtual.DelayedCall(19, () => {
+            WeaponChange(2);
+        }).SetLoops(-1, LoopType.Restart);
+
+        DOVirtual.DelayedCall(17, () => {
+            WeaponChange(1);
+        }).SetLoops(-1, LoopType.Restart);
+
+        DOVirtual.DelayedCall(15, () => {
+            WeaponChange(0);
+        }).SetLoops(-1,LoopType.Restart);
+
     }
 
 	public void CloseThisMenu ( )
@@ -208,38 +238,75 @@ public class UiManager : ManagerParent
 
     public void MultiplierNew( int value = 0 )
     {
+
+        //WHITE FLASH
+
+        WhiteBackground.DOFade(.7f, .2f).OnComplete(() => {
+            WhiteBackground.DOFade(0, .2f);
+        });
+
+
+        //GaugeLevelGet(0); GaugeLevelGet(1); GaugeLevelGet(2); GaugeLevelGet(3); GaugeLevelGet(4);
+
+        GaugeBackground.GetComponent<RainbowMove>().enabled = true;
+        GetGauge.GetComponent<RainbowMove>().enabled = true;
+        GetGauge.GetComponentInChildren<RainbowColor>().enabled = false;
+        GetGauge.GetComponentInChildren<RainbowColor>().transform.GetComponent<Image>().DOColor(new Color(1,1,1,0), 0);
+
+        DOVirtual.DelayedCall(.8f, () => {
+            GaugeBackground.GetComponent<RainbowMove>().enabled = false;
+            GetGauge.GetComponent<RainbowMove>().enabled = false;
+
+            Multiplier.GetComponent<RainbowColor>().enabled = false;
+            Multiplier.GetComponent<RainbowMove>().enabled = false;
+            Multiplier.GetComponent<RainbowScale>().enabled = false;
+        });
+
         Multiplier.GetComponent<Text>().text = "x"+ value.ToString();
         Multiplier.GetComponent<RainbowColor>().enabled = true;
         Multiplier.GetComponent<RainbowMove>().enabled = true;
         Multiplier.GetComponent<RainbowScale>().enabled = true;
 
-                var circle = Instantiate(CircleMultiplier, Multiplier.transform.position, Quaternion.identity, Multiplier.transform.parent);
+        var circle = Instantiate(CircleMultiplier, Multiplier.transform.position, Quaternion.identity, Multiplier.transform.parent);
         circle.transform.SetSiblingIndex(0);
 
-        DOVirtual.DelayedCall(.8f, () => {
-
-            Multiplier.GetComponent<RainbowColor>().enabled = false;
-            Multiplier.GetComponent<RainbowMove>().enabled = false;
-            Multiplier.GetComponent<RainbowScale>().enabled = false;
-
-        });
     }
 
     #endregion
 
     #region Private Methods
 
+    private void LateUpdate()
+    {
+
+        UnityEngine.Debug.Log(Camera.main.transform.localPosition);
+    }
+
     public void ScreenShake()
     {
-        /*
-        float rdmX = UnityEngine.Random.Range(-1, 1);
-        float rdmZ = UnityEngine.Random.Range(-1, 1);
 
-        UnityEngine.Debug.Log(Camera.main.transform.position);
-        UnityEngine.Debug.Log(Camera.main.transform.localPosition);
+        UnityEngine.Debug.Log("ShootShake");
+
+        shakeTwPos.Kill(true);
+        shakeTwRot.Kill(true);
+
+        float rdmX = UnityEngine.Random.Range(ShakeMinPos, ShakeMaxPos);
+        float rdmZ = UnityEngine.Random.Range(ShakeMinRot, ShakeMaxRot);
+
+        Transform getT = Manager.GameCont.MainCam.transform;
 
 
-        Camera.main.transform.DOPunchPosition(Camera.main.transform.localPosition + new Vector3(1 * rdmX, 0, -5 * rdmZ), .1f, 15, 1);*/
+        float dir = -1;
+        shakeTwPos = getT.transform.DOPunchPosition(new Vector3(rdmX,0,rdmX), ShakeDurationPos, 2, 1);
+        shakeTwRot = getT.transform.DOPunchRotation(new Vector3(0, 0, rdmZ), ShakeDurationRot,2,1);
+
+
+        //getT.DOPunchPosition(getT.localPosition + getT.right * rdmX + getT.up * rdmZ, .5f, 0, 0);
+        //UnityEngine.Debug.Log(Camera.main.transform.localPosition);
+
+        //Manager.GameCont.MainCam.transform.DOMove(Manager.GameCont.MainCam.transform.localPosition + new Vector3(rdmX, 0, rdmZ), .12f, 0, 0);
+
+        //Manager.GameCont.MainCam.transform.DOPunchPosition(Manager.GameCont.MainCam.transform.localPosition + new Vector3(rdmX, 0, rdmZ), .2f, 0, 0);
     }
 
     void ScorePlus()
