@@ -25,6 +25,7 @@ public class AgentControllerCac : MonoBehaviour
     private float timeAgent = -5;
 
     public float timeLeftAgentAttacCac = 1f;
+    bool checkUpdate = true;
 
     private Camera cam;
 
@@ -32,6 +33,13 @@ public class AgentControllerCac : MonoBehaviour
     {
         myEtatAgent = AgentEtat.aliveAgent;
         targetCauldron = Manager.GameCont.WeaponB.gameObject;
+        System.Action<AgentEvent> thisAct = delegate (AgentEvent thisEvnt)
+      {
+          checkUpdate = thisEvnt.AgentChecking;
+          navAgent.isStopped = checkUpdate;
+      };
+
+        Manager.Event.Register(thisAct);
     }
     void Awake()
     {
@@ -42,6 +50,12 @@ public class AgentControllerCac : MonoBehaviour
 
     void Update()
     {
+
+        if (!checkUpdate)
+        {
+            return;
+        }
+
         NavMeshPath path = new NavMeshPath();
 
         navAgent.CalculatePath(transform.position, path);
