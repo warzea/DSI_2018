@@ -15,12 +15,12 @@ public class PlayerController : MonoBehaviour
     public float MoveSpeed;
     public GameObject ItemLostObj;
     public float radialDeadZone = 0.3f;
+    public float Aim_Sensitivity = 2;
+
     //public float DashDistance = 5;
     //public float DashTime = 1;
     public float DistToDropItem = 1;
-
     public int nbItemBeforeBigBag = 10;
-
     public Animator animPlayer;
     public Transform WeaponPos;
     public Transform BagPos;
@@ -42,6 +42,9 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Speed reduce pendant qu'on pousse la caisse")]
     public float SpeedReduceOnBox = 0.1f;
     public float SmoothRotateOnBox = 10;
+
+    public float SmoothRotatePlayer = 10;
+    public float SmoothRotatePlayerWithFocus = 2;
 
     [HideInInspector]
     public List<GameObject> AllItem;
@@ -111,7 +114,7 @@ public class PlayerController : MonoBehaviour
     CameraFollow GetCamFoll;
     Player inputPlayer;
     Camera getCam;
-
+    WeaponBox thisWB;
 
     int lifePlayer;
 
@@ -161,6 +164,7 @@ public class PlayerController : MonoBehaviour
         getBoxWeapon = Manager.GameCont.WeaponB.transform;
         getCam = Manager.GameCont.MainCam;
         GetCamFoll = Manager.GameCont.GetCameraFollow;
+        thisWB = getBoxWeapon.GetComponent<WeaponBox>();
     }
 
     void Update()
@@ -357,6 +361,8 @@ public class PlayerController : MonoBehaviour
         }
         else if (driveBox)
         {
+            thisWB.CurrTime += getDeltaTime;
+            thisWB.ThisGauge.value = thisWB.CurrTime;
             TimeWBox += getDeltaTime;
             getSpeed *= SpeedReduceOnBox;
         }
@@ -379,14 +385,33 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            if (driveBox)
+            float actuFocus = SmoothRotatePlayer;
+            RaycastHit hit;
+            if (Physics.Raycast(thisWeapon.SpawnBullet.position, thisTrans.forward, out hit))
             {
-                thisTrans.localRotation = Quaternion.Slerp(thisTrans.rotation, Quaternion.LookRotation(new Vector3(Xaim, 0, Yaim), thisTrans.up), SmoothRotateOnBox * getDeltaTime);
+                if (hit.transform.tag == Constants._Enemy)
+                {
+                    actuFocus = SmoothRotatePlayerWithFocus;
+                }
             }
-            else
+
+            Quaternion newAngle = Quaternion.LookRotation(new Vector3(Xaim, 0, Yaim), thisTrans.up);
+
+            float difAngle = Quaternion.Angle(thisTrans.rotation, newAngle);
+
+            if (difAngle > Aim_Sensitivity)
             {
-                thisTrans.localRotation = Quaternion.LookRotation(new Vector3(Xaim, 0, Yaim), thisTrans.up);
+                if (driveBox)
+                {
+                    thisTrans.localRotation = Quaternion.Slerp(thisTrans.rotation, newAngle, SmoothRotateOnBox * getDeltaTime);
+                }
+                else
+                {
+                    thisTrans.localRotation = Quaternion.Slerp(thisTrans.rotation, newAngle, actuFocus * getDeltaTime);
+                    // thisTrans.localRotation = Quaternion.LookRotation(new Vector3(Xaim, 0, Yaim), thisTrans.up);
+                }
             }
+
         }
 
     }
@@ -396,7 +421,12 @@ public class PlayerController : MonoBehaviour
         float shootInput = inputPlayer.GetAxis("Shoot");
         if (!canShoot)
         {
-            if (shootInput > 0 && driveBox)
+            if ( driveBox )
+            {
+                thisWB.AttackCauld();
+                return;
+            }
+            else if (shootInput > 0 )
             {
                 useBoxWeapon();
             }
@@ -404,6 +434,7 @@ public class PlayerController : MonoBehaviour
             {
                 return;
             }
+
         }
 
         if (shootInput == 1 && checkShootScore)
@@ -478,20 +509,27 @@ public class PlayerController : MonoBehaviour
                 useBoxWeapon();
                 return;
             }
+        }
+        if (inputPlayer.GetButtonDown("Cauldron"))
+        {   
+            if ( canCauldron )
+            {
+                if (thisWeapon != null)
+                {
+                    Destroy(thisWeapon.gameObject);
+                }
+
+                Manager.GameCont.WeaponB.NewWeapon(thisPC);
+            }
+            else if ( driveBox )
+            {
+                thisWB.ActionSpe();
+            }
             else if (currInt != null)
             {
                 currInt.OnInteract(thisPC);
                 AddItem();
             }
-        }
-        if (canCauldron && inputPlayer.GetButtonDown("Cauldron"))
-        {
-            if (thisWeapon != null)
-            {
-                Destroy(thisWeapon.gameObject);
-            }
-
-            Manager.GameCont.WeaponB.NewWeapon(thisPC);
         }
     }
 
@@ -499,6 +537,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Manager.GameCont.WeaponB.CanControl)
         {
+            thisWB.ThisGauge.gameObject.SetActive(true);
             Manager.Ui.CauldronButtons(true);
             GetCamFoll.UpdateTarget(thisTrans);
             WeaponPos.gameObject.SetActive(false);
@@ -515,6 +554,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (driveBox)
         {
+            thisWB.ThisGauge.gameObject.SetActive(false);
             Manager.Ui.checkDrive = false;
             Manager.Ui.CauldronButtons(false);
             AmmoUI.GetComponent<CanvasGroup>().alpha = 1;
@@ -599,12 +639,6 @@ public class PlayerController : MonoBehaviour
         ItemLost getItem;
         Vector3 getDirect = Vector3.Normalize(thisTrans.position - pointColl);
         getDirect = new Vector3(getDirect.x, thisTrans.localPosition.y, getDirect.z);
-        GameObject newObj = (GameObject)Instantiate(ItemLostObj, thisTrans.position, thisTrans.rotation);
-        GameObject newObjUi = (GameObject)Instantiate(Manager.Ui.PotionGet, Manager.Ui.GetInGame);
-        PotionFollowP thisPFP = newObjUi.GetComponent<PotionFollowP>();
-        newObj.GetComponent<ItemObjLost>().ThisObj = newObjUi;
-        thisPFP.ThisPlayer = newObj.transform;
-        thisPFP.getCam = getCam;
 
         int a;
         float getDist = DistProjDead;
@@ -651,35 +685,46 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(getList[a]);	
         }*/
-        int getNbr = (int)(getList.Length - (getList.Length * PourcLootLost) * 0.01f);
-        LostItem += getList.Length;
-        thisPFP.Nbr = getNbr;
-        thisPFP.GetComponent<CanvasGroup>().DOFade(1,0.1f);
 
-        for (a = getList.Length - 1; a > getNbr - 1; a--)
+        if ( getList.Length > 0 )
         {
-            getItem = getList[a].transform.GetComponent<ItemLost>();
-            getItem.gameObject.SetActive(true);
-            getItem.transform.localScale = Vector3.one;
-            getItem.transform.localPosition = Vector3.zero;
-            if (!getItem)
+            GameObject newObj = (GameObject)Instantiate(ItemLostObj, thisTrans.position, thisTrans.rotation);
+            GameObject newObjUi = (GameObject)Instantiate(Manager.Ui.PotionGet, Manager.Ui.GetInGame);
+            PotionFollowP thisPFP = newObjUi.GetComponent<PotionFollowP>();
+            newObj.GetComponent<ItemObjLost>().ThisObj = newObjUi;
+            thisPFP.ThisPlayer = newObj.transform;
+            thisPFP.getCam = getCam;
+
+            int getNbr = (int)(getList.Length - (getList.Length * PourcLootLost) * 0.01f);
+            LostItem += getList.Length;
+            thisPFP.Nbr = getNbr;
+            thisPFP.GetComponent<CanvasGroup>().DOFade(1,0.1f);
+
+            for (a = getList.Length - 1; a > getNbr - 1; a--)
             {
-                getItem = getList[a].AddComponent<ItemLost>();
+                getItem = getList[a].transform.GetComponent<ItemLost>();
+                getItem.gameObject.SetActive(true);
+                getItem.transform.localScale = Vector3.one;
+                getItem.transform.localPosition = Vector3.zero;
+                if (!getItem)
+                {
+                    getItem = getList[a].AddComponent<ItemLost>();
+                }
+
+                //getItem.EnableColl(true);
+                getItem.transform.SetParent(newObj.transform);
+                AllItem.RemoveAt(a);
             }
 
-            //getItem.EnableColl(true);
-            getItem.transform.SetParent(newObj.transform);
-            AllItem.RemoveAt(a);
-        }
+            getList = AllItem.ToArray();
+            for (a = 0; a < getList.Length; a++)
+            {
+                Destroy(getList[a]);
+            }
 
-        getList = AllItem.ToArray();
-        for (a = 0; a < getList.Length; a++)
-        {
-            Destroy(getList[a]);
+            AllItem.Clear();
+            Destroy(newObj, 60);
         }
-
-        AllItem.Clear();
-        Destroy(newObj, 60);
     }
 
     void OnTriggerEnter(Collider thisColl)

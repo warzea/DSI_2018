@@ -7,11 +7,23 @@ using DG.Tweening;
 public class WeaponBox : MonoBehaviour 
 {
 	#region Variables
+	public Slider ThisGauge;
+	public GameObject AttackZone;
+	public float DelayAttack = 1;
+	public float DelayStay = 1;
+	public int SpeMultRessources = 2;
+	public int StayMult = 5;
 	public float InvincibleTime = 1;
 	Transform GetTrans;
 	public int pourcLoot = 10;
+	public int MinLost = 10;
+	public int ItemOneGauge = 100;
 	public GameObject[] AllWeapon;
 	public float DelayNewWeapon = 1;
+	[Tooltip("Time to full fill")]
+	public float TimeFullFill = 6;
+	[HideInInspector]
+	public float CurrTime = 0;
 
 	[HideInInspector]
 	public int NbrItem = 0;
@@ -24,6 +36,7 @@ public class WeaponBox : MonoBehaviour
 	Transform getChild;
 	int nbrTotalSlide = 1;
 	bool invc = false;
+	bool checkAttack = false;
 	#endregion
 	
 	#region Mono
@@ -38,10 +51,46 @@ public class WeaponBox : MonoBehaviour
 			updateWeapon.Add ( new PlayerWeapon () );
 			updateWeapon[a].IDPlayer = a;
 		}
+
+		if ( DelayStay < DelayAttack )
+		{
+			DelayStay = DelayAttack;
+		}
 	}
 	#endregion
 	
 	#region Public Methods
+	public void AttackCauld ( )
+	{
+		if ( !checkAttack )
+		{
+			checkAttack = true;
+			AttackZone.SetActive(true);
+
+			DOVirtual.DelayedCall(DelayAttack, ( ) => 
+			{
+				checkAttack = false;
+			});
+
+			DOVirtual.DelayedCall(DelayStay, ( ) => 
+			{
+				AttackZone.SetActive(false);
+			});
+		}
+	}
+
+	public void ActionSpe ( )
+	{
+		if ( CurrTime >= TimeFullFill )
+		{
+			CurrTime = 0;
+
+			var newMult = new ChestEvent ( );
+			newMult.Mult = SpeMultRessources;
+			newMult.TimeMult = StayMult;
+			newMult.Raise ( );
+		}
+	}
 
     public void GetWeapon (PlayerController thisPlayer, GameObject newObj = null)
     {
@@ -143,7 +192,7 @@ public class WeaponBox : MonoBehaviour
 
         NbrItem += lenghtItem;
 
-		int currNbr = NbrItem - (nbrTotalSlide - 1) * 100;
+		int currNbr = NbrItem - (nbrTotalSlide - 1) * ItemOneGauge;
 		Image[] getFeedBack = Manager.Ui.GaugeFeedback;
 		float getWait = 0;
 		bool checkCurr = false;
@@ -171,7 +220,7 @@ public class WeaponBox : MonoBehaviour
 
 		Manager.Ui.GetScores.UpdateValue( NbrItem, ScoreType.BoxWeapon, false );
 		int getCal = lastNbr;
-		while ( currNbr >= lastNbr * 20 && lastNbr * 20 <= 100 )
+		while ( currNbr >= lastNbr * (ItemOneGauge * 0.2)  && lastNbr * (ItemOneGauge * 0.2) <= ItemOneGauge )
 		{
 			int thisNbr = lastNbr;
 			DOVirtual.DelayedCall (0.1f * (lastNbr - getCal + 0.5f), () => 
@@ -181,13 +230,13 @@ public class WeaponBox : MonoBehaviour
 			lastNbr++;
 		}
 	
-		while ( currNbr > 100 )
+		while ( currNbr > ItemOneGauge )
 		{
 			lastNbr = 1;
 			checkCurr = true;
 			nbrTotalSlide ++;
 			Manager.Ui.MultiplierNew( nbrTotalSlide );
-			currNbr -=100;
+			currNbr -=ItemOneGauge;
 		}	
 		
 		if ( checkCurr )
@@ -198,7 +247,7 @@ public class WeaponBox : MonoBehaviour
 				getTween = Manager.Ui.GetGauge.DOFillAmount ( 0, 0.5f ).OnComplete ( () =>
 				{
 					lastNbr = 1;
-					while ( currNbr >= lastNbr * 20 )
+					while ( currNbr >= lastNbr * (ItemOneGauge * 0.2) )
 					{
 						int thisNbr = lastNbr;
 						getTween = DOVirtual.DelayedCall (0.1f * lastNbr, () => 
@@ -345,12 +394,25 @@ public class WeaponBox : MonoBehaviour
 		{
 			invc = false;
 		});
+		
+		int calLost = (int)((NbrItem * pourcLoot) * 0.01f);
 
-		NbrItem -= (int)((NbrItem * pourcLoot) * 0.01f);
+		if ( calLost < MinLost )
+		{
+			calLost = MinLost;
 
+			if ( calLost > NbrItem )
+			{
+				calLost = NbrItem;
+			}
+		}
+
+		NbrItem -= calLost;
+		
+		
 		//Manager.Ui.ScoreText.text = NbrItem.ToString();
 		
-		int getMult = (int)NbrItem / 100 + 1;
+		int getMult = (int)NbrItem / ItemOneGauge + 1;
 		if ( getMult > nbrTotalSlide )
 		{
 			Manager.Ui.MultiplierNew(getMult);
