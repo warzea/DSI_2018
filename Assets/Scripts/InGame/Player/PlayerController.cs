@@ -159,22 +159,18 @@ public class PlayerController : MonoBehaviour
 		thisTrans = transform;
 		thisRig = GetComponent<Rigidbody> ();
 
-<<<<<<< Temporary merge branch 1
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            Manager.GameCont.WeaponB.GetWeapon(thisPC);
-        }
-
-        if ( !checkUpdate )
-=======
-        if (!checkUpdate)
->>>>>>> Temporary merge branch 2
-        {
-            return;
-        }
+		AmmoUI.gameObject.SetActive (true);
+		UiAmmo = AmmoUI.Find ("Ammo Inside").GetComponent<Image> ();
+		inputPlayer = ReInput.players.GetPlayer (IdPlayer);
+		getBoxWeapon = Manager.GameCont.WeaponB.transform;
+		getCam = Manager.GameCont.MainCam;
+		GetCamFoll = Manager.GameCont.GetCameraFollow;
+		thisWB = getBoxWeapon.GetComponent<WeaponBox> ();
+	}
 
 	void Update ()
 	{
+		
 		thisRig.velocity = Vector3.zero;
 
 		if (!checkUpdate) {
@@ -699,12 +695,3 @@ public class PlayerController : MonoBehaviour
 
 
 
-
-		AmmoUI.gameObject.SetActive (true);
-		UiAmmo = AmmoUI.Find ("Ammo Inside").GetComponent<Image> ();
-		inputPlayer = ReInput.players.GetPlayer (IdPlayer);
-		getBoxWeapon = Manager.GameCont.WeaponB.transform;
-		getCam = Manager.GameCont.MainCam;
-		GetCamFoll = Manager.GameCont.GetCameraFollow;
-		thisWB = getBoxWeapon.GetComponent<WeaponBox> ();
-	}
