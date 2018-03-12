@@ -88,7 +88,6 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public int LostItem = 0;
     // -----
-    [HideInInspector]
     public Transform AmmoUI;
     public float UiAmmoX;
     public float UiAmmoY;
