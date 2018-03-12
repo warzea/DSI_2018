@@ -21,7 +21,7 @@ public class WeaponBox : MonoBehaviour
 
 	List<PlayerWeapon> updateWeapon; 
 	List<Tween> getAllTween;
-
+	Transform getChild;
 	int nbrTotalSlide = 1;
 	bool invc = false;
 	#endregion
@@ -32,7 +32,7 @@ public class WeaponBox : MonoBehaviour
 		getAllTween = new List<Tween>();
 		updateWeapon = new List<PlayerWeapon>();
 		GetTrans = transform;
-
+		getChild = GetTrans.Find("Inside");
 		for ( int a = 0; a < 4; a ++)
 		{
 			updateWeapon.Add ( new PlayerWeapon () );
@@ -44,38 +44,35 @@ public class WeaponBox : MonoBehaviour
 	#region Public Methods
 	public void NewWeapon ( PlayerController thisPlayer, GameObject newObj = null )
 	{
+
         //TRANSFO CANON
         //transform.DOScaleX(1, .15f).SetEase(Ease.InSine);
 
         //transform.DOScaleY(1, .15f).SetEase(Ease.InSine);
 
         //transform.DOScaleZ(2.5f, .15f).SetEase(Ease.InSine).OnComplete(()=> {
-        transform.DOShakeScale(.15f, .8f, 25, 0).OnComplete(() => { 
+		getChild.DOKill(true);
+        getChild.DOShakeScale(.15f, .8f, 25, 0).OnComplete(() => { 
 
-            transform.DOScaleZ(1.75f, .1f).SetEase(Ease.Linear).OnComplete(() => {
+            getChild.DOScaleZ(1.75f, .1f).SetEase(Ease.Linear).OnComplete(() => {
 
-                transform.DOScaleZ(4.5f, .1f).SetEase(Ease.Linear);
+                getChild.DOScaleZ(3.5f, .1f).SetEase(Ease.Linear);
 
                 DOVirtual.DelayedCall(.1f, () => {
 
-                    transform.DOScaleZ(1.38f, .1f).SetEase(Ease.OutSine).OnComplete(()=> {
+                    getChild.DOScaleZ(1.3f, .1f).SetEase(Ease.OutSine).OnComplete(()=> {
 
-                        transform.DOShakeScale(.2f, .3f, 18, 0);
-
+                        getChild.DOShakeScale(.2f, .3f, 18, 0);
                     });
-
                 });
             });
         });
-
-
-
 
         Manager.Ui.WeaponChange(thisPlayer.IdPlayer);
 
 		if ( newObj == null )
 		{
-			newObj = (GameObject) Instantiate ( AllWeapon[Random.Range(0, AllWeapon.Length)], thisPlayer.WeaponPos );
+			newObj = (GameObject) Instantiate ( AllWeapon[Random.Range(0, AllWeapon.Length)], GetTrans );
 		}
 		else
 		{
@@ -83,8 +80,7 @@ public class WeaponBox : MonoBehaviour
 			getWeap.Add ( newObj );
 			AllWeapon = getWeap.ToArray();
 		}
-
-		thisPlayer.WeapText.text = newObj.name;
+		//thisPlayer.WeapText.text = newObj.name;
 
 		Transform objTrans = newObj.transform;
 		objTrans.position = GetTrans.position;
@@ -106,18 +102,26 @@ public class WeaponBox : MonoBehaviour
             thisPlayer.UiAmmo.fillAmount = 1;
             Manager.Ui.WeaponNew(thisPlayer.IdPlayer);
         });
-		objTrans.DOScale ( Vector3.one, DelayNewWeapon );
-		DOVirtual.DelayedCall ( 0.1f, ( ) => 
-		{
-			objTrans.DOLocalRotateQuaternion ( Quaternion.identity, DelayNewWeapon );
-			objTrans.DOLocalMove(Vector3.zero, DelayNewWeapon).OnComplete ( () =>
-			{
-				thisPlayer.UpdateWeapon ( newObj.GetComponent<WeaponAbstract>() );
 
-				updateWeapon[currId].CurrObj = null;
+		DOVirtual.DelayedCall ( DelayNewWeapon * 0.25f, () =>
+		{
+			objTrans.DOScale ( Vector3.one, DelayNewWeapon * 0.5f );
+			objTrans.DOLocalRotateQuaternion ( Quaternion.identity, DelayNewWeapon * 0.65f );
+			objTrans.DOLocalMove ( Vector3.zero + Vector3.up * 5, DelayNewWeapon * 0.65f).OnComplete ( () =>
+			{
+				objTrans.SetParent(thisPlayer.WeaponPos);
+				objTrans.DOLocalRotateQuaternion ( Quaternion.identity, DelayNewWeapon * 0.1f );
+				objTrans.DOLocalMove ( Vector3.zero, DelayNewWeapon * 0.1f ).OnComplete ( () =>
+				{
+					thisPlayer.UpdateWeapon ( newObj.GetComponent<WeaponAbstract>() );
+
+					updateWeapon[currId].CurrObj = null;
+				});
 			});
-		});
+		} );
 	}
+
+	int lastNbr = 1;
 
 	public void AddItem ( int lenghtItem, bool inv = false )
 	{
@@ -150,20 +154,47 @@ public class WeaponBox : MonoBehaviour
 		//Manager.Ui.ScoreText.text = NbrItem.ToString();
 
 		Manager.Ui.GetScores.UpdateValue( NbrItem, ScoreType.BoxWeapon, false );
-
+		int getCal = lastNbr;
+		while ( currNbr >= lastNbr * 20 && lastNbr * 20 <= 100 )
+		{
+			int thisNbr = lastNbr;
+			DOVirtual.DelayedCall (0.1f * (lastNbr - getCal + 0.5f), () => 
+			{
+				Manager.Ui.GaugeLevelGet(thisNbr - 1);
+			});
+			lastNbr++;
+		}
+	
 		while ( currNbr > 100 )
 		{
+			lastNbr = 1;
 			checkCurr = true;
 			nbrTotalSlide ++;
+			Manager.Ui.MultiplierNew( nbrTotalSlide );
 			currNbr -=100;
 		}	
 		
 		if ( checkCurr )
 		{
-			Tween getTween = DOVirtual.DelayedCall(0.5f, () =>
+			Tween getTween;
+			getTween = DOVirtual.DelayedCall(0.5f, () =>
 			{
-				Manager.Ui.GetGauge.DOKill(true);
-				Manager.Ui.GetGauge.DOFillAmount ( currNbr * 0.01f, 0.5f );
+				getTween = Manager.Ui.GetGauge.DOFillAmount ( 0, 0.5f ).OnComplete ( () =>
+				{
+					lastNbr = 1;
+					while ( currNbr >= lastNbr * 20 )
+					{
+						int thisNbr = lastNbr;
+						getTween = DOVirtual.DelayedCall (0.1f * lastNbr, () => 
+						{
+							Manager.Ui.GaugeLevelGet(thisNbr - 1);
+						});
+						lastNbr++;
+					}
+			
+					getTween = Manager.Ui.GetGauge.DOFillAmount ( currNbr * 0.01f, 0.5f );
+
+				});
 			});
 			getAllTween.Add ( getTween );
 			

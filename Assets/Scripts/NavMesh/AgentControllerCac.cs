@@ -38,9 +38,19 @@ public class AgentControllerCac : MonoBehaviour
 
     void Update()
     {
-        if (myEtatAgent == AgentEtat.aliveAgent)
+        if (myEtatAgent == AgentEtat.aliveAgent && focusPlayer != null)
         {
-            ShootCac();
+            NavMeshPath path = new NavMeshPath();
+
+            navAgent.CalculatePath(focusPlayer.transform.position, path);
+            if (path.status == NavMeshPathStatus.PathPartial)
+            {
+                DeadFonction();
+            }
+            else
+            {
+                ShootCac();
+            }
         }
     }
 
@@ -67,6 +77,7 @@ public class AgentControllerCac : MonoBehaviour
                     }
                     else if (focusPlayer.tag == "Player")
                     {
+						Debug.Log ("Shhooottt");
                         focusPlayer.GetComponent<PlayerController>().GetDamage(transform);
                     }
                 }
@@ -111,6 +122,17 @@ public class AgentControllerCac : MonoBehaviour
         lifeAgent = 1;
     }
 
+
+    public void DeadFonction()
+    {
+        myEtatAgent = AgentEtat.deadAgent;
+        navAgent.isStopped = true;
+        transform.GetComponent<Renderer>().material = deadMaterial;
+        StartCoroutine(WaitRespawn());
+    }
+
+
+
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "BulletPlayer")
@@ -118,10 +140,7 @@ public class AgentControllerCac : MonoBehaviour
             lifeAgent = lifeAgent - 1;
             if (lifeAgent <= 0 && AgentEtat.aliveAgent == myEtatAgent)
             {
-                myEtatAgent = AgentEtat.deadAgent;
-                navAgent.isStopped = true;
-                transform.GetComponent<Renderer>().material = deadMaterial;
-                StartCoroutine(WaitRespawn());
+                DeadFonction();
             }
         }
     }

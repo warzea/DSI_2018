@@ -24,7 +24,7 @@ TagManager:
   - BulletPlayer
   - ZoneAggro
   - BulletAgent
-  - 
+  - IgnoreBulletAgent
   - 
   - 
   - 
