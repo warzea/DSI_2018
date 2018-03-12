@@ -53,6 +53,19 @@ public class GameController : ManagerParent
         Manager.Ui.OpenThisMenu(MenuType.SelectPlayer);
     }
 
+    public void EtatAgent ( bool thisEtat )
+    {
+        var newEtat = new AgentEvent ( );
+        newEtat.AgentChecking = thisEtat;
+        newEtat.Raise ( );
+       /* System.Action <AgentEvent> thisAct = new delegate( AgentEvent thisEvnt )
+        {
+            thisEvnt.AgentChecking = thisEtat;
+        };
+
+        Manager.Event.Raise(thisAct);*/
+    }
+
 
     #endregion
 
