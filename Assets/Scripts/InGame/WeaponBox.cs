@@ -17,6 +17,7 @@ public class WeaponBox : MonoBehaviour
 	Transform GetTrans;
 	public int pourcLoot = 10;
 	public int MinLost = 10;
+	public int ItemOneGauge = 100;
 	public GameObject[] AllWeapon;
 	public float DelayNewWeapon = 1;
 	[Tooltip("Time to full fill")]
@@ -191,7 +192,7 @@ public class WeaponBox : MonoBehaviour
 
         NbrItem += lenghtItem;
 
-		int currNbr = NbrItem - (nbrTotalSlide - 1) * 100;
+		int currNbr = NbrItem - (nbrTotalSlide - 1) * ItemOneGauge;
 		Image[] getFeedBack = Manager.Ui.GaugeFeedback;
 		float getWait = 0;
 		bool checkCurr = false;
@@ -219,7 +220,7 @@ public class WeaponBox : MonoBehaviour
 
 		Manager.Ui.GetScores.UpdateValue( NbrItem, ScoreType.BoxWeapon, false );
 		int getCal = lastNbr;
-		while ( currNbr >= lastNbr * 20 && lastNbr * 20 <= 100 )
+		while ( currNbr >= lastNbr * (ItemOneGauge * 0.2)  && lastNbr * (ItemOneGauge * 0.2) <= ItemOneGauge )
 		{
 			int thisNbr = lastNbr;
 			DOVirtual.DelayedCall (0.1f * (lastNbr - getCal + 0.5f), () => 
@@ -229,13 +230,13 @@ public class WeaponBox : MonoBehaviour
 			lastNbr++;
 		}
 	
-		while ( currNbr > 100 )
+		while ( currNbr > ItemOneGauge )
 		{
 			lastNbr = 1;
 			checkCurr = true;
 			nbrTotalSlide ++;
 			Manager.Ui.MultiplierNew( nbrTotalSlide );
-			currNbr -=100;
+			currNbr -=ItemOneGauge;
 		}	
 		
 		if ( checkCurr )
@@ -246,7 +247,7 @@ public class WeaponBox : MonoBehaviour
 				getTween = Manager.Ui.GetGauge.DOFillAmount ( 0, 0.5f ).OnComplete ( () =>
 				{
 					lastNbr = 1;
-					while ( currNbr >= lastNbr * 20 )
+					while ( currNbr >= lastNbr * (ItemOneGauge * 0.2) )
 					{
 						int thisNbr = lastNbr;
 						getTween = DOVirtual.DelayedCall (0.1f * lastNbr, () => 
@@ -411,7 +412,7 @@ public class WeaponBox : MonoBehaviour
 		
 		//Manager.Ui.ScoreText.text = NbrItem.ToString();
 		
-		int getMult = (int)NbrItem / 100 + 1;
+		int getMult = (int)NbrItem / ItemOneGauge + 1;
 		if ( getMult > nbrTotalSlide )
 		{
 			Manager.Ui.MultiplierNew(getMult);
