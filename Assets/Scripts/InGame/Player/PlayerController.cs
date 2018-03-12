@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     public int LifePlayer = 3;
     public int TimeToRegen = 3;
     public float MoveSpeed;
-
+    public GameObject ItemLostObj;
     public float radialDeadZone = 0.3f;
     public float Aim_Sensitivity = 2;
 
@@ -98,6 +98,7 @@ public class PlayerController : MonoBehaviour
     public Transform AmmoUI;
     public float UiAmmoX;
     public float UiAmmoY;
+    
     [HideInInspector]
     public Image UiAmmo;
     [HideInInspector]
@@ -113,7 +114,7 @@ public class PlayerController : MonoBehaviour
     CameraFollow GetCamFoll;
     Player inputPlayer;
     Camera getCam;
-
+    WeaponBox thisWB;
 
     int lifePlayer;
 
@@ -163,6 +164,7 @@ public class PlayerController : MonoBehaviour
         getBoxWeapon = Manager.GameCont.WeaponB.transform;
         getCam = Manager.GameCont.MainCam;
         GetCamFoll = Manager.GameCont.GetCameraFollow;
+        thisWB = getBoxWeapon.GetComponent<WeaponBox>();
     }
 
     void Update()
@@ -359,6 +361,8 @@ public class PlayerController : MonoBehaviour
         }
         else if (driveBox)
         {
+            thisWB.CurrTime += getDeltaTime;
+            thisWB.ThisGauge.value = thisWB.CurrTime;
             TimeWBox += getDeltaTime;
             getSpeed *= SpeedReduceOnBox;
         }
@@ -417,7 +421,12 @@ public class PlayerController : MonoBehaviour
         float shootInput = inputPlayer.GetAxis("Shoot");
         if (!canShoot)
         {
-            if (shootInput > 0 && driveBox)
+            if ( driveBox )
+            {
+                thisWB.AttackCauld();
+                return;
+            }
+            else if (shootInput > 0 )
             {
                 useBoxWeapon();
             }
@@ -425,6 +434,7 @@ public class PlayerController : MonoBehaviour
             {
                 return;
             }
+
         }
 
         if (shootInput == 1 && checkShootScore)
@@ -505,14 +515,21 @@ public class PlayerController : MonoBehaviour
                 AddItem();
             }
         }
-        if (canCauldron && inputPlayer.GetButtonDown("Cauldron"))
-        {
-            if (thisWeapon != null)
+        if (inputPlayer.GetButtonDown("Cauldron"))
+        {   
+            if ( canCauldron )
             {
-                Destroy(thisWeapon.gameObject);
-            }
+                if (thisWeapon != null)
+                {
+                    Destroy(thisWeapon.gameObject);
+                }
 
-            Manager.GameCont.WeaponB.NewWeapon(thisPC);
+                Manager.GameCont.WeaponB.NewWeapon(thisPC);
+            }
+            else if ( driveBox )
+            {
+                thisWB.ActionSpe();
+            }
         }
     }
 
@@ -520,6 +537,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Manager.GameCont.WeaponB.CanControl)
         {
+            thisWB.ThisGauge.gameObject.SetActive(true);
             Manager.Ui.CauldronButtons(true);
             GetCamFoll.UpdateTarget(thisTrans);
             WeaponPos.gameObject.SetActive(false);
@@ -536,6 +554,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (driveBox)
         {
+            thisWB.ThisGauge.gameObject.SetActive(false);
             Manager.Ui.checkDrive = false;
             Manager.Ui.CauldronButtons(false);
             AmmoUI.GetComponent<CanvasGroup>().alpha = 1;
@@ -620,7 +639,12 @@ public class PlayerController : MonoBehaviour
         ItemLost getItem;
         Vector3 getDirect = Vector3.Normalize(thisTrans.position - pointColl);
         getDirect = new Vector3(getDirect.x, thisTrans.localPosition.y, getDirect.z);
-        GameObject newObj = (GameObject)Instantiate(new GameObject(), thisTrans.position, thisTrans.rotation);
+        GameObject newObj = (GameObject)Instantiate(ItemLostObj, thisTrans.position, thisTrans.rotation);
+        GameObject newObjUi = (GameObject)Instantiate(Manager.Ui.PotionGet, Manager.Ui.GetInGame);
+        PotionFollowP thisPFP = newObjUi.GetComponent<PotionFollowP>();
+        newObj.GetComponent<ItemObjLost>().ThisObj = newObjUi;
+        thisPFP.ThisPlayer = newObj.transform;
+        thisPFP.getCam = getCam;
 
         int a;
         float getDist = DistProjDead;
@@ -631,7 +655,6 @@ public class PlayerController : MonoBehaviour
 
         getDist -= checkBorderDead(thisTrans.position + getDirect * DistProjDead);
         allHit = Physics.RaycastAll(thisTrans.position, getDirect, getDist);
-
 
         foreach (RaycastHit thisRay in allHit)
         {
@@ -649,17 +672,15 @@ public class PlayerController : MonoBehaviour
 
         thisTrans.DOKill();
 
-        //thisTrans.SetParent(getBoxWeapon);
-
         thisTrans.DOLocalMove(thisTrans.localPosition + getDirect * getDist, getTime);
 
         DOVirtual.DelayedCall(getTime + TimeDead + TimeProjDead - getTime, () =>
-       {
-           GetComponent<Collider>().isTrigger = false;
-           WeaponPos.gameObject.SetActive(true);
-           lifePlayer = LifePlayer;
-           dead = false;
-           thisWeapon.canShoot = true;
+        {
+            GetComponent<Collider>().isTrigger = false;
+            WeaponPos.gameObject.SetActive(true);
+            lifePlayer = LifePlayer;
+            dead = false;
+            thisWeapon.canShoot = true;
 
            DOVirtual.DelayedCall(TimeInvincible, () =>
            {
@@ -672,17 +693,21 @@ public class PlayerController : MonoBehaviour
         }*/
         int getNbr = (int)(getList.Length - (getList.Length * PourcLootLost) * 0.01f);
         LostItem += getList.Length;
+        thisPFP.Nbr = getNbr;
+        thisPFP.GetComponent<CanvasGroup>().DOFade(1,0.1f);
 
         for (a = getList.Length - 1; a > getNbr - 1; a--)
         {
             getItem = getList[a].transform.GetComponent<ItemLost>();
-
+            getItem.gameObject.SetActive(true);
+            getItem.transform.localScale = Vector3.one;
+            getItem.transform.localPosition = Vector3.zero;
             if (!getItem)
             {
                 getItem = getList[a].AddComponent<ItemLost>();
             }
 
-            getItem.EnableColl(true);
+            //getItem.EnableColl(true);
             getItem.transform.SetParent(newObj.transform);
             AllItem.RemoveAt(a);
         }
@@ -695,28 +720,6 @@ public class PlayerController : MonoBehaviour
 
         AllItem.Clear();
         Destroy(newObj, 60);
-
-
-        //AllItem.Clear();
-
-        //thisTrans.DOKill ( );
-
-        /*	thisTrans.DOLocalMove(Vector3.zero, 1f);
-            thisTrans.DOScale (Vector3.zero, 1f).OnComplete ( () => 
-            {
-                DOVirtual.DelayedCall ( 3, ( ) => 
-                {
-                    thisTrans.SetParent ( null );
-                    thisTrans.DOLocalMove( thisTrans.localPosition + Vector3.right, 0.25f);
-                    thisTrans.DOScale ( Vector3.one, 0.25f).OnComplete ( () => 
-                    {
-                        WeaponPos.gameObject.SetActive(true);
-                        lifePlayer = LifePlayer;
-                        dead = false;
-                        thisWeapon.canShoot = true;
-                    });
-                });
-            });*/
     }
 
     void OnTriggerEnter(Collider thisColl)

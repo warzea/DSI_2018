@@ -7,11 +7,22 @@ using DG.Tweening;
 public class WeaponBox : MonoBehaviour 
 {
 	#region Variables
+	public Slider ThisGauge;
+	public GameObject AttackZone;
+	public float DelayAttack = 1;
+	public float DelayStay = 1;
+	public int SpeMultRessources = 2;
+	public int StayMult = 5;
 	public float InvincibleTime = 1;
 	Transform GetTrans;
 	public int pourcLoot = 10;
+	public int MinLost = 10;
 	public GameObject[] AllWeapon;
 	public float DelayNewWeapon = 1;
+	[Tooltip("Time to full fill")]
+	public float TimeFullFill = 6;
+	[HideInInspector]
+	public float CurrTime = 0;
 
 	[HideInInspector]
 	public int NbrItem = 0;
@@ -24,6 +35,7 @@ public class WeaponBox : MonoBehaviour
 	Transform getChild;
 	int nbrTotalSlide = 1;
 	bool invc = false;
+	bool checkAttack = false;
 	#endregion
 	
 	#region Mono
@@ -38,19 +50,67 @@ public class WeaponBox : MonoBehaviour
 			updateWeapon.Add ( new PlayerWeapon () );
 			updateWeapon[a].IDPlayer = a;
 		}
+
+		if ( DelayStay < DelayAttack )
+		{
+			DelayStay = DelayAttack;
+		}
 	}
 	#endregion
 	
 	#region Public Methods
-	public void NewWeapon ( PlayerController thisPlayer, GameObject newObj = null )
+	public void AttackCauld ( )
+	{
+		if ( !checkAttack )
+		{
+			checkAttack = true;
+			AttackZone.SetActive(true);
+
+			DOVirtual.DelayedCall(DelayAttack, ( ) => 
+			{
+				checkAttack = false;
+			});
+
+			DOVirtual.DelayedCall(DelayStay, ( ) => 
+			{
+				AttackZone.SetActive(false);
+			});
+		}
+	}
+
+	public void ActionSpe ( )
+	{
+		if ( CurrTime >= TimeFullFill )
+		{
+			CurrTime = 0;
+
+			var newMult = new ChestEvent ( );
+			newMult.Mult = SpeMultRessources;
+			newMult.TimeMult = StayMult;
+			newMult.Raise ( );
+		}
+	}
+
+    public void GetWeapon (PlayerController thisPlayer, GameObject newObj = null)
+    {
+        getChild.DOKill(true);
+        getChild.DORotate(new Vector3(0,0,1080), 2, RotateMode.LocalAxisAdd).SetEase(Ease.InSine);
+        getChild.DOLocalMoveY(3, 2).SetEase(Ease.InSine).OnComplete(()=> {
+            getChild.DOShakeScale(.5f, .3f, 18, 0);
+            getChild.DOLocalMoveY(0.5f, .6f).SetEase(Ease.InElastic).OnComplete(()=> {
+
+                getChild.DOShakeScale(1f, .4f, 18, 0);
+            });
+        });
+
+    }
+
+
+    public void NewWeapon ( PlayerController thisPlayer, GameObject newObj = null )
 	{
 
         //TRANSFO CANON
-        //transform.DOScaleX(1, .15f).SetEase(Ease.InSine);
 
-        //transform.DOScaleY(1, .15f).SetEase(Ease.InSine);
-
-        //transform.DOScaleZ(2.5f, .15f).SetEase(Ease.InSine).OnComplete(()=> {
 		getChild.DOKill(true);
         getChild.DOShakeScale(.15f, .8f, 25, 0).OnComplete(() => { 
 
@@ -125,7 +185,11 @@ public class WeaponBox : MonoBehaviour
 
 	public void AddItem ( int lenghtItem, bool inv = false )
 	{
-		NbrItem += lenghtItem;
+
+        if(inv)
+            Manager.Ui.PopPotions(PotionType.Less);
+
+        NbrItem += lenghtItem;
 
 		int currNbr = NbrItem - (nbrTotalSlide - 1) * 100;
 		Image[] getFeedBack = Manager.Ui.GaugeFeedback;
@@ -329,9 +393,22 @@ public class WeaponBox : MonoBehaviour
 		{
 			invc = false;
 		});
+		
+		int calLost = (int)((NbrItem * pourcLoot) * 0.01f);
 
-		NbrItem -= (int)((NbrItem * pourcLoot) * 0.01f);
+		if ( calLost < MinLost )
+		{
+			calLost = MinLost;
 
+			if ( calLost > NbrItem )
+			{
+				calLost = NbrItem;
+			}
+		}
+
+		NbrItem -= calLost;
+		
+		
 		//Manager.Ui.ScoreText.text = NbrItem.ToString();
 		
 		int getMult = (int)NbrItem / 100 + 1;
@@ -353,6 +430,7 @@ public class WeaponBox : MonoBehaviour
 	#region Private Methods
 	void OnTriggerEnter ( Collider thisColl )
 	{
+
 		string tag = thisColl.tag;
 		if ( tag == Constants._EnemyBullet )
 		{

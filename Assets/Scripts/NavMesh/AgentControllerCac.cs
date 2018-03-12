@@ -38,6 +38,7 @@ public class AgentControllerCac : MonoBehaviour
           checkUpdate = thisEvnt.AgentChecking;
           navAgent.isStopped = checkUpdate;
       };
+        cam = Manager.GameCont.MainCam;
 
         Manager.Event.Register(thisAct);
     }
@@ -45,7 +46,6 @@ public class AgentControllerCac : MonoBehaviour
     {
         navAgent = transform.GetComponent<NavMeshAgent>();
         agentsM = GameObject.Find("ManagerNavMesh").GetComponent<AgentsManagerCac>();
-        cam = Manager.GameCont.MainCam;
     }
 
     void Update()
