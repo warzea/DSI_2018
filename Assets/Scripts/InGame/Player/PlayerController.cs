@@ -354,7 +354,6 @@ public class PlayerController : MonoBehaviour
 			Quaternion newAngle = Quaternion.LookRotation (new Vector3 (Xmove, 0, Ymove), thisTrans.up);
 
 			float difAngle = Quaternion.Angle (thisTrans.rotation, newAngle);
-			Debug.Log(difAngle);
 			
 			if ( difAngle > 90 )
 			{
