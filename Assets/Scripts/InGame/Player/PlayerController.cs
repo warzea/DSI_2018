@@ -15,12 +15,12 @@ public class PlayerController : MonoBehaviour
     public float MoveSpeed;
     public GameObject ItemLostObj;
     public float radialDeadZone = 0.3f;
+    public float Aim_Sensitivity = 2;
+
     //public float DashDistance = 5;
     //public float DashTime = 1;
     public float DistToDropItem = 1;
-
     public int nbItemBeforeBigBag = 10;
-
     public Animator animPlayer;
     public Transform WeaponPos;
     public Transform BagPos;
@@ -42,6 +42,8 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Speed reduce pendant qu'on pousse la caisse")]
     public float SpeedReduceOnBox = 0.1f;
     public float SmoothRotateOnBox = 10;
+
+    public float SmoothRotatePlayer = 1;
 
     [HideInInspector]
     public List<GameObject> AllItem;
@@ -382,14 +384,23 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            if (driveBox)
+            Quaternion newAngle = Quaternion.LookRotation(new Vector3(Xaim, 0, Yaim), thisTrans.up);
+
+            float difAngle = Quaternion.Angle(thisTrans.rotation, newAngle);
+
+            if (difAngle > Aim_Sensitivity)
             {
-                thisTrans.localRotation = Quaternion.Slerp(thisTrans.rotation, Quaternion.LookRotation(new Vector3(Xaim, 0, Yaim), thisTrans.up), SmoothRotateOnBox * getDeltaTime);
+                if (driveBox)
+                {
+                    thisTrans.localRotation = Quaternion.Slerp(thisTrans.rotation, newAngle, SmoothRotateOnBox * getDeltaTime);
+                }
+                else
+                {
+                    thisTrans.localRotation = Quaternion.Slerp(thisTrans.rotation, newAngle, SmoothRotatePlayer * getDeltaTime);
+                    // thisTrans.localRotation = Quaternion.LookRotation(new Vector3(Xaim, 0, Yaim), thisTrans.up);
+                }
             }
-            else
-            {
-                thisTrans.localRotation = Quaternion.LookRotation(new Vector3(Xaim, 0, Yaim), thisTrans.up);
-            }
+
         }
 
     }
