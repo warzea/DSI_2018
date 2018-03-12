@@ -13,12 +13,44 @@ public class InteractAbstract : MonoBehaviour
 	public GameObject[] ItemDrop;
 	Transform thisTrans;
 	bool checkItem = true;
+	int valDrop;
+	Tween thisT;
 	#endregion
 	
 	#region Mono
 	void Awake () 
 	{
 		thisTrans = transform;
+		valDrop = ValueOnDrop;
+	}
+	void Start ( )
+	{
+		System.Action<ChestEvent> thisAct = delegate (ChestEvent thisEvnt)
+        {
+			Camera getCam = Manager.GameCont.MainCam;
+			Vector3 getCamPos = getCam.WorldToViewportPoint(thisTrans.position);
+
+            if (getCamPos.x > 1f || getCamPos.x < 0f || getCamPos.y > 1f || getCamPos.y < 0f)
+            {
+
+			}
+			else
+			{
+				if ( thisT != null)
+				{
+					thisT.Kill();
+				}
+				
+           		valDrop *= thisEvnt.Mult;
+				multEffect (true);
+				thisT = DOVirtual.DelayedCall(thisEvnt.TimeMult, () =>
+				{
+					multEffect (false);
+				});
+			}
+        };
+
+        Manager.Event.Register(thisAct);
 	}
 	#endregion
 	
@@ -38,7 +70,7 @@ public class InteractAbstract : MonoBehaviour
 				{
 					DOVirtual.DelayedCall ( Random.Range(0, 0.2f), ()=> 
 					{
-						for ( b = 0; b < ValueOnDrop; b ++ )
+						for ( b = 0; b < valDrop; b ++ )
 						{
 							GameObject newItem = (GameObject) Instantiate (ItemDrop[Random.Range(0, ItemDrop.Length - 1)], thisPlayer.BagPos);
 							Transform getTrans = newItem.transform;
@@ -74,6 +106,11 @@ public class InteractAbstract : MonoBehaviour
 	#endregion
 
 	#region Private Methods
+
+	void multEffect ( bool isEnable )
+	{
+
+	}
 	#endregion
 
 }

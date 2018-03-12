@@ -7,11 +7,22 @@ using DG.Tweening;
 public class WeaponBox : MonoBehaviour 
 {
 	#region Variables
+	public GameObject ThisGauge;
+	public GameObject AttackZone;
+	public float DelayAttack = 1;
+	public float DelayStay = 1;
+	public int SpeMultRessources = 2;
+	public int StayMult = 5;
 	public float InvincibleTime = 1;
 	Transform GetTrans;
 	public int pourcLoot = 10;
+	public int MinLost = 10;
 	public GameObject[] AllWeapon;
 	public float DelayNewWeapon = 1;
+	[Tooltip("Time to full fill")]
+	public float TimeFullFill = 6;
+	[HideInInspector]
+	public float CurrTime = 0;
 
 	[HideInInspector]
 	public int NbrItem = 0;
@@ -24,6 +35,7 @@ public class WeaponBox : MonoBehaviour
 	Transform getChild;
 	int nbrTotalSlide = 1;
 	bool invc = false;
+	bool checkAttack = false;
 	#endregion
 	
 	#region Mono
@@ -38,10 +50,46 @@ public class WeaponBox : MonoBehaviour
 			updateWeapon.Add ( new PlayerWeapon () );
 			updateWeapon[a].IDPlayer = a;
 		}
+
+		if ( DelayStay < DelayAttack )
+		{
+			DelayStay = DelayAttack;
+		}
 	}
 	#endregion
 	
 	#region Public Methods
+	public void AttackCauld ( )
+	{
+		if ( !checkAttack )
+		{
+			checkAttack = true;
+			ThisGauge.SetActive(true);
+
+			DOVirtual.DelayedCall(DelayAttack, ( ) => 
+			{
+				checkAttack = false;
+			});
+
+			DOVirtual.DelayedCall(DelayStay, ( ) => 
+			{
+				ThisGauge.SetActive(false);
+			});
+		}
+	}
+
+	public void ActionSpe ( )
+	{
+		if ( CurrTime >= TimeFullFill )
+		{
+			CurrTime = 0;
+
+			var newMult = new ChestEvent ( );
+			newMult.Mult = SpeMultRessources;
+			newMult.TimeMult = StayMult;
+			newMult.Raise ( );
+		}
+	}
 
     public void GetWeapon (PlayerController thisPlayer, GameObject newObj = null)
     {
@@ -345,9 +393,22 @@ public class WeaponBox : MonoBehaviour
 		{
 			invc = false;
 		});
+		
+		int calLost = (int)((NbrItem * pourcLoot) * 0.01f);
 
-		NbrItem -= (int)((NbrItem * pourcLoot) * 0.01f);
+		if ( calLost < MinLost )
+		{
+			calLost = MinLost;
 
+			if ( calLost > NbrItem )
+			{
+				calLost = NbrItem;
+			}
+		}
+
+		NbrItem -= calLost;
+		
+		
 		//Manager.Ui.ScoreText.text = NbrItem.ToString();
 		
 		int getMult = (int)NbrItem / 100 + 1;

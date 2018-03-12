@@ -111,6 +111,7 @@ public class PlayerController : MonoBehaviour
     CameraFollow GetCamFoll;
     Player inputPlayer;
     Camera getCam;
+    WeaponBox thisWB;
 
 
     int lifePlayer;
@@ -161,6 +162,7 @@ public class PlayerController : MonoBehaviour
         getBoxWeapon = Manager.GameCont.WeaponB.transform;
         getCam = Manager.GameCont.MainCam;
         GetCamFoll = Manager.GameCont.GetCameraFollow;
+        thisWB = getBoxWeapon.GetComponent<WeaponBox>();
     }
 
     void Update()
@@ -357,6 +359,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (driveBox)
         {
+            thisWB.CurrTime += getDeltaTime;
             TimeWBox += getDeltaTime;
             getSpeed *= SpeedReduceOnBox;
         }
@@ -396,7 +399,11 @@ public class PlayerController : MonoBehaviour
         float shootInput = inputPlayer.GetAxis("Shoot");
         if (!canShoot)
         {
-            if (shootInput > 0 && driveBox)
+            if ( driveBox )
+            {
+                
+            }
+            else if (shootInput > 0 )
             {
                 useBoxWeapon();
             }
@@ -404,6 +411,7 @@ public class PlayerController : MonoBehaviour
             {
                 return;
             }
+
         }
 
         if (shootInput == 1 && checkShootScore)
@@ -499,6 +507,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Manager.GameCont.WeaponB.CanControl)
         {
+            thisWB.ThisGauge.SetActive(true);
             Manager.Ui.CauldronButtons(true);
             GetCamFoll.UpdateTarget(thisTrans);
             WeaponPos.gameObject.SetActive(false);
@@ -515,6 +524,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (driveBox)
         {
+            thisWB.ThisGauge.SetActive(false);
             Manager.Ui.checkDrive = false;
             Manager.Ui.CauldronButtons(false);
             AmmoUI.GetComponent<CanvasGroup>().alpha = 1;
