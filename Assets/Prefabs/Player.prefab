@@ -1047,7 +1047,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IdPlayer: 0
-  LifePlayer: 10000
+  LifePlayer: 1
   TimeToRegen: 3
   MoveSpeed: 13
   DistToDropItem: 10
@@ -1087,8 +1087,8 @@ MonoBehaviour:
   currentEnemy: 0
   LostItem: 0
   AmmoUI: {fileID: 0}
-  UiAmmoX: 3
-  UiAmmoY: 2
+  UiAmmoX: 2
+  UiAmmoY: 4
   UiAmmo: {fileID: 0}
   currInt: {fileID: 0}
   autoShoot: 1

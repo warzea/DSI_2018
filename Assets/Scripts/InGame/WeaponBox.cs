@@ -125,7 +125,11 @@ public class WeaponBox : MonoBehaviour
 
 	public void AddItem ( int lenghtItem, bool inv = false )
 	{
-		NbrItem += lenghtItem;
+
+        if(inv)
+            Manager.Ui.PopPotions(PotionType.Less);
+
+        NbrItem += lenghtItem;
 
 		int currNbr = NbrItem - (nbrTotalSlide - 1) * 100;
 		Image[] getFeedBack = Manager.Ui.GaugeFeedback;
@@ -353,6 +357,7 @@ public class WeaponBox : MonoBehaviour
 	#region Private Methods
 	void OnTriggerEnter ( Collider thisColl )
 	{
+
 		string tag = thisColl.tag;
 		if ( tag == Constants._EnemyBullet )
 		{
