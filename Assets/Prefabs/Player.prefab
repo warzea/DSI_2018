@@ -1102,7 +1102,7 @@ MonoBehaviour:
   SpeedReduceOnBox: 0.3
   SmoothRotateOnBox: 3.5
   aimSensitivity: 10
-  aimSensitivityEnemy: 2
+  aimSensitivityEnemy: 1.5
   AllItem: []
   driveBox: 0
   dead: 0
