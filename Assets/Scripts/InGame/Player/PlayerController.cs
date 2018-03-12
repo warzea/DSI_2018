@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public int LifePlayer = 3;
     public int TimeToRegen = 3;
     public float MoveSpeed;
+    public GameObject ItemLostObj;
     //public float DashDistance = 5;
     //public float DashTime = 1;
     public float DistToDropItem = 1;
@@ -93,6 +94,7 @@ public class PlayerController : MonoBehaviour
     public Transform AmmoUI;
     public float UiAmmoX;
     public float UiAmmoY;
+    
     [HideInInspector]
     public Image UiAmmo;
     [HideInInspector]
@@ -590,7 +592,12 @@ public class PlayerController : MonoBehaviour
         ItemLost getItem;
         Vector3 getDirect = Vector3.Normalize(thisTrans.position - pointColl);
         getDirect = new Vector3(getDirect.x, thisTrans.localPosition.y, getDirect.z);
-        GameObject newObj = (GameObject)Instantiate(new GameObject(), thisTrans.position, thisTrans.rotation);
+        GameObject newObj = (GameObject)Instantiate(ItemLostObj, thisTrans.position, thisTrans.rotation);
+        GameObject newObjUi = (GameObject)Instantiate(Manager.Ui.PotionGet, Manager.Ui.GetInGame);
+        PotionFollowP thisPFP = newObjUi.GetComponent<PotionFollowP>();
+        newObj.GetComponent<ItemObjLost>().ThisObj = newObjUi;
+        thisPFP.ThisPlayer = newObj.transform;
+        thisPFP.getCam = getCam;
 
         int a;
         float getDist = DistProjDead;
@@ -601,7 +608,6 @@ public class PlayerController : MonoBehaviour
 
         getDist -= checkBorderDead(thisTrans.position + getDirect * DistProjDead);
         allHit = Physics.RaycastAll(thisTrans.position, getDirect, getDist);
-
 
         foreach (RaycastHit thisRay in allHit)
         {
@@ -619,40 +625,39 @@ public class PlayerController : MonoBehaviour
 
         thisTrans.DOKill();
 
-        //thisTrans.SetParent(getBoxWeapon);
-
         thisTrans.DOLocalMove(thisTrans.localPosition + getDirect * getDist, getTime);
 
         DOVirtual.DelayedCall(getTime + TimeDead + TimeProjDead - getTime, () =>
-       {
-           GetComponent<Collider>().isTrigger = false;
-           WeaponPos.gameObject.SetActive(true);
-           lifePlayer = LifePlayer;
-           dead = false;
-           thisWeapon.canShoot = true;
+        {
+            GetComponent<Collider>().isTrigger = false;
+            WeaponPos.gameObject.SetActive(true);
+            lifePlayer = LifePlayer;
+            dead = false;
+            thisWeapon.canShoot = true;
 
-           DOVirtual.DelayedCall(TimeInvincible, () =>
-           {
-               canTakeDmg = true;
-           });
-       });
-        /*for ( a = 0; a < getList.Length; a ++ )
-		{
-			Destroy(getList[a]);	
-		}*/
+            DOVirtual.DelayedCall(TimeInvincible, () =>
+            {
+                canTakeDmg = true;
+            });
+        });
+
         int getNbr = (int)(getList.Length - (getList.Length * PourcLootLost) * 0.01f);
         LostItem += getList.Length;
+        thisPFP.Nbr = getNbr;
+        thisPFP.GetComponent<CanvasGroup>().DOFade(1,0.1f);
 
         for (a = getList.Length - 1; a > getNbr - 1; a--)
         {
             getItem = getList[a].transform.GetComponent<ItemLost>();
-
+            getItem.gameObject.SetActive(true);
+            getItem.transform.localScale = Vector3.one;
+            getItem.transform.localPosition = Vector3.zero;
             if (!getItem)
             {
                 getItem = getList[a].AddComponent<ItemLost>();
             }
 
-            getItem.EnableColl(true);
+            //getItem.EnableColl(true);
             getItem.transform.SetParent(newObj.transform);
             AllItem.RemoveAt(a);
         }
@@ -665,28 +670,6 @@ public class PlayerController : MonoBehaviour
 
         AllItem.Clear();
         Destroy(newObj, 60);
-
-
-        //AllItem.Clear();
-
-        //thisTrans.DOKill ( );
-
-        /*	thisTrans.DOLocalMove(Vector3.zero, 1f);
-            thisTrans.DOScale (Vector3.zero, 1f).OnComplete ( () => 
-            {
-                DOVirtual.DelayedCall ( 3, ( ) => 
-                {
-                    thisTrans.SetParent ( null );
-                    thisTrans.DOLocalMove( thisTrans.localPosition + Vector3.right, 0.25f);
-                    thisTrans.DOScale ( Vector3.one, 0.25f).OnComplete ( () => 
-                    {
-                        WeaponPos.gameObject.SetActive(true);
-                        lifePlayer = LifePlayer;
-                        dead = false;
-                        thisWeapon.canShoot = true;
-                    });
-                });
-            });*/
     }
 
     void OnTriggerEnter(Collider thisColl)
