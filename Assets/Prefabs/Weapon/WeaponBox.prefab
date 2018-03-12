@@ -31,16 +31,16 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1677744131910300
+--- !u!1 &1548965283056070
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4694686377843248}
+  - component: {fileID: 4694695353103302}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: AttackZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70,10 +70,11 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1362042216562444}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.7, y: -0.4, z: 7.18}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.26, y: 0.6, z: -10.51}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 4694695353103302}
   - {fileID: 4279158102363542}
   - {fileID: 4694686377843248}
   m_Father: {fileID: 0}
@@ -86,24 +87,24 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1933992694225564}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.59, z: 0}
   m_LocalScale: {x: 1.387688, y: 1.387688, z: 1.387688}
   m_Children: []
   m_Father: {fileID: 4070923493568338}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!4 &4694686377843248
+--- !u!4 &4694695353103302
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1677744131910300}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_GameObject: {fileID: 1548965283056070}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.387688, y: 1.3876885, z: 1.3876885}
   m_Children: []
   m_Father: {fileID: 4070923493568338}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &23681826378398952
 MeshRenderer:
@@ -197,14 +198,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ThisGauge: {fileID: 0}
-  AttackZone: {fileID: 1677744131910300}
+  AttackZone: {fileID: 1548965283056070}
   DelayAttack: 1
   DelayStay: 1
   SpeMultRessources: 2
   StayMult: 5
   InvincibleTime: 1
-  pourcLoot: 10
-  MinLost: 10
+  pourcLoot: 2
+  MinLost: 1
+  ItemOneGauge: 1500
   AllWeapon:
   - {fileID: 1509122289724188, guid: 6faf6d452e98c124ab3de0bf8773fd30, type: 2}
   - {fileID: 1559736636736308, guid: 87b437a1c10e3e0488c6c73195a1a2eb, type: 2}

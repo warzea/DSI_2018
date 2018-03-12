@@ -1079,30 +1079,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IdPlayer: 0
   LifePlayer: 5
-  TimeToRegen: 3
+  TimeToRegen: 4
   MoveSpeed: 13
   ItemLostObj: {fileID: 1330381900745004, guid: 0540fd0faddbcfd46bb2584e8d68fc5c,
     type: 2}
   radialDeadZone: 0.3
-  Aim_Sensitivity: 2
-  DistToDropItem: 10
+  maxAngle: 3
+  DistToDropItem: 16
   nbItemBeforeBigBag: 10
   animPlayer: {fileID: 95255310504812768}
   WeaponPos: {fileID: 4522346009082788}
   BagPos: {fileID: 4248657163601990}
   BoxPlace: {fileID: 4998498178062740}
-  DistProjDead: 0
-  TimeProjDead: 0
+  DistProjDead: 10
+  TimeProjDead: 0.8
   TimeDead: 1
-  TimeInvincible: 0
+  TimeInvincible: 1.2
   PourcLootLost: 20
   CdShoot: 0
   GetSpeed: 0
   SpeedReduce: 0.5
   SpeedReduceOnBox: 0.3
   SmoothRotateOnBox: 3.5
-  SmoothRotatePlayer: 10
-  SmoothRotatePlayerWithFocus: 2
+  aimSensitivity: 10
+  aimSensitivityEnemy: 1.5
   AllItem: []
   driveBox: 0
   dead: 0
