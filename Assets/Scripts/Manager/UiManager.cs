@@ -33,6 +33,8 @@ public class UiManager : ManagerParent
     public GameObject Circle;
     public GameObject CircleMultiplier;
 
+    [HideInInspector]
+    public GameObject[] AllPotGet;
 
     Dictionary <MenuType, UiParent> AllMenu;
 	MenuType menuOpen;

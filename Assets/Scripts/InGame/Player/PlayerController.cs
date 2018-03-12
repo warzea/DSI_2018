@@ -87,6 +87,8 @@ public class PlayerController : MonoBehaviour
     public int currentEnemy = 0;
     [HideInInspector]
     public int LostItem = 0;
+    [HideInInspector]
+    public bool checkAward = false;
     // -----
     [HideInInspector]
     public Transform AmmoUI;
@@ -119,7 +121,7 @@ public class PlayerController : MonoBehaviour
     bool checkShoot = true;
     bool canTakeDmg = true;
     bool checkShootScore = true;
-    bool checkAward = false;
+    
     bool checkAuto = false;
     bool checkUIBorder = false;
     bool checkUIBorderY = false;
