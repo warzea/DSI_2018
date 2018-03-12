@@ -170,7 +170,20 @@ MonoBehaviour:
   InvincibleTime: 1
   pourcLoot: 10
   AllWeapon:
-  - {fileID: 1093315411277202, guid: ea26266d024e3cf4f8bc8992dc15534d, type: 2}
+  - {fileID: 1509122289724188, guid: 6faf6d452e98c124ab3de0bf8773fd30, type: 2}
+  - {fileID: 1559736636736308, guid: 87b437a1c10e3e0488c6c73195a1a2eb, type: 2}
+  - {fileID: 1788549042048930, guid: ad1acb712f8273a40b01d8af53a02556, type: 2}
+  - {fileID: 1092635991050510, guid: 73fd845b02ab9d4479adf3e01e1afd5a, type: 2}
+  - {fileID: 1941229272249318, guid: 9ed532d95539cce4ea70be7d4f119dd4, type: 2}
+  - {fileID: 1155408933555290, guid: 56455a0175f86e44fb62565ead3594ff, type: 2}
+  - {fileID: 1764146296769658, guid: 0372d945f9215144684664f64033ab1b, type: 2}
+  - {fileID: 1101624166473472, guid: 084955f832fdbb54b8cf374bff8a03c3, type: 2}
+  - {fileID: 1751569402159540, guid: 06be9e275b0584e419d58ac97101d576, type: 2}
+  - {fileID: 1261528143164592, guid: 3e5637905001e484c8762b125e5a64cd, type: 2}
+  - {fileID: 1440639309290938, guid: 4b0dabc1dd172ad409651219820bc3cd, type: 2}
+  - {fileID: 1108328275404316, guid: 0a93e28f17326fc42a43750f31370081, type: 2}
+  - {fileID: 1540500496880890, guid: f2dac88d4d1402d42b4a46c9e8e9cc8a, type: 2}
+  - {fileID: 1510514992761886, guid: 851e0d175a2acad4eadb14ab01f31673, type: 2}
   DelayNewWeapon: 1
   NbrItem: 0
   CanControl: 1
