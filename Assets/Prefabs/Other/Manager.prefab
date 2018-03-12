@@ -2506,7 +2506,8 @@ MonoBehaviour:
   PotionGet: {fileID: 1980759458752834, guid: 238447965ba613a438def6621d65b4be, type: 2}
   ScoreText: {fileID: 114814007728545504}
   Multiplier: {fileID: 114334813085844014}
-  CauldronGauge: {fileID: 0}
+  CauldronGauge: {fileID: 1246058091811566, guid: 277c8c0953394fd4288b85e629ceb02a,
+    type: 2}
   GetGauge: {fileID: 114836762412856348}
   GaugeBackground: {fileID: 114267099696946530}
   GaugeFeedback:
