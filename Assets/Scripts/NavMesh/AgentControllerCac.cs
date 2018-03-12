@@ -25,6 +25,9 @@ public class AgentControllerCac : MonoBehaviour
     private float timeAgent = -5;
 
     public float timeLeftAgentAttacCac = 1f;
+
+    private Camera cam;
+
     void Start()
     {
         myEtatAgent = AgentEtat.aliveAgent;
@@ -34,6 +37,7 @@ public class AgentControllerCac : MonoBehaviour
     {
         navAgent = transform.GetComponent<NavMeshAgent>();
         agentsM = GameObject.Find("ManagerNavMesh").GetComponent<AgentsManagerCac>();
+        cam = Manager.GameCont.MainCam;
     }
 
     void Update()
@@ -77,7 +81,7 @@ public class AgentControllerCac : MonoBehaviour
                     }
                     else if (focusPlayer.tag == "Player")
                     {
-						Debug.Log ("Shhooottt");
+                        Debug.Log("Shhooottt");
                         focusPlayer.GetComponent<PlayerController>().GetDamage(transform);
                     }
                 }

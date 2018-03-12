@@ -1399,6 +1399,16 @@ Prefab:
       propertyPath: TimerRoom
       value: 300
       objectReference: {fileID: 0}
+    - target: {fileID: 65826970101253734, guid: 70ff29e70a83df742a5dd03c3195a1c0,
+        type: 2}
+      propertyPath: m_Size.z
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 65826970101253734, guid: 70ff29e70a83df742a5dd03c3195a1c0,
+        type: 2}
+      propertyPath: m_Center.x
+      value: 1.55
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 70ff29e70a83df742a5dd03c3195a1c0, type: 2}
   m_IsPrefabParent: 0
