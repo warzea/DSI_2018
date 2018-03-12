@@ -490,6 +490,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Manager.GameCont.WeaponB.CanControl)
         {
+            Manager.Ui.CauldronButtons(true);
             GetCamFoll.UpdateTarget(thisTrans);
             WeaponPos.gameObject.SetActive(false);
             AmmoUI.GetComponent<CanvasGroup>().alpha = 0;
@@ -505,6 +506,8 @@ public class PlayerController : MonoBehaviour
         }
         else if (driveBox)
         {
+            Manager.Ui.checkDrive = false;
+            Manager.Ui.CauldronButtons(false);
             AmmoUI.GetComponent<CanvasGroup>().alpha = 1;
             getBoxWeapon.DOKill();
             WeaponPos.gameObject.SetActive(true);
