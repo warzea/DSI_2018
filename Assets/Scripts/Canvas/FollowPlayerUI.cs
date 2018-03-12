@@ -23,7 +23,7 @@ public class FollowPlayerUI : MonoBehaviour
 	#region Public
 	void Update ()
 	{
-		thisTrans.position = getCam.WorldToScreenPoint(ThisPlayer.position + Vector3.up * 5);
+		thisTrans.position = getCam.WorldToScreenPoint(ThisPlayer.position + Vector3.up * 9);
 	}
 	#endregion
 	

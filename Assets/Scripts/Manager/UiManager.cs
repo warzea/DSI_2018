@@ -15,11 +15,14 @@ public class UiManager : ManagerParent
     public GameObject[] PlayersHUD;
     public Image[] PlayersWeaponHUD;
     public GameObject[] PlayersAmmo;
+    public Text[] textWeapon;
+    public GameObject PotionGet;
 
-    Tween ammoTwRot, ammoTwScale1, ammoTwScale2, ammoTwFade;
+    Tween ammoTwRot, ammoTwScale1, ammoTwScale2, ammoTwFade, ammoTwWait;
 
     public Text ScoreText;
     public Text Multiplier;
+    public Image GetGauge;
     public Image[] GaugeFeedback;
 
     public GameObject[] PlayerText;
@@ -84,6 +87,7 @@ public class UiManager : ManagerParent
         ammoTwRot.Kill(true);
         ammoTwScale1.Kill(true);
         ammoTwScale2.Kill(true);
+        ammoTwWait.Kill(true);
     }
 
     public void WeaponChange(int PlayerId)
@@ -102,24 +106,7 @@ public class UiManager : ManagerParent
 
         ammoTwScale1 = PlayersAmmo[PlayerId].transform.DOPunchScale((Vector3.one * .45f), 0.3f, 20, .1f);
         ammoTwFade = PlayersAmmo[PlayerId].transform.GetComponent<CanvasGroup>().DOFade(0, .3f);
-        ammoTwScale2 = PlayersAmmo[PlayerId].transform.DOScale(0,.3f).OnComplete(()=> {
-
-            //LE CHARGEUR REAPARAIT VISIBLE
-
-            ammoTwFade = PlayersAmmo[PlayerId].transform.GetComponent<CanvasGroup>().DOFade(1, .2f);
-            PlayersAmmo[PlayerId].transform.DOScale(3, 0);
-            ammoTwScale1 = PlayersAmmo[PlayerId].transform.DOScale(1, .2f);
-
-
-            //COURT EFFET LUMINEUX DE COULEUR SUR LE OUTLINE
-
-            PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[1].enabled = true;
-            ammoTwScale2 = DOVirtual.DelayedCall(.3f, () => {
-                PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[1].enabled = false;
-                PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[1].transform.GetComponent<Image>().color = PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[1].colors[1];
-            });
-
-        });
+        ammoTwScale2 = PlayersAmmo[PlayerId].transform.DOScale(0, .3f);
         
         //HUD ABOVE ALL
         
@@ -137,6 +124,25 @@ public class UiManager : ManagerParent
 
     }
 
+    public void WeaponNew(int PlayerId)
+    {
+        //LE CHARGEUR REAPARAIT VISIBLE
+
+        ammoTwFade = PlayersAmmo[PlayerId].transform.GetComponent<CanvasGroup>().DOFade(1, .2f);
+        PlayersAmmo[PlayerId].transform.DOScale(3, 0);
+        ammoTwScale1 = PlayersAmmo[PlayerId].transform.DOScale(1, .2f);
+
+
+        //COURT EFFET LUMINEUX DE COULEUR SUR LE OUTLINE
+
+        PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[1].enabled = true;
+        ammoTwWait = DOVirtual.DelayedCall(.3f, () =>
+        {
+            PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[1].enabled = false;
+            PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[1].transform.GetComponent<Image>().color = PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[1].colors[1];
+        });
+    }
+
 
     public void GaugeLevelGet(int whichLevel)
     {
@@ -149,10 +155,6 @@ public class UiManager : ManagerParent
         });
     }
 
-    public void WeaponNew()
-    {
-
-    }
 
     public void PopPotions(PotionType type) // poser ressource : 20 - 40 - 60 - 80 et 100
     {
@@ -164,6 +166,13 @@ public class UiManager : ManagerParent
 
             //potion.GetComponent<RainbowMove>().ObjectTransform = ici;
         }
+        else if(type == PotionType.Less)
+        {
+            var potion = Instantiate(PotionsLess, GetInGame.position, Quaternion.identity, GetInGame);
+
+            ScorePlus();
+            //potion.GetComponent<RainbowMove>().ObjectTransform = ici;
+        }
     }
 
     public void MultiplierNew( int value = 0 )
@@ -173,13 +182,8 @@ public class UiManager : ManagerParent
         Multiplier.GetComponent<RainbowMove>().enabled = true;
         Multiplier.GetComponent<RainbowScale>().enabled = true;
 
-        for (int i = 0; i < 4; i++)
-        {
-            DOVirtual.DelayedCall(.1f * i, () => {
-
-                var circle = Instantiate(CircleMultiplier, Multiplier.transform.position, Quaternion.identity, Multiplier.transform);
-            });
-        }
+                var circle = Instantiate(CircleMultiplier, Multiplier.transform.position, Quaternion.identity, Multiplier.transform.parent);
+        circle.transform.SetSiblingIndex(0);
 
         DOVirtual.DelayedCall(.8f, () => {
 
@@ -193,6 +197,20 @@ public class UiManager : ManagerParent
     #endregion
 
     #region Private Methods
+
+    public void ScreenShake()
+    {
+        /*
+        float rdmX = UnityEngine.Random.Range(-1, 1);
+        float rdmZ = UnityEngine.Random.Range(-1, 1);
+
+        UnityEngine.Debug.Log(Camera.main.transform.position);
+        UnityEngine.Debug.Log(Camera.main.transform.localPosition);
+
+
+        Camera.main.transform.DOPunchPosition(Camera.main.transform.localPosition + new Vector3(1 * rdmX, 0, -5 * rdmZ), .1f, 15, 1);*/
+    }
+
     void ScorePlus()
     {
         ScoreText.transform.DOKill(true);

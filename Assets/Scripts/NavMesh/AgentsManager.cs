@@ -53,7 +53,7 @@ public class AgentsManager : ManagerParent
     [Header("List Agent Focus Other")]
     public List<AgentController> othersAgents;
 
-
+    private CheckRoom[] roomFight;
 
 
     /// <summary> Private <summary>
@@ -72,6 +72,8 @@ public class AgentsManager : ManagerParent
     private GameObject playerLead;
     private GameObject playerCauldron;
 
+    private Camera cam;
+
     //Timer
     private float timeAgent = 0;
     bool startCheck = false;
@@ -80,7 +82,8 @@ public class AgentsManager : ManagerParent
     {
         agents = GameObject.FindObjectsOfType<AgentController>();
         playerCauldron = Manager.GameCont.WeaponB.gameObject;
-        Debug.Log(playerCauldron);
+        roomFight = GameObject.FindObjectsOfType<CheckRoom>();
+        cam = Manager.GameCont.MainCam;
     }
 
     private void Update()
@@ -88,14 +91,7 @@ public class AgentsManager : ManagerParent
         timeAgent += Time.deltaTime;
         if (startCheck && timeAgent > timeLeftAgentLook)
         {
-            for (int i = 0; i < agents.Length; i++)
-            {
-                if (agents[i].GetEtatAgent())
-                {
-                    float randStopDist = Random.Range(10, 20);
-                    agents[i].TargetPlayer(randStopDist, maxPosPlayer);
-                }
-            }
+            
             timeAgent = 0;
         }
     }
@@ -103,42 +99,74 @@ public class AgentsManager : ManagerParent
     #region CheckPoint
     public Vector3 CheckBestcheckPoint(Transform posTarget)
     {
-        Vector3 bestSpawn = new Vector3();
         float lastdist = 0;
         List<Transform> bestSpawnlist = new List<Transform>();
+        Vector3 bestSpawn = new Vector3();
+        bool inRoom = false;
+        List<Transform> inRoomList = new List<Transform>();
 
-        for (int i = 0; i < posRespawn.Length; i++)
+
+        for (int i = 0; i < roomFight.Length; i++)
         {
-            float distanceAgent = Vector3.Distance(posRespawn[i].localPosition, posTarget.localPosition);
-            if (distanceSave > distanceAgent)
+            if (roomFight[i].GetEtatRoom())
             {
-                bestSpawnlist.Add(posRespawn[i]);
+                for (int j = 0; j < roomFight[i].checkPoint.Length; j++)
+                {
+                    Vector3 getCamPos = cam.WorldToViewportPoint(roomFight[i].checkPoint[j].transform.position);
+
+                    if (getCamPos.x > 0.97f || getCamPos.x < 0.03f || getCamPos.y > 0.97f || getCamPos.y < 0.03f)
+                    {
+                        inRoomList.Add(roomFight[i].checkPoint[j]);
+                        inRoom = true;
+                    }
+                }
+
+                if (inRoom)
+                {
+                    int randomPos = Random.Range(0, inRoomList.Count);
+                    bestSpawn = roomFight[i].checkPoint[randomPos].position;
+                }
             }
-            else
+        }
+
+        if (!inRoom)
+        {
+            for (int i = 0; i < posRespawn.Length; i++)
             {
-                if (lastdist == 0)
+                Vector3 getCamPos = cam.WorldToViewportPoint(posRespawn[i].transform.position);
+
+                if (getCamPos.x > 0.97f || getCamPos.x < 0.03f || getCamPos.y > 0.97f || getCamPos.y < 0.03f)
                 {
-                    lastdist = distanceAgent;
-                    bestSpawn = posRespawn[i].position;
-                }
-                else if (lastdist > distanceAgent)
-                {
-                    bestSpawn = posRespawn[i].position;
+                    float distanceAgent = Vector3.Distance(posRespawn[i].localPosition, posTarget.localPosition);
+
+                    if (distanceSave > distanceAgent)
+                    {
+                        bestSpawnlist.Add(posRespawn[i]);
+                    }
+                    else
+                    {
+                        if (lastdist == 0)
+                        {
+                            lastdist = distanceAgent;
+                            bestSpawn = posRespawn[i].position;
+                        }
+                        else if (lastdist > distanceAgent)
+                        {
+                            bestSpawn = posRespawn[i].position;
+                        }
+                    }
                 }
             }
-        }
 
-        int randomSpawnPlayer = Random.Range(0, bestSpawnlist.Count);
+            int randomSpawnPlayer = Random.Range(0, bestSpawnlist.Count);
 
-        if (bestSpawnlist.Count != 0)
-        {
-            bestSpawn = bestSpawnlist[randomSpawnPlayer].position;
-            return bestSpawn;
+            if (bestSpawnlist.Count != 0)
+            {
+                bestSpawn = bestSpawnlist[randomSpawnPlayer].position;
+            }
         }
-        else
-        {
-            return bestSpawn;
-        }
+        return bestSpawn;
+
     }
     #endregion
 
@@ -200,6 +228,14 @@ public class AgentsManager : ManagerParent
             agents[i].SetFocusRandomPlayer(player[randomPlayer]);
         }
 
+//		for (int i = 0; i < agents.Length; i++)
+//		{
+//			if (agents[i].GetEtatAgent())
+//			{
+//				float randStopDist = Random.Range(10, 15);
+//				agents[i].TargetPlayer(randStopDist, maxPosPlayer);
+//			}
+//		}
         CheckFocusIni();
     }
     #endregion

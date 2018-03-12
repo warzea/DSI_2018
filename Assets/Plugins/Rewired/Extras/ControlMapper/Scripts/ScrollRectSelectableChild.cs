@@ -32,6 +32,7 @@ namespace Rewired.UI.ControlMapper {
             parentScrollRect = transform.GetComponentInParent<ScrollRect>();
             if(parentScrollRect == null) {
                 Debug.LogError("Rewired Control Mapper: No ScrollRect found! This component must be a child of a ScrollRect!");
+                Destroy(gameObject);
                 return;
             }
         }
