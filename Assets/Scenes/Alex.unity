@@ -16998,6 +16998,11 @@ Mesh:
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
   m_MeshOptimized: 0
+--- !u!1 &1520629660 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1362042216562444, guid: 4937250a6dda9a844ac259531ecc0430,
+    type: 2}
+  m_PrefabInternal: {fileID: 221782916}
 --- !u!43 &1523527874
 Mesh:
   m_ObjectHideFlags: 0
@@ -23187,6 +23192,11 @@ Prefab:
       propertyPath: GetCameraFollow
       value: 
       objectReference: {fileID: 2073317891}
+    - target: {fileID: 114615207581199468, guid: 09c0fcd273fc2424693f3e4b734896bb,
+        type: 2}
+      propertyPath: playerCauldron
+      value: 
+      objectReference: {fileID: 1520629660}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 09c0fcd273fc2424693f3e4b734896bb, type: 2}
   m_IsPrefabParent: 0

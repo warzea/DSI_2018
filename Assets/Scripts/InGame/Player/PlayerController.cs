@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
 	public int LifePlayer = 3;
 	public int TimeToRegen = 3;
 	public float MoveSpeed;
+	[Range(0,1)]
+	public float SlowDriveBack = 0.5f;
 	public GameObject ItemLostObj;
 	public float radialDeadZone = 0.3f;
 	public float maxAngle = 2;
@@ -170,7 +172,6 @@ public class PlayerController : MonoBehaviour
 
 	void Update ()
 	{
-		
 		thisRig.velocity = Vector3.zero;
 
 		if (!checkUpdate) {
@@ -323,6 +324,16 @@ public class PlayerController : MonoBehaviour
 	{
 		float Xmove = inputPlayer.GetAxis ("MoveX");
 		float Ymove = inputPlayer.GetAxis ("MoveY");
+
+		if ( driveBox )
+		{
+			Xmove = 0;
+
+			if ( Ymove < 0 )
+			{
+				Ymove *= SlowDriveBack;
+			}
+		}
 
 		float speed = Mathf.Abs (Xmove) + Mathf.Abs (Ymove) * 2;
 
