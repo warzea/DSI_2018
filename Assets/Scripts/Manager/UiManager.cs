@@ -24,6 +24,7 @@ public class UiManager : ManagerParent
     public Text Multiplier;
     public Image GetGauge;
     public Image[] GaugeFeedback;
+    public CanvasGroup ButtonsInteract;
 
     public GameObject[] PlayerText;
 
@@ -33,6 +34,8 @@ public class UiManager : ManagerParent
     public GameObject Circle;
     public GameObject CircleMultiplier;
 
+    [HideInInspector]
+    public GameObject[] AllPotGet;
 
     Dictionary <MenuType, UiParent> AllMenu;
 	MenuType menuOpen;
@@ -143,6 +146,11 @@ public class UiManager : ManagerParent
         });
     }
 
+    public void PotionsLost()
+    {
+
+    }
+
 
     public void GaugeLevelGet(int whichLevel)
     {
@@ -153,6 +161,26 @@ public class UiManager : ManagerParent
         
             GaugeFeedback[whichLevel].DOFade(0, .4f);
         });
+    }
+
+    int nbrCauld = 0;
+    [HideInInspector]
+    public bool checkDrive = false;
+    public void CauldronButtons(bool visible = false)
+    {
+        if (!visible)
+        {
+            nbrCauld --;
+            if ( nbrCauld <= 0 && !checkDrive )
+            {
+                ButtonsInteract.DOFade(0, .1f);
+            }
+        }
+        else
+        {
+            nbrCauld++;
+            ButtonsInteract.DOFade(1, .1f);
+        }
     }
 
 
@@ -170,7 +198,9 @@ public class UiManager : ManagerParent
         {
             var potion = Instantiate(PotionsLess, GetInGame.position, Quaternion.identity, GetInGame);
 
-            ScorePlus();
+            //potion.transform.DOLocalMove(Manager.GameCont.WeaponB.transform.position, 0);
+            //potion.transform.DOLocalMoveY(Manager.GameCont.WeaponB.transform.localPosition.y + 220, 0);
+            ScoreLess();
             //potion.GetComponent<RainbowMove>().ObjectTransform = ici;
         }
     }
@@ -220,6 +250,17 @@ public class UiManager : ManagerParent
             ScoreText.GetComponent<RainbowColor>().enabled = false;
         });
     }
+
+    void ScoreLess()
+    {
+        ScoreText.transform.DOKill(true);
+        ScoreText.transform.DOShakeScale(.4f, 1f, 12, 15);
+        ScoreText.GetComponentsInChildren<RainbowColor>()[1].enabled = true;
+        DOVirtual.DelayedCall(.4f, () => {
+            ScoreText.GetComponentsInChildren<RainbowColor>()[1].enabled = false;
+        });
+    }
+
     private void Update()
     {
 
@@ -245,7 +286,7 @@ public class UiManager : ManagerParent
         }
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            GaugeLevelGet(0);
+            PopPotions(PotionType.Less);
         }
         if (Input.GetKeyDown(KeyCode.T))
         {

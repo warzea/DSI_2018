@@ -75,8 +75,9 @@ public class Interact : MonoBehaviour
 		else if ( thisColl.tag == Constants._BoxTag)
 		{
 			cauldron = thisColl.transform;
+            Manager.Ui.CauldronButtons(true);
 
-			if ( containerIt.Count > 0 )
+            if ( containerIt.Count > 0 )
 			{
 				StartCoroutine (checkDist(new WaitForEndOfFrame()));
 			}
@@ -111,8 +112,9 @@ public class Interact : MonoBehaviour
 			}
         }
 		else if ( thisColl.tag == Constants._BoxTag)
-		{
-			cauldron = null;
+        {
+            Manager.Ui.CauldronButtons(false);
+            cauldron = null;
 			thisPC.canCauldron = false;
 		}
     }

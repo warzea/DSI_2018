@@ -7,17 +7,50 @@ public class InteractAbstract : MonoBehaviour
 {
 	#region Variables
 	public int NbrItem = 10;
+	public int ValueOnDrop = 5;
 	public int NbrDropByDrop = 2;
 	public int NbrTouchToDrop = 2;
 	public GameObject[] ItemDrop;
 	Transform thisTrans;
 	bool checkItem = true;
+	int valDrop;
+	Tween thisT;
 	#endregion
 	
 	#region Mono
 	void Awake () 
 	{
 		thisTrans = transform;
+		valDrop = ValueOnDrop;
+	}
+	void Start ( )
+	{
+		System.Action<ChestEvent> thisAct = delegate (ChestEvent thisEvnt)
+        {
+			Camera getCam = Manager.GameCont.MainCam;
+			Vector3 getCamPos = getCam.WorldToViewportPoint(thisTrans.position);
+
+            if (getCamPos.x > 1f || getCamPos.x < 0f || getCamPos.y > 1f || getCamPos.y < 0f)
+            {
+
+			}
+			else
+			{
+				if ( thisT != null)
+				{
+					thisT.Kill();
+				}
+				
+           		valDrop *= thisEvnt.Mult;
+				multEffect (true);
+				thisT = DOVirtual.DelayedCall(thisEvnt.TimeMult, () =>
+				{
+					multEffect (false);
+				});
+			}
+        };
+
+        Manager.Event.Register(thisAct);
 	}
 	#endregion
 	
@@ -30,28 +63,33 @@ public class InteractAbstract : MonoBehaviour
 		}
 		else 
 		{
+			int b;
 			for ( int a = 0; a < NbrDropByDrop; a ++ )
 			{
 				if ( NbrItem > 0 )
 				{
 					DOVirtual.DelayedCall ( Random.Range(0, 0.2f), ()=> 
 					{
-						GameObject newItem = (GameObject) Instantiate (ItemDrop[Random.Range(0, ItemDrop.Length - 1)], thisPlayer.BagPos);
-						Transform getTrans = newItem.transform;
-
-						getTrans.position = thisTrans.position + new Vector3 ( Random.Range(-0.5f, 0.51f), 0, Random.Range(-0.5f, 0.51f) );
-						
-						getTrans.DOLocalMove(Vector3.zero + Vector3.up * 3, 0.5f).OnComplete ( () => 
+						for ( b = 0; b < valDrop; b ++ )
 						{
-							getTrans.DOScale(Vector3.zero, 0.5f).OnComplete( () => 
-							{
-								newItem.SetActive(false);
-							});
-							
-							getTrans.DOLocalMove(Vector3.zero, 0.5f);
-						});
+							GameObject newItem = (GameObject) Instantiate (ItemDrop[Random.Range(0, ItemDrop.Length - 1)], thisPlayer.BagPos);
+							Transform getTrans = newItem.transform;
 
-						thisPlayer.AllItem.Add(newItem);
+							getTrans.position = thisTrans.position + new Vector3 ( Random.Range(-0.5f, 0.51f), 0, Random.Range(-0.5f, 0.51f) );
+							
+							getTrans.DOLocalMove(Vector3.zero + Vector3.up * 3, 0.5f).OnComplete ( () => 
+							{
+								getTrans.DOScale(Vector3.zero, 0.5f).OnComplete( () => 
+								{
+									newItem.SetActive(false);
+								});
+								
+								getTrans.DOLocalMove(Vector3.zero, 0.5f);
+							});
+
+							thisPlayer.AllItem.Add(newItem);
+							}
+						
 					});
 					
 					NbrItem --;
@@ -68,6 +106,11 @@ public class InteractAbstract : MonoBehaviour
 	#endregion
 
 	#region Private Methods
+
+	void multEffect ( bool isEnable )
+	{
+
+	}
 	#endregion
 
 }
