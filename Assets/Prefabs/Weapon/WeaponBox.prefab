@@ -70,13 +70,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1362042216562444}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.26, y: 0.6, z: -10.51}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.7, y: -0.4, z: 1.91}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4694695353103302}
   - {fileID: 4279158102363542}
-  - {fileID: 4694686377843248}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -208,20 +207,14 @@ MonoBehaviour:
   MinLost: 1
   ItemOneGauge: 1500
   AllWeapon:
-  - {fileID: 1509122289724188, guid: 6faf6d452e98c124ab3de0bf8773fd30, type: 2}
-  - {fileID: 1559736636736308, guid: 87b437a1c10e3e0488c6c73195a1a2eb, type: 2}
-  - {fileID: 1788549042048930, guid: ad1acb712f8273a40b01d8af53a02556, type: 2}
-  - {fileID: 1092635991050510, guid: 73fd845b02ab9d4479adf3e01e1afd5a, type: 2}
-  - {fileID: 1941229272249318, guid: 9ed532d95539cce4ea70be7d4f119dd4, type: 2}
-  - {fileID: 1155408933555290, guid: 56455a0175f86e44fb62565ead3594ff, type: 2}
-  - {fileID: 1764146296769658, guid: 0372d945f9215144684664f64033ab1b, type: 2}
-  - {fileID: 1101624166473472, guid: 084955f832fdbb54b8cf374bff8a03c3, type: 2}
-  - {fileID: 1751569402159540, guid: 06be9e275b0584e419d58ac97101d576, type: 2}
-  - {fileID: 1261528143164592, guid: 3e5637905001e484c8762b125e5a64cd, type: 2}
-  - {fileID: 1440639309290938, guid: 4b0dabc1dd172ad409651219820bc3cd, type: 2}
-  - {fileID: 1108328275404316, guid: 0a93e28f17326fc42a43750f31370081, type: 2}
-  - {fileID: 1540500496880890, guid: f2dac88d4d1402d42b4a46c9e8e9cc8a, type: 2}
-  - {fileID: 1510514992761886, guid: 851e0d175a2acad4eadb14ab01f31673, type: 2}
+  - {fileID: 1294729226091156, guid: 9e537c0ffddff9248b8d488acd4c88b9, type: 2}
+  - {fileID: 1710333208426710, guid: 9f39bc799258c874e94d822387524985, type: 2}
+  - {fileID: 1180992830767308, guid: 59e29fb570b191c42a4fda2b01a0aa32, type: 2}
+  - {fileID: 1868345327832182, guid: 805d0df3037a9bf43b55b0e915a65eee, type: 2}
+  - {fileID: 1889261419105248, guid: 8a6dc1e2e3bbad14189e95e460ab8c2b, type: 2}
+  - {fileID: 1909916809828264, guid: c02548164cfaf7645ab6e5f2a5d2eb36, type: 2}
+  - {fileID: 1117256704115732, guid: f5de41277b861c04bb366c198f1da51c, type: 2}
+  - {fileID: 1593376080157516, guid: 67ccdcadbf94d7e4682d0a58a343252e, type: 2}
   DelayNewWeapon: 1
   TimeFullFill: 6
   CurrTime: 0
