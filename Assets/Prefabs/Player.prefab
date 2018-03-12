@@ -1086,6 +1086,7 @@ MonoBehaviour:
   NbrEnemy: 0
   currentEnemy: 0
   LostItem: 0
+  checkAward: 0
   AmmoUI: {fileID: 0}
   UiAmmoX: 2
   UiAmmoY: 4

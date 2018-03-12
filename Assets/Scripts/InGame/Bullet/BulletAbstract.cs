@@ -158,13 +158,15 @@ public class BulletAbstract : MonoBehaviour
     #endregion
 
     #region Private Methods
+    Tween t1;
+    Tween t2;
     void playZone()
     {
         GetComponent<Collider>().enabled = false;
         startPos = Vector3.zero;
 
-        DOTween.To(() => getDistScale, x => getDistScale = x, BulletRange * 0.5f * FarEffect, TimeFarEffect);
-        DOTween.To(() => startPos, x => startPos = x, new Vector3(WidthRange, 5, BulletRange), SpeedZone).OnComplete(() =>
+        t1 = DOTween.To(() => getDistScale, x => getDistScale = x, BulletRange * 0.5f * FarEffect, TimeFarEffect);
+        t2 = DOTween.To(() => startPos, x => startPos = x, new Vector3(WidthRange, 5, BulletRange), SpeedZone).OnComplete(() =>
         {
             destObj ( TimeStay );
         });
@@ -282,6 +284,8 @@ public class BulletAbstract : MonoBehaviour
 
     void destObj ( float delay = 0 )
     {
+        t1.Kill();
+        t2.Kill();
         Destroy (gameObject, delay);
     }
     #endregion

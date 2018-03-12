@@ -19,6 +19,19 @@ public abstract class AbstractMedal : MonoBehaviour
 	
 	#region Public Methods
 	public abstract void StartCheck ( PlayerController[] allPlayer );
+
+	public void GoTarget ( PlayerController equaContr = null, string Text = "" )
+	{
+		ThisPlayer.checkAward = true;
+
+		if ( equaContr != null )
+		{
+			equaContr.checkAward = true;
+			GameObject thisObj = (GameObject) Instantiate (gameObject, thisTrans.parent );
+			thisObj.GetComponent<AbstractMedal>().ThisPlayer = equaContr;
+			thisObj.GetComponent<AbstractMedal>().GoTarget();
+		}
+	}
 	#endregion
 
 	#region Private Methods

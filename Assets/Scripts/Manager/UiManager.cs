@@ -34,6 +34,8 @@ public class UiManager : ManagerParent
     public GameObject Circle;
     public GameObject CircleMultiplier;
 
+    [HideInInspector]
+    public GameObject[] AllPotGet;
 
     Dictionary <MenuType, UiParent> AllMenu;
 	MenuType menuOpen;
@@ -161,14 +163,22 @@ public class UiManager : ManagerParent
         });
     }
 
+    int nbrCauld = 0;
+    [HideInInspector]
+    public bool checkDrive = false;
     public void CauldronButtons(bool visible = false)
     {
         if (!visible)
         {
-            ButtonsInteract.DOFade(0, .1f);
+            nbrCauld --;
+            if ( nbrCauld <= 0 && !checkDrive )
+            {
+                ButtonsInteract.DOFade(0, .1f);
+            }
         }
         else
         {
+            nbrCauld++;
             ButtonsInteract.DOFade(1, .1f);
         }
     }

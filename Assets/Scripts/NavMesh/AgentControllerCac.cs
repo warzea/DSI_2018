@@ -25,10 +25,22 @@ public class AgentControllerCac : MonoBehaviour
     private float timeAgent = -5;
 
     public float timeLeftAgentAttacCac = 1f;
+    bool checkUpdate = true;
+
+    private Camera cam;
+
     void Start()
     {
         myEtatAgent = AgentEtat.aliveAgent;
         targetCauldron = Manager.GameCont.WeaponB.gameObject;
+        System.Action<AgentEvent> thisAct = delegate (AgentEvent thisEvnt)
+      {
+          checkUpdate = thisEvnt.AgentChecking;
+          navAgent.isStopped = checkUpdate;
+      };
+        cam = Manager.GameCont.MainCam;
+
+        Manager.Event.Register(thisAct);
     }
     void Awake()
     {
@@ -38,20 +50,29 @@ public class AgentControllerCac : MonoBehaviour
 
     void Update()
     {
-        if (myEtatAgent == AgentEtat.aliveAgent && focusPlayer != null)
-        {
-            NavMeshPath path = new NavMeshPath();
 
-            navAgent.CalculatePath(focusPlayer.transform.position, path);
-            if (path.status == NavMeshPathStatus.PathPartial)
+        if (!checkUpdate)
+        {
+            return;
+        }
+
+        NavMeshPath path = new NavMeshPath();
+
+        navAgent.CalculatePath(transform.position, path);
+        if (path.status == NavMeshPathStatus.PathPartial)
+        {
+            Vector3 getCamPos = cam.WorldToViewportPoint(transform.position);
+
+            if (getCamPos.x > 1f || getCamPos.x < 0f || getCamPos.y > 1f || getCamPos.y < 0f)
             {
                 DeadFonction();
             }
-            else
-            {
-                ShootCac();
-            }
         }
+        else
+        {
+            ShootCac();
+        }
+
     }
 
     public void ShootCac()
@@ -77,7 +98,7 @@ public class AgentControllerCac : MonoBehaviour
                     }
                     else if (focusPlayer.tag == "Player")
                     {
-						Debug.Log ("Shhooottt");
+                        Debug.Log("Shhooottt");
                         focusPlayer.GetComponent<PlayerController>().GetDamage(transform);
                     }
                 }

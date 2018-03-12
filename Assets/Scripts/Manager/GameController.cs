@@ -53,6 +53,19 @@ public class GameController : ManagerParent
         Manager.Ui.OpenThisMenu(MenuType.SelectPlayer);
     }
 
+    public void EtatAgent ( bool thisEtat )
+    {
+        var newEtat = new AgentEvent ( );
+        newEtat.AgentChecking = thisEtat;
+        newEtat.Raise ( );
+       /* System.Action <AgentEvent> thisAct = delegate( AgentEvent thisEvnt )
+        {
+            thisEvnt.AgentChecking = thisEtat;
+        };
+
+        Manager.Event.Raise(thisAct);*/
+    }
+
 
     #endregion
 
@@ -80,6 +93,8 @@ public class GameController : ManagerParent
         GameObject getWeapon;
         GameObject[] getPlayerHud = Manager.Ui.PlayersHUD;
         
+        List<GameObject> getPotGets = new List<GameObject>();
+
         for (int a = 0; a < getPlayers.Length; a++)
         {
             getPlayers[a].ReadyPlayer = false;
@@ -107,6 +122,7 @@ public class GameController : ManagerParent
                 getWeapon = (GameObject)Instantiate(Manager.Ui.PotionGet, Manager.Ui.GetInGame);
                 getWeapon.GetComponent<PotionFollowP>().getCam = MainCam;
                 getWeapon.GetComponent<PotionFollowP>().ThisPlayer = getPlayer.transform;
+                getPotGets.Add ( getWeapon);
 
                 getWeapon = (GameObject)Instantiate(StartWeapon, getPC.WeaponPos.transform);
                 getWeapon.transform.localPosition = Vector3.zero;
@@ -120,6 +136,7 @@ public class GameController : ManagerParent
             }
         }
 
+        Manager.Ui.AllPotGet = getPotGets.ToArray();
         Manager.AgentM.player = Players.ToArray();
         Manager.AgentM.InitGame();
     }
