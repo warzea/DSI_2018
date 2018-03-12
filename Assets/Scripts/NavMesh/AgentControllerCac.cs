@@ -42,20 +42,23 @@ public class AgentControllerCac : MonoBehaviour
 
     void Update()
     {
-        if (myEtatAgent == AgentEtat.aliveAgent && focusPlayer != null)
-        {
-            NavMeshPath path = new NavMeshPath();
+        NavMeshPath path = new NavMeshPath();
 
-            navAgent.CalculatePath(focusPlayer.transform.position, path);
-            if (path.status == NavMeshPathStatus.PathPartial)
+        navAgent.CalculatePath(transform.position, path);
+        if (path.status == NavMeshPathStatus.PathPartial)
+        {
+            Vector3 getCamPos = cam.WorldToViewportPoint(transform.position);
+
+            if (getCamPos.x > 1f || getCamPos.x < 0f || getCamPos.y > 1f || getCamPos.y < 0f)
             {
                 DeadFonction();
             }
-            else
-            {
-                ShootCac();
-            }
         }
+        else
+        {
+            ShootCac();
+        }
+
     }
 
     public void ShootCac()
