@@ -38,7 +38,7 @@ public class AgentController : MonoBehaviour
     public AgentEtat myEtatAgent;
     private AgentsManager agentsManager;
     private NavMeshAgent navAgent;
-
+    bool checkUpdate = true;
     private float timeAgent = -5;
 
     private Camera cam;
@@ -58,10 +58,23 @@ public class AgentController : MonoBehaviour
         parentBullet = Manager.GameCont.Garbage;
         navAgent.stoppingDistance = distanceShoot;
         cam = Manager.GameCont.MainCam;
+
+        System.Action<AgentEvent> thisAct = delegate (AgentEvent thisEvnt)
+        {
+            checkUpdate = thisEvnt.AgentChecking;
+            navAgent.isStopped = checkUpdate;
+        };
+
+        Manager.Event.Register(thisAct);
     }
 
     void Update()
     {
+        if (!checkUpdate)
+        {
+            return;
+        }
+
         if (myEtatAgent == AgentEtat.aliveAgent && myFocusPlayer != null)
         {
 
@@ -74,7 +87,6 @@ public class AgentController : MonoBehaviour
             float velocity = navAgent.velocity.magnitude;
             if (velocity > 0.1)
             {
-                ;
                 animAgent.SetBool("IsMoving", true);
             }
             else
@@ -100,6 +112,7 @@ public class AgentController : MonoBehaviour
             {
                 ShootAgent();
             }
+
         }
     }
 
