@@ -90,7 +90,6 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public bool checkAward = false;
     // -----
-    [HideInInspector]
     public Transform AmmoUI;
     public float UiAmmoX;
     public float UiAmmoY;

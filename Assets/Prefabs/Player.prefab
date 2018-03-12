@@ -126,6 +126,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4341385036573900}
   - component: {fileID: 137392359626152124}
+  - component: {fileID: 114774019442977400}
   m_Layer: 0
   m_Name: Corpus
   m_TagString: Untagged
@@ -1090,6 +1091,7 @@ MonoBehaviour:
   UiAmmoY: 2
   UiAmmo: {fileID: 0}
   currInt: {fileID: 0}
+  autoShoot: 1
   canCauldron: 0
   WeapText: {fileID: 0}
 --- !u!114 &114717990859517940
@@ -1106,6 +1108,22 @@ MonoBehaviour:
   thisPC: {fileID: 114134106334906588}
   getPlayer: {fileID: 4111334567357604}
   cauldron: {fileID: 0}
+--- !u!114 &114774019442977400
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1414084814335230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e34c1b773868efe4cb44635a3e8e9967, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: 0.15
+  colors:
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 0.7921569, g: 0.13725491, b: 0.13725491, a: 1}
+  ComponentType: 1
 --- !u!135 &135318390101510292
 SphereCollider:
   m_ObjectHideFlags: 1
