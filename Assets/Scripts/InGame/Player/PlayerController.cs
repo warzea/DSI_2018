@@ -384,7 +384,6 @@ public class PlayerController : MonoBehaviour
     void playerShoot(float getDeltaTime)
     {
         float shootInput = inputPlayer.GetAxis("Shoot");
-        Debug.Log(shootInput);
         if ( !canShoot )
         {
             if ( shootInput > 0 &&  driveBox )
