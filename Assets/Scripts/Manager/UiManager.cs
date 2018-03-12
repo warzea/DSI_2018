@@ -276,11 +276,6 @@ public class UiManager : ManagerParent
 
     #region Private Methods
 
-    private void LateUpdate()
-    {
-
-        UnityEngine.Debug.Log(Camera.main.transform.localPosition);
-    }
 
     public void ScreenShake()
     {

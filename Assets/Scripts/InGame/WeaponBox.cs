@@ -79,6 +79,7 @@ public class WeaponBox : MonoBehaviour
 	{
 		if ( !checkAttack )
 		{
+			GetComponent<Collider>().isTrigger = true;
 			checkAttack = true;
 			gameObject.tag = Constants._PlayerBullet;
 
@@ -86,6 +87,7 @@ public class WeaponBox : MonoBehaviour
 			{
 				GetTrans.DOLocalMoveZ ( 0, SpeedAttack * 0.5f ).OnComplete( () =>
 				{
+					GetComponent<Collider>().isTrigger = false;
 					gameObject.tag = Constants._BoxTag;
 				});
 			});		
@@ -94,7 +96,6 @@ public class WeaponBox : MonoBehaviour
 			{
 				checkAttack = false;
 			});
-
 		}
 	}
 

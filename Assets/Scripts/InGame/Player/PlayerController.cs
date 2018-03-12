@@ -325,24 +325,17 @@ public class PlayerController : MonoBehaviour
 		float Xmove = inputPlayer.GetAxis ("MoveX");
 		float Ymove = inputPlayer.GetAxis ("MoveY");
 
-		if ( driveBox )
-		{
-			Xmove = 0;
-
-			if ( Ymove < 0 )
-			{
-				Ymove *= SlowDriveBack;
-			}
-		}
-
 		float speed = Mathf.Abs (Xmove) + Mathf.Abs (Ymove) * 2;
 
 		animPlayer.SetFloat ("Velocity", speed);
 		float getSpeed = MoveSpeed;
 
-		if (shooting) {
+		if (shooting) 
+		{
 			getSpeed *= SpeedReduce;
-		} else if (driveBox) {
+		} 
+		else if (driveBox) 
+		{
 			thisWB.CurrTime += getDeltaTime;
 			thisWB.ThisGauge.value = thisWB.CurrTime;
 			TimeWBox += getDeltaTime;
@@ -352,7 +345,28 @@ public class PlayerController : MonoBehaviour
 		getSpeed = getDeltaTime * getSpeed;
 		TotalDist += getSpeed;
 
-		thisTrans.position += getSpeed * new Vector3 (Xmove, 0, Ymove);
+		if ( !driveBox )
+		{
+			thisTrans.position += getSpeed * new Vector3 (Xmove, 0, Ymove);
+		}
+		else if ( speed > radialDeadZone )
+		{
+			Quaternion newAngle = Quaternion.LookRotation (new Vector3 (Xmove, 0, Ymove), thisTrans.up);
+
+			float difAngle = Quaternion.Angle (thisTrans.rotation, newAngle);
+			Debug.Log(difAngle);
+			
+			if ( difAngle > 90 )
+			{
+				getSpeed *= SlowDriveBack;
+			}
+			if ( speed > 1 )
+			{
+				speed = 1;
+			}
+
+			thisTrans.position += ( getSpeed * speed )* thisTrans.forward;
+		}
 	}
 
 	void playerAim (float getDeltaTime)
@@ -361,14 +375,24 @@ public class PlayerController : MonoBehaviour
 		float Yaim = inputPlayer.GetAxis ("AimY");
 
 		Vector2 stickInput = new Vector2 (Xaim, Yaim);
-		if (stickInput.magnitude < radialDeadZone) {
+
+		if (stickInput.magnitude < radialDeadZone) 
+		{
 			stickInput = Vector2.zero;
-		} else {
+		} 
+		else 
+		{
 			float actuFocus = aimSensitivity;
-			RaycastHit hit;
-			if (Physics.Raycast (thisWeapon.SpawnBullet.position, thisTrans.forward, out hit)) {
-				if (hit.transform.tag == Constants._Enemy) {
-					actuFocus = aimSensitivityEnemy;
+
+			if ( thisWeapon != null )
+			{
+				RaycastHit hit;
+				if (Physics.Raycast (thisWeapon.SpawnBullet.position, thisTrans.forward, out hit)) 
+				{
+					if (hit.transform.tag == Constants._Enemy) 
+					{
+						actuFocus = aimSensitivityEnemy;
+					}
 				}
 			}
 
@@ -376,15 +400,18 @@ public class PlayerController : MonoBehaviour
 
 			float difAngle = Quaternion.Angle (thisTrans.rotation, newAngle);
 
-			if (difAngle > maxAngle) {
-				if (driveBox) {
+			if (difAngle > maxAngle) 
+			{
+				if (driveBox) 
+				{
 					thisTrans.localRotation = Quaternion.Slerp (thisTrans.rotation, newAngle, SmoothRotateOnBox * getDeltaTime);
-				} else {
+				} 
+				else 
+				{
 					thisTrans.localRotation = Quaternion.Slerp (thisTrans.rotation, newAngle, actuFocus * getDeltaTime);
 					// thisTrans.localRotation = Quaternion.LookRotation(new Vector3(Xaim, 0, Yaim), thisTrans.up);
 				}
 			}
-
 		}
 
 	}
@@ -392,13 +419,20 @@ public class PlayerController : MonoBehaviour
 	void playerShoot (float getDeltaTime)
 	{
 		float shootInput = inputPlayer.GetAxis ("Shoot");
-		if (!canShoot) {
-			if (driveBox) {
-				thisWB.AttackCauld ();
-				return;
-			} else if (shootInput > 0) {
+		if (!canShoot) 
+		{
+			if (shootInput > 0) 
+			{
+				if (driveBox) 
+				{
+					thisWB.AttackCauld ();
+					return;
+				}
+
 				useBoxWeapon ();
-			} else {
+			} 
+			else 
+			{
 				return;
 			}
 
@@ -480,7 +514,8 @@ public class PlayerController : MonoBehaviour
 
 	void useBoxWeapon ()
 	{
-		if (Manager.GameCont.WeaponB.CanControl) {
+		if (Manager.GameCont.WeaponB.CanControl) 
+		{
 			thisWB.ThisGauge.gameObject.SetActive (true);
 			Manager.Ui.CauldronButtons (true);
 			GetCamFoll.UpdateTarget (thisTrans);
@@ -495,7 +530,12 @@ public class PlayerController : MonoBehaviour
 			getBoxWeapon.DOLocalRotateQuaternion (Quaternion.identity, 0.5f);
 
 			driveBox = true;
-		} else if (driveBox) {
+		} 
+		else if (driveBox)
+		 {
+			thisWB.GetComponent<Collider>().isTrigger = false;
+			thisWB.gameObject.tag = Constants._BoxTag;
+			thisWB.transform.DOKill(true);
 			thisWB.ThisGauge.gameObject.SetActive (false);
 			Manager.Ui.checkDrive = false;
 			Manager.Ui.CauldronButtons (false);
