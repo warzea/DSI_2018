@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 224408797952660790}
   - component: {fileID: 222871136154211406}
   - component: {fileID: 114268538704119056}
+  - component: {fileID: 114117244189073566}
   m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
@@ -38,6 +39,7 @@ GameObject:
   - component: {fileID: 224557886064293388}
   - component: {fileID: 222710510056674090}
   - component: {fileID: 114360160964739876}
+  - component: {fileID: 114795690620591520}
   m_Layer: 0
   m_Name: Fiole
   m_TagString: Untagged
@@ -56,6 +58,7 @@ GameObject:
   - component: {fileID: 225592237040573188}
   - component: {fileID: 114936408404501586}
   - component: {fileID: 114171372666379738}
+  - component: {fileID: 114973382413047516}
   m_Layer: 0
   m_Name: Potions Get
   m_TagString: Untagged
@@ -63,6 +66,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &114117244189073566
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1468629703515560}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e34c1b773868efe4cb44635a3e8e9967, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: 0.1
+  colors:
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 0.7921569, g: 0.13725491, b: 0.13725491, a: 1}
+  ComponentType: 4
 --- !u!114 &114171372666379738
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -110,7 +129,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: +470
+  m_Text: +0
 --- !u!114 &114360160964739876
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -138,6 +157,22 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114795690620591520
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1954689020444968}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e34c1b773868efe4cb44635a3e8e9967, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: 0.1
+  colors:
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 0.7921569, g: 0.13725491, b: 0.13725491, a: 1}
+  ComponentType: 0
 --- !u!114 &114936408404501586
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -154,6 +189,26 @@ MonoBehaviour:
   - {x: 1.2, y: 1.2, z: 1.2}
   - {x: 0.9, y: 0.9, z: 0.9}
   easeType: 2
+--- !u!114 &114973382413047516
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1980759458752834}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d66e95897310864b85ec28ea1ee4a6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: 0.15
+  movesType: 4
+  moves:
+  - 25
+  - 30
+  ObjectTransform: []
+  easeType: 1
+  breakMove: 0
+  breakNumber: 0
 --- !u!222 &222710510056674090
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -172,8 +227,8 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1980759458752834}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 25.81034}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224557886064293388}
@@ -183,7 +238,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 95, y: -23}
+  m_AnchoredPosition: {x: 578.1293, y: 67.62344}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224408797952660790
