@@ -360,7 +360,7 @@ public class PlayerController : MonoBehaviour
 		else if (driveBox) 
 		{
 			Xmove = 0;
-			thisWB.CurrTime += getDeltaTime;
+			thisWB.CurrTime += (float)getDeltaTime / thisWB.TimeFullFill;
 			thisWB.ThisGauge.value = thisWB.CurrTime;
 			TimeWBox += getDeltaTime;
 			getSpeed *= SpeedReduceOnBox;
