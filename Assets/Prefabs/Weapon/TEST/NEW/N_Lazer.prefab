@@ -133,20 +133,28 @@ MonoBehaviour:
   FireRate: 0
   CoolDown: 0
   BackPush: 0
-  SpeedReduce: 0
+  SpeedReduce: 0.3
   Damage: 1
+<<<<<<< HEAD
   Range: 30
+=======
+  Range: 12.5
+>>>>>>> Loic
   NbrBullet: 0
   ScaleBullet: 0
   SpeedBullet: 0
   Gust: 0
   SpaceBullet: 0
   Angle: 0
-  TimeFarEffect: 0
-  FarEffect: 0
+  TimeFarEffect: 0.05
+  FarEffect: 2
   WidthRange: 1
   SpeedZone: 0
+<<<<<<< HEAD
   TimeDest: 1
+=======
+  TimeDest: 0.05
+>>>>>>> Loic
   Diameter: 0
   Bullet: {fileID: 1530796011795326, guid: 11f2cea504004b245a6d9e7fa10eef4d, type: 2}
   SpawnBullet: {fileID: 4053524848592642}

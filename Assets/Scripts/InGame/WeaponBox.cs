@@ -223,7 +223,25 @@ public class WeaponBox : MonoBehaviour
 
 		Manager.Ui.GetGauge.DOKill(true);
 //		Debug.Log( NbrItem + " / " + currNbr + " / " + currNbr * 0.01f);
-		Manager.Ui.GetGauge.DOFillAmount ( (float)currNbr / ItemOneGauge, 0.5f );
+		Manager.Ui.GetGauge.DOFillAmount ( (float)currNbr / ItemOneGauge, 0.5f ).OnComplete ( () =>
+		{
+			if ( currNbr > (float)ItemOneGauge * 0.9f )
+			{
+				Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = false;
+				Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = true;
+			}
+			else if ( currNbr < (float)ItemOneGauge * 0.1f )
+			{
+				Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = false;
+				Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = true;
+			}
+			else
+			{
+				Manager.Ui.GetGauge.GetComponentsInChildren<Image>()[1].DOColor(Color.white,0);				
+				Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = false;
+				Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = false;
+			}
+		});
 		/*if ( !inv )
 		{
 			//updateFeed ( getFeedBack, 0, currNbr, inv );
@@ -274,71 +292,32 @@ public class WeaponBox : MonoBehaviour
 						lastNbr++;
 					}
 			
-					getTween = Manager.Ui.GetGauge.DOFillAmount ( (float)currNbr / ItemOneGauge, 0.5f ).OnComplete ( () =>
+					getTween = Manager.Ui.GetGauge.DOFillAmount ( (float) currNbr / ItemOneGauge, 0.5f ).OnComplete ( () =>
 					{
-						/*if ( currNbr > 90 )
+						if ( currNbr > (float)ItemOneGauge * 0.9f )
 						{
-							Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = true;
 							Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = false;
+							Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = true;
 						}
-						else if ( currNbr < 10 )
+						else if ( currNbr < (float)ItemOneGauge * 0.1f )
 						{
-							Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = true;
 							Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = false;
+							Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = true;
 						}
 						else
 						{
 							Manager.Ui.GetGauge.GetComponentsInChildren<Image>()[1].DOColor(Color.white,0);				
-						}*/
+							Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = false;
+							Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = false;
+						}
 					});
 
 
 				});
 			});
 			getAllTween.Add ( getTween );
-			
-			/*Tween getTween;
-			Tween getTween = DOVirtual.DelayedCall(0.5f, () =>
-			{
-				Manager.Ui.GetGauge.DOKill(true);
-				getTween = Manager.Ui.GetGauge.DOFillAmount ( 0, 0.5f ).OnComplete ( ( ) =>
-				{
-					getTween = Manager.Ui.GetGauge.DOFillAmount ( currNbr * 0.01f, 0.5f );
-					getAllTween.Add ( getTween );
-				});
-				getAllTween.Add ( getTween );
-			});
-			getAllTween.Add ( getTween );
-			
-			/*Tween getTween;
-			getTween = DOVirtual.DelayedCall(0.5f, () => 
-			{
-				getWait = 0.5f;
-				resetFeed ( getFeedBack, getFeedBack.Length - 1);
-
-				getTween = DOVirtual.DelayedCall(0.5f, () => 
-				{
-					if ( !inv )
-					{
-						updateFeed ( getFeedBack, 0, currNbr, inv );
-					}
-					else
-					{
-						updateFeed ( getFeedBack, getFeedBack.Length - 1, currNbr, inv );
-					}
-				});
-				getAllTween.Add ( getTween );
-			});
-
-			getAllTween.Add ( getTween );*/
 		}
 	}
-
-    /*
-    private void Update()
-    {
-    }
-    */
 
     void updateFeed ( Image[] getFeedBack, int currInd, int currNbr, bool inv = false )
 	{
@@ -475,5 +454,3 @@ public class WeaponBox : MonoBehaviour
 	#endregion
 
 }
-
-		//Debug.Log( NbrItem + " / " + currNbr + " / " + currNbr * 0.01f);
