@@ -31,10 +31,9 @@ public static class ScriptableObjectUtility
 		Selection.activeObject = asset;
 	}
 
-	/*[MenuItem("CustomTools/Scriptable/Chunks")]
-	public static void CreateChunk ( )
+	[MenuItem("CustomTools/Scriptable/AudioScriptable")]
+	public static void CreateAudio ( )
 	{
-		ScriptableObjectUtility.CreateAsset<ChunksScriptable> ();
-	}*/
-
+		ScriptableObjectUtility.CreateAsset<AudioScriptable> ();
+	}
 }
