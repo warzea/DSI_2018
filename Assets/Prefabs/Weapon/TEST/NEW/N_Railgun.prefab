@@ -124,12 +124,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c6bfe4600766d64c85f4f9c20b7243a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpeEffet: {fileID: 0}
   WeightRandom: 0
   AutoShoot: 1
   Projectile: 0
   Through: 0
   Explosion: 1
-  BulletCapacity: 19
+  BulletCapacity: 20
   FireRate: 0.3
   CoolDown: 0
   BackPush: 1
@@ -148,10 +149,11 @@ MonoBehaviour:
   SpeedZone: 0
   TimeDest: 0.2
   Diameter: 2
-  Bullet: {fileID: 1530796011795326, guid: bc41063ebf29c6f44a009da8b3171b68, type: 2}
+  Bullet: {fileID: 1530796011795326, guid: 7debebcea0d258f4a9f5dc489d6103cf, type: 2}
   SpawnBullet: {fileID: 4940790349217874}
   canShoot: 1
   OnFloor: 1
+  getCapacity: 0
 --- !u!136 &136373074784515192
 CapsuleCollider:
   m_ObjectHideFlags: 1
