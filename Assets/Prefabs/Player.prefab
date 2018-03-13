@@ -1126,8 +1126,8 @@ MonoBehaviour:
   LostItem: 0
   checkAward: 0
   AmmoUI: {fileID: 0}
-  UiAmmoX: 2
-  UiAmmoY: 4
+  UiAmmoX: 30
+  UiAmmoY: 20
   CurrItem: 0
   UiAmmo: {fileID: 0}
   currInt: {fileID: 0}

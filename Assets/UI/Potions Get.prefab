@@ -93,8 +93,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f4f66fc3b2849c4b8df64ae07eb23a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Nbr: -1
   XPos: -0.5
-  YPos: 4
+  YPos: 50
   ThisPlayer: {fileID: 0}
   getCam: {fileID: 0}
 --- !u!114 &114268538704119056

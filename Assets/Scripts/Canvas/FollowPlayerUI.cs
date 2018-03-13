@@ -8,15 +8,14 @@ public class FollowPlayerUI : MonoBehaviour
 	public Transform ThisPlayer;
 	public Camera getCam;
 	Transform thisTrans;
-
 	#endregion
-	
 	
 	#region Mono
 	void Awake ( )
 	{
 		thisTrans = transform;		
 	}
+
 	void Start ( )
 	{
 		if ( getCam == null )
@@ -35,7 +34,8 @@ public class FollowPlayerUI : MonoBehaviour
 	#region Public
 	void Update ()
 	{
-		thisTrans.position = getCam.WorldToScreenPoint(ThisPlayer.position + Vector3.up * 9 );
+		thisTrans.position = getCam.WorldToScreenPoint(ThisPlayer.position );
+		thisTrans.localPosition +=  Vector3.up * 9;
 	}
 	#endregion
 	
