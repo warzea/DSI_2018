@@ -84,10 +84,23 @@ public class GameController : ManagerParent
             GetPlayersInput[a].EnablePlayer = false;
         }
 
+        if ( WeaponB == null )
+        {
+            WeaponB = (WeaponBox) FindObjectOfType(typeof(WeaponBox));
+        }
+
         if ( StartWeapon == null)
         {
             StartWeapon = WeaponB.AllWeapon[0];
         }
+
+        if ( MainCam == null )
+        {
+            MainCam = Camera.main;
+            GetCameraFollow = MainCam.transform.parent.GetComponent<CameraFollow>();
+        }
+
+       
     }
 
     void SpawnPlayer()
