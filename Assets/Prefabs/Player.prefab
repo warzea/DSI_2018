@@ -1086,7 +1086,7 @@ MonoBehaviour:
     type: 2}
   radialDeadZone: 0.3
   maxAngle: 3
-  DistToDropItem: 16
+  DistToDropItem: 6
   nbItemBeforeBigBag: 10
   animPlayer: {fileID: 95255310504812768}
   WeaponPos: {fileID: 4522346009082788}
