@@ -1,10 +1,19 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 7f5def0d9b7dfc74d940deed9473b4b4
 timeCreated: 1520936533
 licenseType: Free
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 0
+=======
+guid: f6adf49328d390f439b5f99f945849b5
+timeCreated: 1520935359
+licenseType: Free
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 23800000
+>>>>>>> LoicTolinos
   userData: 
   assetBundleName: 
   assetBundleVariant: 
