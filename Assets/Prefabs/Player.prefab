@@ -1132,6 +1132,8 @@ MonoBehaviour:
   UiAmmo: {fileID: 0}
   currInt: {fileID: 0}
   autoShoot: 1
+  checkShoot: 1
+  checkAuto: 0
   canCauldron: 0
   WeapText: {fileID: 0}
 --- !u!114 &114717990859517940

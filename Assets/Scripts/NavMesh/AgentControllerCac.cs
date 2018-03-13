@@ -29,7 +29,7 @@ public class AgentControllerCac : MonoBehaviour
     private float timeAgent = -5;
 
     public float timeLeftAgentAttacCac = 1f;
-    bool checkUpdate = true;
+    public bool checkUpdate = false;
 
     private Camera cam;
 

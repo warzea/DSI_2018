@@ -227,15 +227,6 @@ public class AgentsManager : ManagerParent
             othersAgents.Add(agents[i]);
             agents[i].SetFocusRandomPlayer(player[randomPlayer]);
         }
-
-        //		for (int i = 0; i < agents.Length; i++)
-        //		{
-        //			if (agents[i].GetEtatAgent())
-        //			{
-        //				float randStopDist = Random.Range(10, 15);
-        //				agents[i].TargetPlayer(randStopDist, maxPosPlayer);
-        //			}
-        //		}
         CheckFocusIni();
     }
     #endregion

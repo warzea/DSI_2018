@@ -38,7 +38,7 @@ public class AgentController : MonoBehaviour
     public AgentEtat myEtatAgent;
     private AgentsManager agentsManager;
     private NavMeshAgent navAgent;
-    bool checkUpdate = true;
+    public bool checkUpdate = false;
     private float timeAgent = -5;
 
     private Camera cam;
