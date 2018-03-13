@@ -737,7 +737,8 @@ public class PlayerController : MonoBehaviour
 
 	void OnTriggerExit (Collider thisColl)
 	{
-		if (thisColl.tag == Constants._EnterCont) {
+		if (thisColl.tag == Constants._EnterCont) 
+		{
 			canEnterBox = false;
 		}
 	}
