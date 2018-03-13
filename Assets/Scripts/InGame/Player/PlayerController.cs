@@ -110,6 +110,10 @@ public class PlayerController : MonoBehaviour
 	public InteractAbstract currInt;
 	[HideInInspector]
 	public bool autoShoot = true;
+	[HideInInspector]
+	public bool checkShoot = true;
+	[HideInInspector]
+	public bool checkAuto = false;
 	public bool canCauldron = false;
 	PlayerController thisPC;
 	WeaponAbstract thisWeapon;
@@ -120,6 +124,7 @@ public class PlayerController : MonoBehaviour
 	Player inputPlayer;
 	Camera getCam;
 	WeaponBox thisWB;
+	GameObject getEffect;
 
 	int lifePlayer;
 
@@ -128,11 +133,10 @@ public class PlayerController : MonoBehaviour
 	bool canDash = true;
 	bool canEnterBox = false;
 	bool canShoot = true;
-	bool checkShoot = true;
+	
 	bool canTakeDmg = true;
 	bool checkShootScore = true;
 
-	bool checkAuto = false;
 	bool checkUIBorder = false;
 	bool checkUIBorderY = false;
 	bool checkUpdate = true;
@@ -152,7 +156,8 @@ public class PlayerController : MonoBehaviour
 
 		System.Array thisArray = System.Enum.GetValues (typeof(TypeEnemy));
 
-		for (int a = 0; a < thisArray.Length; a++) {
+		for (int a = 0; a < thisArray.Length; a++) 
+		{
 			AllEnemy.Add (new EnemyInfo ());
 			AllEnemy [a].ThisType = (TypeEnemy)thisArray.GetValue (a);
 		}
@@ -188,14 +193,16 @@ public class PlayerController : MonoBehaviour
 
 		checkBorder ();
 
-		if (!checkUIBorder) {
-			//AmmoUI.localScale = Vector3.one;
+		if (!checkUIBorder) 
+		{
+			AmmoUI.position = getCam.WorldToScreenPoint ( thisTrans.position );
+			AmmoUI.localPosition -= Vector3.right * UiAmmoX + Vector3.up * UiAmmoY;
+		} 
+		else 
+		{
+			AmmoUI.position = getCam.WorldToScreenPoint (thisTrans.position);
 
-			AmmoUI.position = getCam.WorldToScreenPoint (thisTrans.position - Vector3.right * UiAmmoX + Vector3.up * UiAmmoY);
-		} else {
-			//AmmoUI.localScale = new Vector3(-1, 1, 1);
-
-			AmmoUI.position = getCam.WorldToScreenPoint (thisTrans.position + Vector3.right * UiAmmoX + Vector3.up * UiAmmoY);
+			AmmoUI.localPosition += Vector3.right * UiAmmoX + Vector3.up * UiAmmoY;
 		}
 
 		if (AllItem.Count > 0 && Vector3.Distance (thisTrans.position, getBoxWeapon.position) < DistToDropItem) 
@@ -230,7 +237,6 @@ public class PlayerController : MonoBehaviour
 				animeDead (thisEnemy.position);
 			}
 		}
-
 	}
 
 	#endregion
@@ -242,43 +248,56 @@ public class PlayerController : MonoBehaviour
 		Vector3 getCamPos = getCam.WorldToViewportPoint (thisTrans.position);
 		Vector3 getDir = Vector3.zero;
 
-		if (getCamPos.x > 0.97f) {
+		if (getCamPos.x > 0.97f) 
+		{
 			getDir -= Vector3.right;
 			thisTrans.position = new Vector3 (getCam.ViewportToWorldPoint (new Vector3 (0.97f, getCamPos.y, getCamPos.z)).x, thisTrans.position.y, thisTrans.position.z);
-		} else if (getCamPos.x < 0.03f) {
+		} 
+		else if (getCamPos.x < 0.03f) 
+		{
 			getDir += Vector3.right;
 			thisTrans.position = new Vector3 (getCam.ViewportToWorldPoint (new Vector3 (0.03f, getCamPos.y, getCamPos.z)).x, thisTrans.position.y, thisTrans.position.z);
 		}
 
-		if (getCam.WorldToViewportPoint (thisTrans.position - Vector3.right * UiAmmoX).x < 0.03f) {
+		if (getCam.WorldToViewportPoint (thisTrans.position ).x < 0.1f) 
+		{
 			checkUIBorder = true;
-		} else {
+		} 
+		else 
+		{
 			checkUIBorder = false;
 		}
 
-		if (getCamPos.y > 0.85f) {
+		if (getCamPos.y > 0.85f) 
+		{
 			getDir -= Vector3.up;
 			thisTrans.position = new Vector3 (thisTrans.position.x, thisTrans.position.y, getCam.ViewportToWorldPoint (new Vector3 (getCamPos.x, 0.85f, getCamPos.z)).z);
-		} else if (getCamPos.y < 0.03f) {
+		} 
+		else if (getCamPos.y < 0.03f) 
+		{
 			getDir += Vector3.up;
 			thisTrans.position = new Vector3 (thisTrans.position.x, thisTrans.position.y, getCam.ViewportToWorldPoint (new Vector3 (getCamPos.x, 0.03f, getCamPos.z)).z);
 		}
 
-		if (getDir != Vector3.zero) {
+		if (getDir != Vector3.zero) 
+		{
 			RaycastHit[] allHit;
 			string getTag;
 
 			allHit = Physics.RaycastAll (thisTrans.position, getDir, 0.5f);
 
-			foreach (RaycastHit thisRay in allHit) {
+			foreach (RaycastHit thisRay in allHit) 
+			{
 				getTag = thisRay.collider.tag;
 
-				if (getTag == Constants._Wall) {
+				if (getTag == Constants._Wall) 
+				{
 
 					checkUpdate = false;
 
 					thisTrans.DOKill (true);
-					thisTrans.DOMove (getBoxWeapon.position, 0.5f, true).OnComplete (() => {
+					thisTrans.DOMove (getBoxWeapon.position, 0.5f, true).OnComplete (() => 
+					{
 						checkUpdate = true;
 					});
 					break;
@@ -341,7 +360,7 @@ public class PlayerController : MonoBehaviour
 		else if (driveBox) 
 		{
 			Xmove = 0;
-			thisWB.CurrTime += getDeltaTime;
+			thisWB.CurrTime += (float)getDeltaTime / thisWB.TimeFullFill;
 			thisWB.ThisGauge.value = thisWB.CurrTime;
 			TimeWBox += getDeltaTime;
 			getSpeed *= SpeedReduceOnBox;
@@ -435,22 +454,44 @@ public class PlayerController : MonoBehaviour
 
 		}
 
-		if (shootInput == 1 && checkShootScore) {
+		if (shootInput == 1 && checkShootScore) 
+		{
+			if ( thisWeapon != null && thisWeapon.SpeEffet != null && thisWeapon.getCapacity > 0 )
+			{
+				getEffect = (GameObject) Instantiate ( thisWeapon.SpeEffet, thisWeapon.SpawnBullet );
+				getEffect.GetComponent<BulletAbstract>().thisPlayer = this;
+				getEffect.transform.rotation = Quaternion.LookRotation(thisTrans.forward, thisTrans.up);
+			}
+
 			checkShootScore = false;
 			SpawmShoot++;
-		} else if (shootInput < 0.3f) {
+		} 
+		else if (shootInput < 0.3f) 
+		{
+			if ( getEffect != null )
+			{
+				Destroy ( getEffect );
+			}
 			checkShootScore = true;
 		}
-
-		if (shootInput == 0 && checkAuto) {
-			checkShoot = true;
+		else if ( thisWeapon != null && thisWeapon.getCapacity == 0 && getEffect != null )
+		{
+			Destroy ( getEffect );
 		}
 
-		if (shootInput > 0.3f && thisWeapon != null && checkShoot) {
-			if (!autoShoot) {
+		if (shootInput == 0 && checkAuto) 
+		{
+			checkShoot = true;
+		}
+		
+		if (shootInput > 0.3f && thisWeapon != null && checkShoot) 
+		{
+			if (!autoShoot) 
+			{
 				checkAuto = false;
 				checkShoot = false;
-				DOVirtual.DelayedCall (CdShoot, () => {
+				DOVirtual.DelayedCall (CdShoot, () => 
+				{
 					checkAuto = true;
 				});
 			}
@@ -458,7 +499,8 @@ public class PlayerController : MonoBehaviour
 			thisWeapon.weaponShoot (thisTrans);
 			animPlayer.SetBool ("Attack", true);
 			shooting = true;
-			if (thisWeapon != null) { //&& thisWeapon.Damage == 1)
+			if (thisWeapon != null) 
+			{ //&& thisWeapon.Damage == 1)
 				//Debug.Log("Shoot");
 				if (thisWeapon.Damage <= Manager.VibM.DamagesLow)
 					Manager.VibM.ShootLowVibration (inputPlayer);
@@ -467,7 +509,9 @@ public class PlayerController : MonoBehaviour
 				else if (thisWeapon.Damage > Manager.VibM.DamagesLow && thisWeapon.Damage <= Manager.VibM.DamagesMedium)
 					Manager.VibM.ShootHighVibration (inputPlayer);
 			}
-		} else {
+		} 
+		else 
+		{
 			animPlayer.SetBool ("Attack", false);
 			shooting = false;
 		}
@@ -610,7 +654,7 @@ public class PlayerController : MonoBehaviour
 		GetComponent<Collider> ().isTrigger = true;
 
 		Vector3 getDirect = Vector3.Normalize (thisTrans.position - pointColl);
-		getDirect = new Vector3 (getDirect.x, thisTrans.localPosition.y, getDirect.z);
+		getDirect = new Vector3 (getDirect.x, 0, getDirect.z);
 
 		float getDist = DistProjDead;
 		float getTime = TimeProjDead;

@@ -18,8 +18,8 @@ public enum ScoreType
 
 public enum Trajectoir
 {
-	Standard
-	
+	Standard,
+	Nothing
 }
 
 public enum TypeEnemy
@@ -43,3 +43,18 @@ public enum TypeMedail
 	hard
 
 }
+
+public enum AudioType
+{
+	MusicBackGround,
+	OtherMusic,
+	FxSound,
+	OtherSound,
+	Other,
+	Acceleration,
+	SteroKill,
+	PunchVoice,
+	MusicTrash,
+    Madnesse
+}
+
