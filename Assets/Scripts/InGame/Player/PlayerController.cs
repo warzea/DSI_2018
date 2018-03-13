@@ -336,6 +336,7 @@ public class PlayerController : MonoBehaviour
 		} 
 		else if (driveBox) 
 		{
+			Xmove = 0;
 			thisWB.CurrTime += getDeltaTime;
 			thisWB.ThisGauge.value = thisWB.CurrTime;
 			TimeWBox += getDeltaTime;
@@ -349,22 +350,11 @@ public class PlayerController : MonoBehaviour
 		{
 			thisTrans.position += getSpeed * new Vector3 (Xmove, 0, Ymove);
 		}
-		else if ( speed > radialDeadZone )
+		else if ( Mathf.Abs(Ymove)  > radialDeadZone )
 		{
 			Quaternion newAngle = Quaternion.LookRotation (new Vector3 (Xmove, 0, Ymove), thisTrans.up);
 
-			float difAngle = Quaternion.Angle (thisTrans.rotation, newAngle);
-			
-			if ( difAngle > 90 )
-			{
-				getSpeed *= SlowDriveBack;
-			}
-			if ( speed > 1 )
-			{
-				speed = 1;
-			}
-
-			thisTrans.position += ( getSpeed * speed )* thisTrans.forward;
+			thisTrans.position += getSpeed * Ymove* thisTrans.forward;
 		}
 	}
 
@@ -552,7 +542,7 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	void emptyBag ()
+	async void emptyBag ()
 	{
 		Manager.Ui.PopPotions (PotionType.Plus);
 		animPlayer.SetTrigger ("BagUnfull");
@@ -564,7 +554,8 @@ public class PlayerController : MonoBehaviour
 		CurrScore += getBagItems.Length;
 		CurrLootScore += getBagItems.Length;
 
-		for (int a = 0; a < getBagItems.Length; a++) {
+		for (int a = 0; a < getBagItems.Length; a++) 
+		{
 			currTrans = getBagItems [a].transform;
 			currTrans.DOKill ();
 
@@ -609,12 +600,9 @@ public class PlayerController : MonoBehaviour
 		WeaponPos.gameObject.SetActive (false);
 		GetComponent<Collider> ().isTrigger = true;
 
-		GameObject[] getList = AllItem.ToArray ();
-		ItemLost getItem;
 		Vector3 getDirect = Vector3.Normalize (thisTrans.position - pointColl);
 		getDirect = new Vector3 (getDirect.x, thisTrans.localPosition.y, getDirect.z);
 
-		int a;
 		float getDist = DistProjDead;
 		float getTime = TimeProjDead;
 		string getTag;
@@ -655,7 +643,16 @@ public class PlayerController : MonoBehaviour
             Destroy(getList[a]);	
         }*/
 
-		if (getList.Length > 0) {
+		lostItem();
+	}
+
+	async void lostItem ( )
+	{
+		GameObject[] getList = AllItem.ToArray ();
+		if (getList.Length > 0) 
+		{
+			int a;
+			ItemLost getItem;
 			GameObject newObj = (GameObject)Instantiate (ItemLostObj, thisTrans.position, thisTrans.rotation);
 			GameObject newObjUi = (GameObject)Instantiate (Manager.Ui.PotionGet, Manager.Ui.GetInGame);
 			PotionFollowP thisPFP = newObjUi.GetComponent<PotionFollowP> ();

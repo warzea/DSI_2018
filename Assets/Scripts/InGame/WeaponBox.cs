@@ -58,11 +58,6 @@ public class WeaponBox : MonoBehaviour
 		{
 			DelayStay = DelayAttack;
 		}
-
-		if ( SpeedAttack < DelayAttack )
-		{
-			SpeedAttack = DelayAttack;
-		}
 	}
 
 	void Start ( )
@@ -89,10 +84,11 @@ public class WeaponBox : MonoBehaviour
 				{
 					GetComponent<Collider>().isTrigger = false;
 					gameObject.tag = Constants._BoxTag;
+					
+					
 				});
 			});		
-
-			DOVirtual.DelayedCall(DelayAttack, ( ) => 
+			DOVirtual.DelayedCall(DelayAttack + SpeedAttack, ( ) => 
 			{
 				checkAttack = false;
 			});

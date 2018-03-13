@@ -70,8 +70,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1362042216562444}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.7, y: -0.4, z: 1.91}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.7, y: 0.6, z: -11.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4694695353103302}
@@ -197,7 +197,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ThisGauge: {fileID: 0}
-  AttackZone: {fileID: 1548965283056070}
+  SpeedAttack: 0.25
+  RangeAttack: 1.5
   DelayAttack: 1
   DelayStay: 1
   SpeMultRessources: 2
@@ -216,7 +217,7 @@ MonoBehaviour:
   - {fileID: 1117256704115732, guid: f5de41277b861c04bb366c198f1da51c, type: 2}
   - {fileID: 1593376080157516, guid: 67ccdcadbf94d7e4682d0a58a343252e, type: 2}
   DelayNewWeapon: 1
-  TimeFullFill: 6
+  TimeFullFill: 45
   CurrTime: 0
   NbrItem: 0
   CanControl: 1
