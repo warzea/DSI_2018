@@ -51,6 +51,8 @@ public class ItemObjLost : MonoBehaviour
 		{
 			PlayerController getPC = thisColl.GetComponent<PlayerController>();
 			getPC.CurrItem = NbrItem;
+			Manager.Ui.AllPotGet[getPC.IdPlayer].GetComponent<PotionFollowP>().Nbr = NbrItem;
+			
 			foreach ( ItemLost thisT in thisTrans.GetComponentsInChildren<ItemLost>() )
 			{
 				thisT.GoTarget(getPC);

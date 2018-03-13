@@ -716,14 +716,19 @@ public class PlayerController : MonoBehaviour
 
 			Manager.VibM.StunVibration (inputPlayer);
 
-			if (lifePlayer <= 0 && !dead) {
+			if (lifePlayer <= 0 && !dead) 
+			{
 				animeDead (thisColl.transform.position);
-			} else {
-				if (tweenRegen != null) {
+			} 
+			else 
+			{
+				if (tweenRegen != null) 
+				{
 					tweenRegen.Kill ();
 				}
 
-				DOVirtual.DelayedCall (TimeToRegen, () => {
+				DOVirtual.DelayedCall (TimeToRegen, () => 
+				{
 					lifePlayer = LifePlayer;
 				});
 			}
