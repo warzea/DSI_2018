@@ -19,7 +19,6 @@ public class PotionFollowP : MonoBehaviour
 	CanvasGroup thisCanvas;
 	#endregion
 	
-	
 	#region Mono
 	void Start ( )
 	{
@@ -30,7 +29,6 @@ public class PotionFollowP : MonoBehaviour
 	}
 	#endregion
 	
-	
 	#region Public
 	public void NewValue ( int val )
 	{
@@ -38,7 +36,8 @@ public class PotionFollowP : MonoBehaviour
 	}
 	void Update ()
 	{
-		thisTrans.position = getCam.WorldToScreenPoint(ThisPlayer.position + Vector3.up * YPos + Vector3.right * XPos );
+		thisTrans.position = getCam.WorldToScreenPoint(ThisPlayer.position );
+		thisTrans.localPosition += Vector3.up * YPos + Vector3.right * XPos ;
 
 		if ( thisPC != null )
 		{

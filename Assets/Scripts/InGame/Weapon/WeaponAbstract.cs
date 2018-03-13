@@ -89,9 +89,6 @@ public class WeaponAbstract : MonoBehaviour
     {
         if (canShoot && getCapacity > 0 && !blockShoot)
         {
-
-            Debug.Log("Shootlol");
-
             Manager.Ui.ScreenShake();
 
             //playerTrans.localPosition -= playerTrans.forward * BackPush * Time.deltaTime;
