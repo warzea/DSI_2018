@@ -300,10 +300,19 @@ public class BulletAbstract : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
-        GetComponentInChildren<MeshRenderer>().enabled = false;
-        GetComponent<Collider>().enabled = false;
+        try
+        {
+            GetComponentInChildren<MeshRenderer>().enabled = false;
+            GetComponent<Collider>().enabled = false;
+        }
+        catch (System.Exception)
+        {
+            
+            Destroy (gameObject, DefinitiveDestroy);
+            throw;
+        }
         
-        Destroy (gameObject, DefinitiveDestroy);
+        
     }
     
     #endregion
