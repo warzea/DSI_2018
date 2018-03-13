@@ -154,7 +154,7 @@ public class UiManager : ManagerParent
 
         ResetTween();
 
-        Transform getTrans = PlayersAmmo[PlayerId].transform;
+        Transform getTrans = PlayersWeaponHUD[PlayerId].transform;
 
 
         getTrans.GetChild(0).GetComponent<Image>().DOFade(1, .25f).OnComplete(() =>
