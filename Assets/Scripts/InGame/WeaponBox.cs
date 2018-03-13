@@ -7,8 +7,10 @@ using DG.Tweening;
 public class WeaponBox : MonoBehaviour 
 {
 	#region Variables
+	[HideInInspector]
 	public Slider ThisGauge;
-	public GameObject AttackZone;
+	public float SpeedAttack = 1;
+	public float RangeAttack = 1;
 	public float DelayAttack = 1;
 	public float DelayStay = 1;
 	public int SpeMultRessources = 2;
@@ -56,6 +58,19 @@ public class WeaponBox : MonoBehaviour
 		{
 			DelayStay = DelayAttack;
 		}
+
+		if ( SpeedAttack < DelayAttack )
+		{
+			SpeedAttack = DelayAttack;
+		}
+	}
+
+	void Start ( )
+	{
+		if ( ThisGauge == null )
+		{
+			ThisGauge = Manager.Ui.CauldronGauge.GetComponent<Slider>();
+		}
 	}
 	#endregion
 	
@@ -64,17 +79,22 @@ public class WeaponBox : MonoBehaviour
 	{
 		if ( !checkAttack )
 		{
+			GetComponent<Collider>().isTrigger = true;
 			checkAttack = true;
-			AttackZone.SetActive(true);
+			gameObject.tag = Constants._PlayerBullet;
+
+			GetTrans.DOLocalMoveZ ( RangeAttack, SpeedAttack * 0.5f ).OnComplete( () =>
+			{
+				GetTrans.DOLocalMoveZ ( 0, SpeedAttack * 0.5f ).OnComplete( () =>
+				{
+					GetComponent<Collider>().isTrigger = false;
+					gameObject.tag = Constants._BoxTag;
+				});
+			});		
 
 			DOVirtual.DelayedCall(DelayAttack, ( ) => 
 			{
 				checkAttack = false;
-			});
-
-			DOVirtual.DelayedCall(DelayStay, ( ) => 
-			{
-				AttackZone.SetActive(false);
 			});
 		}
 	}
