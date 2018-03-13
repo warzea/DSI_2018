@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 966d2e149f4248c4e9c4147a408b53a6
-timeCreated: 1520526414
+guid: 959f40107a0f65640bfed57a64ad39fb
+timeCreated: 1520690850
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -8,6 +8,7 @@ ModelImporter:
     100000: //RootNode
     400000: //RootNode
     2100000: No Name
+    2100002: 'Material #30'
     2300000: //RootNode
     3300000: //RootNode
     4300000: wall

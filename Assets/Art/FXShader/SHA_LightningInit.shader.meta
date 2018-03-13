@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: e90ef27c8b60f744883bf3a2695b9ff7
+timeCreated: 1520892834
+licenseType: Pro
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _T_Lightning: {fileID: 2800000, guid: d49990a49468418429e231cd9d07bac2, type: 3}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

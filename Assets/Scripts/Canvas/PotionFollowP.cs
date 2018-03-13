@@ -19,7 +19,6 @@ public class PotionFollowP : MonoBehaviour
 	CanvasGroup thisCanvas;
 	#endregion
 	
-	
 	#region Mono
 	void Start ( )
 	{
@@ -30,15 +29,19 @@ public class PotionFollowP : MonoBehaviour
 	}
 	#endregion
 	
-	
 	#region Public
+	public void NewValue ( int val )
+	{
+    	 DOTween.To(() => Nbr, x => Nbr = x, val, 0.3f);
+	}
 	void Update ()
 	{
-		thisTrans.position = getCam.WorldToScreenPoint(ThisPlayer.position + Vector3.up * YPos + Vector3.right * XPos );
+		thisTrans.position = getCam.WorldToScreenPoint(ThisPlayer.position );
+		thisTrans.localPosition += Vector3.up * YPos + Vector3.right * XPos ;
 
 		if ( thisPC != null )
 		{
-			getText.text = "+" + thisPC.AllItem.Count.ToString();
+			getText.text = "+" + Nbr;
 			if ( thisPC.AllItem.Count - 1 > 0 && !checkPotion )
 			{
 				checkPotion = true;
@@ -53,7 +56,6 @@ public class PotionFollowP : MonoBehaviour
 		else
 		{
 			getText.text = "+" + Nbr.ToString();
-
 		}
 	}
 	#endregion

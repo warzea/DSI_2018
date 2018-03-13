@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: adcc5bdf9543436489350ebe57b71080
+timeCreated: 1520890316
+licenseType: Pro
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _T_AvatarTrail: {fileID: 2800000, guid: 4a859e482c38ec2469642bd3f02fe699, type: 3}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

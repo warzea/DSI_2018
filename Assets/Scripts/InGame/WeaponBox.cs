@@ -12,7 +12,6 @@ public class WeaponBox : MonoBehaviour
 	public float SpeedAttack = 1;
 	public float RangeAttack = 1;
 	public float DelayAttack = 1;
-	public float DelayStay = 1;
 	public int SpeMultRessources = 2;
 	public int StayMult = 5;
 	public float InvincibleTime = 1;
@@ -53,16 +52,6 @@ public class WeaponBox : MonoBehaviour
 			updateWeapon.Add ( new PlayerWeapon () );
 			updateWeapon[a].IDPlayer = a;
 		}
-
-		if ( DelayStay < DelayAttack )
-		{
-			DelayStay = DelayAttack;
-		}
-
-		if ( SpeedAttack < DelayAttack )
-		{
-			SpeedAttack = DelayAttack;
-		}
 	}
 
 	void Start ( )
@@ -89,10 +78,11 @@ public class WeaponBox : MonoBehaviour
 				{
 					GetComponent<Collider>().isTrigger = false;
 					gameObject.tag = Constants._BoxTag;
+					
+					
 				});
 			});		
-
-			DOVirtual.DelayedCall(DelayAttack, ( ) => 
+			DOVirtual.DelayedCall(DelayAttack + SpeedAttack, ( ) => 
 			{
 				checkAttack = false;
 			});
@@ -149,7 +139,7 @@ public class WeaponBox : MonoBehaviour
             });
         });
 
-        Manager.Ui.WeaponChange(thisPlayer.IdPlayer);
+        Manager.Ui.WeaponChangeIG(thisPlayer.IdPlayer);
 
 		if ( newObj == null )
 		{
@@ -208,7 +198,9 @@ public class WeaponBox : MonoBehaviour
 	{
 
         if(inv)
+		{
             Manager.Ui.PopPotions(PotionType.Less);
+		}
 
         NbrItem += lenghtItem;
 
@@ -225,8 +217,25 @@ public class WeaponBox : MonoBehaviour
 
 		Manager.Ui.GetGauge.DOKill(true);
 //		Debug.Log( NbrItem + " / " + currNbr + " / " + currNbr * 0.01f);
-		Manager.Ui.GetGauge.DOFillAmount ( currNbr * 0.01f, 0.5f );
-		
+		Manager.Ui.GetGauge.DOFillAmount ( (float)currNbr / ItemOneGauge, 0.5f ).OnComplete ( () =>
+		{
+			if ( currNbr > (float)ItemOneGauge * 0.9f )
+			{
+				Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = false;
+				Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = true;
+			}
+			else if ( currNbr < (float)ItemOneGauge * 0.1f )
+			{
+				Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = false;
+				Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = true;
+			}
+			else
+			{
+				Manager.Ui.GetGauge.GetComponentsInChildren<Image>()[1].DOColor(Color.white,0);				
+				Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = false;
+				Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = false;
+			}
+		});
 		/*if ( !inv )
 		{
 			//updateFeed ( getFeedBack, 0, currNbr, inv );
@@ -277,54 +286,32 @@ public class WeaponBox : MonoBehaviour
 						lastNbr++;
 					}
 			
-					getTween = Manager.Ui.GetGauge.DOFillAmount ( currNbr * 0.01f, 0.5f );
+					getTween = Manager.Ui.GetGauge.DOFillAmount ( (float) currNbr / ItemOneGauge, 0.5f ).OnComplete ( () =>
+					{
+						if ( currNbr > (float)ItemOneGauge * 0.9f )
+						{
+							Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = false;
+							Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = true;
+						}
+						else if ( currNbr < (float)ItemOneGauge * 0.1f )
+						{
+							Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = false;
+							Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = true;
+						}
+						else
+						{
+							Manager.Ui.GetGauge.GetComponentsInChildren<Image>()[1].DOColor(Color.white,0);				
+							Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = false;
+							Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = false;
+						}
+					});
+
 
 				});
 			});
 			getAllTween.Add ( getTween );
-			
-			/*Tween getTween;
-			Tween getTween = DOVirtual.DelayedCall(0.5f, () =>
-			{
-				Manager.Ui.GetGauge.DOKill(true);
-				getTween = Manager.Ui.GetGauge.DOFillAmount ( 0, 0.5f ).OnComplete ( ( ) =>
-				{
-					getTween = Manager.Ui.GetGauge.DOFillAmount ( currNbr * 0.01f, 0.5f );
-					getAllTween.Add ( getTween );
-				});
-				getAllTween.Add ( getTween );
-			});
-			getAllTween.Add ( getTween );
-			
-			/*Tween getTween;
-			getTween = DOVirtual.DelayedCall(0.5f, () => 
-			{
-				getWait = 0.5f;
-				resetFeed ( getFeedBack, getFeedBack.Length - 1);
-
-				getTween = DOVirtual.DelayedCall(0.5f, () => 
-				{
-					if ( !inv )
-					{
-						updateFeed ( getFeedBack, 0, currNbr, inv );
-					}
-					else
-					{
-						updateFeed ( getFeedBack, getFeedBack.Length - 1, currNbr, inv );
-					}
-				});
-				getAllTween.Add ( getTween );
-			});
-
-			getAllTween.Add ( getTween );*/
 		}
 	}
-
-    /*
-    private void Update()
-    {
-    }
-    */
 
     void updateFeed ( Image[] getFeedBack, int currInd, int currNbr, bool inv = false )
 	{
@@ -461,5 +448,3 @@ public class WeaponBox : MonoBehaviour
 	#endregion
 
 }
-
-		//Debug.Log( NbrItem + " / " + currNbr + " / " + currNbr * 0.01f);
