@@ -8,7 +8,7 @@ public class WeaponBox : MonoBehaviour
 {
 	#region Variables
 
-	public Slider ThisGauge;
+	public Image ThisGauge;
 	public float SpeedAttack = 1;
 	public float RangeAttack = 1;
 	public float DelayAttack = 1;
@@ -54,13 +54,6 @@ public class WeaponBox : MonoBehaviour
 		}
 	}
 
-	void Start ( )
-	{
-		if ( ThisGauge == null )
-		{
-			ThisGauge = Manager.Ui.CauldronGauge.GetComponent<Slider>();
-		}
-	}
 	#endregion
 	
 	#region Public Methods
