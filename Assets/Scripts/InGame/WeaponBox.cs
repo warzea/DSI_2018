@@ -7,7 +7,7 @@ using DG.Tweening;
 public class WeaponBox : MonoBehaviour 
 {
 	#region Variables
-	[HideInInspector]
+
 	public Slider ThisGauge;
 	public float SpeedAttack = 1;
 	public float RangeAttack = 1;
