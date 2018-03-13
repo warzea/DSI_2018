@@ -12,7 +12,6 @@ public class WeaponBox : MonoBehaviour
 	public float SpeedAttack = 1;
 	public float RangeAttack = 1;
 	public float DelayAttack = 1;
-	public float DelayStay = 1;
 	public int SpeMultRessources = 2;
 	public int StayMult = 5;
 	public float InvincibleTime = 1;
@@ -52,11 +51,6 @@ public class WeaponBox : MonoBehaviour
 		{
 			updateWeapon.Add ( new PlayerWeapon () );
 			updateWeapon[a].IDPlayer = a;
-		}
-
-		if ( DelayStay < DelayAttack )
-		{
-			DelayStay = DelayAttack;
 		}
 	}
 

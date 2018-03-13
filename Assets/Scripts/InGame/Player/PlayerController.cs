@@ -110,6 +110,10 @@ public class PlayerController : MonoBehaviour
 	public InteractAbstract currInt;
 	[HideInInspector]
 	public bool autoShoot = true;
+	[HideInInspector]
+	public bool checkShoot = true;
+	[HideInInspector]
+	public bool checkAuto = false;
 	public bool canCauldron = false;
 	PlayerController thisPC;
 	WeaponAbstract thisWeapon;
@@ -128,11 +132,10 @@ public class PlayerController : MonoBehaviour
 	bool canDash = true;
 	bool canEnterBox = false;
 	bool canShoot = true;
-	bool checkShoot = true;
+	
 	bool canTakeDmg = true;
 	bool checkShootScore = true;
 
-	bool checkAuto = false;
 	bool checkUIBorder = false;
 	bool checkUIBorderY = false;
 	bool checkUpdate = true;
@@ -197,7 +200,7 @@ public class PlayerController : MonoBehaviour
 		else 
 		{
 			AmmoUI.position = getCam.WorldToScreenPoint (thisTrans.position);
-			
+
 			AmmoUI.localPosition += Vector3.right * UiAmmoX + Vector3.up * UiAmmoY;
 		}
 
@@ -450,22 +453,29 @@ public class PlayerController : MonoBehaviour
 
 		}
 
-		if (shootInput == 1 && checkShootScore) {
+		if (shootInput == 1 && checkShootScore) 
+		{
 			checkShootScore = false;
 			SpawmShoot++;
-		} else if (shootInput < 0.3f) {
+		} 
+		else if (shootInput < 0.3f) 
+		{
 			checkShootScore = true;
 		}
 
-		if (shootInput == 0 && checkAuto) {
+		if (shootInput == 0 && checkAuto) 
+		{
 			checkShoot = true;
 		}
-
-		if (shootInput > 0.3f && thisWeapon != null && checkShoot) {
-			if (!autoShoot) {
+		
+		if (shootInput > 0.3f && thisWeapon != null && checkShoot) 
+		{
+			if (!autoShoot) 
+			{
 				checkAuto = false;
 				checkShoot = false;
-				DOVirtual.DelayedCall (CdShoot, () => {
+				DOVirtual.DelayedCall (CdShoot, () => 
+				{
 					checkAuto = true;
 				});
 			}
@@ -473,7 +483,8 @@ public class PlayerController : MonoBehaviour
 			thisWeapon.weaponShoot (thisTrans);
 			animPlayer.SetBool ("Attack", true);
 			shooting = true;
-			if (thisWeapon != null) { //&& thisWeapon.Damage == 1)
+			if (thisWeapon != null) 
+			{ //&& thisWeapon.Damage == 1)
 				//Debug.Log("Shoot");
 				if (thisWeapon.Damage <= Manager.VibM.DamagesLow)
 					Manager.VibM.ShootLowVibration (inputPlayer);
@@ -482,7 +493,9 @@ public class PlayerController : MonoBehaviour
 				else if (thisWeapon.Damage > Manager.VibM.DamagesLow && thisWeapon.Damage <= Manager.VibM.DamagesMedium)
 					Manager.VibM.ShootHighVibration (inputPlayer);
 			}
-		} else {
+		} 
+		else 
+		{
 			animPlayer.SetBool ("Attack", false);
 			shooting = false;
 		}
