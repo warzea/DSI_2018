@@ -12,10 +12,10 @@ public class AgentControllerCac : MonoBehaviour
 
     private GameObject targetCauldron;
     public int lifeAgent = 1;
-	public Animator animAgent;
+    public Animator animAgent;
 
-	public float distancePlayer = 4f;
-	public float distanceWeaponBox = 5f;
+    public float distancePlayer = 4f;
+    public float distanceWeaponBox = 5f;
 
     public float speedVsCauldron = 20;
     public float speedVsPlayer = 20;
@@ -24,7 +24,7 @@ public class AgentControllerCac : MonoBehaviour
     public GameObject focusPlayer;
     private AgentsManagerCac agentsM;
 
-	public float timeBeforeDepop = 3;
+    public float timeBeforeDepop = 3;
 
     private float timeAgent = -5;
 
@@ -55,7 +55,7 @@ public class AgentControllerCac : MonoBehaviour
 
     void Update()
     {
-		timeAgent += Time.deltaTime;
+        timeAgent += Time.deltaTime;
         if (!checkUpdate)
         {
             return;
@@ -63,41 +63,46 @@ public class AgentControllerCac : MonoBehaviour
 
 
 
-		if (myEtatAgent == AgentEtat.aliveAgent && focusPlayer != null) {
+        if (myEtatAgent == AgentEtat.aliveAgent && focusPlayer != null)
+        {
 
-			Vector3 lookAtPosition2 = new Vector3(focusPlayer.transform.transform.position.x, this.transform.position.y, focusPlayer.transform.transform.position.z);
-			transform.LookAt(lookAtPosition2);
+            Vector3 lookAtPosition2 = new Vector3(focusPlayer.transform.transform.position.x, this.transform.position.y, focusPlayer.transform.transform.position.z);
+            transform.LookAt(lookAtPosition2);
 
-			float velocity = navAgent.velocity.magnitude;
-			if (velocity > 0.2)
-			{
-				animAgent.SetBool("Move", true);
-			}
-			else
-			{
-				animAgent.SetBool("Move", false);
+            float velocity = navAgent.velocity.magnitude;
+            if (velocity > 0.2)
+            {
+                animAgent.SetBool("Move", true);
+            }
+            else
+            {
+                animAgent.SetBool("Move", false);
 
-			}
+            }
 
-			float dist = Vector3.Distance(transform.position, focusPlayer.transform.position);
-			if (dist > 3f)
-			{
-				navAgent.SetDestination(focusPlayer.transform.position);
-			}
+            float dist = Vector3.Distance(transform.position, focusPlayer.transform.position);
+            if (dist > 3f)
+            {
+                navAgent.SetDestination(focusPlayer.transform.position);
+            }
 
-			NavMeshPath path = new NavMeshPath ();
+            NavMeshPath path = new NavMeshPath();
 
-			navAgent.CalculatePath (transform.position, path);
-			if (path.status == NavMeshPathStatus.PathPartial) {
-				Vector3 getCamPos = cam.WorldToViewportPoint (transform.position);
+            navAgent.CalculatePath(transform.position, path);
+            if (path.status == NavMeshPathStatus.PathPartial)
+            {
+                Vector3 getCamPos = cam.WorldToViewportPoint(transform.position);
 
-				if (getCamPos.x > 1f || getCamPos.x < 0f || getCamPos.y > 1f || getCamPos.y < 0f) {
-					DeadFonction ();
-				}
-			} else {
-				ShootCac ();
-			}
-		}
+                if (getCamPos.x > 1f || getCamPos.x < 0f || getCamPos.y > 1f || getCamPos.y < 0f)
+                {
+                    DeadFonction();
+                }
+            }
+            else
+            {
+                ShootCac();
+            }
+        }
 
     }
 
@@ -106,23 +111,23 @@ public class AgentControllerCac : MonoBehaviour
 
         if (timeAgent > timeLeftAgentAttacCac)
         {
-			if (focusPlayer != null)
+            if (focusPlayer != null)
             {
-				float dist = Vector3.Distance(transform.position, focusPlayer.transform.position);
+                float dist = Vector3.Distance(transform.position, focusPlayer.transform.position);
 
-				if (focusPlayer.tag == "WeaponBox" && dist < distanceWeaponBox)
-					{
-						animAgent.SetBool("Move", false);
-						animAgent.SetTrigger("MeleeAttack");
-						focusPlayer.GetComponent<WeaponBox>().TakeHit();
-					}
-				else if (focusPlayer.tag == "Player" && dist < distancePlayer)
-					{
-						animAgent.SetBool("Move", false);
-						animAgent.SetTrigger("MeleeAttack");
-						Debug.Log("Shhooottt");
-						focusPlayer.GetComponent<PlayerController>().GetDamage(transform);
-					}                   
+                if (focusPlayer.tag == "WeaponBox" && dist < distanceWeaponBox)
+                {
+                    animAgent.SetBool("Move", false);
+                    animAgent.SetTrigger("MeleeAttack");
+                    focusPlayer.GetComponent<WeaponBox>().TakeHit();
+                }
+                else if (focusPlayer.tag == "Player" && dist < distancePlayer)
+                {
+                    animAgent.SetBool("Move", false);
+                    animAgent.SetTrigger("MeleeAttack");
+                    Debug.Log("Shhooottt");
+                    focusPlayer.GetComponent<PlayerController>().GetDamage(transform);
+                }
             }
             timeAgent = 0;
         }
@@ -153,16 +158,17 @@ public class AgentControllerCac : MonoBehaviour
 
     IEnumerator WaitRespawn()
     {
-		animAgent.SetBool("Move", false);
-		//animAgent.SetTrigger("Die");
-		yield return new WaitForSeconds(timeBeforeDepop);
-		Vector3 newPos = agentsM.CheckBestcheckPoint (focusPlayer.transform);
-		navAgent.Warp(newPos);
+        animAgent.SetBool("Move", false);
+        // animAgent.SetTrigger("Die");
+        yield return new WaitForSeconds(timeBeforeDepop);
+        Vector3 newPos = agentsM.CheckBestcheckPoint(focusPlayer.transform);
+        navAgent.Warp(newPos);
         focusPlayer = targetCauldron;
         navAgent.speed = speedVsCauldron;
         navAgent.isStopped = false;
         myEtatAgent = AgentEtat.aliveAgent;
         lifeAgent = 1;
+        animAgent.SetBool("Move", true);
     }
 
     public void DeadFonction()
@@ -178,7 +184,7 @@ public class AgentControllerCac : MonoBehaviour
             lifeAgent = lifeAgent - 1;
             if (lifeAgent <= 0 && AgentEtat.aliveAgent == myEtatAgent)
             {
-				myEtatAgent = AgentEtat.deadAgent;
+                myEtatAgent = AgentEtat.deadAgent;
                 DeadFonction();
             }
         }
