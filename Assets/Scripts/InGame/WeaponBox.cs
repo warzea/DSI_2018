@@ -208,7 +208,9 @@ public class WeaponBox : MonoBehaviour
 	{
 
         if(inv)
+		{
             Manager.Ui.PopPotions(PotionType.Less);
+		}
 
         NbrItem += lenghtItem;
 
@@ -225,8 +227,7 @@ public class WeaponBox : MonoBehaviour
 
 		Manager.Ui.GetGauge.DOKill(true);
 //		Debug.Log( NbrItem + " / " + currNbr + " / " + currNbr * 0.01f);
-		Manager.Ui.GetGauge.DOFillAmount ( currNbr * 0.01f, 0.5f );
-		
+		Manager.Ui.GetGauge.DOFillAmount ( (float)currNbr / ItemOneGauge, 0.5f );
 		/*if ( !inv )
 		{
 			//updateFeed ( getFeedBack, 0, currNbr, inv );
@@ -277,7 +278,24 @@ public class WeaponBox : MonoBehaviour
 						lastNbr++;
 					}
 			
-					getTween = Manager.Ui.GetGauge.DOFillAmount ( currNbr * 0.01f, 0.5f );
+					getTween = Manager.Ui.GetGauge.DOFillAmount ( (float)currNbr / ItemOneGauge, 0.5f ).OnComplete ( () =>
+					{
+						/*if ( currNbr > 90 )
+						{
+							Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = true;
+							Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = false;
+						}
+						else if ( currNbr < 10 )
+						{
+							Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = true;
+							Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = false;
+						}
+						else
+						{
+							Manager.Ui.GetGauge.GetComponentsInChildren<Image>()[1].DOColor(Color.white,0);				
+						}*/
+					});
+
 
 				});
 			});
