@@ -13,7 +13,8 @@ public class ItemLost : MonoBehaviour
 	#region Mono
 	void Awake ( )
 	{
-		Collider thisColl = GetComponent<Collider>();
+		thisTrans = transform;
+		/*Collider thisColl = GetComponent<Collider>();
 		if ( !GetComponent<Collider>() )
 		{
 			thisColl = gameObject.AddComponent<Collider>();
@@ -22,7 +23,7 @@ public class ItemLost : MonoBehaviour
 		thisColl.enabled = false;
 
 		thisTrans = transform;
-		getScale = thisTrans.localScale;
+		getScale = thisTrans.localScale;*/
 	}
 	#endregion
 	
@@ -38,12 +39,30 @@ public class ItemLost : MonoBehaviour
 			thisColl.enabled = active;
 		});
 	}
+
+	public void GoTarget ( PlayerController thisPlayer )
+	{
+		thisTrans.SetParent(thisPlayer.BagPos);
+		
+		thisTrans.DOLocalMove(Vector3.zero + Vector3.up * 3, 0.5f).OnComplete ( () => 
+		{
+			thisTrans.DOScale(Vector3.zero, 0.5f).OnComplete( () => 
+			{
+				gameObject.SetActive(false);
+			});
+			
+			thisTrans.DOLocalMove(Vector3.zero, 0.5f);
+		});
+
+		thisPlayer.AllItem.Add(gameObject);
+		GetComponent<Collider>().enabled = false;
+	}
 	#endregion
 
 	#region Private Methods
 	void OnTriggerEnter ( Collider thisColl )
 	{
-		if ( thisColl.tag == Constants._Player )
+		/*if ( thisColl.tag == Constants._Player )
 		{
 			PlayerController thisPlayer = thisColl.GetComponent<PlayerController>();
 			Transform getTrans = transform;
@@ -61,7 +80,7 @@ public class ItemLost : MonoBehaviour
 
 			thisPlayer.AllItem.Add(gameObject);
 			GetComponent<Collider>().enabled = false;
-		}
+		}*/
 	}
 	#endregion
 

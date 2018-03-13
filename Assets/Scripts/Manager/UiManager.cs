@@ -22,6 +22,7 @@ public class UiManager : ManagerParent
 
     public Text ScoreText;
     public Text Multiplier;
+    public GameObject CauldronGauge;
     public Image GetGauge;
     public Image GaugeBackground;
     public Image[] GaugeFeedback;
@@ -275,11 +276,6 @@ public class UiManager : ManagerParent
 
     #region Private Methods
 
-    private void LateUpdate()
-    {
-
-        UnityEngine.Debug.Log(Camera.main.transform.localPosition);
-    }
 
     public void ScreenShake()
     {
@@ -387,6 +383,8 @@ public class UiManager : ManagerParent
 			setAllMenu.Add ( thisUi.ThisMenu, thisUi );
 		}
 
+        CauldronGauge = (GameObject) Instantiate(CauldronGauge, GetInGame);
+        CauldronGauge.SetActive(false);
 		AllMenu = setAllMenu;
 
 		OpenThisMenu(MenuType.SelectPlayer);
