@@ -351,7 +351,12 @@ public class PlayerController : MonoBehaviour
 		float Ymove = inputPlayer.GetAxis ("MoveY");
 
 		float speed = Mathf.Abs (Xmove) + Mathf.Abs (Ymove) * 2;
-
+	
+		if ( speed == 0 )
+		{
+			currSpeed = 0;
+		}
+		
 		animPlayer.SetFloat ("Velocity", speed);
 		float getSpeed = MoveSpeed;
 
@@ -576,7 +581,8 @@ public class PlayerController : MonoBehaviour
 			driveBox = true;
 		} 
 		else if (driveBox)
-		 {
+		{
+			currSpeed = 0;
 			thisWB.GetComponent<Collider>().isTrigger = false;
 			thisWB.gameObject.tag = Constants._BoxTag;
 			thisWB.transform.DOKill(true);
