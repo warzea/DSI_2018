@@ -52,7 +52,7 @@ public class BulletAbstract : MonoBehaviour
     bool checkEnd = false;
     bool blockUpdate = false;
     float getDistScale = 0;
-
+    bool checkUpdate = true;
     #endregion
 
     #region Mono
@@ -75,6 +75,11 @@ public class BulletAbstract : MonoBehaviour
             playZone();
         }
 
+        if ( ThisTrajectoir == Trajectoir.Nothing )
+        {
+            checkUpdate = false;
+        }
+
         RaycastHit[] allHit;
         string getTag;
 
@@ -95,7 +100,7 @@ public class BulletAbstract : MonoBehaviour
     #region Public Methods
     void Update()
     {
-        if (blockUpdate )
+        if ( blockUpdate || !checkUpdate)
         {
             return;
         }

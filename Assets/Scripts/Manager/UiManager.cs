@@ -78,26 +78,24 @@ public class UiManager : ManagerParent
             thisUi.OpenThis(GetTok);
         }
 
-
-
         DOVirtual.DelayedCall(22, () =>
         {
-            WeaponChange(3);
+            WeaponChangeHUD(3);
         }).SetLoops(-1, LoopType.Restart);
 
         DOVirtual.DelayedCall(19, () =>
         {
-            WeaponChange(2);
+            WeaponChangeHUD(2);
         }).SetLoops(-1, LoopType.Restart);
 
         DOVirtual.DelayedCall(17, () =>
         {
-            WeaponChange(1);
+            WeaponChangeHUD(1);
         }).SetLoops(-1, LoopType.Restart);
 
         DOVirtual.DelayedCall(15, () =>
         {
-            WeaponChange(0);
+            WeaponChangeHUD(0);
         }).SetLoops(-1, LoopType.Restart);
 
     }
@@ -128,9 +126,11 @@ public class UiManager : ManagerParent
         ammoTwWait.Kill(true);
     }
 
-    public void WeaponChange(int PlayerId)
+    public void WeaponChangeIG(int PlayerId)
     {
         ResetTween();
+
+        WeaponChangeHUD(PlayerId);
     
         //HUD INGAME
         Transform getTrans = PlayersAmmo[PlayerId].transform;
@@ -146,10 +146,17 @@ public class UiManager : ManagerParent
         ammoTwScale1 = getTrans.DOPunchScale((Vector3.one * .45f), 0.3f, 20, .1f);
         ammoTwFade = getTrans.GetComponent<CanvasGroup>().DOFade(0, .3f);
         ammoTwScale2 = getTrans.DOScale(0, .3f);
+    }
 
+    public void WeaponChangeHUD(int PlayerId)
+    {
         //HUD ABOVE ALL
 
-        getTrans.DOKill(true);
+        ResetTween();
+
+        Transform getTrans = PlayersWeaponHUD[PlayerId].transform;
+
+
         getTrans.GetChild(0).GetComponent<Image>().DOFade(1, .25f).OnComplete(() =>
         {
             getTrans.GetChild(0).GetComponent<Image>().DOFade(0, .25f);
@@ -167,8 +174,6 @@ public class UiManager : ManagerParent
     public void WeaponNew(int PlayerId)
     {
         //LE CHARGEUR REAPARAIT VISIBLE
-        ResetTween ( );
-        
         Transform getTrans = PlayersAmmo[PlayerId].transform;
         ammoTwFade = getTrans.GetComponent<CanvasGroup>().DOFade(1, .2f);
         getTrans.localScale = new Vector3(3,3,3);
@@ -345,7 +350,7 @@ public class UiManager : ManagerParent
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
-            WeaponChange(0);
+            WeaponChangeIG(0);
         }
         if (Input.GetKeyDown(KeyCode.I))
         {

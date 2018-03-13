@@ -139,7 +139,7 @@ public class WeaponBox : MonoBehaviour
             });
         });
 
-        Manager.Ui.WeaponChange(thisPlayer.IdPlayer);
+        Manager.Ui.WeaponChangeIG(thisPlayer.IdPlayer);
 
 		if ( newObj == null )
 		{
