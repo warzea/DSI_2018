@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using Rewired;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
+using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour {
 
@@ -16,15 +17,17 @@ public class MenuManager : MonoBehaviour {
     [Header("CANVAS")]
     public CanvasGroup canvasSelect;
     public CanvasGroup canvasMenu;
-
-    public GameObject playersReady;
+    
 
     bool player1Ready, player2Ready, player3Ready, player4Ready;
+
+    public Image backgroundFlash;
 
     [Header("PLAYER MODELS")]
     public GameObject[] PlayersMesh;
     public float[] PlayersRotate;
     public GameObject Cauldron;
+    public GameObject CamCinemachine;
 
     public PlayableDirector timelineDirector;
     public MenuButton firstItemMenu;
@@ -108,10 +111,105 @@ public class MenuManager : MonoBehaviour {
         }
 
         Cauldron.GetComponentInChildren<Animator>().SetTrigger("More");
+
+        DOVirtual.DelayedCall(1, () => {
+
+            PlayersMesh[4].SetActive(true);
+
+            ScreenShake(1);
+
+            DOVirtual.DelayedCall(.5f, () => {
+
+                PlayersMesh[5].SetActive(true);
+                ScreenShake(2);
+
+                DOVirtual.DelayedCall(.4f, () => {
+
+                    PlayersMesh[6].SetActive(true);
+                    ScreenShake(3);
+
+                    DOVirtual.DelayedCall(.3f, () => {
+
+                        PlayersMesh[7].SetActive(true);
+                        ScreenShake(4);
+
+                        DOVirtual.DelayedCall(.3f, () => {
+
+                            backgroundFlash.DOFade(1, 1f).OnComplete(() => {
+
+                                StartCoroutine("LoadLevel");
+
+                            });
+
+                        });
+                    });
+                });
+            });
+        });
         
     }
 
-	
+    IEnumerator LoadLevel()
+    {
+        AsyncOperation opLevel = SceneManager.LoadSceneAsync("Alex", LoadSceneMode.Additive);
+
+        opLevel.allowSceneActivation = false;
+
+        while (opLevel.progress < .9f)
+        {
+            yield return null;
+        }
+
+        DOVirtual.DelayedCall(4, () => {
+
+            backgroundFlash.DOFade(0, .25f).OnComplete(() => {
+
+
+                opLevel.allowSceneActivation = true;
+            });
+        });
+    }
+
+    void ScreenShake(int number)
+    {
+
+        Transform cam = Camera.main.transform;
+        Destroy(CamCinemachine.gameObject);
+
+        if (number == 1)
+        {
+            float rdmX = UnityEngine.Random.Range(-.5f, .5f);
+            float rdmZ = UnityEngine.Random.Range(-.5f, .5f);
+            cam.transform.DOPunchPosition(new Vector3(rdmX, 0, rdmZ), .5f, 2, 1);
+            cam.transform.DOPunchRotation(new Vector3(0, 0, rdmZ), .5f, 2, 1);
+        }
+
+        if(number == 2)
+        {
+            float rdmX = UnityEngine.Random.Range(-1, 1);
+            float rdmZ = UnityEngine.Random.Range(-1, 1);
+            cam.transform.DOPunchPosition(new Vector3(rdmX, 0, rdmX), .35f, 2, 1);
+            cam.transform.DOPunchRotation(new Vector3(0, 0, rdmZ), .35f, 2, 1);
+        }
+
+        if (number == 3)
+        {
+            float rdmX = UnityEngine.Random.Range(-2, 2);
+            float rdmZ = UnityEngine.Random.Range(-2, 2);
+            cam.transform.DOPunchPosition(new Vector3(rdmX, 0, rdmX), .25f, 2, 1);
+            cam.transform.DOPunchRotation(new Vector3(0, 0, rdmZ), .25f, 2, 1);
+        }
+
+        if (number == 4)
+        {
+            transform.DOKill(true);
+            Camera.main.transform.DORotate(Vector3.zero, 1f).SetEase(Ease.InOutExpo);
+            Camera.main.transform.DOShakeRotation(2f, 2f, 15, 90);
+            Camera.main.transform.DOShakePosition(2f, 2f, 15, 90);
+        }
+
+    }
+
 	// Update is called once per frame
 	void Update () {
 
@@ -119,6 +217,11 @@ public class MenuManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.J))
         {
             PlayStart();
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            ScreenShake(1);
         }
 #endif
 
@@ -136,31 +239,125 @@ public class MenuManager : MonoBehaviour {
                     Transform p1 = canvasSelect.transform.GetChild(0).transform;
 
                     p1.GetComponentsInChildren<Text>()[1].text = "READY !";
-                    p1.transform.GetChild(0).GetComponentInChildren<Image>().DOFade(0, .05f);
+                    p1.GetComponentInChildren<Image>().DOFade(0, .05f);
                     
                     PlayersMesh[0].gameObject.SetActive(true);
-                    
-                    /*
-                    float randomZrotate = UnityEngine.Random.Range(-17, 17);
-                    canvasSelect.transform.GetChild(0).transform.DOPunchRotation(new Vector3(1, 1, randomZrotate), 0.2f, 10, 1);
-
-                    p1.DOPunchScale((Vector3.one * .45f), 0.2f, 20, .1f);
-                    p1.transform.GetComponent<CanvasGroup>().DOFade(0, .15f);*/
-
                 }
                 else
                 {
-
                     DOVirtual.DelayedCall(.05f, () => {
                         player1Ready = false;
                     });
 
-                    canvasSelect.transform.GetChild(0).GetComponentsInChildren<Text>()[1].text = "GET READY \n PRESS";
-                    canvasSelect.transform.GetChild(0).GetComponentInChildren<Image>().DOFade(1, .05f);
+                    Transform p1 = canvasSelect.transform.GetChild(0).transform;
 
+                    p1.GetComponentsInChildren<Text>()[1].text = "GET READY \n PRESS";
+                    p1.GetComponentInChildren<Image>().DOFade(1, .05f);
 
                     PlayersMesh[0].gameObject.SetActive(false);
 
+                }
+            }
+
+            if (player2.GetButtonDown("UISubmit"))
+            {
+                if (!player2Ready)
+                {
+                    DOVirtual.DelayedCall(.05f, () =>
+                    {
+                        player2Ready = true;
+                    });
+
+                    Transform p2 = canvasSelect.transform.GetChild(0).transform;
+
+                    p2.GetComponentsInChildren<Text>()[1].text = "READY !";
+                    p2.GetComponentInChildren<Image>().DOFade(0, .05f);
+
+                    PlayersMesh[0].gameObject.SetActive(true);
+                }
+                else
+                {
+                    DOVirtual.DelayedCall(.05f, () => {
+                        player2Ready = false;
+                    });
+
+                    Transform p2 = canvasSelect.transform.GetChild(0).transform;
+
+                    p2.GetComponentsInChildren<Text>()[1].text = "GET READY \n PRESS";
+                    p2.GetComponentInChildren<Image>().DOFade(1, .05f);
+
+                    PlayersMesh[1].gameObject.SetActive(false);
+
+                }
+            }
+
+            if (player3.GetButtonDown("UISubmit"))
+            {
+                if (!player3Ready)
+                {
+                    DOVirtual.DelayedCall(.05f, () =>
+                    {
+                        player3Ready = true;
+                    });
+
+                    Transform p3 = canvasSelect.transform.GetChild(0).transform;
+
+                    p3.GetComponentsInChildren<Text>()[1].text = "READY !";
+                    p3.GetComponentInChildren<Image>().DOFade(0, .05f);
+
+                    PlayersMesh[2].gameObject.SetActive(true);
+                }
+                else
+                {
+                    DOVirtual.DelayedCall(.05f, () => {
+                        player3Ready = false;
+                    });
+
+                    Transform p3 = canvasSelect.transform.GetChild(0).transform;
+
+                    p3.GetComponentsInChildren<Text>()[1].text = "GET READY \n PRESS";
+                    p3.GetComponentInChildren<Image>().DOFade(1, .05f);
+
+                    PlayersMesh[3].gameObject.SetActive(false);
+                }
+            }
+
+            if (player4.GetButtonDown("UISubmit"))
+            {
+                if (!player4Ready)
+                {
+                    DOVirtual.DelayedCall(.05f, () =>
+                    {
+                        player4Ready = true;
+                    });
+
+                    Transform p4 = canvasSelect.transform.GetChild(0).transform;
+
+                    p4.GetComponentsInChildren<Text>()[1].text = "READY !";
+                    p4.GetComponentInChildren<Image>().DOFade(0, .05f);
+
+                    PlayersMesh[3].gameObject.SetActive(true);
+                }
+                else
+                {
+                    DOVirtual.DelayedCall(.05f, () => {
+                        player4Ready = false;
+                    });
+
+                    Transform p4 = canvasSelect.transform.GetChild(0).transform;
+
+                    p4.GetComponentsInChildren<Text>()[1].text = "GET READY \n PRESS";
+                    p4.GetComponentInChildren<Image>().DOFade(1, .05f);
+
+                    PlayersMesh[3].gameObject.SetActive(false);
+                }
+            }
+
+            if (player1Ready && player2Ready && player3Ready && player4Ready)
+            {
+                if (player1.GetButtonDown("UIStart") || player2.GetButtonDown("UIStart") || player3.GetButtonDown("UIStart") || player4.GetButtonDown("UIStart"))
+                {
+                    PlayReady();
                 }
             }
 
