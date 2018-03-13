@@ -63,8 +63,12 @@ public class InteractAbstract : MonoBehaviour
 		}
 		else 
 		{
+			thisPlayer.CurrItem += NbrDropByDrop * ValueOnDrop;
+
+			Manager.Ui.AllPotGet[thisPlayer.IdPlayer].GetComponent<PotionFollowP>().NewValue ( thisPlayer.CurrItem );
+
 			int b;
-			for ( int a = 0; a < NbrDropByDrop; a ++ )
+			for ( int a = 0; a < Random.Range(5, 20); a ++ )
 			{
 				if ( NbrItem > 0 )
 				{
@@ -74,7 +78,6 @@ public class InteractAbstract : MonoBehaviour
 						{
 							GameObject newItem = (GameObject) Instantiate (ItemDrop[Random.Range(0, ItemDrop.Length - 1)], thisPlayer.BagPos);
 							Transform getTrans = newItem.transform;
-
 							getTrans.position = thisTrans.position + new Vector3 ( Random.Range(-0.5f, 0.51f), 0, Random.Range(-0.5f, 0.51f) );
 							
 							getTrans.DOLocalMove(Vector3.zero + Vector3.up * 3, 0.5f).OnComplete ( () => 
@@ -87,9 +90,15 @@ public class InteractAbstract : MonoBehaviour
 								getTrans.DOLocalMove(Vector3.zero, 0.5f);
 							});
 
-							thisPlayer.AllItem.Add(newItem);
+							if ( thisPlayer.AllItem.Count < 20 )
+							{
+								thisPlayer.AllItem.Add(newItem);
 							}
-						
+							else
+							{
+								Destroy(newItem, 1);
+							}
+						}
 					});
 					
 					NbrItem --;

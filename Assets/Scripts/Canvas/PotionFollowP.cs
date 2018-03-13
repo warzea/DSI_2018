@@ -32,13 +32,17 @@ public class PotionFollowP : MonoBehaviour
 	
 	
 	#region Public
+	public void NewValue ( int val )
+	{
+    	 DOTween.To(() => Nbr, x => Nbr = x, val, 0.3f);
+	}
 	void Update ()
 	{
 		thisTrans.position = getCam.WorldToScreenPoint(ThisPlayer.position + Vector3.up * YPos + Vector3.right * XPos );
 
 		if ( thisPC != null )
 		{
-			getText.text = "+" + thisPC.AllItem.Count.ToString();
+			getText.text = "+" + Nbr;
 			if ( thisPC.AllItem.Count - 1 > 0 && !checkPotion )
 			{
 				checkPotion = true;
@@ -53,7 +57,6 @@ public class PotionFollowP : MonoBehaviour
 		else
 		{
 			getText.text = "+" + Nbr.ToString();
-
 		}
 	}
 	#endregion
