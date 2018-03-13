@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 3a3c2fe3630bbba40bd46ad641863884
-timeCreated: 1520688939
+guid: c81dfe7d5e10f0446b3a1b1d09caa7b8
+timeCreated: 1520679633
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -10,7 +10,7 @@ ModelImporter:
     2100000: No Name
     2300000: //RootNode
     3300000: //RootNode
-    4300000: displayStand_3
+    4300000: enemyShoot
     9500000: //RootNode
   externalObjects: {}
   materials:
