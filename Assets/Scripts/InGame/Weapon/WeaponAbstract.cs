@@ -164,7 +164,7 @@ public class WeaponAbstract : MonoBehaviour
             thisBA.Projectil = true;
             thisBA.canExplose = true;
             thisBA.Diameter = 3;
-            thisBA.BulletRange = Range;
+            thisBA.BulletRange = playerTrans.GetComponent<PlayerController>().DistThrowWeap;
             thisBA.gameObject.tag = Constants._BulletPlayer;
             Destroy(GetComponent<WeaponAbstract>());
             Manager.GameCont.WeaponB.NewWeapon(getPC);

@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
 	public GameObject ItemLostObj;
 	public float radialDeadZone = 0.3f;
 	public float maxAngle = 2;
+	public float DistThrowWeap = 2;
 
 	//public float DashDistance = 5;
 	//public float DashTime = 1;
@@ -361,7 +362,7 @@ public class PlayerController : MonoBehaviour
 		{
 			Xmove = 0;
 			thisWB.CurrTime += (float)getDeltaTime / thisWB.TimeFullFill;
-			thisWB.ThisGauge.value = thisWB.CurrTime;
+			thisWB.ThisGauge.fillAmount = thisWB.CurrTime;
 			TimeWBox += getDeltaTime;
 			getSpeed *= SpeedReduceOnBox;
 		}
@@ -559,7 +560,11 @@ public class PlayerController : MonoBehaviour
 	{
 		if (Manager.GameCont.WeaponB.CanControl) 
 		{
-			thisWB.ThisGauge.gameObject.SetActive (true);
+            if ( thisWB.ThisGauge == null )
+			{
+				thisWB.ThisGauge = Manager.Ui.CauldronGauge.transform.Find("Cauldron Inside").GetComponent<Image>();
+			}
+            Manager.Ui.CauldronGauge.SetActive (true);
 			Manager.Ui.CauldronButtons (true);
 			GetCamFoll.UpdateTarget (thisTrans);
 			WeaponPos.gameObject.SetActive (false);
@@ -579,7 +584,7 @@ public class PlayerController : MonoBehaviour
 			thisWB.GetComponent<Collider>().isTrigger = false;
 			thisWB.gameObject.tag = Constants._BoxTag;
 			thisWB.transform.DOKill(true);
-			thisWB.ThisGauge.gameObject.SetActive (false);
+            Manager.Ui.CauldronGauge.SetActive (false);
 			Manager.Ui.checkDrive = false;
 			Manager.Ui.CauldronButtons (false);
 			AmmoUI.GetComponent<CanvasGroup> ().alpha = 1;

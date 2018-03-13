@@ -2039,8 +2039,9 @@ MonoBehaviour:
   speedVsCauldron: 15
   speedVsPlayer: 8
   focusPlayer: {fileID: 0}
-  timeBeforeDepop: 6
+  timeBeforeDepop: 0.1
   timeLeftAgentAttacCac: 2
+  checkUpdate: 1
   MeshDestroy: {fileID: 1415171531169404, guid: cdb965a6a0e40694c8833fe95a1d5e5d,
     type: 2}
 --- !u!135 &135595202935105828

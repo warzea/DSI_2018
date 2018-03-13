@@ -302,9 +302,7 @@ public class UiManager : ManagerParent
         float rdmZ = UnityEngine.Random.Range(ShakeMinRot, ShakeMaxRot);
 
         Transform getT = Manager.GameCont.MainCam.transform;
-
-
-        float dir = -1;
+        
         shakeTwPos = getT.transform.DOPunchPosition(new Vector3(rdmX, 0, rdmX), ShakeDurationPos, 2, 1);
         shakeTwRot = getT.transform.DOPunchRotation(new Vector3(0, 0, rdmZ), ShakeDurationRot, 2, 1);
 
