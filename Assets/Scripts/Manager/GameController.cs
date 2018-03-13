@@ -83,6 +83,11 @@ public class GameController : ManagerParent
             GetPlayersInput[a].InputPlayer = ReInput.players.GetPlayer(a);
             GetPlayersInput[a].EnablePlayer = false;
         }
+
+        if ( StartWeapon == null)
+        {
+            StartWeapon = WeaponB.AllWeapon[0];
+        }
     }
 
     void SpawnPlayer()
@@ -110,7 +115,15 @@ public class GameController : ManagerParent
                    thisMat.material = PlayerMaterial[a];
                 }
                 
-                getPlayer.transform.position = PlayerPosSpawn.position + new Vector3(a * 1.5f, 0, 0);
+                if ( PlayerPosSpawn != null )
+                {
+                    getPlayer.transform.position = PlayerPosSpawn.position + new Vector3(a * 1.5f, 0, 0);
+                }
+                else
+                {
+                    getPlayer.transform.position = new Vector3(a * 1.5f, 0, 0);
+                }
+
                 getPC = getPlayer.GetComponent<PlayerController>();
                 getPC.IdPlayer = getPlayers[a].IdPlayer;
                 getPC.AmmoUI = Manager.Ui.PlayersAmmo[a].transform;

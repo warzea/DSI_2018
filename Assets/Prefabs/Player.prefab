@@ -1078,8 +1078,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IdPlayer: 0
-  LifePlayer: 5
-  TimeToRegen: 4
+  LifePlayer: 1
+  TimeToRegen: 3
   MoveSpeed: 13
   ItemLostObj: {fileID: 1330381900745004, guid: 0540fd0faddbcfd46bb2584e8d68fc5c,
     type: 2}

@@ -6,9 +6,9 @@ using DG.Tweening;
 public class CameraFollow : MonoBehaviour
 {
     #region Variables
-    public Transform Target;
     public float smoothTime = 0.3F;
     Vector3 velocity = Vector3.zero;
+    Transform Target;
     Transform thisTrans;
     #endregion
 
@@ -16,6 +16,11 @@ public class CameraFollow : MonoBehaviour
     void Start()
     {
         thisTrans = transform;
+
+        if ( Target == null )
+        {
+            Target = Manager.GameCont.WeaponB.transform;
+        }
     }
 
     void LateUpdate()
