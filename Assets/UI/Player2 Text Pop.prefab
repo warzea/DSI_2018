@@ -60,6 +60,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ThisPlayer: {fileID: 0}
   getCam: {fileID: 0}
+  offSetY: 110
+  offSetX: 0
 --- !u!114 &114240414820915974
 MonoBehaviour:
   m_ObjectHideFlags: 1
