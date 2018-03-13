@@ -1,15 +1,8 @@
 fileFormatVersion: 2
-<<<<<<< HEAD:Assets/Scenes/Alex/NavMesh-ground 7.asset.meta
-guid: 57e3362da6115154eaa1e0d768df29e2
-timeCreated: 1520958699
-=======
-guid: 22a8920b0dc97a64e925bd52807a59c2
-timeCreated: 1520947089
->>>>>>> Alexandre:Assets/Scenes/LevelDesign/NavMesh-ground 4.asset.meta
-licenseType: Free
+guid: d2ab14c8d9bef98459ce01386a40cfbf
 NativeFormatImporter:
   externalObjects: {}
-  mainObjectFileID: 23800000
+  mainObjectFileID: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

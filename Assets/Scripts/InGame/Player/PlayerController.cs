@@ -559,7 +559,9 @@ public class PlayerController : MonoBehaviour
 	{
 		if (Manager.GameCont.WeaponB.CanControl) 
 		{
-			thisWB.ThisGauge.gameObject.SetActive (true);
+            Debug.Log(thisWB);
+            Debug.Log(thisWB.ThisGauge);
+            thisWB.ThisGauge.gameObject.SetActive (true);
 			Manager.Ui.CauldronButtons (true);
 			GetCamFoll.UpdateTarget (thisTrans);
 			WeaponPos.gameObject.SetActive (false);
