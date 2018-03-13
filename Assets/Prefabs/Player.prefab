@@ -1078,10 +1078,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IdPlayer: 0
-  LifePlayer: 1
+  LifePlayer: 100000000
   TimeToRegen: 3
   MoveSpeed: 13
-  SlowDriveBack: 0.5
+  SlowDriveBack: 0.7
   ItemLostObj: {fileID: 1330381900745004, guid: 0540fd0faddbcfd46bb2584e8d68fc5c,
     type: 2}
   radialDeadZone: 0.3
@@ -1100,8 +1100,8 @@ MonoBehaviour:
   CdShoot: 0
   GetSpeed: 0
   SpeedReduce: 0.5
-  SpeedReduceOnBox: 0.3
-  SmoothRotateOnBox: 3.5
+  SpeedReduceOnBox: 0.35
+  SmoothRotateOnBox: 2.8
   aimSensitivity: 10
   aimSensitivityEnemy: 1.5
   AllItem: []
@@ -1128,6 +1128,7 @@ MonoBehaviour:
   AmmoUI: {fileID: 0}
   UiAmmoX: 2
   UiAmmoY: 4
+  CurrItem: 0
   UiAmmo: {fileID: 0}
   currInt: {fileID: 0}
   autoShoot: 1

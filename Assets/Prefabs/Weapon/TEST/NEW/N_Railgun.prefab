@@ -130,10 +130,10 @@ MonoBehaviour:
   Through: 0
   Explosion: 1
   BulletCapacity: 17
-  FireRate: 0
+  FireRate: 0.3
   CoolDown: 0
   BackPush: 1
-  SpeedReduce: 0
+  SpeedReduce: 0.5
   Damage: 1
   Range: 28
   NbrBullet: 0
@@ -142,11 +142,11 @@ MonoBehaviour:
   Gust: 0
   SpaceBullet: 0
   Angle: 0
-  TimeFarEffect: 0
+  TimeFarEffect: 0.2
   FarEffect: 1
-  WidthRange: 0
+  WidthRange: 0.2
   SpeedZone: 0
-  TimeDest: 0
+  TimeDest: 0.5
   Diameter: 2
   Bullet: {fileID: 1530796011795326, guid: bc41063ebf29c6f44a009da8b3171b68, type: 2}
   SpawnBullet: {fileID: 4940790349217874}
