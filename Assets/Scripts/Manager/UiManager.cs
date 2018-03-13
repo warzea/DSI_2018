@@ -158,7 +158,6 @@ public class UiManager : ManagerParent
         var circle = Instantiate(Circle, getTrans.parent.position, Quaternion.identity, getTrans.parent.GetChild(0));
         getTrans.DOLocalRotate(new Vector3(0, 0, 360), .5f, RotateMode.LocalAxisAdd).OnComplete(() =>
         {
-
             var light = Instantiate(Light, getTrans.position, Quaternion.identity, getTrans);
         });
 
