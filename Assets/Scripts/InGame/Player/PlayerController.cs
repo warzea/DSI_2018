@@ -14,12 +14,11 @@ public class PlayerController : MonoBehaviour
 	public int LifePlayer = 3;
 	public int TimeToRegen = 3;
 	public float MoveSpeed;
-	[Range(0,1)]
-	public float SlowDriveBack = 0.5f;
 	public GameObject ItemLostObj;
 	public float radialDeadZone = 0.3f;
 	public float maxAngle = 2;
 	public float DistThrowWeap = 2;
+	public float SpeedThrow = 2;
 
 	//public float DashDistance = 5;
 	//public float DashTime = 1;
@@ -45,6 +44,7 @@ public class PlayerController : MonoBehaviour
 	[Range (0, 1)]
 	[Tooltip ("Speed reduce pendant qu'on pousse la caisse")]
 	public float SpeedReduceOnBox = 0.1f;
+	public float TimeAccelBox = 5f;
 	public float SmoothRotateOnBox = 10;
 
 	public float aimSensitivity = 10;
@@ -128,7 +128,8 @@ public class PlayerController : MonoBehaviour
 	GameObject getEffect;
 
 	int lifePlayer;
-
+	float currSpeed;
+	
 	bool shooting = false;
 	bool dashing = false;
 	bool canDash = true;
@@ -354,36 +355,27 @@ public class PlayerController : MonoBehaviour
 		animPlayer.SetFloat ("Velocity", speed);
 		float getSpeed = MoveSpeed;
 
-		if (shooting) 
+		if (driveBox) 
 		{
-			getSpeed *= SpeedReduce;
-		} 
-		else if (driveBox) 
-		{
-			Xmove = 0;
+			if(	currSpeed < MoveSpeed * SpeedReduceOnBox )
+			{
+				currSpeed += ((MoveSpeed * SpeedReduceOnBox) / TimeAccelBox ) * getDeltaTime ;
+			}
+
+			getSpeed = currSpeed;
 			thisWB.CurrTime += (float)getDeltaTime / thisWB.TimeFullFill;
 			thisWB.ThisGauge.fillAmount = thisWB.CurrTime;
 			TimeWBox += getDeltaTime;
-			getSpeed *= SpeedReduceOnBox;
 		}
+		else if (shooting) 
+		{
+			getSpeed *= SpeedReduce;
+		} 
 
 		getSpeed = getDeltaTime * getSpeed;
 		TotalDist += getSpeed;
 
-		if ( !driveBox )
-		{
-			thisTrans.position += getSpeed * new Vector3 (Xmove, 0, Ymove);
-		}
-		else if ( Mathf.Abs(Ymove)  > radialDeadZone )
-		{
-			Quaternion newAngle = Quaternion.LookRotation (new Vector3 (Xmove, 0, Ymove), thisTrans.up);
-
-			if ( Ymove < 0 )
-			{
-				Ymove *= SlowDriveBack;
-			}
-			thisTrans.position += getSpeed * Ymove * thisTrans.forward;
-		}
+		thisTrans.position += getSpeed * new Vector3 (Xmove, 0, Ymove);
 	}
 
 	void playerAim (float getDeltaTime)
@@ -514,7 +506,11 @@ public class PlayerController : MonoBehaviour
 		else 
 		{
 			animPlayer.SetBool ("Attack", false);
-			shooting = false;
+
+			if ( !autoShoot || shootInput < 0.3f )
+			{
+				shooting = false;
+			}
 		}
 	}
 

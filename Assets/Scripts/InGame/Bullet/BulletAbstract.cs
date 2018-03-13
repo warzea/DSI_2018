@@ -11,6 +11,7 @@ public class BulletAbstract : MonoBehaviour
     public GameObject GetEffect;
     public Trajectoir ThisTrajectoir;
     public float MoveSpeed = 10;
+    public float DefinitiveDestroy = 5;
     [HideInInspector]
     public Vector3 direction = Vector3.zero;
 
@@ -291,7 +292,19 @@ public class BulletAbstract : MonoBehaviour
     {
         t1.Kill();
         t2.Kill();
-        Destroy (gameObject, delay);
+        
+        StartCoroutine(waitDest(delay));
     }
+
+    IEnumerator waitDest ( float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        GetComponentInChildren<MeshRenderer>().enabled = false;
+        GetComponent<Collider>().enabled = false;
+        
+        Destroy (gameObject, DefinitiveDestroy);
+    }
+    
     #endregion
 }
