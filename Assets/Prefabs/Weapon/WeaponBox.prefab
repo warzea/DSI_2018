@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 208908941077094698}
   - component: {fileID: 114620685492680398}
   - component: {fileID: 114237322677844954}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WeaponBox
   m_TagString: WeaponBox
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4694695353103302}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: AttackZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 65400283961105054}
   - component: {fileID: 23681826378398952}
   - component: {fileID: 33740169598720720}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Inside
   m_TagString: EnterContainer
   m_Icon: {fileID: 0}
@@ -200,7 +200,6 @@ MonoBehaviour:
   SpeedAttack: 0.25
   RangeAttack: 1.5
   DelayAttack: 1
-  DelayStay: 1
   SpeMultRessources: 2
   StayMult: 5
   InvincibleTime: 1

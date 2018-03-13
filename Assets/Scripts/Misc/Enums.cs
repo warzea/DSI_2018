@@ -43,3 +43,18 @@ public enum TypeMedail
 	hard
 
 }
+
+public enum AudioType
+{
+	MusicBackGround,
+	OtherMusic,
+	FxSound,
+	OtherSound,
+	Other,
+	Acceleration,
+	SteroKill,
+	PunchVoice,
+	MusicTrash,
+    Madnesse
+}
+

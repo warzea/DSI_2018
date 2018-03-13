@@ -23,14 +23,12 @@ public class RainbowScale : MonoBehaviour
     {
         index = (index + 1) % scales.Length;
 
-
         transform.DOScale(scales[index], time).SetEase(easeType).OnComplete(() => Next());
-        
     }
 
     void OnDisable()
     {
         transform.DOKill(false);
-        transform.DOScale(Vector3.one, 0);
+        transform.localScale = Vector3.one;
     }
 }

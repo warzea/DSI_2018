@@ -101,6 +101,8 @@ public class PlayerController : MonoBehaviour
 	public Transform AmmoUI;
 	public float UiAmmoX;
 	public float UiAmmoY;
+	[HideInInspector]
+	public int CurrItem = 0;
     
 	[HideInInspector]
 	public Image UiAmmo;
@@ -108,6 +110,10 @@ public class PlayerController : MonoBehaviour
 	public InteractAbstract currInt;
 	[HideInInspector]
 	public bool autoShoot = true;
+	[HideInInspector]
+	public bool checkShoot = true;
+	[HideInInspector]
+	public bool checkAuto = false;
 	public bool canCauldron = false;
 	PlayerController thisPC;
 	WeaponAbstract thisWeapon;
@@ -126,11 +132,10 @@ public class PlayerController : MonoBehaviour
 	bool canDash = true;
 	bool canEnterBox = false;
 	bool canShoot = true;
-	bool checkShoot = true;
+	
 	bool canTakeDmg = true;
 	bool checkShootScore = true;
 
-	bool checkAuto = false;
 	bool checkUIBorder = false;
 	bool checkUIBorderY = false;
 	bool checkUpdate = true;
@@ -150,7 +155,8 @@ public class PlayerController : MonoBehaviour
 
 		System.Array thisArray = System.Enum.GetValues (typeof(TypeEnemy));
 
-		for (int a = 0; a < thisArray.Length; a++) {
+		for (int a = 0; a < thisArray.Length; a++) 
+		{
 			AllEnemy.Add (new EnemyInfo ());
 			AllEnemy [a].ThisType = (TypeEnemy)thisArray.GetValue (a);
 		}
@@ -186,17 +192,20 @@ public class PlayerController : MonoBehaviour
 
 		checkBorder ();
 
-		if (!checkUIBorder) {
-			//AmmoUI.localScale = Vector3.one;
+		if (!checkUIBorder) 
+		{
+			AmmoUI.position = getCam.WorldToScreenPoint ( thisTrans.position );
+			AmmoUI.localPosition -= Vector3.right * UiAmmoX + Vector3.up * UiAmmoY;
+		} 
+		else 
+		{
+			AmmoUI.position = getCam.WorldToScreenPoint (thisTrans.position);
 
-			AmmoUI.position = getCam.WorldToScreenPoint (thisTrans.position - Vector3.right * UiAmmoX + Vector3.up * UiAmmoY);
-		} else {
-			//AmmoUI.localScale = new Vector3(-1, 1, 1);
-
-			AmmoUI.position = getCam.WorldToScreenPoint (thisTrans.position + Vector3.right * UiAmmoX + Vector3.up * UiAmmoY);
+			AmmoUI.localPosition += Vector3.right * UiAmmoX + Vector3.up * UiAmmoY;
 		}
 
-		if (AllItem.Count > 0 && Vector3.Distance (thisTrans.position, getBoxWeapon.position) < DistToDropItem) {
+		if (AllItem.Count > 0 && Vector3.Distance (thisTrans.position, getBoxWeapon.position) < DistToDropItem) 
+		{
 			emptyBag ();
 		}
 	}
@@ -227,7 +236,6 @@ public class PlayerController : MonoBehaviour
 				animeDead (thisEnemy.position);
 			}
 		}
-
 	}
 
 	#endregion
@@ -239,43 +247,56 @@ public class PlayerController : MonoBehaviour
 		Vector3 getCamPos = getCam.WorldToViewportPoint (thisTrans.position);
 		Vector3 getDir = Vector3.zero;
 
-		if (getCamPos.x > 0.97f) {
+		if (getCamPos.x > 0.97f) 
+		{
 			getDir -= Vector3.right;
 			thisTrans.position = new Vector3 (getCam.ViewportToWorldPoint (new Vector3 (0.97f, getCamPos.y, getCamPos.z)).x, thisTrans.position.y, thisTrans.position.z);
-		} else if (getCamPos.x < 0.03f) {
+		} 
+		else if (getCamPos.x < 0.03f) 
+		{
 			getDir += Vector3.right;
 			thisTrans.position = new Vector3 (getCam.ViewportToWorldPoint (new Vector3 (0.03f, getCamPos.y, getCamPos.z)).x, thisTrans.position.y, thisTrans.position.z);
 		}
 
-		if (getCam.WorldToViewportPoint (thisTrans.position - Vector3.right * UiAmmoX).x < 0.03f) {
+		if (getCam.WorldToViewportPoint (thisTrans.position ).x < 0.1f) 
+		{
 			checkUIBorder = true;
-		} else {
+		} 
+		else 
+		{
 			checkUIBorder = false;
 		}
 
-		if (getCamPos.y > 0.85f) {
+		if (getCamPos.y > 0.85f) 
+		{
 			getDir -= Vector3.up;
 			thisTrans.position = new Vector3 (thisTrans.position.x, thisTrans.position.y, getCam.ViewportToWorldPoint (new Vector3 (getCamPos.x, 0.85f, getCamPos.z)).z);
-		} else if (getCamPos.y < 0.03f) {
+		} 
+		else if (getCamPos.y < 0.03f) 
+		{
 			getDir += Vector3.up;
 			thisTrans.position = new Vector3 (thisTrans.position.x, thisTrans.position.y, getCam.ViewportToWorldPoint (new Vector3 (getCamPos.x, 0.03f, getCamPos.z)).z);
 		}
 
-		if (getDir != Vector3.zero) {
+		if (getDir != Vector3.zero) 
+		{
 			RaycastHit[] allHit;
 			string getTag;
 
 			allHit = Physics.RaycastAll (thisTrans.position, getDir, 0.5f);
 
-			foreach (RaycastHit thisRay in allHit) {
+			foreach (RaycastHit thisRay in allHit) 
+			{
 				getTag = thisRay.collider.tag;
 
-				if (getTag == Constants._Wall) {
+				if (getTag == Constants._Wall) 
+				{
 
 					checkUpdate = false;
 
 					thisTrans.DOKill (true);
-					thisTrans.DOMove (getBoxWeapon.position, 0.5f, true).OnComplete (() => {
+					thisTrans.DOMove (getBoxWeapon.position, 0.5f, true).OnComplete (() => 
+					{
 						checkUpdate = true;
 					});
 					break;
@@ -312,7 +333,8 @@ public class PlayerController : MonoBehaviour
 			//playerDash ( );
 		}
 
-		if (!dashing) {
+		if (!dashing) 
+		{
 			interactPlayer ();
 			playerMove (getDeltaTime);
 		}
@@ -354,7 +376,11 @@ public class PlayerController : MonoBehaviour
 		{
 			Quaternion newAngle = Quaternion.LookRotation (new Vector3 (Xmove, 0, Ymove), thisTrans.up);
 
-			thisTrans.position += getSpeed * Ymove* thisTrans.forward;
+			if ( Ymove < 0 )
+			{
+				Ymove *= SlowDriveBack;
+			}
+			thisTrans.position += getSpeed * Ymove * thisTrans.forward;
 		}
 	}
 
@@ -427,22 +453,29 @@ public class PlayerController : MonoBehaviour
 
 		}
 
-		if (shootInput == 1 && checkShootScore) {
+		if (shootInput == 1 && checkShootScore) 
+		{
 			checkShootScore = false;
 			SpawmShoot++;
-		} else if (shootInput < 0.3f) {
+		} 
+		else if (shootInput < 0.3f) 
+		{
 			checkShootScore = true;
 		}
 
-		if (shootInput == 0 && checkAuto) {
+		if (shootInput == 0 && checkAuto) 
+		{
 			checkShoot = true;
 		}
-
-		if (shootInput > 0.3f && thisWeapon != null && checkShoot) {
-			if (!autoShoot) {
+		
+		if (shootInput > 0.3f && thisWeapon != null && checkShoot) 
+		{
+			if (!autoShoot) 
+			{
 				checkAuto = false;
 				checkShoot = false;
-				DOVirtual.DelayedCall (CdShoot, () => {
+				DOVirtual.DelayedCall (CdShoot, () => 
+				{
 					checkAuto = true;
 				});
 			}
@@ -450,7 +483,8 @@ public class PlayerController : MonoBehaviour
 			thisWeapon.weaponShoot (thisTrans);
 			animPlayer.SetBool ("Attack", true);
 			shooting = true;
-			if (thisWeapon != null) { //&& thisWeapon.Damage == 1)
+			if (thisWeapon != null) 
+			{ //&& thisWeapon.Damage == 1)
 				//Debug.Log("Shoot");
 				if (thisWeapon.Damage <= Manager.VibM.DamagesLow)
 					Manager.VibM.ShootLowVibration (inputPlayer);
@@ -459,7 +493,9 @@ public class PlayerController : MonoBehaviour
 				else if (thisWeapon.Damage > Manager.VibM.DamagesLow && thisWeapon.Damage <= Manager.VibM.DamagesMedium)
 					Manager.VibM.ShootHighVibration (inputPlayer);
 			}
-		} else {
+		} 
+		else 
+		{
 			animPlayer.SetBool ("Attack", false);
 			shooting = false;
 		}
@@ -467,9 +503,11 @@ public class PlayerController : MonoBehaviour
 
 	public void AddItem ()
 	{
-		if (AllItem.Count <= nbItemBeforeBigBag) {
+		if (AllItem.Count <= nbItemBeforeBigBag) 
+		{
 			animPlayer.SetTrigger ("Bag_Up");
-		} else if (AllItem.Count > nbItemBeforeBigBag) {
+		} else if (AllItem.Count > nbItemBeforeBigBag) 
+		{
 			animPlayer.SetTrigger ("Bag_Up2");
 		}
 	}
@@ -542,7 +580,7 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	async void emptyBag ()
+	void emptyBag ()
 	{
 		Manager.Ui.PopPotions (PotionType.Plus);
 		animPlayer.SetTrigger ("BagUnfull");
@@ -550,9 +588,9 @@ public class PlayerController : MonoBehaviour
 		Transform getBoxTrans = getBoxWeapon;
 		Transform currTrans;
 
-		Manager.GameCont.WeaponB.AddItem (getBagItems.Length);
-		CurrScore += getBagItems.Length;
-		CurrLootScore += getBagItems.Length;
+		Manager.GameCont.WeaponB.AddItem (CurrItem);
+		CurrScore += CurrItem;
+		CurrLootScore += CurrItem;
 
 		for (int a = 0; a < getBagItems.Length; a++) 
 		{
@@ -581,8 +619,6 @@ public class PlayerController : MonoBehaviour
 					});
 				});
 			});
-
-
 		});
 	}
 
@@ -593,7 +629,8 @@ public class PlayerController : MonoBehaviour
 		canTakeDmg = false;
 		dead = true;
 
-		if (driveBox) {
+		if (driveBox) 
+		{
 			useBoxWeapon ();
 		}
 
@@ -612,11 +649,14 @@ public class PlayerController : MonoBehaviour
 		getDist -= checkBorderDead (thisTrans.position + getDirect * DistProjDead);
 		allHit = Physics.RaycastAll (thisTrans.position, getDirect, getDist);
 
-		foreach (RaycastHit thisRay in allHit) {
+		foreach (RaycastHit thisRay in allHit) 
+		{
 			getTag = thisRay.collider.tag;
 
-			if (getTag == Constants._Wall) {
-				if (thisRay.distance < getDist) {
+			if (getTag == Constants._Wall) 
+			{
+				if (thisRay.distance < getDist) 
+				{
 					getDist = thisRay.distance - 1;
 					getTime = TimeProjDead / (DistProjDead / getDist);
 				}
@@ -646,10 +686,10 @@ public class PlayerController : MonoBehaviour
 		lostItem();
 	}
 
-	async void lostItem ( )
+	void lostItem ( )
 	{
 		GameObject[] getList = AllItem.ToArray ();
-		if (getList.Length > 0) 
+		if (getList.Length > 0 ) 
 		{
 			int a;
 			ItemLost getItem;
@@ -660,17 +700,21 @@ public class PlayerController : MonoBehaviour
 			thisPFP.ThisPlayer = newObj.transform;
 			thisPFP.getCam = getCam;
 
-			int getNbr = (int)(getList.Length - (getList.Length * PourcLootLost) * 0.01f);
-			LostItem += getList.Length;
+			int getNbr = (int)(CurrItem - (CurrItem * PourcLootLost) * 0.01f);
+			LostItem += CurrItem;
 			thisPFP.Nbr = getNbr;
+			newObj.GetComponent<ItemObjLost> ().NbrItem = getNbr;
 			thisPFP.GetComponent<CanvasGroup> ().DOFade (1, 0.1f);
-
-			for (a = getList.Length - 1; a > getNbr - 1; a--) {
+			
+			for (a = getList.Length - 1; a > getList.Length * 0.5f; a--) 
+			{
 				getItem = getList [a].transform.GetComponent<ItemLost> ();
 				getItem.gameObject.SetActive (true);
 				getItem.transform.localScale = Vector3.one;
 				getItem.transform.localPosition = Vector3.zero;
-				if (!getItem) {
+
+				if (!getItem) 
+				{
 					getItem = getList [a].AddComponent<ItemLost> ();
 				}
 
@@ -680,7 +724,8 @@ public class PlayerController : MonoBehaviour
 			}
 
 			getList = AllItem.ToArray ();
-			for (a = 0; a < getList.Length; a++) {
+			for (a = 0; a < getList.Length; a++) 
+			{
 				Destroy (getList [a]);
 			}
 
@@ -699,14 +744,19 @@ public class PlayerController : MonoBehaviour
 
 			Manager.VibM.StunVibration (inputPlayer);
 
-			if (lifePlayer <= 0 && !dead) {
+			if (lifePlayer <= 0 && !dead) 
+			{
 				animeDead (thisColl.transform.position);
-			} else {
-				if (tweenRegen != null) {
+			} 
+			else 
+			{
+				if (tweenRegen != null) 
+				{
 					tweenRegen.Kill ();
 				}
 
-				DOVirtual.DelayedCall (TimeToRegen, () => {
+				DOVirtual.DelayedCall (TimeToRegen, () => 
+				{
 					lifePlayer = LifePlayer;
 				});
 			}
@@ -715,7 +765,8 @@ public class PlayerController : MonoBehaviour
 
 	void OnTriggerExit (Collider thisColl)
 	{
-		if (thisColl.tag == Constants._EnterCont) {
+		if (thisColl.tag == Constants._EnterCont) 
+		{
 			canEnterBox = false;
 		}
 	}

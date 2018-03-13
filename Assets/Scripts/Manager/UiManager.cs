@@ -8,9 +8,9 @@ using System.Runtime.CompilerServices;
 
 public class UiManager : ManagerParent
 {
-	#region Variables
-	public Transform GetInGame;
-	public Scores GetScores;
+    #region Variables
+    public Transform GetInGame;
+    public Scores GetScores;
 
     public GameObject[] PlayersHUD;
     public Image[] PlayersWeaponHUD;
@@ -49,65 +49,67 @@ public class UiManager : ManagerParent
     [HideInInspector]
     public GameObject[] AllPotGet;
 
-    Dictionary <MenuType, UiParent> AllMenu;
-	MenuType menuOpen;
-	#endregion
+    Dictionary<MenuType, UiParent> AllMenu;
+    MenuType menuOpen;
+    #endregion
 
-	#region Mono
-	#endregion
+    #region Mono
+    #endregion
 
-	#region Public Methods
-	public void OpenThisMenu ( MenuType thisType, MenuTokenAbstract GetTok = null )
-	{
-		UiParent thisUi;
-		//Debug.Log ( "open " + thisType );
+    #region Public Methods
+    public void OpenThisMenu(MenuType thisType, MenuTokenAbstract GetTok = null)
+    {
+        UiParent thisUi;
+        //Debug.Log ( "open " + thisType );
 
-		if ( AllMenu.TryGetValue ( thisType, out thisUi ) )
-		{
-			if ( menuOpen == thisType )
-			{
-				return;
-			}
-            
-			if ( menuOpen != MenuType.Nothing )
-			{
-				CloseThisMenu ( );
-			}
+        if (AllMenu.TryGetValue(thisType, out thisUi))
+        {
+            if (menuOpen == thisType)
+            {
+                return;
+            }
 
-			menuOpen = thisType;
-			thisUi.OpenThis ( GetTok );
-		}
+            if (menuOpen != MenuType.Nothing)
+            {
+                CloseThisMenu();
+            }
 
+            menuOpen = thisType;
+            thisUi.OpenThis(GetTok);
+        }
 
-
-        DOVirtual.DelayedCall(22, () => {
-            WeaponChange(3);
+        DOVirtual.DelayedCall(22, () =>
+        {
+            WeaponChangeHUD(3);
         }).SetLoops(-1, LoopType.Restart);
 
-        DOVirtual.DelayedCall(19, () => {
-            WeaponChange(2);
+        DOVirtual.DelayedCall(19, () =>
+        {
+            WeaponChangeHUD(2);
         }).SetLoops(-1, LoopType.Restart);
 
-        DOVirtual.DelayedCall(17, () => {
-            WeaponChange(1);
+        DOVirtual.DelayedCall(17, () =>
+        {
+            WeaponChangeHUD(1);
         }).SetLoops(-1, LoopType.Restart);
 
-        DOVirtual.DelayedCall(15, () => {
-            WeaponChange(0);
-        }).SetLoops(-1,LoopType.Restart);
+        DOVirtual.DelayedCall(15, () =>
+        {
+            WeaponChangeHUD(0);
+        }).SetLoops(-1, LoopType.Restart);
 
     }
 
-	public void CloseThisMenu ( )
-	{
-		UiParent thisUi;
+    public void CloseThisMenu()
+    {
+        UiParent thisUi;
 
-		if ( menuOpen != MenuType.Nothing && AllMenu.TryGetValue ( menuOpen, out thisUi ) )
-		{
-			thisUi.CloseThis ( );
-			menuOpen = MenuType.Nothing;
-		}
-	}
+        if (menuOpen != MenuType.Nothing && AllMenu.TryGetValue(menuOpen, out thisUi))
+        {
+            thisUi.CloseThis();
+            menuOpen = MenuType.Nothing;
+        }
+    }
 
     public void WeaponEmpty(int PlayerId)
     {
@@ -124,35 +126,46 @@ public class UiManager : ManagerParent
         ammoTwWait.Kill(true);
     }
 
-    public void WeaponChange(int PlayerId)
+    public void WeaponChangeIG(int PlayerId)
     {
         ResetTween();
 
+        WeaponChangeHUD(PlayerId);
+    
         //HUD INGAME
-
-        PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[0].enabled = false;
-        PlayersAmmo[PlayerId].GetComponentInChildren<RainbowScale>().enabled = false;
+        Transform getTrans = PlayersAmmo[PlayerId].transform;
+        getTrans.GetComponentsInChildren<RainbowColor>()[0].enabled = false;
+        getTrans.GetComponentInChildren<RainbowScale>().enabled = false;
+        getTrans.localScale = Vector3.one;
 
         float randomZrotate = UnityEngine.Random.Range(-17, 17);
-        ammoTwRot = PlayersAmmo[PlayerId].transform.DOPunchRotation(new Vector3(1, 1, randomZrotate), 0.6f, 10, 1);
+        ammoTwRot = getTrans.DOPunchRotation(new Vector3(1, 1, randomZrotate), 0.6f, 10, 1);
 
         //LE CHARGEUR DISPARAIT
 
-        ammoTwScale1 = PlayersAmmo[PlayerId].transform.DOPunchScale((Vector3.one * .45f), 0.3f, 20, .1f);
-        ammoTwFade = PlayersAmmo[PlayerId].transform.GetComponent<CanvasGroup>().DOFade(0, .3f);
-        ammoTwScale2 = PlayersAmmo[PlayerId].transform.DOScale(0, .3f);
-        
+        ammoTwScale1 = getTrans.DOPunchScale((Vector3.one * .45f), 0.3f, 20, .1f);
+        ammoTwFade = getTrans.GetComponent<CanvasGroup>().DOFade(0, .3f);
+        ammoTwScale2 = getTrans.DOScale(0, .3f);
+    }
+
+    public void WeaponChangeHUD(int PlayerId)
+    {
         //HUD ABOVE ALL
-        
-        PlayersWeaponHUD[PlayerId].transform.DOKill(true);
-        PlayersWeaponHUD[PlayerId].transform.GetChild(0).GetComponent<Image>().DOFade(1, .25f).OnComplete(()=> {
-            PlayersWeaponHUD[PlayerId].transform.GetChild(0).GetComponent<Image>().DOFade(0, .25f);
+
+        ResetTween();
+
+        Transform getTrans = PlayersAmmo[PlayerId].transform;
+
+
+        getTrans.GetChild(0).GetComponent<Image>().DOFade(1, .25f).OnComplete(() =>
+        {
+            getTrans.GetChild(0).GetComponent<Image>().DOFade(0, .25f);
         });
 
-        var circle = Instantiate(Circle, PlayersWeaponHUD[PlayerId].transform.parent.position, Quaternion.identity, PlayersWeaponHUD[PlayerId].transform.parent.GetChild(0));
-        PlayersWeaponHUD[PlayerId].transform.DOLocalRotate(new Vector3(0, 0, 360), .5f, RotateMode.LocalAxisAdd).OnComplete(() => {
-
-            var light = Instantiate(Light, PlayersWeaponHUD[PlayerId].transform.position, Quaternion.identity, PlayersWeaponHUD[PlayerId].transform);
+        var circle = Instantiate(Circle, getTrans.parent.position, Quaternion.identity, getTrans.parent.GetChild(0));
+        getTrans.DOLocalRotate(new Vector3(0, 0, 360), .5f, RotateMode.LocalAxisAdd).OnComplete(() =>
+        {
+            var light = Instantiate(Light, getTrans.position, Quaternion.identity, getTrans);
         });
 
 
@@ -161,19 +174,19 @@ public class UiManager : ManagerParent
     public void WeaponNew(int PlayerId)
     {
         //LE CHARGEUR REAPARAIT VISIBLE
-
-        ammoTwFade = PlayersAmmo[PlayerId].transform.GetComponent<CanvasGroup>().DOFade(1, .2f);
-        PlayersAmmo[PlayerId].transform.DOScale(3, 0);
-        ammoTwScale1 = PlayersAmmo[PlayerId].transform.DOScale(1, .2f);
+        Transform getTrans = PlayersAmmo[PlayerId].transform;
+        ammoTwFade = getTrans.GetComponent<CanvasGroup>().DOFade(1, .2f);
+        getTrans.localScale = new Vector3(3,3,3);
+        ammoTwScale1 = getTrans.DOScale(1, .2f);
 
 
         //COURT EFFET LUMINEUX DE COULEUR SUR LE OUTLINE
-
-        PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[1].enabled = true;
+        getTrans.Find("Ammo Inside").GetComponent<Image>().color = Color.white;
+        getTrans.GetComponentsInChildren<RainbowColor>()[1].enabled = true;
         ammoTwWait = DOVirtual.DelayedCall(.3f, () =>
         {
-            PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[1].enabled = false;
-            PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[1].transform.GetComponent<Image>().color = PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[1].colors[1];
+            getTrans.GetComponentsInChildren<RainbowColor>()[1].enabled = false;
+            getTrans.GetComponentsInChildren<RainbowColor>()[1].transform.GetComponent<Image>().color = getTrans.GetComponentsInChildren<RainbowColor>()[1].colors[1];
         });
     }
 
@@ -188,8 +201,9 @@ public class UiManager : ManagerParent
         GaugeFeedback[whichLevel].transform.DOScale(4, 0);
         GaugeFeedback[whichLevel].transform.DOScale(1, .4f);
         GaugeFeedback[whichLevel].DOFade(1, .1f);
-        DOVirtual.DelayedCall(.3f, () => {
-        
+        DOVirtual.DelayedCall(.3f, () =>
+        {
+
             GaugeFeedback[whichLevel].DOFade(0, .4f);
         });
     }
@@ -201,8 +215,8 @@ public class UiManager : ManagerParent
     {
         if (!visible)
         {
-            nbrCauld --;
-            if ( nbrCauld <= 0 && !checkDrive )
+            nbrCauld--;
+            if (nbrCauld <= 0 && !checkDrive)
             {
                 ButtonsInteract.DOFade(0, .1f);
             }
@@ -217,7 +231,7 @@ public class UiManager : ManagerParent
 
     public void PopPotions(PotionType type) // poser ressource : 20 - 40 - 60 - 80 et 100
     {
-        if(type == PotionType.Plus)
+        if (type == PotionType.Plus)
         {
             var potion = Instantiate(PotionsPlus, GetInGame.position, Quaternion.identity, GetInGame);
 
@@ -225,7 +239,7 @@ public class UiManager : ManagerParent
 
             //potion.GetComponent<RainbowMove>().ObjectTransform = ici;
         }
-        else if(type == PotionType.Less)
+        else if (type == PotionType.Less)
         {
             var potion = Instantiate(PotionsLess, GetInGame.position, Quaternion.identity, GetInGame);
 
@@ -236,12 +250,13 @@ public class UiManager : ManagerParent
         }
     }
 
-    public void MultiplierNew( int value = 0 )
+    public void MultiplierNew(int value = 0)
     {
 
         //WHITE FLASH
 
-        WhiteBackground.DOFade(.7f, .2f).OnComplete(() => {
+        WhiteBackground.DOFade(.7f, .2f).OnComplete(() =>
+        {
             WhiteBackground.DOFade(0, .2f);
         });
 
@@ -251,9 +266,10 @@ public class UiManager : ManagerParent
         GaugeBackground.GetComponent<RainbowMove>().enabled = true;
         GetGauge.GetComponent<RainbowMove>().enabled = true;
         GetGauge.GetComponentInChildren<RainbowColor>().enabled = false;
-        GetGauge.GetComponentInChildren<RainbowColor>().transform.GetComponent<Image>().DOColor(new Color(1,1,1,0), 0);
+        GetGauge.GetComponentInChildren<RainbowColor>().transform.GetComponent<Image>().DOColor(new Color(1, 1, 1, 0), 0);
 
-        DOVirtual.DelayedCall(.8f, () => {
+        DOVirtual.DelayedCall(.8f, () =>
+        {
             GaugeBackground.GetComponent<RainbowMove>().enabled = false;
             GetGauge.GetComponent<RainbowMove>().enabled = false;
 
@@ -262,7 +278,7 @@ public class UiManager : ManagerParent
             Multiplier.GetComponent<RainbowScale>().enabled = false;
         });
 
-        Multiplier.GetComponent<Text>().text = "x"+ value.ToString();
+        Multiplier.GetComponent<Text>().text = "x" + value.ToString();
         Multiplier.GetComponent<RainbowColor>().enabled = true;
         Multiplier.GetComponent<RainbowMove>().enabled = true;
         Multiplier.GetComponent<RainbowScale>().enabled = true;
@@ -279,9 +295,6 @@ public class UiManager : ManagerParent
 
     public void ScreenShake()
     {
-
-        UnityEngine.Debug.Log("ShootShake");
-
         shakeTwPos.Kill(true);
         shakeTwRot.Kill(true);
 
@@ -292,8 +305,8 @@ public class UiManager : ManagerParent
 
 
         float dir = -1;
-        shakeTwPos = getT.transform.DOPunchPosition(new Vector3(rdmX,0,rdmX), ShakeDurationPos, 2, 1);
-        shakeTwRot = getT.transform.DOPunchRotation(new Vector3(0, 0, rdmZ), ShakeDurationRot,2,1);
+        shakeTwPos = getT.transform.DOPunchPosition(new Vector3(rdmX, 0, rdmX), ShakeDurationPos, 2, 1);
+        shakeTwRot = getT.transform.DOPunchRotation(new Vector3(0, 0, rdmZ), ShakeDurationRot, 2, 1);
 
 
         //getT.DOPunchPosition(getT.localPosition + getT.right * rdmX + getT.up * rdmZ, .5f, 0, 0);
@@ -309,7 +322,8 @@ public class UiManager : ManagerParent
         ScoreText.transform.DOKill(true);
         ScoreText.transform.DOShakeScale(.4f, 1f, 12, 15);
         ScoreText.GetComponent<RainbowColor>().enabled = true;
-        DOVirtual.DelayedCall(.4f, () => {
+        DOVirtual.DelayedCall(.4f, () =>
+        {
             ScoreText.GetComponent<RainbowColor>().enabled = false;
         });
     }
@@ -318,10 +332,10 @@ public class UiManager : ManagerParent
     {
         ScoreText.transform.DOKill(true);
         ScoreText.transform.DOShakeScale(.4f, 1f, 12, 15);
-        ScoreText.GetComponentsInChildren<RainbowColor>()[1].enabled = true;
-        DOVirtual.DelayedCall(.4f, () => {
-            ScoreText.GetComponentsInChildren<RainbowColor>()[1].enabled = false;
-        });
+        /*  ScoreText.GetComponentsInChildren<RainbowColor>()[1].enabled = true;
+          DOVirtual.DelayedCall(.4f, () => {
+              ScoreText.GetComponentsInChildren<RainbowColor>()[1].enabled = false;
+          });*/
     }
 
     private void Update()
@@ -336,7 +350,7 @@ public class UiManager : ManagerParent
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
-            WeaponChange(0);
+            WeaponChangeIG(0);
         }
         if (Input.GetKeyDown(KeyCode.I))
         {
@@ -359,36 +373,31 @@ public class UiManager : ManagerParent
 
     }
 
-    private void FixedUpdate()
+    protected override void InitializeManager()
     {
-        //PlayersAmmo[0].transform.position = Manager.GameCont.Players[0].transform.position;
+        Object[] getAllMenu = Resources.LoadAll("Menu");
+        Dictionary<MenuType, UiParent> setAllMenu = new Dictionary<MenuType, UiParent>(getAllMenu.Length);
+
+        Transform Parent = transform.GetChild(0); ;
+        GameObject thisMenu;
+        UiParent thisUi;
+
+        for (int a = 0; a < getAllMenu.Length; a++)
+        {
+            thisMenu = (GameObject)Instantiate(getAllMenu[a], Parent);
+            thisUi = thisMenu.GetComponent<UiParent>();
+            thisUi.Initialize();
+            thisMenu.SetActive(false);
+
+            setAllMenu.Add(thisUi.ThisMenu, thisUi);
+        }
+
+        CauldronGauge = (GameObject)Instantiate(CauldronGauge, GetInGame);
+        CauldronGauge.SetActive(false);
+        AllMenu = setAllMenu;
+
+        OpenThisMenu(MenuType.SelectPlayer);
     }
 
-    protected override void InitializeManager ( )
-	{
-		Object[] getAllMenu = Resources.LoadAll ( "Menu" );
-		Dictionary<MenuType, UiParent> setAllMenu = new Dictionary<MenuType, UiParent> ( getAllMenu.Length );
-
-		Transform Parent = transform.GetChild(0);;
-		GameObject thisMenu;
-		UiParent thisUi;
-
-		for ( int a = 0; a < getAllMenu.Length; a++ )
-		{
-			thisMenu = ( GameObject ) Instantiate ( getAllMenu [ a ], Parent );
-			thisUi = thisMenu.GetComponent<UiParent> ( );
-			thisUi.Initialize ( );
-			thisMenu.SetActive(false);
-			
-			setAllMenu.Add ( thisUi.ThisMenu, thisUi );
-		}
-
-        CauldronGauge = (GameObject) Instantiate(CauldronGauge, GetInGame);
-        CauldronGauge.SetActive(false);
-		AllMenu = setAllMenu;
-
-		OpenThisMenu(MenuType.SelectPlayer);
-	}
-
-	#endregion
+    #endregion
 }
