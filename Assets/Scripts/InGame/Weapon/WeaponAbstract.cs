@@ -6,6 +6,8 @@ using DG.Tweening;
 public class WeaponAbstract : MonoBehaviour
 {
     #region Variables
+    public GameObject SpeEffet;
+
     public int WeightRandom = 0;
     public bool AutoShoot = true;
     public bool Projectile = false;
@@ -69,7 +71,8 @@ public class WeaponAbstract : MonoBehaviour
 	public bool OnFloor = true;
 
     Transform getGargabe;
-    int getCapacity;
+    [HideInInspector]
+    public int getCapacity;
 
     IEnumerator GetEnumerator;
 
@@ -134,6 +137,7 @@ public class WeaponAbstract : MonoBehaviour
                 playerTrans.GetComponent<PlayerController>().checkAuto = true;
             }
 
+            
             customWeapon(playerTrans);
         }
         else if (getCapacity <= 0)

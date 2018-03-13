@@ -124,6 +124,7 @@ public class PlayerController : MonoBehaviour
 	Player inputPlayer;
 	Camera getCam;
 	WeaponBox thisWB;
+	GameObject getEffect;
 
 	int lifePlayer;
 
@@ -455,12 +456,27 @@ public class PlayerController : MonoBehaviour
 
 		if (shootInput == 1 && checkShootScore) 
 		{
+			if ( thisWeapon != null && thisWeapon.SpeEffet != null && thisWeapon.getCapacity > 0 )
+			{
+				getEffect = (GameObject) Instantiate ( thisWeapon.SpeEffet, thisWeapon.SpawnBullet );
+				getEffect.GetComponent<BulletAbstract>().thisPlayer = this;
+				getEffect.transform.rotation = Quaternion.LookRotation(thisTrans.forward, thisTrans.up);
+			}
+
 			checkShootScore = false;
 			SpawmShoot++;
 		} 
 		else if (shootInput < 0.3f) 
 		{
+			if ( getEffect != null )
+			{
+				Destroy ( getEffect );
+			}
 			checkShootScore = true;
+		}
+		else if ( thisWeapon != null && thisWeapon.getCapacity == 0 && getEffect != null )
+		{
+			Destroy ( getEffect );
 		}
 
 		if (shootInput == 0 && checkAuto) 
@@ -638,7 +654,7 @@ public class PlayerController : MonoBehaviour
 		GetComponent<Collider> ().isTrigger = true;
 
 		Vector3 getDirect = Vector3.Normalize (thisTrans.position - pointColl);
-		getDirect = new Vector3 (getDirect.x, thisTrans.localPosition.y, getDirect.z);
+		getDirect = new Vector3 (getDirect.x, 0, getDirect.z);
 
 		float getDist = DistProjDead;
 		float getTime = TimeProjDead;

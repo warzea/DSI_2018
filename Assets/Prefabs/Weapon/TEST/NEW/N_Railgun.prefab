@@ -124,6 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c6bfe4600766d64c85f4f9c20b7243a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpeEffet: {fileID: 1530796011795326, guid: 11f2cea504004b245a6d9e7fa10eef4d, type: 2}
   WeightRandom: 0
   AutoShoot: 1
   Projectile: 0

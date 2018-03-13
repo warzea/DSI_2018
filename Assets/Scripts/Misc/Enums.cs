@@ -18,8 +18,8 @@ public enum ScoreType
 
 public enum Trajectoir
 {
-	Standard
-	
+	Standard,
+	Nothing
 }
 
 public enum TypeEnemy
