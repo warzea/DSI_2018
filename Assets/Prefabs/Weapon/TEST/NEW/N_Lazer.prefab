@@ -143,10 +143,10 @@ MonoBehaviour:
   SpaceBullet: 0
   Angle: 0
   TimeFarEffect: 0.05
-  FarEffect: 1.5
+  FarEffect: 2
   WidthRange: 1
   SpeedZone: 0
-  TimeDest: 0
+  TimeDest: 0.05
   Diameter: 0
   Bullet: {fileID: 1530796011795326, guid: bc41063ebf29c6f44a009da8b3171b68, type: 2}
   SpawnBullet: {fileID: 4053524848592642}

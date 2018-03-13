@@ -1078,7 +1078,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IdPlayer: 0
-  LifePlayer: 100000000
+  LifePlayer: 5
   TimeToRegen: 3
   MoveSpeed: 13
   SlowDriveBack: 0.7
