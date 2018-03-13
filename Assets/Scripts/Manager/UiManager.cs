@@ -288,9 +288,6 @@ public class UiManager : ManagerParent
 
     public void ScreenShake()
     {
-
-        UnityEngine.Debug.Log("ShootShake");
-
         shakeTwPos.Kill(true);
         shakeTwRot.Kill(true);
 
