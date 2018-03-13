@@ -564,7 +564,6 @@ public class PlayerController : MonoBehaviour
 		CurrScore += getBagItems.Length;
 		CurrLootScore += getBagItems.Length;
 
-
 		for (int a = 0; a < getBagItems.Length; a++) {
 			currTrans = getBagItems [a].transform;
 			currTrans.DOKill ();
@@ -574,7 +573,7 @@ public class PlayerController : MonoBehaviour
 			currTrans.SetParent (getBoxTrans);
 
 			currTrans.position = BagPos.position + new Vector3 (Random.Range (-0.2f, 0.21f), 3, Random.Range (-0.2f, 0.21f));
-
+			
 			dropItem (currTrans);
 		}
 		AllItem.Clear ();
