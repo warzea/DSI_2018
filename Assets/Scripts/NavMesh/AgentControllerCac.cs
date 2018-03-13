@@ -24,7 +24,7 @@ public class AgentControllerCac : MonoBehaviour
     public GameObject focusPlayer;
     private AgentsManagerCac agentsM;
 
-    public float timeBeforeDepop = 3;
+    public float timeBeforeDepop = 0.1f;
 
     private float timeAgent = -5;
 
@@ -32,6 +32,8 @@ public class AgentControllerCac : MonoBehaviour
     bool checkUpdate = true;
 
     private Camera cam;
+
+    public GameObject MeshDestroy;
 
     void Start()
     {
@@ -159,8 +161,9 @@ public class AgentControllerCac : MonoBehaviour
     IEnumerator WaitRespawn()
     {
         animAgent.SetBool("Move", false);
-        animAgent.SetTrigger("Die");
+        //animAgent.SetTrigger("Die");
         yield return new WaitForSeconds(timeBeforeDepop);
+        Instantiate(MeshDestroy, transform.position, transform.rotation);
         Vector3 newPos = agentsM.CheckBestcheckPoint(focusPlayer.transform);
         navAgent.Warp(newPos);
         focusPlayer = targetCauldron;
