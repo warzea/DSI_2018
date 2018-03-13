@@ -135,7 +135,7 @@ MonoBehaviour:
   BackPush: 2
   SpeedReduce: 0.12
   Damage: 1
-  Range: 11
+  Range: 11.5
   NbrBullet: 1
   ScaleBullet: 4
   SpeedBullet: 12
