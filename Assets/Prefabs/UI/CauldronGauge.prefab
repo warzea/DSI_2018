@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 224866039767605780}
   - component: {fileID: 222961832416956734}
   - component: {fileID: 114269343291262172}
-  - component: {fileID: 114855861944305456}
   - component: {fileID: 114644378690170476}
   m_Layer: 0
   m_Name: Outline
@@ -56,6 +55,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224719021060059386}
   - component: {fileID: 114754922191812818}
+  - component: {fileID: 114940278002022590}
   m_Layer: 0
   m_Name: CauldronGauge
   m_TagString: Untagged
@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.20784315, g: 0.25882354, b: 0.5372549, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -158,7 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e34c1b773868efe4cb44635a3e8e9967, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 0.02
+  time: 0.1
   colors:
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 0.21176472, g: 0.24313727, b: 0.5372549, a: 1}
@@ -178,22 +178,6 @@ MonoBehaviour:
   getCam: {fileID: 0}
   offSetY: 90
   offSetX: 0
---- !u!114 &114855861944305456
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1043396152948202}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e34c1b773868efe4cb44635a3e8e9967, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  time: 0.15
-  colors:
-  - {r: 1, g: 0, b: 0, a: 1}
-  - {r: 1, g: 1, b: 1, a: 1}
-  ComponentType: 0
 --- !u!114 &114886845748526642
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -221,6 +205,22 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114940278002022590
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1246058091811566}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 649fefe4a2e17314d90106d1b4e9fb89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: 0.2
+  scales:
+  - {x: 1, y: 1, z: 1}
+  - {x: 1.2, y: 1.2, z: 1.2}
+  easeType: 1
 --- !u!222 &222169115601311908
 CanvasRenderer:
   m_ObjectHideFlags: 1
