@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using DG.Tweening;
 
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
@@ -8,7 +9,47 @@ using System.Runtime.CompilerServices;
 public class UiManager : ManagerParent
 {
 	#region Variables
-	Dictionary <MenuType, UiParent> AllMenu;
+	public Transform GetInGame;
+	public Scores GetScores;
+
+    public GameObject[] PlayersHUD;
+    public Image[] PlayersWeaponHUD;
+    public GameObject[] PlayersAmmo;
+    public Text[] textWeapon;
+    public GameObject PotionGet;
+
+    Tween ammoTwRot, ammoTwScale1, ammoTwScale2, ammoTwFade, ammoTwWait, shakeTwPos, shakeTwRot;
+
+    public Text ScoreText;
+    public Text Multiplier;
+    public GameObject CauldronGauge;
+    public Image GetGauge;
+    public Image GaugeBackground;
+    public Image[] GaugeFeedback;
+    public CanvasGroup ButtonsInteract;
+    public Image WhiteBackground;
+
+    public GameObject[] PlayerText;
+
+    public GameObject PotionsPlus;
+    public GameObject PotionsLess;
+    public GameObject Light;
+    public GameObject Circle;
+    public GameObject CircleMultiplier;
+
+
+    [Header("SCREENSHAKE")]
+    public float ShakeMinPos;
+    public float ShakeMaxPos;
+    public float ShakeMinRot;
+    public float ShakeMaxRot;
+    public float ShakeDurationPos;
+    public float ShakeDurationRot;
+
+    [HideInInspector]
+    public GameObject[] AllPotGet;
+
+    Dictionary <MenuType, UiParent> AllMenu;
 	MenuType menuOpen;
 	#endregion
 
@@ -36,6 +77,25 @@ public class UiManager : ManagerParent
 			menuOpen = thisType;
 			thisUi.OpenThis ( GetTok );
 		}
+
+
+
+        DOVirtual.DelayedCall(22, () => {
+            WeaponChange(3);
+        }).SetLoops(-1, LoopType.Restart);
+
+        DOVirtual.DelayedCall(19, () => {
+            WeaponChange(2);
+        }).SetLoops(-1, LoopType.Restart);
+
+        DOVirtual.DelayedCall(17, () => {
+            WeaponChange(1);
+        }).SetLoops(-1, LoopType.Restart);
+
+        DOVirtual.DelayedCall(15, () => {
+            WeaponChange(0);
+        }).SetLoops(-1,LoopType.Restart);
+
     }
 
 	public void CloseThisMenu ( )
@@ -48,10 +108,263 @@ public class UiManager : ManagerParent
 			menuOpen = MenuType.Nothing;
 		}
 	}
-	#endregion
 
-	#region Private Methods
-	protected override void InitializeManager ( )
+    public void WeaponEmpty(int PlayerId)
+    {
+        PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[0].enabled = true;
+        PlayersAmmo[PlayerId].GetComponentInChildren<RainbowScale>().enabled = true;
+    }
+
+    public void ResetTween()
+    {
+        ammoTwFade.Kill(true);
+        ammoTwRot.Kill(true);
+        ammoTwScale1.Kill(true);
+        ammoTwScale2.Kill(true);
+        ammoTwWait.Kill(true);
+    }
+
+    public void WeaponChange(int PlayerId)
+    {
+        ResetTween();
+
+        //HUD INGAME
+
+        PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[0].enabled = false;
+        PlayersAmmo[PlayerId].GetComponentInChildren<RainbowScale>().enabled = false;
+
+        float randomZrotate = UnityEngine.Random.Range(-17, 17);
+        ammoTwRot = PlayersAmmo[PlayerId].transform.DOPunchRotation(new Vector3(1, 1, randomZrotate), 0.6f, 10, 1);
+
+        //LE CHARGEUR DISPARAIT
+
+        ammoTwScale1 = PlayersAmmo[PlayerId].transform.DOPunchScale((Vector3.one * .45f), 0.3f, 20, .1f);
+        ammoTwFade = PlayersAmmo[PlayerId].transform.GetComponent<CanvasGroup>().DOFade(0, .3f);
+        ammoTwScale2 = PlayersAmmo[PlayerId].transform.DOScale(0, .3f);
+        
+        //HUD ABOVE ALL
+        
+        PlayersWeaponHUD[PlayerId].transform.DOKill(true);
+        PlayersWeaponHUD[PlayerId].transform.GetChild(0).GetComponent<Image>().DOFade(1, .25f).OnComplete(()=> {
+            PlayersWeaponHUD[PlayerId].transform.GetChild(0).GetComponent<Image>().DOFade(0, .25f);
+        });
+
+        var circle = Instantiate(Circle, PlayersWeaponHUD[PlayerId].transform.parent.position, Quaternion.identity, PlayersWeaponHUD[PlayerId].transform.parent.GetChild(0));
+        PlayersWeaponHUD[PlayerId].transform.DOLocalRotate(new Vector3(0, 0, 360), .5f, RotateMode.LocalAxisAdd).OnComplete(() => {
+
+            var light = Instantiate(Light, PlayersWeaponHUD[PlayerId].transform.position, Quaternion.identity, PlayersWeaponHUD[PlayerId].transform);
+        });
+
+
+    }
+
+    public void WeaponNew(int PlayerId)
+    {
+        //LE CHARGEUR REAPARAIT VISIBLE
+
+        ammoTwFade = PlayersAmmo[PlayerId].transform.GetComponent<CanvasGroup>().DOFade(1, .2f);
+        PlayersAmmo[PlayerId].transform.DOScale(3, 0);
+        ammoTwScale1 = PlayersAmmo[PlayerId].transform.DOScale(1, .2f);
+
+
+        //COURT EFFET LUMINEUX DE COULEUR SUR LE OUTLINE
+
+        PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[1].enabled = true;
+        ammoTwWait = DOVirtual.DelayedCall(.3f, () =>
+        {
+            PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[1].enabled = false;
+            PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[1].transform.GetComponent<Image>().color = PlayersAmmo[PlayerId].GetComponentsInChildren<RainbowColor>()[1].colors[1];
+        });
+    }
+
+    public void PotionsLost()
+    {
+
+    }
+
+
+    public void GaugeLevelGet(int whichLevel)
+    {
+        GaugeFeedback[whichLevel].transform.DOScale(4, 0);
+        GaugeFeedback[whichLevel].transform.DOScale(1, .4f);
+        GaugeFeedback[whichLevel].DOFade(1, .1f);
+        DOVirtual.DelayedCall(.3f, () => {
+        
+            GaugeFeedback[whichLevel].DOFade(0, .4f);
+        });
+    }
+
+    int nbrCauld = 0;
+    [HideInInspector]
+    public bool checkDrive = false;
+    public void CauldronButtons(bool visible = false)
+    {
+        if (!visible)
+        {
+            nbrCauld --;
+            if ( nbrCauld <= 0 && !checkDrive )
+            {
+                ButtonsInteract.DOFade(0, .1f);
+            }
+        }
+        else
+        {
+            nbrCauld++;
+            ButtonsInteract.DOFade(1, .1f);
+        }
+    }
+
+
+    public void PopPotions(PotionType type) // poser ressource : 20 - 40 - 60 - 80 et 100
+    {
+        if(type == PotionType.Plus)
+        {
+            var potion = Instantiate(PotionsPlus, GetInGame.position, Quaternion.identity, GetInGame);
+
+            ScorePlus();
+
+            //potion.GetComponent<RainbowMove>().ObjectTransform = ici;
+        }
+        else if(type == PotionType.Less)
+        {
+            var potion = Instantiate(PotionsLess, GetInGame.position, Quaternion.identity, GetInGame);
+
+            //potion.transform.DOLocalMove(Manager.GameCont.WeaponB.transform.position, 0);
+            //potion.transform.DOLocalMoveY(Manager.GameCont.WeaponB.transform.localPosition.y + 220, 0);
+            ScoreLess();
+            //potion.GetComponent<RainbowMove>().ObjectTransform = ici;
+        }
+    }
+
+    public void MultiplierNew( int value = 0 )
+    {
+
+        //WHITE FLASH
+
+        WhiteBackground.DOFade(.7f, .2f).OnComplete(() => {
+            WhiteBackground.DOFade(0, .2f);
+        });
+
+
+        //GaugeLevelGet(0); GaugeLevelGet(1); GaugeLevelGet(2); GaugeLevelGet(3); GaugeLevelGet(4);
+
+        GaugeBackground.GetComponent<RainbowMove>().enabled = true;
+        GetGauge.GetComponent<RainbowMove>().enabled = true;
+        GetGauge.GetComponentInChildren<RainbowColor>().enabled = false;
+        GetGauge.GetComponentInChildren<RainbowColor>().transform.GetComponent<Image>().DOColor(new Color(1,1,1,0), 0);
+
+        DOVirtual.DelayedCall(.8f, () => {
+            GaugeBackground.GetComponent<RainbowMove>().enabled = false;
+            GetGauge.GetComponent<RainbowMove>().enabled = false;
+
+            Multiplier.GetComponent<RainbowColor>().enabled = false;
+            Multiplier.GetComponent<RainbowMove>().enabled = false;
+            Multiplier.GetComponent<RainbowScale>().enabled = false;
+        });
+
+        Multiplier.GetComponent<Text>().text = "x"+ value.ToString();
+        Multiplier.GetComponent<RainbowColor>().enabled = true;
+        Multiplier.GetComponent<RainbowMove>().enabled = true;
+        Multiplier.GetComponent<RainbowScale>().enabled = true;
+
+        var circle = Instantiate(CircleMultiplier, Multiplier.transform.position, Quaternion.identity, Multiplier.transform.parent);
+        circle.transform.SetSiblingIndex(0);
+
+    }
+
+    #endregion
+
+    #region Private Methods
+
+
+    public void ScreenShake()
+    {
+
+        UnityEngine.Debug.Log("ShootShake");
+
+        shakeTwPos.Kill(true);
+        shakeTwRot.Kill(true);
+
+        float rdmX = UnityEngine.Random.Range(ShakeMinPos, ShakeMaxPos);
+        float rdmZ = UnityEngine.Random.Range(ShakeMinRot, ShakeMaxRot);
+
+        Transform getT = Manager.GameCont.MainCam.transform;
+
+
+        float dir = -1;
+        shakeTwPos = getT.transform.DOPunchPosition(new Vector3(rdmX,0,rdmX), ShakeDurationPos, 2, 1);
+        shakeTwRot = getT.transform.DOPunchRotation(new Vector3(0, 0, rdmZ), ShakeDurationRot,2,1);
+
+
+        //getT.DOPunchPosition(getT.localPosition + getT.right * rdmX + getT.up * rdmZ, .5f, 0, 0);
+        //UnityEngine.Debug.Log(Camera.main.transform.localPosition);
+
+        //Manager.GameCont.MainCam.transform.DOMove(Manager.GameCont.MainCam.transform.localPosition + new Vector3(rdmX, 0, rdmZ), .12f, 0, 0);
+
+        //Manager.GameCont.MainCam.transform.DOPunchPosition(Manager.GameCont.MainCam.transform.localPosition + new Vector3(rdmX, 0, rdmZ), .2f, 0, 0);
+    }
+
+    void ScorePlus()
+    {
+        ScoreText.transform.DOKill(true);
+        ScoreText.transform.DOShakeScale(.4f, 1f, 12, 15);
+        ScoreText.GetComponent<RainbowColor>().enabled = true;
+        DOVirtual.DelayedCall(.4f, () => {
+            ScoreText.GetComponent<RainbowColor>().enabled = false;
+        });
+    }
+
+    void ScoreLess()
+    {
+        ScoreText.transform.DOKill(true);
+        ScoreText.transform.DOShakeScale(.4f, 1f, 12, 15);
+        ScoreText.GetComponentsInChildren<RainbowColor>()[1].enabled = true;
+        DOVirtual.DelayedCall(.4f, () => {
+            ScoreText.GetComponentsInChildren<RainbowColor>()[1].enabled = false;
+        });
+    }
+
+    private void Update()
+    {
+
+#if UNITY_EDITOR
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            PopPotions(PotionType.Plus);
+            WeaponEmpty(0);
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            WeaponChange(0);
+        }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            ScorePlus();
+        }
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            MultiplierNew();
+            GaugeLevelGet(2);
+        }
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            PopPotions(PotionType.Less);
+        }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+        }
+
+#endif
+
+    }
+
+    private void FixedUpdate()
+    {
+        //PlayersAmmo[0].transform.position = Manager.GameCont.Players[0].transform.position;
+    }
+
+    protected override void InitializeManager ( )
 	{
 		Object[] getAllMenu = Resources.LoadAll ( "Menu" );
 		Dictionary<MenuType, UiParent> setAllMenu = new Dictionary<MenuType, UiParent> ( getAllMenu.Length );
@@ -70,6 +383,8 @@ public class UiManager : ManagerParent
 			setAllMenu.Add ( thisUi.ThisMenu, thisUi );
 		}
 
+        CauldronGauge = (GameObject) Instantiate(CauldronGauge, GetInGame);
+        CauldronGauge.SetActive(false);
 		AllMenu = setAllMenu;
 
 		OpenThisMenu(MenuType.SelectPlayer);

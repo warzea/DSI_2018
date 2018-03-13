@@ -9,3 +9,37 @@ public enum MenuType
 	Nothing,
 	SelectPlayer
 }
+
+public enum ScoreType
+{
+	Nothing,
+	BoxWeapon
+}
+
+public enum Trajectoir
+{
+	Standard
+	
+}
+
+public enum TypeEnemy
+{
+	Cac,
+	Distance
+	
+}
+
+public enum PotionType
+{
+	Plus,
+	Less
+	
+}
+
+public enum TypeMedail 
+{
+	easy,
+	medium,
+	hard
+
+}

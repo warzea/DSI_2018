@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: fb92d4e5ffe4b1e4a89214ce1d3b0e7c
+timeCreated: 1520590739
+licenseType: Pro
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - weapon: {fileID: 1093315411277202, guid: ea26266d024e3cf4f8bc8992dc15534d, type: 2}
+  - csvFile: {fileID: 4900000, guid: 05346ff67c6e4c94fab3e46a19315f43, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

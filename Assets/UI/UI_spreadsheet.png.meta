@@ -1,0 +1,348 @@
+fileFormatVersion: 2
+guid: b4f4cb9961f096042aff7f7365e95dd0
+timeCreated: 1520588051
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: UI_Score_Gauge
+    21300002: UI_Score_Gauge_1
+    21300004: UI_Score_Gauge_2
+    21300006: UI_Score_Gauge_3
+    21300008: UI_Score_Gauge_4
+    21300010: UI_Score_Gauge_5
+    21300012: UI_Player1_Sprite
+    21300014: UI_Player2_Sprite
+    21300016: UI_Player3_Sprite
+    21300018: UI_Player4_Sprite
+    21300020: UI_Player1_WeaponSlot
+    21300022: UI_Player2_WeaponSlot
+    21300024: UI_Player3_WeaponSlot
+    21300026: UI_Player4_WeaponSlot
+    21300028: UI_Weapon_1
+    21300030: UI_Weapon_2
+    21300032: UI_Weapon_3
+    21300034: UI_Weapon_4
+    21300036: UI_Score_MultiplierSlot
+    21300038: UI_WeaponAmmo
+    21300040: UI_Score_Slot
+    21300042: UI_Gradient_Green
+    21300044: UI_Ammo_Inside
+  externalObjects: {}
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: UI_Player1_Sprite
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 2035
+        width: 612
+        height: 580
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UI_Player2_Sprite
+      rect:
+        serializedVersion: 2
+        x: 1839
+        y: 1957
+        width: 643
+        height: 606
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UI_Player3_Sprite
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 655
+        width: 652
+        height: 590
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UI_Player4_Sprite
+      rect:
+        serializedVersion: 2
+        x: 1836
+        y: 638
+        width: 613
+        height: 595
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UI_Player1_WeaponSlot
+      rect:
+        serializedVersion: 2
+        x: 857
+        y: 2014
+        width: 577
+        height: 469
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UI_Player2_WeaponSlot
+      rect:
+        serializedVersion: 2
+        x: 2536
+        y: 1937
+        width: 701
+        height: 523
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UI_Player3_WeaponSlot
+      rect:
+        serializedVersion: 2
+        x: 780
+        y: 631
+        width: 737
+        height: 504
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UI_Player4_WeaponSlot
+      rect:
+        serializedVersion: 2
+        x: 2566
+        y: 586
+        width: 650
+        height: 486
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UI_Weapon_1
+      rect:
+        serializedVersion: 2
+        x: 874
+        y: 2496
+        width: 546
+        height: 567
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UI_Weapon_2
+      rect:
+        serializedVersion: 2
+        x: 3053
+        y: 2530
+        width: 533
+        height: 583
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UI_Weapon_3
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 1142
+        width: 747
+        height: 656
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UI_Weapon_4
+      rect:
+        serializedVersion: 2
+        x: 2660
+        y: 1111
+        width: 441
+        height: 694
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UI_Score_MultiplierSlot
+      rect:
+        serializedVersion: 2
+        x: 870
+        y: 75
+        width: 416
+        height: 424
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UI_WeaponAmmo
+      rect:
+        serializedVersion: 2
+        x: 1681
+        y: 78
+        width: 364
+        height: 393
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UI_Score_Slot
+      rect:
+        serializedVersion: 2
+        x: 477
+        y: 4131
+        width: 2830
+        height: 756
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UI_Gradient_Green
+      rect:
+        serializedVersion: 2
+        x: 1318
+        y: 81
+        width: 350
+        height: 366
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UI_Ammo_Inside
+      rect:
+        serializedVersion: 2
+        x: 2652
+        y: 83
+        width: 305
+        height: 335
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -3,44 +3,47 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class CameraFollow : MonoBehaviour 
+public class CameraFollow : MonoBehaviour
 {
-	#region Variables
-	public Transform Target;
-	public float TimeGoTarget = 1;
+    #region Variables
+    public float smoothTime = 0.3F;
+    Vector3 velocity = Vector3.zero;
+    Transform Target;
+    Transform thisTrans;
+    #endregion
 
-	Transform thisTrans;
-	#endregion
+    #region Mono
+    void Start()
+    {
+        thisTrans = transform;
 
-	#region Mono
-	void Start ( )
-	{
-		thisTrans = transform;
-	}
-	#endregion
+        if ( Target == null )
+        {
+            Target = Manager.GameCont.WeaponB.transform;
+        }
+    }
 
-	#region Public Methods
-	public void InitGame ( Transform setTarget = null )
-	{
-		if ( setTarget != null )
-		{
-			Target = setTarget;
-		}
+    void LateUpdate()
+    {
+        transform.position = Vector3.Lerp(transform.position, Target.position, smoothTime * Time.deltaTime);
+    }
+    #endregion
 
-		thisTrans.SetParent (Target);
-		thisTrans.localPosition = new Vector3 ( 0, thisTrans.localPosition.y, 0);
-	}
+    #region Public Methods
+    public void InitGame(Transform setTarget = null)
+    {
+        if (setTarget != null)
+        {
+            Target = setTarget;
+        }
+    }
 
-	public void UpdateTarget ( Transform newTarget )
-	{
-		Target = newTarget;
-		thisTrans.SetParent(newTarget);
+    public void UpdateTarget(Transform newTarget)
+    {
+        Target = newTarget;
+    }
+    #endregion
 
-		thisTrans.DOLocalMoveX(0, TimeGoTarget, true);
-		thisTrans.DOLocalMoveZ(0, TimeGoTarget, true);
-	}
-	#endregion
-
-	#region Private Methods
-	#endregion
+    #region Private Methods
+    #endregion
 }
