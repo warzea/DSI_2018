@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: f081c1b116815374285d661051dddba8
 timeCreated: 1520939981
+=======
+guid: 22a8920b0dc97a64e925bd52807a59c2
+timeCreated: 1520947089
+>>>>>>> marie
 licenseType: Free
 NativeFormatImporter:
   externalObjects: {}
