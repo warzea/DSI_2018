@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
 	public GameObject ItemLostObj;
 	public float radialDeadZone = 0.3f;
 	public float maxAngle = 2;
+	public float DistThrowWeap = 2;
 
 	//public float DashDistance = 5;
 	//public float DashTime = 1;
