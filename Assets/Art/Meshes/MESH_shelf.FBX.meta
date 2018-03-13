@@ -1,18 +1,16 @@
 fileFormatVersion: 2
-guid: 9261903f376d1084ba07b9d0b81c89df
-timeCreated: 1520688966
+guid: ecc2af5d9e212f64db4b3e85f562df8d
+timeCreated: 1520935442
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
-    2100000: No Name
-    2100002: 'Material #31'
+    2100000: lambert1
     2300000: //RootNode
     3300000: //RootNode
-    4300000: displayStand_4
-    4300002: displayStand_3
+    4300000: shelf
     9500000: //RootNode
   externalObjects: {}
   materials:
