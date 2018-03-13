@@ -76,6 +76,9 @@ public class LevelDataInspector : Editor
             GameObject weapon = (GameObject)Instantiate(weaponPref, weaponPref.transform.position, weaponPref.transform.rotation, parentWeapon.transform);
             WeaponAbstract wpAbstract = weapon.GetComponent<WeaponAbstract>();
             weapon.name = Caracts[0].ToString();
+            float test;
+            float.TryParse(Caracts[3], out test);
+            Debug.Log (test);
             bool.TryParse(Caracts[1], out wpAbstract.AutoShoot);
             float.TryParse(Caracts[2], out wpAbstract.FireRate);
             float.TryParse(Caracts[3], out wpAbstract.CoolDown);
