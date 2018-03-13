@@ -607,6 +607,7 @@ public class PlayerController : MonoBehaviour
 		Manager.GameCont.WeaponB.AddItem (CurrItem);
 		CurrScore += CurrItem;
 		CurrLootScore += CurrItem;
+		CurrItem = 0;
 
 		for (int a = 0; a < getBagItems.Length; a++) 
 		{
