@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 208689542821674992}
   - component: {fileID: 114653082073803896}
   m_Layer: 0
-  m_Name: coffre
+  m_Name: Chest
   m_TagString: Container
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -6,6 +6,7 @@ public class ItemObjLost : MonoBehaviour
 {
 	#region Variables
 	public GameObject ThisObj;
+	public int NbrItem;
 	Transform thisTrans;
 	Camera GetCamera;
 	bool check = false;
@@ -49,7 +50,9 @@ public class ItemObjLost : MonoBehaviour
 		if ( thisColl.tag == Constants._Player && check )
 		{
 			PlayerController getPC = thisColl.GetComponent<PlayerController>();
-
+			getPC.CurrItem = NbrItem;
+			Manager.Ui.AllPotGet[getPC.IdPlayer].GetComponent<PotionFollowP>().Nbr = NbrItem;
+			
 			foreach ( ItemLost thisT in thisTrans.GetComponentsInChildren<ItemLost>() )
 			{
 				thisT.GoTarget(getPC);

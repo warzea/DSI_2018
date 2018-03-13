@@ -52,10 +52,10 @@ public class Scores : MonoBehaviour
 	IEnumerator updateValue ( WaitForEndOfFrame thisF, ScoreInfo thisInfo )
 	{
 		yield return thisF;
+		thisInfo.ScoreText.text = thisInfo.ScoreValue.ToString();
 
 		if ( thisInfo.FinalScore != thisInfo.ScoreValue )
 		{
-			thisInfo.ScoreText.text = thisInfo.ScoreValue.ToString();
 
 			StartCoroutine(updateValue ( thisF, thisInfo ) );
 		}
