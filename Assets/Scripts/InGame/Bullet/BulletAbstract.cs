@@ -300,7 +300,7 @@ public class BulletAbstract : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
-       /* MeshRenderer thisMr = GetComponentInChildren<MeshRenderer>();
+        MeshRenderer thisMr = GetComponentInChildren<MeshRenderer>();
         Collider thisC = GetComponent<Collider>();
         if ( thisMr != null && thisC != null )
         {
@@ -310,8 +310,8 @@ public class BulletAbstract : MonoBehaviour
         }
         else
         {
-        }*/
             Destroy (gameObject);
+        }
     }
     
     #endregion
