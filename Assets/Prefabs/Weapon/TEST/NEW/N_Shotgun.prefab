@@ -52,7 +52,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1303726343159936}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.068, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4371842684289666}
@@ -142,19 +142,11 @@ MonoBehaviour:
   Gust: 0
   SpaceBullet: 0
   Angle: 0
-<<<<<<< HEAD
-  TimeFarEffect: 0
-  FarEffect: 0
-  WidthRange: 0
-  SpeedZone: 0
-  TimeDest: 1
-=======
   TimeFarEffect: 0.1
   FarEffect: 1.25
   WidthRange: 3.75
   SpeedZone: 0.1
   TimeDest: 0.1
->>>>>>> Loic
   Diameter: 0
   Bullet: {fileID: 1530796011795326, guid: 18c65fd6d7d2efd4e8d9413388e25917, type: 2}
   SpawnBullet: {fileID: 4076233017719882}
