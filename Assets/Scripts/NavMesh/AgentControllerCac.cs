@@ -159,7 +159,7 @@ public class AgentControllerCac : MonoBehaviour
     IEnumerator WaitRespawn()
     {
         animAgent.SetBool("Move", false);
-        // animAgent.SetTrigger("Die");
+        animAgent.SetTrigger("Die");
         yield return new WaitForSeconds(timeBeforeDepop);
         Vector3 newPos = agentsM.CheckBestcheckPoint(focusPlayer.transform);
         navAgent.Warp(newPos);
@@ -168,6 +168,7 @@ public class AgentControllerCac : MonoBehaviour
         navAgent.isStopped = false;
         myEtatAgent = AgentEtat.aliveAgent;
         lifeAgent = 1;
+        animAgent.SetTrigger("MeleeAttack");
         animAgent.SetBool("Move", true);
     }
 
