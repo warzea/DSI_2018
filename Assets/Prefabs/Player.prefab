@@ -1081,11 +1081,12 @@ MonoBehaviour:
   LifePlayer: 1
   TimeToRegen: 3
   MoveSpeed: 13
+  SlowDriveBack: 0.5
   ItemLostObj: {fileID: 1330381900745004, guid: 0540fd0faddbcfd46bb2584e8d68fc5c,
     type: 2}
   radialDeadZone: 0.3
   maxAngle: 3
-  DistToDropItem: 16
+  DistToDropItem: 6
   nbItemBeforeBigBag: 10
   animPlayer: {fileID: 95255310504812768}
   WeaponPos: {fileID: 4522346009082788}

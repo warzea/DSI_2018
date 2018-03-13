@@ -2036,9 +2036,10 @@ MonoBehaviour:
   animAgent: {fileID: 95181506654246960}
   distancePlayer: 4
   distanceWeaponBox: 5
-  speedVsCauldron: 15
-  speedVsPlayer: 8
+  speedVsCauldron: 12
+  speedVsPlayer: 6
   focusPlayer: {fileID: 0}
+  timeBeforeDepop: 3
   timeLeftAgentAttacCac: 2
 --- !u!135 &135595202935105828
 SphereCollider:
