@@ -403,7 +403,7 @@ public class PlayerController : MonoBehaviour
 		thisTrans.position += getSpeed * new Vector3 (Xmove, 0, Ymove);
 	}
 
-	oid playerAim(float getDeltaTime)
+	void playerAim(float getDeltaTime)
     {
         float Xaim = inputPlayer.GetAxis("AimX");
         float Yaim = inputPlayer.GetAxis("AimY");
