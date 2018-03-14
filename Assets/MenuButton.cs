@@ -40,7 +40,43 @@ public class MenuButton : Button {
             myEventSystem.GetComponent<UnityEngine.EventSystems.EventSystem>().SetSelectedGameObject(null);
         }
 
-       
+        if (gameObject.name == "Restart")
+        {
+
+            GameObject myEventSystem = GameObject.Find("Rewired Event System");
+            myEventSystem.GetComponent<UnityEngine.EventSystems.EventSystem>().SetSelectedGameObject(null);
+        }
+
+        if (gameObject.name == "Credits" && Credits.Singleton.canPressCredits)
+        {
+
+            Credits.Singleton.canPressCredits = false;
+            MenuManager.Singleton.canvasMenu.transform.GetChild(0).GetComponent<CanvasGroup>().DOFade(0, .2f);
+            MenuManager.Singleton.canvasMenu.transform.GetChild(1).GetComponent<CanvasGroup>().DOFade(0, .2f);
+            MenuManager.Singleton.canvasMenu.transform.GetChild(2).GetComponent<CanvasGroup>().DOFade(0, .2f);
+            MenuManager.Singleton.canvasMenu.transform.GetChild(3).GetComponent<CanvasGroup>().DOFade(0, .2f);
+
+            MenuManager.Singleton.Credits.DOFade(1, .35f).OnComplete(() => {
+
+                Credits.Singleton.canPressCredits = true;
+            });
+
+
+            Credits.Singleton.opened = true;
+
+            GameObject myEventSystem = GameObject.Find("Rewired Event System");
+            myEventSystem.GetComponent<UnityEngine.EventSystems.EventSystem>().SetSelectedGameObject(null);
+        }
+
+        if (gameObject.name == "Quit")
+        {
+            if (!Application.isEditor)
+            {
+                System.Diagnostics.Process.GetCurrentProcess().Kill();
+            }
+        }
+
+
 
     }
 
