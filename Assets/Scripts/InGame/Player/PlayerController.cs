@@ -810,9 +810,12 @@ public class PlayerController : MonoBehaviour
 	void OnTriggerEnter (Collider thisColl)
 	{
 		string getTag = thisColl.tag;
-		if (thisColl.tag == Constants._EnterCont) {
+		if (thisColl.tag == Constants._EnterCont) 
+		{
 			canEnterBox = true;
-		} else if (getTag == Constants._EnemyBullet && canTakeDmg && checkUpdate/*|| getTag == Constants._Enemy*/) {
+		} 
+		else if (getTag == Constants._EnemyBullet && canTakeDmg && checkUpdate/*|| getTag == Constants._Enemy*/) 
+		{
 			lifePlayer--;
 
 			Manager.VibM.StunVibration (inputPlayer);
@@ -820,11 +823,10 @@ public class PlayerController : MonoBehaviour
             Manager.VibM.StunVibration(inputPlayer);
             animPlayer.SetTrigger("Damage");
 
-				DOVirtual.DelayedCall (TimeToRegen, () => 
-				{
-					lifePlayer = LifePlayer;
-				});
-			}
+			DOVirtual.DelayedCall (TimeToRegen, () => 
+			{
+				lifePlayer = LifePlayer;
+			});
 		}
 	}
 
