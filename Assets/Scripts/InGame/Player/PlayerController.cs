@@ -421,9 +421,11 @@ public class PlayerController : MonoBehaviour
 				try
 				{
 					Manager.Ui.GaugeButtonBonus.GetComponent<CanvasGroup> ( ).DOFade (1, .1f);
-					thisWB.ThisGauge.GetComponentInChildren<RainbowColor> ( ).enabled = true;
-				}
-				catch
+					thisWB.ThisGauge.transform.parent.GetComponentInChildren<RainbowColor> ( ).enabled = true;;
+                    thisWB.ThisGauge.transform.parent.GetComponentInChildren<RainbowScale>().enabled = true;
+
+                }
+                catch
 				{
 					Manager.Ui.GaugeButtonBonus.GetComponent<CanvasGroup> ( ).DOFade (0, .1f);
 					Debug.Log ("Raimbo jauge empty");
