@@ -365,6 +365,7 @@ public class UiManager : ManagerParent
 
             //potion.transform.DOLocalMove(Manager.GameCont.WeaponB.transform.position, 0);
             //potion.transform.DOLocalMoveY(Manager.GameCont.WeaponB.transform.localPosition.y + 220, 0);
+
             ScoreLess ();
             //potion.GetComponent<RainbowMove>().ObjectTransform = ici;
         }
