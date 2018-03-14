@@ -84,7 +84,7 @@ public class WeaponBox : MonoBehaviour
 
 	public void ActionSpe ( )
 	{
-		if ( ThisGauge.fillAmount >= .1f )
+		if ( ThisGauge.fillAmount >= 1 )
 		{
             transform.DOKill(true);
             getChild.DOKill(true);
