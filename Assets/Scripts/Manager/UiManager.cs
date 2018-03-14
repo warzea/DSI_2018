@@ -56,6 +56,7 @@ public class UiManager : ManagerParent
     public Text EndScreenRank;
     public GameObject EndScreenFX;
     public GameObject EndScreenWeaponBox;
+    public GameObject EndScreenMedal;
 
     [HideInInspector]
     public GameObject[] AllPotGet;
@@ -184,14 +185,37 @@ public class UiManager : ManagerParent
 
     }
 
+
+
+    public void EndScreenMedals()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            var medal = Instantiate(EndScreenMedal, transform.position, Quaternion.identity, PlayersEndScreen[i].transform.GetChild(3).transform);
+            medal.transform.localPosition += new Vector3(0, 50, 0);
+        }
+    }
+
     public void EndScreenFinished()
     {
+
+
         EndScreenRank.transform.DOScale(4, 0);
         EndScreenRank.transform.DOScale(1, .15f);
         EndScreenRank.transform.GetComponent<CanvasGroup>().DOFade(1, .15f);
         EndScreenFX.gameObject.SetActive(true);
+        
+    }
 
-
+    public void EndScreenAll()
+    {
+        foreach (Transform trans in EndScreenContainer.transform)
+        {
+            if (trans.GetComponent<CanvasGroup>())
+            {
+                trans.GetComponent<CanvasGroup>().DOFade(1, .1f);
+            }
+        }
     }
 
     public void WeaponChangeIG(int PlayerId)
@@ -458,6 +482,10 @@ public class UiManager : ManagerParent
         {
             EndScreenStart();
         }
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            EndScreenAll();
+        }
 
 #endif
 
@@ -482,6 +510,7 @@ public class UiManager : ManagerParent
             setAllMenu.Add(thisUi.ThisMenu, thisUi);
         }
 
+        EndScreenContainer.transform.parent.GetComponent<Canvas>().worldCamera = Manager.GameCont.MainCam;
         GaugeButtonBonus = (GameObject)Instantiate(GaugeButtonBonus, GetInGame);
 
         CauldronGauge = (GameObject)Instantiate(CauldronGauge, GetInGame);
