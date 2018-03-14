@@ -156,7 +156,7 @@ MonoBehaviour:
   SpeEffet: {fileID: 0}
   ExploWeapon: {fileID: 0}
   PrefabExplo: {fileID: 0}
-  NameMusic: 
+  NameMusic: grenade_scope
   TimeBackPush: 0.1
   WeightRandom: 0
   AutoShoot: 1
