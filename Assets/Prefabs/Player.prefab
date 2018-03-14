@@ -1087,8 +1087,38 @@ MonoBehaviour:
   DistThrowWeap: 11
   SpeedThrow: 21
   SpeedReduceOnBox: 0.75
-  TimeAccelBox: 0.5
+  TimeAccelBox: 2.5
   SmoothRotateOnBox: 7
+  CurveAcceleration:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.108742975
+      value: 0.28858098
+      inSlope: 0.45128167
+      outSlope: 0.45128167
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.19122761
+      value: 0.33267367
+      inSlope: 2.3011541
+      outSlope: 2.3011541
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
   UiAmmoX: 50
   UiAmmoY: -50
   CdShoot: 0
