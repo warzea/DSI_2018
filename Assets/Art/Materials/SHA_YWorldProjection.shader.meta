@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 321a22085146bcc4d8d6d71df0b1870b
+timeCreated: 1520957363
+licenseType: Free
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _TEX_ground_wood_N: {fileID: 2800000, guid: d0c03b6bdd92b5a49aaaba47b4126fe3,
+      type: 3}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
