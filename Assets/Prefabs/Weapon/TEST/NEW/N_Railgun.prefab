@@ -177,12 +177,12 @@ MonoBehaviour:
   SpaceBullet: 0
   Angle: 0
   TimeFarEffect: 0.2
-  FarEffect: 6.5
+  FarEffect: 1
   WidthRange: 0.2
   SpeedZone: 0
   TimeDest: 0.2
   Diameter: 2
-  Bullet: {fileID: 1530796011795326, guid: 7debebcea0d258f4a9f5dc489d6103cf, type: 2}
+  Bullet: {fileID: 1530796011795326, guid: b8f91084fbb60784d81fcdee41701c84, type: 2}
   SpawnBullet: {fileID: 4940790349217874}
   canShoot: 1
   OnFloor: 1
