@@ -245,7 +245,15 @@ public class AgentController : MonoBehaviour
         {
             BulletAbstract getBA = other.GetComponent<BulletAbstract>();
 
-            lifeAgent -= getBA.BulletDamage;
+            if (getBA != null)
+            {
+                lifeAgent -= getBA.BulletDamage;
+            }
+            else
+            {
+                lifeAgent -= 1;
+            }
+
 
             if (lifeAgent <= 0 && AgentEtat.aliveAgent == myEtatAgent)
             {

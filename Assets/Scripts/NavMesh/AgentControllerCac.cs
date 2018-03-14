@@ -161,7 +161,7 @@ public class AgentControllerCac : MonoBehaviour
     IEnumerator WaitRespawn()
     {
         animAgent.SetBool("Move", false);
-        //animAgent.SetTrigger("Die");
+        animAgent.SetTrigger("Die");
         yield return new WaitForSeconds(timeBeforeDepop);
         Instantiate(MeshDestroy, transform.position, transform.rotation);
         Vector3 newPos = agentsM.CheckBestcheckPoint(focusPlayer.transform);
