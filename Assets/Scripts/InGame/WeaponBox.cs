@@ -126,7 +126,6 @@ public class WeaponBox : MonoBehaviour
             var newMult = new ChestEvent ( );
             newMult.Mult = SpeMultRessources;
             newMult.TimeMult = StayMult;
-            newMult.ThisMat = BonusMat;
             newMult.Raise ( );
         }
     }

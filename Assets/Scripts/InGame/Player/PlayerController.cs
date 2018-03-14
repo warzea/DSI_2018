@@ -60,10 +60,10 @@ public class PlayerController : MonoBehaviour
 	[Header ("Cauldron")]
 	[Range (0, 1)]
 	[Tooltip ("Speed reduce pendant qu'on pousse la caisse")]
-	public AnimationCurve CurveAcceleration;
 	public float SpeedReduceOnBox = 0.1f;
 	public float TimeAccelBox = 5f;
 	public float SmoothRotateOnBox = 10;
+	public AnimationCurve CurveAcceleration;
 
 	[Header ("UI Pos")]
 	public float UiAmmoX;
@@ -394,11 +394,11 @@ public class PlayerController : MonoBehaviour
 
 		float speed = Mathf.Abs (Xmove)+ Mathf.Abs (Ymove)* 2;
 
-		if (speed == 0)
+		if (speed == 0 && !checkAcc)
 		{
+			accel.Kill ( );
 			checkAcc = true;
 			currSpeed = 0;
-
 		}
 
 		if (checkAcc)
