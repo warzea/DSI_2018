@@ -238,7 +238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PrefabExplosion: {fileID: 1530796011795326, guid: b3af346aef9065f49a641a18ab89aed9,
     type: 2}
-  GetEffect: {fileID: 1530796011795326, guid: b3af346aef9065f49a641a18ab89aed9, type: 2}
+  GetEffect: {fileID: 1449142836116410, guid: 9377f14e110903248b4f53cd5b6974bf, type: 2}
   ThisTrajectoir: 0
   MoveSpeed: 1
   NameAudio: grenade_scope_explosion
