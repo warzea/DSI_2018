@@ -1074,7 +1074,7 @@ MonoBehaviour:
   radialDeadZone: 0.3
   maxAngle: 3
   DistThrowWeap: 11
-  SpeedThrow: 2
+  SpeedThrow: 21
   DistToDropItem: 6
   nbItemBeforeBigBag: 10
   animPlayer: {fileID: 95255310504812768}
@@ -1090,8 +1090,8 @@ MonoBehaviour:
   GetSpeed: 0
   SpeedReduce: 0.5
   SpeedReduceOnBox: 0.35
-  TimeAccelBox: 2.2
-  SmoothRotateOnBox: 3.7
+  TimeAccelBox: 2
+  SmoothRotateOnBox: 4.2
   aimSensitivity: 10
   aimSensitivityEnemy: 1.5
   AllItem: []
