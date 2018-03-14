@@ -46,3 +46,17 @@ MonoBehaviour:
       Volume: 1
       Pitch: 1
       Audio: {fileID: 8300000, guid: a09ffa4de2a9b5d41b8c514983acca49, type: 3}
+  - ThisType: 4
+    SetAudio:
+    - AudioName: grenade_frog_explosion
+      Volume: 1
+      Pitch: 1
+      Audio: {fileID: 8300000, guid: e0657d8947099034886cf13381e78dd5, type: 3}
+    - AudioName: grenade_scope_explosion
+      Volume: 1
+      Pitch: 1
+      Audio: {fileID: 8300000, guid: bde939e45b9a7f44c925249f51ae95d1, type: 3}
+    - AudioName: explosion_lambda
+      Volume: 1
+      Pitch: 1
+      Audio: {fileID: 8300000, guid: 4834583391059ce4fa4a290dddee5032, type: 3}
