@@ -127,7 +127,6 @@ public class AgentControllerCac : MonoBehaviour
                 {
                     animAgent.SetBool("Move", false);
                     animAgent.SetTrigger("MeleeAttack");
-                    Debug.Log("Shhooottt");
                     focusPlayer.GetComponent<PlayerController>().GetDamage(transform);
                 }
             }

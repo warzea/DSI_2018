@@ -27,6 +27,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _Float1: 0.3
+    - _Float2: 1
     - _Metalness: 0
     - _NormalFlatten: 0.64
     - _Smoothness: 0.1
