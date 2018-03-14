@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 
-public class AudioManager : MonoBehaviour 
+public class AudioManager : ManagerParent 
 {
 	#region Variable
 	[Tooltip ("Create a new ScriptableAudio and drag and drop here (in project : create -> Scriptable -> Audio)")]
@@ -230,7 +230,7 @@ public class AudioManager : MonoBehaviour
 	#endregion
 	
 	#region Private
-	public void InitializeManager ( )
+	protected override void InitializeManager ( )
 	{
 		Dictionary<AudioType, AudioSource> setDict = new Dictionary<AudioType, AudioSource> ( );
 		Dictionary<AudioType, int> setVol = new Dictionary<AudioType, int> ( );
