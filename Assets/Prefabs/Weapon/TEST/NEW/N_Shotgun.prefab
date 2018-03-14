@@ -125,6 +125,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpeEffet: {fileID: 0}
+  ExploWeapon: {fileID: 0}
+  PrefabExplo: {fileID: 0}
+  NameMusic: shotgun_zone
+  TimeBackPush: 0.1
   WeightRandom: 0
   AutoShoot: 1
   Projectile: 0

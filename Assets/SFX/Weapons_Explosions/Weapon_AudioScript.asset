@@ -9,6 +9,40 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0b54c21d6e3c5b43bf2d1d26e8302ae, type: 3}
-  m_Name: AudioScript
+  m_Name: Weapon_AudioScript
   m_EditorClassIdentifier: 
-  AllMF: []
+  AllMF:
+  - ThisType: 6
+    SetAudio:
+    - AudioName: grenade_frog
+      Volume: 1
+      Pitch: 1
+      Audio: {fileID: 8300000, guid: ee7cd469a88d9c04789755ad00735648, type: 3}
+    - AudioName: laser_wand
+      Volume: 1
+      Pitch: 1
+      Audio: {fileID: 8300000, guid: f8a1936b7cf05e24c923ab2ecc827828, type: 3}
+    - AudioName: machinegun_gust
+      Volume: 1
+      Pitch: 1
+      Audio: {fileID: 8300000, guid: 0f883307a58639e4e81b9b4b2352f999, type: 3}
+    - AudioName: machinegun_spread
+      Volume: 1
+      Pitch: 1
+      Audio: {fileID: 8300000, guid: bc6779e7d2c49dd4eb0aaaa7cca8135f, type: 3}
+    - AudioName: laser_railgun
+      Volume: 1
+      Pitch: 1
+      Audio: {fileID: 8300000, guid: e06fd58665255394cbc32084240e0318, type: 3}
+    - AudioName: grenade_scope
+      Volume: 1
+      Pitch: 1
+      Audio: {fileID: 8300000, guid: faf916b36f51b6e45b89ae008ca77796, type: 3}
+    - AudioName: shotgun_bullet
+      Volume: 1
+      Pitch: 1
+      Audio: {fileID: 8300000, guid: 7ae4202b6731dc94a94046c1eefeecbb, type: 3}
+    - AudioName: shotgun_zone
+      Volume: 1
+      Pitch: 1
+      Audio: {fileID: 8300000, guid: a09ffa4de2a9b5d41b8c514983acca49, type: 3}
