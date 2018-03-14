@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
 	[Space]
 
 	[Header("Aime")]
+    public float angleAimSensitivity = 6;
 	public float aimSensitivity = 10;
 	public float aimSensitivityEnemy = 2;
 	public float radialDeadZone = 0.3f;
