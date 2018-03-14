@@ -75,7 +75,7 @@ public class GameController : ManagerParent
             {
                 for (int a = 0; a < AllMedal.Length; a++)
                 {
-                    Debug.Log ("medal : " + a + " / " + AllMedal.Length);
+                    Debug.Log (a);
                     AllMedal [a].gameObject.SetActive (true);
 
                     AllMedal [a].StartCheck (getPlayerCont.ToArray ());
@@ -187,7 +187,8 @@ public class GameController : ManagerParent
 
                 getWeapon = (GameObject) Instantiate (StartWeapon, getPC.WeaponPos.transform);
                 getWeapon.transform.localPosition = Vector3.zero;
-                getWeapon.transform.localRotation = Quaternion.identity;
+                //getWeapon.transform.localRotation = Quaternion.identity;
+                getWeapon.transform.localScale = new Vector3 (0.01165743f, 0.01258486f, 0.01180339f);
 
                 //getPlayer.GetComponent<PlayerController>().WeapText = Manager.Ui.textWeapon[a];
 

@@ -11,7 +11,7 @@ public class MedalAim : AbstractMedal
 	#region Mono
 	public override void StartCheck (PlayerController [] allPlayer)
 	{
-		PlayerController thisPlayer = allPlayer [0];
+		thisPlayer = allPlayer [0];
 		PlayerController thisPlayerEqua = null;
 
 		float cal1;
@@ -38,7 +38,6 @@ public class MedalAim : AbstractMedal
 		}
 		else
 		{
-
 			GoTarget ();
 		}
 	}

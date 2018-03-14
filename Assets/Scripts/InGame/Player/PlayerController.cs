@@ -11,7 +11,6 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
 	#region Variables
-
 	[HideInInspector]
 	public int IdPlayer;
 
@@ -43,6 +42,7 @@ public class PlayerController : MonoBehaviour
 	[Space]
 
 	[Header ("Reference")]
+	public Transform SpawnBullet;
 	public GameObject ItemLostObj;
 	public Animator animPlayer;
 	public Transform WeaponPos;
@@ -246,6 +246,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if (thisWeap != null)
 		{
+			thisWeap.SpawnBullet = SpawnBullet;
 			thisWeap.OnFloor = false;
 			autoShoot = thisWeap.AutoShoot;
 			SpeedReduce = thisWeap.SpeedReduce;
@@ -383,6 +384,8 @@ public class PlayerController : MonoBehaviour
 		playerAim (getDeltaTime);
 	}
 
+	bool checkAcc = false;
+
 	void playerMove (float getDeltaTime)
 	{
 		float Xmove = inputPlayer.GetAxis ("MoveX");
@@ -392,7 +395,15 @@ public class PlayerController : MonoBehaviour
 
 		if (speed == 0)
 		{
+			checkAcc = true;
 			currSpeed = 0;
+
+		}
+
+		if (checkAcc)
+		{
+			accel = DOTween.To (() => currSpeed, x => currSpeed = x, MoveSpeed * SpeedReduceOnBox, TimeAccelBox).SetEase (Ease.InOutExpo);
+			checkAcc = false;
 		}
 
 		animPlayer.SetFloat ("Velocity", speed);
@@ -400,11 +411,6 @@ public class PlayerController : MonoBehaviour
 
 		if (driveBox)
 		{
-			if (currSpeed < MoveSpeed * SpeedReduceOnBox)
-			{
-				currSpeed += ((MoveSpeed * SpeedReduceOnBox) / TimeAccelBox) * getDeltaTime;
-			}
-
 			getSpeed = currSpeed;
 			thisWB.CurrTime += (float) getDeltaTime / thisWB.TimeFullFill;
 			thisWB.ThisGauge.fillAmount = thisWB.CurrTime;
@@ -632,6 +638,7 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	Tween accel;
 	void useBoxWeapon ()
 	{
 		if (Manager.GameCont.WeaponB.CanControl)
@@ -640,6 +647,9 @@ public class PlayerController : MonoBehaviour
 			{
 				thisWB.ThisGauge = Manager.Ui.CauldronGauge.transform.Find ("Cauldron Inside").GetComponent<Image> ();
 			}
+
+			currSpeed = 0;
+			accel = DOTween.To (() => currSpeed, x => currSpeed = x, MoveSpeed * SpeedReduceOnBox, TimeAccelBox).SetEase (Ease.InOutExpo);
 
 			Manager.Ui.checkDrive = false;
 			Manager.Ui.CauldronGauge.GetComponent<CanvasGroup> ().DOKill (true);
@@ -660,6 +670,7 @@ public class PlayerController : MonoBehaviour
 		}
 		else if (driveBox)
 		{
+			accel.Kill ();
 			Manager.Ui.CauldronGauge.GetComponent<CanvasGroup> ().DOKill (true);
 
 			currSpeed = 0;
