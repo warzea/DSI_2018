@@ -116,6 +116,8 @@ public class PlayerController : MonoBehaviour
 	[HideInInspector]
 	public bool checkAuto = false;
 	public bool canCauldron = false;
+	[HideInInspector]
+	public bool OnTuto = true;
 	PlayerController thisPC;
 	WeaponAbstract thisWeapon;
 	Transform thisTrans;
@@ -565,8 +567,20 @@ public class PlayerController : MonoBehaviour
 			{
 				thisWB.ThisGauge = Manager.Ui.CauldronGauge.transform.Find("Cauldron Inside").GetComponent<Image>();
 			}
-            Manager.Ui.CauldronGauge.SetActive (true);
-			Manager.Ui.CauldronButtons (true);
+			
+			Manager.Ui.checkDrive = false;
+			Manager.Ui.CauldronButtonBonus(false);
+
+			if ( !OnTuto )
+			{
+				Manager.Ui.CauldronButtons(false);
+			}
+			else
+			{
+				Manager.Ui.CauldronButtons (true);
+			}
+			Manager.Ui.CauldronGauge.GetComponent<CanvasGroup>().DOKill(true);
+            Manager.Ui.CauldronGauge.GetComponent<CanvasGroup>().DOFade(1,0.3f);
 			GetCamFoll.UpdateTarget (thisTrans);
 			WeaponPos.gameObject.SetActive (false);
 			AmmoUI.GetComponent<CanvasGroup> ().alpha = 0;
@@ -582,11 +596,13 @@ public class PlayerController : MonoBehaviour
 		} 
 		else if (driveBox)
 		{
+			Manager.Ui.CauldronGauge.GetComponent<CanvasGroup>().DOKill(true);
+			
 			currSpeed = 0;
 			thisWB.GetComponent<Collider>().isTrigger = false;
 			thisWB.gameObject.tag = Constants._BoxTag;
 			thisWB.transform.DOKill(true);
-            Manager.Ui.CauldronGauge.SetActive (false);
+            Manager.Ui.CauldronGauge.GetComponent<CanvasGroup>().DOFade(0,0.3f);
 			Manager.Ui.checkDrive = false;
 			Manager.Ui.CauldronButtons (false);
 			AmmoUI.GetComponent<CanvasGroup> ().alpha = 1;
