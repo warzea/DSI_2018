@@ -543,6 +543,7 @@ public class PlayerController : MonoBehaviour
 				shooting = false;
 			}
 		}
+		Debug.Log(shooting);
 	}
 
 	public void AddItem ()

@@ -35,6 +35,7 @@ public class CustomWeapon : Editor
 	SerializedProperty Bullet;
 	SerializedProperty SpawnBullet;
 	SerializedProperty SpeEffet;
+	SerializedProperty TimeBackPush;
 	GUIContent Empty;
 	#endregion
 	
@@ -46,6 +47,7 @@ public class CustomWeapon : Editor
 	{
 		Empty = new GUIContent ( "" );
 		SpeEffet = serializedObject.FindProperty("SpeEffet");
+		TimeBackPush = serializedObject.FindProperty("TimeBackPush");
 		
 		WeightRandom = serializedObject.FindProperty("WeightRandom");
 		Bullet = serializedObject.FindProperty("Bullet");
@@ -110,6 +112,7 @@ public class CustomWeapon : Editor
 		//buttonStyle.normal.textColor = Color.red;
 		serializedObject.Update ( );
 		
+		EditorGUILayout.PropertyField ( TimeBackPush );
 		EditorGUILayout.PropertyField ( SpeEffet );
 		EditorGUILayout.PropertyField ( WeightRandom );
 		

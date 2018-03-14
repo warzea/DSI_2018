@@ -8,6 +8,7 @@ public class WeaponAbstract : MonoBehaviour
     #region Variables
     public GameObject SpeEffet;
 
+    public float TimeBackPush = 0.1f;
     public int WeightRandom = 0;
     public bool AutoShoot = true;
     public bool Projectile = false;
@@ -119,8 +120,11 @@ public class WeaponAbstract : MonoBehaviour
                     }
                 }
             }
-            
-            playerTrans.DOLocalMove ( playerTrans.localPosition - playerTrans.forward * getDist * getDir, 0.1f );
+
+            if ( getDist != 0 )
+            {
+                playerTrans.DOLocalMove ( playerTrans.localPosition - playerTrans.forward * getDist * getDir, TimeBackPush );
+            }
 
             getCapacity--;
             canShoot = false;
