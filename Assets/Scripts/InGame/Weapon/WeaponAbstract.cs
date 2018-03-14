@@ -145,7 +145,7 @@ public class WeaponAbstract : MonoBehaviour
 
             if ( SpeEffet == null )
             {
-                getPC.thisAud.OpenAudio(AudioType.Shoot, NameMusic, false, null, true );
+                Manager.Audm.OpenAudio(AudioType.Shoot, NameMusic );
             }
 
             customWeapon(playerTrans);

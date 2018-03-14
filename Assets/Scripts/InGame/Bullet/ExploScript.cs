@@ -20,7 +20,7 @@ public class ExploScript : MonoBehaviour
 		{
 			TimeStay = TimeEffect;
 		}
-
+		
 		transform.localScale = new Vector3(ScaleExplo, ScaleExplo, ScaleExplo);
 
 		if ( GetEffect != null )
