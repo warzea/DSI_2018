@@ -1,7 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: eba0179d1f81e6a4eb2adc750c2d71e9
 folderAsset: yes
 timeCreated: 1521060204
+=======
+guid: e3e49b8d84a5e724eb7ff726ff51928f
+folderAsset: yes
+timeCreated: 1521063613
+>>>>>>> Tom
 licenseType: Free
 DefaultImporter:
   externalObjects: {}
