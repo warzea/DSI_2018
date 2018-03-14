@@ -3862,7 +3862,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 4ef4a2c1af03a904192b0cb249c0586b, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4450,10 +4450,10 @@ MonoBehaviour:
   Garbage: {fileID: 0}
   Players: []
   PlayerMaterial:
-  - {fileID: 2100000, guid: ca405353e0ac8b349866703f4ca689fd, type: 2}
-  - {fileID: 2100000, guid: b77b756311bd9db468e4adfd33652476, type: 2}
-  - {fileID: 2100000, guid: e414af1524d258047bb6b82b8860062c, type: 2}
-  - {fileID: 2100000, guid: 5c9ea827aaa4145c8900e81ca1395aae, type: 2}
+  - {fileID: 2100000, guid: 98ba3f491559e844aa096fcb6da184fe, type: 2}
+  - {fileID: 2100000, guid: fd995c12fd6cecd46990ad13315dd302, type: 2}
+  - {fileID: 2100000, guid: 639b98a629b40ec43be7dd7028a004af, type: 2}
+  - {fileID: 2100000, guid: 846fc72ce6db65e408c2feec08b9e04d, type: 2}
   AllMedal:
   - {fileID: 114446911832119600}
   - {fileID: 114948021201478194}
