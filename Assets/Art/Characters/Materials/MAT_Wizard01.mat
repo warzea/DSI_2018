@@ -84,7 +84,7 @@ Material:
     - _ZWrite: 1
     - __dirty: 0
     m_Colors:
-    - _BC: {r: 0.5514706, g: 0.5514706, b: 0.5514706, a: 1}
+    - _BC: {r: 1, g: 0, b: 0.68275833, a: 1}
     - _BiasScale: {r: -0.52, g: 2.36, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

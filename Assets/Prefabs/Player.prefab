@@ -296,7 +296,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4838628596936686}
   - component: {fileID: 137551446743466372}
-  - component: {fileID: 114131128341670696}
   m_Layer: 0
   m_Name: Corpus
   m_TagString: Untagged
@@ -1126,22 +1125,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114131128341670696
+--- !u!114 &114146322316325562
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1638703181405486}
+  m_GameObject: {fileID: 1032687665075350}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e34c1b773868efe4cb44635a3e8e9967, type: 3}
+  m_Script: {fileID: 11500000, guid: c7d2987fd5132ee43bae306e72167223, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 0.15
-  colors:
-  - {r: 1, g: 1, b: 1, a: 1}
-  - {r: 0.7921569, g: 0.13725491, b: 0.13725491, a: 1}
-  ComponentType: 1
+  AllMF: []
 --- !u!114 &114631395906171732
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1230,8 +1225,7 @@ MonoBehaviour:
   nbItemBeforeBigBag: 10
   ItemLostObj: {fileID: 1330381900745004, guid: 0540fd0faddbcfd46bb2584e8d68fc5c,
     type: 2}
-  animPlayer: {fileID: 95255310504812768, guid: 937d3b462b9817747b2216f2faea9faa,
-    type: 2}
+  animPlayer: {fileID: 95720146484201416}
   WeaponPos: {fileID: 4246215549971970}
   BagPos: {fileID: 4172327163606488}
   BoxPlace: {fileID: 4412137378519398}
@@ -1326,7 +1320,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 84befd8f8effa9649a436c0b0e7f2025, type: 3}
+  - {fileID: 2100000, guid: 98ba3f491559e844aa096fcb6da184fe, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1387,7 +1381,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 84befd8f8effa9649a436c0b0e7f2025, type: 3}
+  - {fileID: 2100000, guid: 98ba3f491559e844aa096fcb6da184fe, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1435,7 +1429,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 84befd8f8effa9649a436c0b0e7f2025, type: 3}
+  - {fileID: 2100000, guid: 98ba3f491559e844aa096fcb6da184fe, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

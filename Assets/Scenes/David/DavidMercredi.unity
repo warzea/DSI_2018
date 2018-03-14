@@ -1659,11 +1659,6 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 2130472066}
   m_Script: {fileID: 11500000, guid: 49555ba341cab3f40a56b88d876f952f, type: 3}
---- !u!1 &807389225 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1477871063388626, guid: 09c0fcd273fc2424693f3e4b734896bb,
-    type: 2}
-  m_PrefabInternal: {fileID: 1425088863}
 --- !u!1 &820176786 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1761805416676882, guid: b475873df400d4f109fd46964cc99f7d,
@@ -2869,7 +2864,7 @@ Prefab:
         type: 2}
       propertyPath: ButtonsInteract
       value: 
-      objectReference: {fileID: 807389225}
+      objectReference: {fileID: 0}
     - target: {fileID: 114336421664247196, guid: 09c0fcd273fc2424693f3e4b734896bb,
         type: 2}
       propertyPath: GaugeButtonBonus
@@ -2880,7 +2875,7 @@ Prefab:
         type: 2}
       propertyPath: StartWeapon
       value: 
-      objectReference: {fileID: 1294729226091156, guid: 9e537c0ffddff9248b8d488acd4c88b9,
+      objectReference: {fileID: 1909916809828264, guid: c02548164cfaf7645ab6e5f2a5d2eb36,
         type: 2}
     - target: {fileID: 114006546364699532, guid: 09c0fcd273fc2424693f3e4b734896bb,
         type: 2}
