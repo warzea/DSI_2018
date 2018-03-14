@@ -187,8 +187,8 @@ public class GameController : ManagerParent
 
                 getWeapon = (GameObject) Instantiate (StartWeapon, getPC.WeaponPos.transform);
                 getWeapon.transform.localPosition = Vector3.zero;
-                getWeapon.transform.localRotation = Quaternion.identity;
-
+                //getWeapon.transform.rotation = Quaternion.identity;
+                getWeapon.transform.localScale = new Vector3(0.01165743f, 0.01258486f, 0.01180339f);
                 //getPlayer.GetComponent<PlayerController>().WeapText = Manager.Ui.textWeapon[a];
 
                 getPC.UpdateWeapon (getWeapon.GetComponent<WeaponAbstract> ());

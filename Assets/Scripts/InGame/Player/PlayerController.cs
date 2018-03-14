@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-	#region Variables
+    #region Variables
 
 	[HideInInspector]
 	public int IdPlayer;
@@ -68,59 +68,17 @@ public class PlayerController : MonoBehaviour
 	public float UiAmmoX;
 	public float UiAmmoY;
 
-	[HideInInspector]
-	public float CdShoot = 0;
-	[HideInInspector]
-	public float GetSpeed = 0;
-	[HideInInspector]
-	public float SpeedReduce;
-	[HideInInspector]
-	public List<GameObject> AllItem;
-	[HideInInspector]
-	public bool driveBox = false;
-	[HideInInspector]
-	public bool dead = false;
-	[HideInInspector]
-	public List<EnemyInfo> AllEnemy;
+    public GameObject[] weaponMesh;
+    public float DistThrowWeap = 2;
+    public float SpeedThrow = 2;
+    [Space]
 
-	// ----- Score
-	[HideInInspector]
-	public int CurrScore = 0;
-	[HideInInspector]
-	public int CurrLootScore = 0;
-	[HideInInspector]
-	public int CurrKillScore = 0;
-	[HideInInspector]
-	public int NbrDead = 0;
-	[HideInInspector]
-	public int WeaponSwitch = 0;
-	[HideInInspector]
-	public int WeaponThrow = 0;
-	[HideInInspector]
-	public int WeaponCatch = 0;
-	[HideInInspector]
-	public int ShootBullet = 0;
-	[HideInInspector]
-	public int ShootSucceed = 0;
-	[HideInInspector]
-	public float TimeWBox = 0;
-	[HideInInspector]
-	public int SpawmShoot = 0;
-	[HideInInspector]
-	public float TotalDist = 0;
-	[HideInInspector]
-	public int NbrTouchInteract = 0;
-	[HideInInspector]
-	public int NbrChest = 0;
-	[HideInInspector]
-	public int NbrEnemy = 0;
-	[HideInInspector]
-	public int currentEnemy = 0;
-	[HideInInspector]
-	public int LostItem = 0;
-	[HideInInspector]
-	public int NbrAward = 0;
-	// -----
+    [Header("Cauldron")]
+    [Range(0, 1)]
+    [Tooltip("Speed reduce pendant qu'on pousse la caisse")]
+    public float SpeedReduceOnBox = 0.1f;
+    public float TimeAccelBox = 5f;
+    public float SmoothRotateOnBox = 10;
 
 	[HideInInspector]
 	public int CurrItem = 0;
@@ -163,21 +121,80 @@ public class PlayerController : MonoBehaviour
 	bool canTakeDmg = true;
 	bool checkShootScore = true;
 
-	bool checkUIBorder = false;
-	bool checkUIBorderY = false;
-	bool checkUpdate = true;
+    // ----- Score
+    [HideInInspector]
+    public int CurrScore = 0;
+    [HideInInspector]
+    public int CurrLootScore = 0;
+    [HideInInspector]
+    public int CurrKillScore = 0;
+    [HideInInspector]
+    public int NbrDead = 0;
+    [HideInInspector]
+    public int WeaponSwitch = 0;
+    [HideInInspector]
+    public int WeaponThrow = 0;
+    [HideInInspector]
+    public int WeaponCatch = 0;
+    [HideInInspector]
+    public int ShootBullet = 0;
+    [HideInInspector]
+    public int ShootSucceed = 0;
+    [HideInInspector]
+    public float TimeWBox = 0;
+    [HideInInspector]
+    public int SpawmShoot = 0;
+    [HideInInspector]
+    public float TotalDist = 0;
+    [HideInInspector]
+    public int NbrTouchInteract = 0;
+    [HideInInspector]
+    public int NbrChest = 0;
+    [HideInInspector]
+    public int NbrEnemy = 0;
+    [HideInInspector]
+    public int currentEnemy = 0;
+    [HideInInspector]
+    public int LostItem = 0;
+    [HideInInspector]
+    public int NbrAward = 0;
+    // -----
 
-	Tween tweenRegen;
+    [HideInInspector]
+    public int CurrItem = 0;
+    [HideInInspector]
+    public Image UiAmmo;
+    [HideInInspector]
+    public InteractAbstract currInt;
+    [HideInInspector]
+    public bool autoShoot = true;
+    [HideInInspector]
+    public bool checkShoot = true;
+    [HideInInspector]
+    public bool checkAuto = false;
+    [HideInInspector]
+    public bool canCauldron = false;
 
-	#endregion
+    PlayerController thisPC;
+    WeaponAbstract thisWeapon;
+    Transform thisTrans;
+    Transform getBoxWeapon;
+    Rigidbody thisRig;
+    CameraFollow GetCamFoll;
+    Player inputPlayer;
+    Camera getCam;
+    WeaponBox thisWB;
+    GameObject getEffect;
+    AudioSource thisObjAudio;
 
-	#region Mono
+    int lifePlayer;
+    float currSpeed;
 
-	void Awake ()
-	{
-		AllEnemy = new List<EnemyInfo> ();
-		lifePlayer = LifePlayer;
-		thisPC = GetComponent<PlayerController> ();
+    bool shooting = false;
+    bool dashing = false;
+    bool canDash = true;
+    bool canEnterBox = false;
+    bool canShoot = true;
 
 		System.Array thisArray = System.Enum.GetValues (typeof (TypeEnemy));
 
@@ -188,37 +205,28 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	void Start ()
-	{
-		thisTrans = transform;
-		thisRig = GetComponent<Rigidbody> ();
+    Tween tweenRegen;
 
-		AmmoUI.gameObject.SetActive (true);
-		UiAmmo = AmmoUI.Find ("Ammo Inside").GetComponent<Image> ();
-		inputPlayer = ReInput.players.GetPlayer (IdPlayer);
-		getBoxWeapon = Manager.GameCont.WeaponB.transform;
-		getCam = Manager.GameCont.MainCam;
-		GetCamFoll = Manager.GameCont.GetCameraFollow;
-		thisWB = getBoxWeapon.GetComponent<WeaponBox> ();
-	}
+    #endregion
 
-	void Update ()
-	{
-		thisRig.velocity = Vector3.zero;
+    #region Mono
 
 		if (!checkUpdate)
 		{
 			return;
 		}
 
-		float getDeltaTime = Time.deltaTime;
+        System.Array thisArray = System.Enum.GetValues(typeof(TypeEnemy));
 
 		if (!dead)
 		{
 			inputAction (getDeltaTime);
 		}
 
-		checkBorder ();
+    void Start()
+    {
+        thisTrans = transform;
+        thisRig = GetComponent<Rigidbody>();
 
 		if (!checkUIBorder)
 		{
@@ -229,8 +237,9 @@ public class PlayerController : MonoBehaviour
 		{
 			AmmoUI.position = getCam.WorldToScreenPoint (thisTrans.position);
 
-			AmmoUI.localPosition += Vector3.right * UiAmmoX + Vector3.up * UiAmmoY;
-		}
+    void Update()
+    {
+        thisRig.velocity = Vector3.zero;
 
 		if (AllItem.Count > 0 && Vector3.Distance (thisTrans.position, getBoxWeapon.position) < DistToDropItem)
 		{
@@ -238,9 +247,12 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	#endregion
+        float getDeltaTime = Time.deltaTime;
 
-	#region Public Methods
+        if (!dead)
+        {
+            inputAction(getDeltaTime);
+        }
 
 	public void UpdateWeapon (WeaponAbstract thisWeap = null)
 	{
@@ -272,14 +284,14 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	#endregion
+    #endregion
 
-	#region Private Methods
+    #region Private Methods
 
-	void checkBorder ()
-	{
-		Vector3 getCamPos = getCam.WorldToViewportPoint (thisTrans.position);
-		Vector3 getDir = Vector3.zero;
+    void checkBorder()
+    {
+        Vector3 getCamPos = getCam.WorldToViewportPoint(thisTrans.position);
+        Vector3 getDir = Vector3.zero;
 
 		if (getCamPos.x > 0.97f)
 		{
@@ -317,7 +329,7 @@ public class PlayerController : MonoBehaviour
 			RaycastHit [] allHit;
 			string getTag;
 
-			allHit = Physics.RaycastAll (thisTrans.position, getDir, 0.5f);
+            allHit = Physics.RaycastAll(thisTrans.position, getDir, 0.5f);
 
 			foreach (RaycastHit thisRay in allHit)
 			{
@@ -326,7 +338,7 @@ public class PlayerController : MonoBehaviour
 				if (getTag == Constants._Wall)
 				{
 
-					checkUpdate = false;
+                    checkUpdate = false;
 
 					thisTrans.DOKill (true);
 					thisTrans.DOMove (getBoxWeapon.position, 0.5f, true).OnComplete (() =>
@@ -339,10 +351,10 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	float checkBorderDead (Vector3 customPos)
-	{
-		Vector3 getCamPos = getCam.WorldToViewportPoint (customPos);
-		Vector3 getDist = customPos;
+    float checkBorderDead(Vector3 customPos)
+    {
+        Vector3 getCamPos = getCam.WorldToViewportPoint(customPos);
+        Vector3 getDist = customPos;
 
 		if (getCamPos.x > 0.97f)
 		{
@@ -362,12 +374,12 @@ public class PlayerController : MonoBehaviour
 			customPos = new Vector3 (customPos.x, customPos.y, getCam.ViewportToWorldPoint (new Vector3 (getCamPos.x, 0.03f, getCamPos.z)).z);
 		}
 
-		return Vector3.Distance (customPos, getDist);
-	}
+        return Vector3.Distance(customPos, getDist);
+    }
 
-	void inputAction (float getDeltaTime)
-	{
-		playerShoot (getDeltaTime);
+    void inputAction(float getDeltaTime)
+    {
+        playerShoot(getDeltaTime);
 
 		if (canDash)
 		{
@@ -380,13 +392,13 @@ public class PlayerController : MonoBehaviour
 			playerMove (getDeltaTime);
 		}
 
-		playerAim (getDeltaTime);
-	}
+        playerAim(getDeltaTime);
+    }
 
-	void playerMove (float getDeltaTime)
-	{
-		float Xmove = inputPlayer.GetAxis ("MoveX");
-		float Ymove = inputPlayer.GetAxis ("MoveY");
+    void playerMove(float getDeltaTime)
+    {
+        float Xmove = inputPlayer.GetAxis("MoveX");
+        float Ymove = inputPlayer.GetAxis("MoveY");
 
 		float speed = Mathf.Abs (Xmove) + Mathf.Abs (Ymove) * 2;
 
@@ -427,11 +439,27 @@ public class PlayerController : MonoBehaviour
 			getSpeed *= SpeedReduce;
 		}
 
-		getSpeed = getDeltaTime * getSpeed;
-		TotalDist += getSpeed;
+        if (driveBox)
+        {
+            if (currSpeed < MoveSpeed * SpeedReduceOnBox)
+            {
+                currSpeed += ((MoveSpeed * SpeedReduceOnBox) / TimeAccelBox) * getDeltaTime;
+            }
 
-		thisTrans.position += getSpeed * new Vector3 (Xmove, 0, Ymove);
-	}
+            getSpeed = currSpeed;
+            thisWB.CurrTime += (float)getDeltaTime / thisWB.TimeFullFill;
+            thisWB.ThisGauge.fillAmount = thisWB.CurrTime;
+            if (thisWB.ThisGauge.fillAmount == 1)
+            {
+                thisWB.ThisGauge.GetComponentInChildren<RainbowColor>().enabled = true;
+                thisWB.ThisGauge.GetComponentInChildren<RainbowScale>().enabled = true;
+            }
+            TimeWBox += getDeltaTime;
+        }
+        else if (shooting)
+        {
+            getSpeed *= SpeedReduce;
+        }
 
 	void playerAim (float getDeltaTime)
 	{
@@ -505,7 +533,7 @@ public class PlayerController : MonoBehaviour
 				return;
 			}
 
-		}
+        }
 
 		if (shootInput == 1 && checkShootScore)
 		{
@@ -595,9 +623,17 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	void interactPlayer ()
-	{
-		bool interactInput = inputPlayer.GetButtonDown ("Interact");
+    public void AddItem()
+    {
+        if (AllItem.Count <= nbItemBeforeBigBag)
+        {
+            animPlayer.SetTrigger("Bag_Up");
+        }
+        else if (AllItem.Count > nbItemBeforeBigBag)
+        {
+            animPlayer.SetTrigger("Bag_Up2");
+        }
+    }
 
 		if (interactInput)
 		{
@@ -644,16 +680,18 @@ public class PlayerController : MonoBehaviour
 			Manager.Ui.CauldronGauge.GetComponent<CanvasGroup> ().DOKill (true);
 			Manager.Ui.CauldronGauge.GetComponent<CanvasGroup> ().DOFade (1, 0.3f);
 
-			GetCamFoll.UpdateTarget (thisTrans);
-			WeaponPos.gameObject.SetActive (false);
-			AmmoUI.GetComponent<CanvasGroup> ().alpha = 0;
-			canShoot = false;
-			Physics.IgnoreCollision (GetComponent<Collider> (), getBoxWeapon.GetComponent<Collider> (), true);
-			Manager.GameCont.WeaponB.CanControl = false;
-			getBoxWeapon.SetParent (BoxPlace);
+    void useBoxWeapon()
+    {
+        if (Manager.GameCont.WeaponB.CanControl)
+        {
+            if (thisWB.ThisGauge == null)
+            {
+                thisWB.ThisGauge = Manager.Ui.CauldronGauge.transform.Find("Cauldron Inside").GetComponent<Image>();
+            }
 
-			getBoxWeapon.DOLocalMove (Vector3.zero, 0.5f);
-			getBoxWeapon.DOLocalRotateQuaternion (Quaternion.identity, 0.5f);
+            Manager.Ui.checkDrive = false;
+            Manager.Ui.CauldronGauge.GetComponent<CanvasGroup>().DOKill(true);
+            Manager.Ui.CauldronGauge.GetComponent<CanvasGroup>().DOFade(1, 0.3f);
 
 			driveBox = true;
 		}
@@ -672,14 +710,14 @@ public class PlayerController : MonoBehaviour
 			WeaponPos.gameObject.SetActive (true);
 			GetCamFoll.UpdateTarget (getBoxWeapon);
 
-			canShoot = true;
-			Physics.IgnoreCollision (GetComponent<Collider> (), getBoxWeapon.GetComponent<Collider> (), false);
-			Manager.GameCont.WeaponB.CanControl = true;
-			getBoxWeapon.SetParent (null);
+            getBoxWeapon.DOLocalMove(Vector3.zero, 0.5f);
+            getBoxWeapon.DOLocalRotateQuaternion(Quaternion.identity, 0.5f);
 
-			driveBox = false;
-		}
-	}
+            driveBox = true;
+        }
+        else if (driveBox)
+        {
+            Manager.Ui.CauldronGauge.GetComponent<CanvasGroup>().DOKill(true);
 
 	void emptyBag ()
 	{
@@ -689,19 +727,23 @@ public class PlayerController : MonoBehaviour
 		Transform getBoxTrans = getBoxWeapon;
 		Transform currTrans;
 
-		Manager.GameCont.WeaponB.AddItem (CurrItem);
-		CurrScore += CurrItem;
-		CurrLootScore += CurrItem;
-		CurrItem = 0;
+            canShoot = true;
+            Physics.IgnoreCollision(GetComponent<Collider>(), getBoxWeapon.GetComponent<Collider>(), false);
+            Manager.GameCont.WeaponB.CanControl = true;
+            getBoxWeapon.SetParent(null);
 
 		for (int a = 0; a < getBagItems.Length; a++)
 		{
 			currTrans = getBagItems [a].transform;
 			currTrans.DOKill ();
 
-			currTrans.gameObject.SetActive (true);
-			currTrans.SetParent (null);
-			currTrans.SetParent (getBoxTrans);
+    void emptyBag()
+    {
+        Manager.Ui.PopPotions(PotionType.Plus);
+        animPlayer.SetTrigger("BagUnfull");
+        GameObject[] getBagItems = AllItem.ToArray();
+        Transform getBoxTrans = getBoxWeapon;
+        Transform currTrans;
 
 			//currTrans.position = BagPos.position + new Vector3 (Random.Range (-0.2f, 0.21f), 3, Random.Range (-0.2f, 0.21f));
 
@@ -728,32 +770,49 @@ public class PlayerController : MonoBehaviour
 		});
 	}
 
-	void animeDead (Vector3 pointColl)
-	{
-		currentEnemy = 0;
-		NbrDead++;
-		canTakeDmg = false;
-		dead = true;
+            currTrans.gameObject.SetActive(true);
+            currTrans.SetParent(null);
+            currTrans.SetParent(getBoxTrans);
 
 		if (driveBox)
 		{
 			useBoxWeapon ();
 		}
 
-		WeaponPos.gameObject.SetActive (false);
-		GetComponent<Collider> ().isTrigger = true;
+            dropItem(currTrans);
+        }
+        AllItem.Clear();
+    }
 
-		Vector3 getDirect = Vector3.Normalize (thisTrans.position - pointColl);
-		getDirect = new Vector3 (getDirect.x, 0, getDirect.z);
+    void dropItem(Transform currTrans)
+    {
+        float getRange = Random.Range(-0.2f, 0.21f);
+        float getRange2 = Random.Range(-0.2f, 0.21f);
+        float getRange3 = Random.Range(-0.2f, 0.21f);
+        currTrans.DOScale(Vector3.one, 0.5f);
+        currTrans.DOLocalMove(new Vector3(getRange, getRange2, getRange3) + Vector3.zero + Vector3.up * 5, 0.5f).OnComplete(() =>
+       {
+           currTrans.DOLocalMove(Vector3.zero, 0.5f).OnComplete(() =>
+          {
+              currTrans.DOScale(Vector3.zero, 0.5f).OnComplete(() =>
+             {
+                 Destroy(currTrans.gameObject);
+             });
+          });
+       });
+    }
 
-		float getDist = DistProjDead;
-		float getTime = TimeProjDead;
-		string getTag;
+    void animeDead(Vector3 pointColl)
+    {
+        currentEnemy = 0;
+        NbrDead++;
+        canTakeDmg = false;
+        dead = true;
 
 		RaycastHit [] allHit;
 
-		getDist -= checkBorderDead (thisTrans.position + getDirect * DistProjDead);
-		allHit = Physics.RaycastAll (thisTrans.position, getDirect, getDist);
+        WeaponPos.gameObject.SetActive(false);
+        GetComponent<Collider>().isTrigger = true;
 
 		foreach (RaycastHit thisRay in allHit)
 		{
@@ -769,9 +828,10 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 
-		thisTrans.DOKill ();
+        RaycastHit[] allHit;
 
-		thisTrans.DOLocalMove (thisTrans.localPosition + getDirect * getDist, getTime);
+        getDist -= checkBorderDead(thisTrans.position + getDirect * DistProjDead);
+        allHit = Physics.RaycastAll(thisTrans.position, getDirect, getDist);
 
 		DOVirtual.DelayedCall (getTime + TimeDead + TimeProjDead - getTime, () =>
 		{
@@ -787,6 +847,19 @@ public class PlayerController : MonoBehaviour
 			});
 		});
 		/*for ( a = 0; a < getList.Length; a ++ )
+        {
+            GetComponent<Collider>().isTrigger = false;
+            WeaponPos.gameObject.SetActive(true);
+            lifePlayer = LifePlayer;
+            dead = false;
+            thisWeapon.canShoot = true;
+
+            DOVirtual.DelayedCall(TimeInvincible, () =>
+            {
+                canTakeDmg = true;
+            });
+        });
+        /*for ( a = 0; a < getList.Length; a ++ )
         {
             Destroy(getList[a]);	
         }*/
@@ -826,10 +899,10 @@ public class PlayerController : MonoBehaviour
 					getItem = getList [a].AddComponent<ItemLost> ();
 				}
 
-				//getItem.EnableColl(true);
-				getItem.transform.SetParent (newObj.transform);
-				AllItem.RemoveAt (a);
-			}
+                if (!getItem)
+                {
+                    getItem = getList[a].AddComponent<ItemLost>();
+                }
 
 			getList = AllItem.ToArray ();
 			for (a = 0; a < getList.Length; a++)
@@ -837,10 +910,11 @@ public class PlayerController : MonoBehaviour
 				Destroy (getList [a]);
 			}
 
-			AllItem.Clear ();
-			Destroy (newObj, 60);
-		}
-	}
+            getList = AllItem.ToArray();
+            for (a = 0; a < getList.Length; a++)
+            {
+                Destroy(getList[a]);
+            }
 
 	void OnTriggerEnter (Collider thisColl)
 	{
@@ -853,7 +927,16 @@ public class PlayerController : MonoBehaviour
 		{
 			lifePlayer--;
 
-			Manager.VibM.StunVibration (inputPlayer);
+    void OnTriggerEnter(Collider thisColl)
+    {
+        string getTag = thisColl.tag;
+        if (thisColl.tag == Constants._EnterCont)
+        {
+            canEnterBox = true;
+        }
+        else if (getTag == Constants._EnemyBullet && canTakeDmg && checkUpdate/*|| getTag == Constants._Enemy*/)
+        {
+            lifePlayer--;
 
 			Manager.VibM.StunVibration (inputPlayer);
 			animPlayer.SetTrigger ("Damage");
@@ -873,9 +956,9 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	void OnCollisionEnter (Collision thisColl)
-	{
-		/*string getTag = thisColl.collider.tag;
+    void OnCollisionEnter(Collision thisColl)
+    {
+        /*string getTag = thisColl.collider.tag;
 
         if ( getTag == Constants._EnemyBullet || getTag == Constants._Enemy )
         {
@@ -887,7 +970,7 @@ public class PlayerController : MonoBehaviour
                 animeDead ( );
             }
         }*/
-	}
+    }
 
-	#endregion
+    #endregion
 }
