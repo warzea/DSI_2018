@@ -83,7 +83,7 @@ public class WeaponAbstract : MonoBehaviour
     #endregion
 
     #region Mono
-    void Awake ()
+    void Start ()
     {
         getCapacity = BulletCapacity;
         getGargabe = Manager.GameCont.Garbage;

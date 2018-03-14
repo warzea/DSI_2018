@@ -28,8 +28,9 @@ public class GameController : ManagerParent
 
     [HideInInspector]
     public List<GameObject> Players;
-    public Material[] PlayerMaterial;
-    public AbstractMedal[] AllMedal;
+    public Material [] PlayerMaterial;
+    public GameObject[] PlayerTrail;
+    public AbstractMedal [] AllMedal;
 
     List<PlayerController> getPlayerCont;
     #endregion
@@ -71,12 +72,12 @@ public class GameController : ManagerParent
                }
            }
 
-           DOVirtual.DelayedCall(1, () =>
-           {
-               for (int a = 0; a < AllMedal.Length; a++)
-               {
-                   Debug.Log("medal : " + a + " / " + AllMedal.Length);
-                   AllMedal[a].gameObject.SetActive(true);
+            DOVirtual.DelayedCall (1, () =>
+            {
+                for (int a = 0; a < AllMedal.Length; a++)
+                {
+                    Debug.Log (a);
+                    AllMedal [a].gameObject.SetActive (true);
 
                    AllMedal[a].StartCheck(getPlayerCont.ToArray());
                }
@@ -158,7 +159,8 @@ public class GameController : ManagerParent
                 {
                     if (thisMat.gameObject.name == "Corpus")
                     {
-                        thisMat.material = PlayerMaterial[a];
+                        thisMat.material = PlayerMaterial [a];
+                        Instantiate(PlayerTrail[a], thisMat.gameObject.transform.position, Quaternion.identity, thisMat.gameObject.transform);
                         break;
                     }
                 }
