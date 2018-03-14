@@ -25,9 +25,12 @@ public class UiManager : ManagerParent
     public GameObject CauldronGauge;
     public Image GetGauge;
     public Image GaugeBackground;
+    public GameObject GaugeButtonBonus;
     public Image[] GaugeFeedback;
-    public CanvasGroup ButtonsInteract;
     public Image WhiteBackground;
+
+    [Header("TUTO")]
+    public GameObject ButtonsInteract;
 
     public GameObject[] PlayerText;
 
@@ -211,6 +214,24 @@ public class UiManager : ManagerParent
     int nbrCauld = 0;
     [HideInInspector]
     public bool checkDrive = false;
+
+    public void CauldronButtonBonus(bool visible = false)
+    {
+        if (!visible)
+        {
+            nbrCauld--;
+            if (nbrCauld <= 0 && !checkDrive)
+            {
+                GaugeButtonBonus.GetComponent<CanvasGroup>().DOFade(0, .1f);
+            }
+        }
+        else
+        {
+            nbrCauld++;
+            GaugeButtonBonus.GetComponent<CanvasGroup>().DOFade(1, .1f);
+        }
+    }
+
     public void CauldronButtons(bool visible = false)
     {
         if (!visible)
@@ -218,13 +239,13 @@ public class UiManager : ManagerParent
             nbrCauld--;
             if (nbrCauld <= 0 && !checkDrive)
             {
-                ButtonsInteract.DOFade(0, .1f);
+                ButtonsInteract.GetComponent<CanvasGroup>().DOFade(0, .1f);
             }
         }
         else
         {
             nbrCauld++;
-            ButtonsInteract.DOFade(1, .1f);
+            ButtonsInteract.GetComponent<CanvasGroup>().DOFade(1, .1f);
         }
     }
 
@@ -392,6 +413,8 @@ public class UiManager : ManagerParent
 
         CauldronGauge = (GameObject)Instantiate(CauldronGauge, GetInGame);
         CauldronGauge.SetActive(false);
+
+        ButtonsInteract = (GameObject)Instantiate(ButtonsInteract, GetInGame);
         AllMenu = setAllMenu;
 
         OpenThisMenu(MenuType.SelectPlayer);

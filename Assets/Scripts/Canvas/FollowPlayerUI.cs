@@ -8,6 +8,10 @@ public class FollowPlayerUI : MonoBehaviour
 	public Transform ThisPlayer;
 	public Camera getCam;
 	Transform thisTrans;
+
+    public float offSetY;
+    public float offSetX;
+
 	#endregion
 	
 	#region Mono
@@ -35,7 +39,7 @@ public class FollowPlayerUI : MonoBehaviour
 	void Update ()
 	{
 		thisTrans.position = getCam.WorldToScreenPoint(ThisPlayer.position );
-		thisTrans.localPosition +=  Vector3.up * 9;
+		thisTrans.localPosition +=  Vector3.up * 9 + new Vector3(offSetX,offSetY, 0);
 	}
 	#endregion
 	
