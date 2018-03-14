@@ -134,7 +134,7 @@ MonoBehaviour:
   FireRate: 0.3
   CoolDown: 0
   BackPush: 1
-  SpeedReduce: 0.5
+  SpeedReduce: 0.95
   Damage: 1
   Range: 28
   NbrBullet: 0

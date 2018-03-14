@@ -676,7 +676,7 @@ MonoBehaviour:
   PrefabExplosion: {fileID: 1530796011795326, guid: 6ed916362e889e64e83cb698562d1b26,
     type: 2}
   GetEffect: {fileID: 142746, guid: a183756d778416d4d885ecf041d1acda, type: 2}
-  ThisTrajectoir: 0
+  ThisTrajectoir: 1
   MoveSpeed: 10
   direction: {x: 0, y: 0, z: 0}
   BulletDamage: 1
