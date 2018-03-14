@@ -403,52 +403,57 @@ public class PlayerController : MonoBehaviour
 		thisTrans.position += getSpeed * new Vector3 (Xmove, 0, Ymove);
 	}
 
-	void playerAim (float getDeltaTime)
-	{
-		float Xaim = inputPlayer.GetAxis ("AimX");
-		float Yaim = inputPlayer.GetAxis ("AimY");
+	oid playerAim(float getDeltaTime)
+    {
+        float Xaim = inputPlayer.GetAxis("AimX");
+        float Yaim = inputPlayer.GetAxis("AimY");
 
-		Vector2 stickInput = new Vector2 (Xaim, Yaim);
+        Vector2 stickInput = new Vector2(Xaim, Yaim);
 
-		if (stickInput.magnitude < radialDeadZone) 
-		{
-			stickInput = Vector2.zero;
-		} 
-		else 
-		{
-			float actuFocus = aimSensitivity;
+        if (stickInput.magnitude < radialDeadZone)
+        {
+            stickInput = Vector2.zero;
+        }
+        else
+        {
+            float actuFocus = aimSensitivity;
 
-			if ( thisWeapon != null )
-			{
-				RaycastHit hit;
-				if (Physics.Raycast (thisWeapon.SpawnBullet.position, thisTrans.forward, out hit)) 
-				{
-					if (hit.transform.tag == Constants._Enemy) 
-					{
-						actuFocus = aimSensitivityEnemy;
-					}
-				}
-			}
+            if (thisWeapon != null)
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(thisWeapon.SpawnBullet.position, thisTrans.forward, out hit))
+                {
+                    if (hit.transform.tag == Constants._Enemy)
+                    {
+                        Vector3 targetDir = hit.transform.position - transform.position;
+                        float angle = Vector3.Angle(targetDir, transform.forward);
 
-			Quaternion newAngle = Quaternion.LookRotation (new Vector3 (Xaim, 0, Yaim), thisTrans.up);
+                        if (angle < angleAimSensitivity)
+                        {
+                            actuFocus = aimSensitivityEnemy;
+                        }
+                    }
+                }
+            }
 
-			float difAngle = Quaternion.Angle (thisTrans.rotation, newAngle);
+            Quaternion newAngle = Quaternion.LookRotation(new Vector3(Xaim, 0, Yaim), thisTrans.up);
 
-			if (difAngle > maxAngle) 
-			{
-				if (driveBox) 
-				{
-					thisTrans.localRotation = Quaternion.Slerp (thisTrans.rotation, newAngle, SmoothRotateOnBox * getDeltaTime);
-				} 
-				else 
-				{
-					thisTrans.localRotation = Quaternion.Slerp (thisTrans.rotation, newAngle, actuFocus * getDeltaTime);
-					// thisTrans.localRotation = Quaternion.LookRotation(new Vector3(Xaim, 0, Yaim), thisTrans.up);
-				}
-			}
-		}
+            float difAngle = Quaternion.Angle(thisTrans.rotation, newAngle);
 
-	}
+            if (difAngle > maxAngle)
+            {
+                if (driveBox)
+                {
+                    thisTrans.localRotation = Quaternion.Slerp(thisTrans.rotation, newAngle, SmoothRotateOnBox * getDeltaTime);
+                }
+                else
+                {
+                    thisTrans.localRotation = Quaternion.Slerp(thisTrans.rotation, newAngle, actuFocus * getDeltaTime);
+                }
+            }
+        }
+
+    }
 
 	void playerShoot (float getDeltaTime)
 	{
