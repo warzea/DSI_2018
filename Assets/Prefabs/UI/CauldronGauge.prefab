@@ -56,6 +56,7 @@ GameObject:
   - component: {fileID: 224719021060059386}
   - component: {fileID: 114754922191812818}
   - component: {fileID: 114940278002022590}
+  - component: {fileID: 225361940418193854}
   m_Layer: 0
   m_Name: CauldronGauge
   m_TagString: Untagged
@@ -314,3 +315,14 @@ RectTransform:
   m_AnchoredPosition: {x: 3, y: 1.2999878}
   m_SizeDelta: {x: 172.8, y: 160.8}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &225361940418193854
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1246058091811566}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0

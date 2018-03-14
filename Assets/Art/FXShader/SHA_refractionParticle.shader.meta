@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: 0e29555061a5f964dabe66555d30a22c
+timeCreated: 1520936553
+licenseType: Pro
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _T_DifformRadial: {fileID: 2800000, guid: 33b64b40b5ae3ab47a761606cc67cd11, type: 3}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

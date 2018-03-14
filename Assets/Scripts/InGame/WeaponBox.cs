@@ -53,7 +53,6 @@ public class WeaponBox : MonoBehaviour
 			updateWeapon[a].IDPlayer = a;
 		}
 	}
-
 	#endregion
 	
 	#region Public Methods
@@ -71,8 +70,6 @@ public class WeaponBox : MonoBehaviour
 				{
 					GetComponent<Collider>().isTrigger = false;
 					gameObject.tag = Constants._BoxTag;
-					
-					
 				});
 			});		
 			DOVirtual.DelayedCall(DelayAttack + SpeedAttack, ( ) => 
@@ -84,9 +81,11 @@ public class WeaponBox : MonoBehaviour
 
 	public void ActionSpe ( )
 	{
-		Debug.Log( CurrTime + " / " + TimeFullFill );
 		if ( ThisGauge.fillAmount == 1 )
 		{
+			ThisGauge.GetComponentInChildren<RainbowColor>().enabled = false;
+			ThisGauge.GetComponentInChildren<RainbowScale>().enabled = false;
+			
 			ThisGauge.fillAmount = 0;
 			CurrTime = 0;
 
@@ -109,15 +108,12 @@ public class WeaponBox : MonoBehaviour
                 getChild.DOShakeScale(1f, .4f, 18, 0);
             });
         });
-
     }
 
 
     public void NewWeapon ( PlayerController thisPlayer, GameObject newObj = null )
 	{
-
         //TRANSFO CANON
-
 		getChild.DOKill(true);
         getChild.DOShakeScale(.15f, .8f, 25, 0).OnComplete(() => { 
 
@@ -147,7 +143,6 @@ public class WeaponBox : MonoBehaviour
 			getWeap.Add ( newObj );
 			AllWeapon = getWeap.ToArray();
 		}
-		//thisPlayer.WeapText.text = newObj.name;
 
 		Transform objTrans = newObj.transform;
 		objTrans.position = GetTrans.position;
@@ -163,7 +158,6 @@ public class WeaponBox : MonoBehaviour
 
 		updateWeapon[currId].CurrObj = newObj;
 
-		//thisPlayer.UiAmmo.DOFillAmount (1, 0.1f + DelayNewWeapon);
         DOVirtual.DelayedCall(DelayNewWeapon, () =>
         {
             thisPlayer.UiAmmo.fillAmount = 1;
@@ -211,7 +205,6 @@ public class WeaponBox : MonoBehaviour
 		getAllTween.Clear();
 
 		Manager.Ui.GetGauge.DOKill(true);
-//		Debug.Log( NbrItem + " / " + currNbr + " / " + currNbr * 0.01f);
 		Manager.Ui.GetGauge.DOFillAmount ( (float)currNbr / ItemOneGauge, 0.5f ).OnComplete ( () =>
 		{
 			if ( currNbr > (float)ItemOneGauge * 0.9f )
@@ -232,8 +225,6 @@ public class WeaponBox : MonoBehaviour
 			}
 		});
 		
-		//Manager.Ui.ScoreText.text = NbrItem.ToString();
-
 		Manager.Ui.GetScores.UpdateValue( NbrItem, ScoreType.BoxWeapon, false );
 		int getCal = lastNbr;
 		while ( currNbr >= lastNbr * (ItemOneGauge * 0.2)  && lastNbr * (ItemOneGauge * 0.2) <= ItemOneGauge )
