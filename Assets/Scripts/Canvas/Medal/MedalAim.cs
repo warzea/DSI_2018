@@ -35,6 +35,10 @@ public class MedalAim : AbstractMedal
 			
 			GoTarget(thisPlayerEqua);
 		}
+		else
+		{
+			GoTarget(thisPlayer);
+		}
 	}
 	#endregion
 	
