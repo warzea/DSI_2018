@@ -253,10 +253,12 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	public void GetDamage (Transform thisEnemy, int intDmg = 1)
-	{
-		if (canTakeDmg && checkUpdate) {
-			lifePlayer -= intDmg;
+    public void GetDamage(Transform thisEnemy, int intDmg = 1)
+    {
+        if (canTakeDmg && checkUpdate)
+        {
+            lifePlayer -= intDmg;
+            animPlayer.SetTrigger("Damage");
 
 			if (lifePlayer <= 0 && !dead) {
 				animeDead (thisEnemy.position);
@@ -815,16 +817,8 @@ public class PlayerController : MonoBehaviour
 
 			Manager.VibM.StunVibration (inputPlayer);
 
-			if (lifePlayer <= 0 && !dead) 
-			{
-				animeDead (thisColl.transform.position);
-			} 
-			else 
-			{
-				if (tweenRegen != null) 
-				{
-					tweenRegen.Kill ();
-				}
+            Manager.VibM.StunVibration(inputPlayer);
+            animPlayer.SetTrigger("Damage");
 
 				DOVirtual.DelayedCall (TimeToRegen, () => 
 				{

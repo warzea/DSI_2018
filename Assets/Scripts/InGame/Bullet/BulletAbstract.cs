@@ -76,7 +76,7 @@ public class BulletAbstract : MonoBehaviour
             playZone();
         }
 
-        if ( ThisTrajectoir == Trajectoir.Nothing )
+        if (ThisTrajectoir == Trajectoir.Nothing)
         {
             checkUpdate = false;
         }
@@ -88,12 +88,12 @@ public class BulletAbstract : MonoBehaviour
     #region Public Methods
     void Update()
     {
-        if ( blockUpdate || !checkUpdate)
+        if (blockUpdate || !checkUpdate)
         {
             return;
         }
 
-        if (!Projectil )
+        if (!Projectil)
         {
             thisTrans.position = newPos + thisTrans.forward * getDistScale;
             thisTrans.localScale = startPos;
@@ -112,37 +112,45 @@ public class BulletAbstract : MonoBehaviour
             }
         }
         else if (!checkEnd)
-        {   
-            if (canExplose )
+        {
+            Debug.Log("ici");
+            if (canExplose)
             {
-                if ( Projectil )
+                Debug.Log("ici2");
+                instExplo(thisTrans.position);
+
+                if (Projectil)
                 {
-                    destObj ( TimeStay );
-                
+                    Debug.Log("ici3");
+
+                    destObj(TimeStay);
+
                     blockUpdate = true;
                     if (GetEffect != null)
                     {
+                        Debug.Log("ici");
+
                         Instantiate(GetEffect, thisTrans.position, Quaternion.identity);
                     }
-
                     SphereCollider thisSphere = gameObject.AddComponent<SphereCollider>();
                     //thisSphere.radius = Diameter;
                     thisSphere.isTrigger = true;
                     thisTrans.localScale = new Vector3(Diameter, Diameter, Diameter);
-                } 
+                }
                 else
                 {
-                    instExplo( thisTrans.position );
-                    destObj ( 0 );
+                    Debug.Log("ici4");
+
+                    destObj(0);
                 }
             }
-            else if ( Projectil )
+            else if (Projectil)
             {
-                destObj ( 0 );
+                destObj(0);
             }
             else
             {
-                destObj ( TimeStay );
+                destObj(TimeStay);
             }
             //Destroy ( gameObject, TimeStay );
             checkEnd = true;
@@ -179,21 +187,22 @@ public class BulletAbstract : MonoBehaviour
         t1 = DOTween.To(() => getDistScale, x => getDistScale = x, BulletRange * 0.5f * FarEffect, TimeFarEffect);
         t2 = DOTween.To(() => startPos, x => startPos = x, new Vector3(WidthRange, 5, BulletRange), SpeedZone).OnComplete(() =>
         {
-            destObj ( TimeStay );
+            destObj(TimeStay);
         });
     }
 
-    void instExplo ( Vector3 thisPos )
+    void instExplo(Vector3 thisPos)
     {
-        GameObject thisObj = (GameObject) Instantiate ( PrefabExplosion, thisPos, thisTrans.rotation );
+        Debug.Log("A    lex le pd");
+        GameObject thisObj = (GameObject)Instantiate(PrefabExplosion, thisPos, thisTrans.rotation);
         ExploScript getExplo = thisObj.GetComponent<ExploScript>();
 
-        if ( getExplo.TimeStay == 0 )
+        if (getExplo.TimeStay == 0)
         {
             getExplo.TimeStay = TimeStay;
         }
 
-        if ( !getExplo.GetEffect )
+        if (!getExplo.GetEffect)
         {
             getExplo.GetEffect = GetEffect;
         }
@@ -244,9 +253,9 @@ public class BulletAbstract : MonoBehaviour
                 }
             }
 
-            if (canExplose )
+            if (canExplose)
             {
-                if ( Projectil)
+                if (Projectil)
                 {
                     blockUpdate = true;
                     if (GetEffect != null)
@@ -259,65 +268,63 @@ public class BulletAbstract : MonoBehaviour
                     thisSphere.isTrigger = true;
                     thisTrans.localScale = new Vector3(Diameter, Diameter, Diameter);
                 }
-                else
-                {
-                    instExplo( collision.ClosestPoint ( thisTrans.position ) );
-                }
+
+                instExplo(collision.ClosestPoint(thisTrans.position));
             }
 
             if (!Through)
             {
-                if (canExplose )
+                if (canExplose)
                 {
-                    if ( Projectil )
+                    if (Projectil)
                     {
                         if (GetEffect != null && GetEffect.GetComponent<ParticleSystem>())
                         {
-                            destObj ( GetEffect.GetComponent<ParticleSystem>().main.duration );
+                            destObj(GetEffect.GetComponent<ParticleSystem>().main.duration);
                         }
                         else
                         {
-                            destObj ( 1.5f ); 
+                            destObj(1.5f);
                         }
                     }
                 }
                 else
                 {
-                    destObj ( );
+                    destObj();
                 }
             }
         }
-        else if (collision.tag == Constants._Wall && Projectil )
+        else if (collision.tag == Constants._Wall && Projectil)
         {
-            destObj ( );
+            destObj();
         }
     }
 
-    void destObj ( float delay = 0 )
+    void destObj(float delay = 0)
     {
         t1.Kill();
         t2.Kill();
-        
+
         StartCoroutine(waitDest(delay));
     }
 
-    IEnumerator waitDest ( float delay)
+    IEnumerator waitDest(float delay)
     {
         yield return new WaitForSeconds(delay);
 
         MeshRenderer thisMr = GetComponentInChildren<MeshRenderer>();
         Collider thisC = GetComponent<Collider>();
-        if ( thisMr != null && thisC != null )
+        if (thisMr != null && thisC != null)
         {
             thisMr.enabled = false;
             thisC.enabled = false;
-            Destroy (gameObject, DefinitiveDestroy);
+            Destroy(gameObject, DefinitiveDestroy);
         }
         else
         {
-            Destroy (gameObject);
+            Destroy(gameObject);
         }
     }
-    
+
     #endregion
 }
