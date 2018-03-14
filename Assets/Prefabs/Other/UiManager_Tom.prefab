@@ -5508,9 +5508,11 @@ MonoBehaviour:
   EndScreenRank: {fileID: 114978232215409894}
   EndScreenFX: {fileID: 1779291725453210}
   EndScreenWeaponBox: {fileID: 1019585467417748}
-  EndScreenMedal: {fileID: 0}
+  EndScreenMedal: {fileID: 1096880989818426, guid: 89d9a7110f9dc4742b2a0ef450cfd2ae,
+    type: 2}
   AllPotGet: []
   checkDrive: 0
+  OnTuto: 1
 --- !u!114 &114668411564510010
 MonoBehaviour:
   m_ObjectHideFlags: 1
