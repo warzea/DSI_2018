@@ -36,6 +36,7 @@ public class CustomWeapon : Editor
 	SerializedProperty SpawnBullet;
 	SerializedProperty SpeEffet;
 	SerializedProperty TimeBackPush;
+	SerializedProperty NameMusic;
 	GUIContent Empty;
 	#endregion
 	
@@ -48,6 +49,7 @@ public class CustomWeapon : Editor
 		Empty = new GUIContent ( "" );
 		SpeEffet = serializedObject.FindProperty("SpeEffet");
 		TimeBackPush = serializedObject.FindProperty("TimeBackPush");
+		NameMusic = serializedObject.FindProperty("NameMusic");
 		
 		WeightRandom = serializedObject.FindProperty("WeightRandom");
 		Bullet = serializedObject.FindProperty("Bullet");
@@ -115,6 +117,11 @@ public class CustomWeapon : Editor
 		EditorGUILayout.PropertyField ( TimeBackPush );
 		EditorGUILayout.PropertyField ( SpeEffet );
 		EditorGUILayout.PropertyField ( WeightRandom );
+
+		if ( myTarget.SpeEffet == null )
+		{
+			EditorGUILayout.PropertyField ( NameMusic );
+		}
 		
 		EditorGUILayout.Space();
 		EditorGUILayout.BeginVertical();

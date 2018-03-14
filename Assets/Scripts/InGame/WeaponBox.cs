@@ -9,6 +9,7 @@ public class WeaponBox : MonoBehaviour
 	#region Variables
 	public Material BonusMat;
 	public Image ThisGauge;
+	public string NameMusic = "";
 	public float SpeedAttack = 1;
 	public float RangeAttack = 1;
 	public float DelayAttack = 1;
@@ -85,7 +86,7 @@ public class WeaponBox : MonoBehaviour
 		{
 			ThisGauge.GetComponentInChildren<RainbowColor>().enabled = false;
 			ThisGauge.GetComponentInChildren<RainbowScale>().enabled = false;
-			
+
 			ThisGauge.fillAmount = 0;
 			CurrTime = 0;
 

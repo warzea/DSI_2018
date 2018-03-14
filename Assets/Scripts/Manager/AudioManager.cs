@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 
-public class AudioManager : ManagerParent 
+public class AudioManager : MonoBehaviour 
 {
 	#region Variable
 	[Tooltip ("Create a new ScriptableAudio and drag and drop here (in project : create -> Scriptable -> Audio)")]
@@ -230,7 +230,7 @@ public class AudioManager : ManagerParent
 	#endregion
 	
 	#region Private
-	protected override void InitializeManager ( )
+	public void InitializeManager ( )
 	{
 		Dictionary<AudioType, AudioSource> setDict = new Dictionary<AudioType, AudioSource> ( );
 		Dictionary<AudioType, int> setVol = new Dictionary<AudioType, int> ( );
@@ -243,11 +243,7 @@ public class AudioManager : ManagerParent
 		setDict.Add ( AudioType.OtherSound, currT.Find ( "OtherFx" ).GetComponent<AudioSource> ( ) );
 		setDict.Add ( AudioType.Other, currT.Find ( "Other" ).GetComponent<AudioSource> ( ) );
 		setDict.Add ( AudioType.MusicBackGround, currT.Find ( "Music" ).GetComponent<AudioSource> ( ) );
-		setDict.Add ( AudioType.Acceleration, currT.Find ( "Acceleration" ).GetComponent<AudioSource> ( ) );
-		setDict.Add ( AudioType.SteroKill, currT.Find ( "SteroKill" ).GetComponent<AudioSource> ( ) );
-		setDict.Add ( AudioType.PunchVoice, currT.Find ( "PunchVoice" ).GetComponent<AudioSource> ( ) );
-        setDict.Add(AudioType.MusicTrash, currT.Find("MusicTrash").GetComponent<AudioSource>());
-        setDict.Add(AudioType.Madnesse, currT.Find("MusicMadness").GetComponent<AudioSource>());
+		setDict.Add ( AudioType.Shoot, currT.Find ( "Shoot" ).GetComponent<AudioSource> ( ) );
 
         setVol.Add ( AudioType.OtherMusic, 1 );
 		setVol.Add ( AudioType.OtherSound, 1 );
@@ -256,10 +252,8 @@ public class AudioManager : ManagerParent
 
 		setVol.Add ( AudioType.Other, 1 );
 		setVol.Add ( AudioType.FxSound, 1 );
-		setVol.Add ( AudioType.SteroKill, 1 );
 
-		setVol.Add ( AudioType.Acceleration, 1 );
-		setVol.Add ( AudioType.PunchVoice, 1 );
+		setVol.Add ( AudioType.Shoot, 1 );
 
 		AudioType[] getTypes = ( AudioType[] ) System.Enum.GetValues ( typeof( AudioType ) );
 

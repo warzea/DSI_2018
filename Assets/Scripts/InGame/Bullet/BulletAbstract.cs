@@ -81,20 +81,7 @@ public class BulletAbstract : MonoBehaviour
             checkUpdate = false;
         }
 
-        RaycastHit[] allHit;
-        string getTag;
-
-        allHit = Physics.RaycastAll ( playerTrans.position, playerTrans.forward, BulletRange );
-    
-        foreach ( RaycastHit thisRay in allHit )
-        {
-            getTag = thisRay.collider.tag;
-            
-            if ( getTag == Constants._Wall && thisRay.distance < BulletRange )
-            {
-                BulletRange = thisRay.distance - 0.5f;
-            }
-        }
+        checkRayCast ( );
     }
     #endregion
 
@@ -164,6 +151,24 @@ public class BulletAbstract : MonoBehaviour
     #endregion
 
     #region Private Methods
+    async void checkRayCast ( )
+    {
+        RaycastHit[] allHit;
+        string getTag;
+
+        allHit = Physics.RaycastAll ( playerTrans.position, playerTrans.forward, BulletRange );
+    
+        foreach ( RaycastHit thisRay in allHit )
+        {
+            getTag = thisRay.collider.tag;
+            
+            if ( getTag == Constants._Wall && thisRay.distance < BulletRange )
+            {
+                BulletRange = thisRay.distance - 0.5f;
+            }
+        }
+    }
+
     Tween t1;
     Tween t2;
     void playZone()

@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviour
 	public Transform BoxPlace;
 	public Transform AmmoUI;
 	public Text WeapText;
+	public AudioManager thisAud;
 	[Space]
 
 	[Header("WeaponInfo")]
@@ -162,6 +163,7 @@ public class PlayerController : MonoBehaviour
 	bool checkUpdate = true;
 
 	Tween tweenRegen;
+
 	#endregion
 
 	#region Mono
@@ -179,6 +181,10 @@ public class PlayerController : MonoBehaviour
 			AllEnemy.Add (new EnemyInfo ());
 			AllEnemy [a].ThisType = (TypeEnemy)thisArray.GetValue (a);
 		}
+		if ( thisAud == null )
+		{
+			thisAud = GetComponentInChildren<AudioManager>();
+		}
 	}
 
 	void Start ()
@@ -193,6 +199,7 @@ public class PlayerController : MonoBehaviour
 		getCam = Manager.GameCont.MainCam;
 		GetCamFoll = Manager.GameCont.GetCameraFollow;
 		thisWB = getBoxWeapon.GetComponent<WeaponBox> ();
+		thisAud.InitializeManager();
 	}
 
 	void Update ()
@@ -485,6 +492,11 @@ public class PlayerController : MonoBehaviour
 				getEffect = (GameObject) Instantiate ( thisWeapon.SpeEffet, thisWeapon.SpawnBullet );
 				getEffect.GetComponent<BulletAbstract>().thisPlayer = this;
 				getEffect.transform.rotation = Quaternion.LookRotation(thisTrans.forward, thisTrans.up);
+
+				if ( thisWeapon.SpeEffet == null )
+				{
+					thisAud.OpenAudio(AudioType.Shoot, thisWeapon.NameMusic, true, null, true );
+				}
 			}
 
 			checkShootScore = false;
@@ -495,6 +507,7 @@ public class PlayerController : MonoBehaviour
 			if ( getEffect != null )
 			{
 				Destroy ( getEffect );
+				thisAud.CloseAudio(AudioType.Shoot);
 			}
 			checkShootScore = true;
 		}
@@ -543,7 +556,6 @@ public class PlayerController : MonoBehaviour
 				shooting = false;
 			}
 		}
-		Debug.Log(shooting);
 	}
 
 	public void AddItem ()

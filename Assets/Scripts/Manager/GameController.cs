@@ -9,6 +9,7 @@ public class GameController : ManagerParent
     #region Variables
     public GameObject PlayerPrefab;
     public GameObject StartWeapon;
+    public AudioManager AudioController;
     public Transform PlayerPosSpawn;
 
     public Camera MainCam;
@@ -45,6 +46,7 @@ public class GameController : ManagerParent
 
         GetCameraFollow.InitGame();
         checkPlayer();
+
     }
 
     public void EndGame()
@@ -100,7 +102,10 @@ public class GameController : ManagerParent
             GetCameraFollow = MainCam.transform.parent.GetComponent<CameraFollow>();
         }
 
-       
+        if ( AudioController == null )
+        {
+            AudioController = GetComponentInChildren<AudioManager>();
+        }
     }
 
     void SpawnPlayer()
