@@ -53,10 +53,11 @@ public class UiManager : ManagerParent
     public CanvasGroup[] PlayersEndScreen;
     public CanvasGroup EndScreenContainer;
     public Text TextScoreTotal;
-    public Text EndScreenRank;
     public GameObject EndScreenFX;
     public GameObject EndScreenWeaponBox;
     public GameObject EndScreenMedal;
+    public CanvasGroup EndScreenMenu;
+    public Button EndScreenButton;
 
     [HideInInspector]
     public GameObject[] AllPotGet;
@@ -141,6 +142,7 @@ public class UiManager : ManagerParent
     // 1
     public void EndScreenStart()
     {
+        GetInGame.transform.DOLocalMoveY(200, .3f).SetEase(Ease.InOutSine);
 
         EndScreenContainer.DOFade(1, .2f);
 
@@ -196,12 +198,15 @@ public class UiManager : ManagerParent
     // 3
     public void EndScreenFinished()
     {
-
-
-        EndScreenRank.transform.DOScale(4, 0);
-        EndScreenRank.transform.DOScale(1, .15f);
-        EndScreenRank.transform.GetComponent<CanvasGroup>().DOFade(1, .15f);
         EndScreenFX.gameObject.SetActive(true);
+
+        DOVirtual.DelayedCall(1f, () => {
+            EndScreenMenu.DOFade(1, .3f).OnComplete(() => {
+
+                EndScreenButton.Select();
+            });
+        });
+
         
     }
 
@@ -480,6 +485,10 @@ public class UiManager : ManagerParent
         if (Input.GetKeyDown(KeyCode.T))
         {
             EndScreenStart();
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            EndScreenFinished();
         }
         if (Input.GetKeyDown(KeyCode.M))
         {
