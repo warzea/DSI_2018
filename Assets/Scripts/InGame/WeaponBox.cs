@@ -190,6 +190,9 @@ public class WeaponBox : MonoBehaviour
         }
 
         Transform objTrans = newObj.transform;
+
+        Vector3 scaleWeapon = objTrans.localScale;
+
         objTrans.position = GetTrans.position;
         objTrans.localScale = Vector3.zero;
 
@@ -211,12 +214,12 @@ public class WeaponBox : MonoBehaviour
 
         DOVirtual.DelayedCall (DelayNewWeapon * 0.25f, () =>
         {
-            objTrans.DOScale (Vector3.one, DelayNewWeapon * 0.5f);
-            objTrans.DOLocalRotateQuaternion (Quaternion.identity, DelayNewWeapon * 0.65f);
+            objTrans.DOScale (scaleWeapon, DelayNewWeapon * 0.5f);
+            //  objTrans.DOLocalRotateQuaternion(Quaternion.identity, DelayNewWeapon * 0.65f);
             objTrans.DOLocalMove (Vector3.zero + Vector3.up * 5, DelayNewWeapon * 0.65f).OnComplete (() =>
             {
                 objTrans.SetParent (thisPlayer.WeaponPos);
-                objTrans.DOLocalRotateQuaternion (Quaternion.identity, DelayNewWeapon * 0.1f);
+                //    objTrans.DOLocalRotateQuaternion(Quaternion.identity, DelayNewWeapon * 0.1f);
                 objTrans.DOLocalMove (Vector3.zero, DelayNewWeapon * 0.1f).OnComplete (() =>
                 {
                     thisPlayer.UpdateWeapon (newObj.GetComponent<WeaponAbstract> ());
