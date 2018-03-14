@@ -1929,15 +1929,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1060134924738590, guid: 5e9ee2a51299d904db4de8b0b7cd7b3e, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114733373675610378, guid: 5e9ee2a51299d904db4de8b0b7cd7b3e,
-        type: 2}
-      propertyPath: checkUpdate
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5e9ee2a51299d904db4de8b0b7cd7b3e, type: 2}
   m_IsPrefabParent: 0
@@ -4304,15 +4295,6 @@ Prefab:
     - target: {fileID: 1761805416676882, guid: b475873df400d4f109fd46964cc99f7d, type: 2}
       propertyPath: m_Name
       value: AgentMonster (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1761805416676882, guid: b475873df400d4f109fd46964cc99f7d, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114697099544342936, guid: b475873df400d4f109fd46964cc99f7d,
-        type: 2}
-      propertyPath: checkUpdate
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b475873df400d4f109fd46964cc99f7d, type: 2}
