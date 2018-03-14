@@ -149,7 +149,7 @@ MonoBehaviour:
   Angle: 0
   TimeFarEffect: 0.1
   FarEffect: 1.25
-  WidthRange: 3.75
+  WidthRange: 4.25
   SpeedZone: 0.1
   TimeDest: 0.1
   Diameter: 0
