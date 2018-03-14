@@ -510,6 +510,7 @@ public class UiManager : ManagerParent
             setAllMenu.Add(thisUi.ThisMenu, thisUi);
         }
 
+        EndScreenContainer.transform.parent.GetComponent<Canvas>().worldCamera = Manager.GameCont.MainCam;
         GaugeButtonBonus = (GameObject)Instantiate(GaugeButtonBonus, GetInGame);
 
         CauldronGauge = (GameObject)Instantiate(CauldronGauge, GetInGame);
