@@ -159,6 +159,11 @@ public class WeaponAbstract : MonoBehaviour
             Transform getTrans = transform;
             Vector3 getForward = playerTrans.forward;
 
+            if ( getPC.thisObjAudio != null )
+            {
+                Destroy(getPC.thisObjAudio);
+            }
+
             getTrans.SetParent(null);
             getPC.UpdateWeapon();
 

@@ -125,6 +125,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpeEffet: {fileID: 1530796011795326, guid: 11f2cea504004b245a6d9e7fa10eef4d, type: 2}
+  ExploWeapon: {fileID: 0}
+  PrefabExplo: {fileID: 0}
+  NameMusic: laser_wand
+  TimeBackPush: 0.1
   WeightRandom: 0
   AutoShoot: 1
   Projectile: 0

@@ -12,21 +12,21 @@ public class PlayerController : MonoBehaviour
 	[HideInInspector]
 	public int IdPlayer;
 	
-	[Header("Caract Player")]
+	[Header ("Caract Player")]
 	public int LifePlayer = 3;
 	public int TimeToRegen = 3;
 	public float MoveSpeed;
 	[Space]
 
-	[Header("Aime")]
-    public float angleAimSensitivity = 6;
+	[Header ("Aime")]
+	public float angleAimSensitivity = 6;
 	public float aimSensitivity = 10;
 	public float aimSensitivityEnemy = 2;
 	public float radialDeadZone = 0.3f;
 	public float maxAngle = 2;
 	[Space]
 
-	[Header("Dead")]
+	[Header ("Dead")]
 	public float DistProjDead;
 	public float TimeProjDead;
 	public float TimeDead = 1;
@@ -34,12 +34,12 @@ public class PlayerController : MonoBehaviour
 	public int PourcLootLost = 20;
 	[Space]
 	
-	[Header("Bag info")]
+	[Header ("Bag info")]
 	public float DistToDropItem = 1;
 	public int nbItemBeforeBigBag = 10;
 	[Space]
 	
-	[Header("Reference")]
+	[Header ("Reference")]
 	public GameObject ItemLostObj;
 	public Animator animPlayer;
 	public Transform WeaponPos;
@@ -49,19 +49,19 @@ public class PlayerController : MonoBehaviour
 	public Text WeapText;
 	[Space]
 
-	[Header("WeaponInfo")]
+	[Header ("WeaponInfo")]
 	public float DistThrowWeap = 2;
 	public float SpeedThrow = 2;
 	[Space]
 
-	[Header("Cauldron")]
+	[Header ("Cauldron")]
 	[Range (0, 1)]
 	[Tooltip ("Speed reduce pendant qu'on pousse la caisse")]
 	public float SpeedReduceOnBox = 0.1f;
 	public float TimeAccelBox = 5f;
 	public float SmoothRotateOnBox = 10;
 
-	[Header("UI Pos")]
+	[Header ("UI Pos")]
 	public float UiAmmoX;
 	public float UiAmmoY;
 
@@ -144,7 +144,9 @@ public class PlayerController : MonoBehaviour
 	Camera getCam;
 	WeaponBox thisWB;
 	GameObject getEffect;
-	AudioSource thisObjAudio;
+
+	[HideInInspector]
+	public AudioSource thisObjAudio;
 
 	int lifePlayer;
 	float currSpeed;
@@ -176,8 +178,7 @@ public class PlayerController : MonoBehaviour
 
 		System.Array thisArray = System.Enum.GetValues (typeof(TypeEnemy));
 
-		for (int a = 0; a < thisArray.Length; a++) 
-		{
+		for (int a = 0; a < thisArray.Length; a++) {
 			AllEnemy.Add (new EnemyInfo ());
 			AllEnemy [a].ThisType = (TypeEnemy)thisArray.GetValue (a);
 		}
@@ -213,20 +214,16 @@ public class PlayerController : MonoBehaviour
 
 		checkBorder ();
 
-		if (!checkUIBorder) 
-		{
-			AmmoUI.position = getCam.WorldToScreenPoint ( thisTrans.position );
+		if (!checkUIBorder) {
+			AmmoUI.position = getCam.WorldToScreenPoint (thisTrans.position);
 			AmmoUI.localPosition -= Vector3.right * UiAmmoX + Vector3.up * UiAmmoY;
-		} 
-		else 
-		{
+		} else {
 			AmmoUI.position = getCam.WorldToScreenPoint (thisTrans.position);
 
 			AmmoUI.localPosition += Vector3.right * UiAmmoX + Vector3.up * UiAmmoY;
 		}
 
-		if (AllItem.Count > 0 && Vector3.Distance (thisTrans.position, getBoxWeapon.position) < DistToDropItem) 
-		{
+		if (AllItem.Count > 0 && Vector3.Distance (thisTrans.position, getBoxWeapon.position) < DistToDropItem) {
 			emptyBag ();
 		}
 	}
@@ -248,12 +245,11 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-    public void GetDamage(Transform thisEnemy, int intDmg = 1)
-    {
-        if (canTakeDmg && checkUpdate)
-        {
-            lifePlayer -= intDmg;
-            animPlayer.SetTrigger("Damage");
+	public void GetDamage (Transform thisEnemy, int intDmg = 1)
+	{
+		if (canTakeDmg && checkUpdate) {
+			lifePlayer -= intDmg;
+			animPlayer.SetTrigger ("Damage");
 
 			if (lifePlayer <= 0 && !dead) {
 				animeDead (thisEnemy.position);
@@ -270,56 +266,43 @@ public class PlayerController : MonoBehaviour
 		Vector3 getCamPos = getCam.WorldToViewportPoint (thisTrans.position);
 		Vector3 getDir = Vector3.zero;
 
-		if (getCamPos.x > 0.97f) 
-		{
+		if (getCamPos.x > 0.97f) {
 			getDir -= Vector3.right;
 			thisTrans.position = new Vector3 (getCam.ViewportToWorldPoint (new Vector3 (0.97f, getCamPos.y, getCamPos.z)).x, thisTrans.position.y, thisTrans.position.z);
-		} 
-		else if (getCamPos.x < 0.03f) 
-		{
+		} else if (getCamPos.x < 0.03f) {
 			getDir += Vector3.right;
 			thisTrans.position = new Vector3 (getCam.ViewportToWorldPoint (new Vector3 (0.03f, getCamPos.y, getCamPos.z)).x, thisTrans.position.y, thisTrans.position.z);
 		}
 
-		if (getCam.WorldToViewportPoint (thisTrans.position ).x < 0.1f) 
-		{
+		if (getCam.WorldToViewportPoint (thisTrans.position).x < 0.1f) {
 			checkUIBorder = true;
-		} 
-		else 
-		{
+		} else {
 			checkUIBorder = false;
 		}
 
-		if (getCamPos.y > 0.85f) 
-		{
+		if (getCamPos.y > 0.85f) {
 			getDir -= Vector3.up;
 			thisTrans.position = new Vector3 (thisTrans.position.x, thisTrans.position.y, getCam.ViewportToWorldPoint (new Vector3 (getCamPos.x, 0.85f, getCamPos.z)).z);
-		} 
-		else if (getCamPos.y < 0.03f) 
-		{
+		} else if (getCamPos.y < 0.03f) {
 			getDir += Vector3.up;
 			thisTrans.position = new Vector3 (thisTrans.position.x, thisTrans.position.y, getCam.ViewportToWorldPoint (new Vector3 (getCamPos.x, 0.03f, getCamPos.z)).z);
 		}
 
-		if (getDir != Vector3.zero) 
-		{
+		if (getDir != Vector3.zero) {
 			RaycastHit[] allHit;
 			string getTag;
 
 			allHit = Physics.RaycastAll (thisTrans.position, getDir, 0.5f);
 
-			foreach (RaycastHit thisRay in allHit) 
-			{
+			foreach (RaycastHit thisRay in allHit) {
 				getTag = thisRay.collider.tag;
 
-				if (getTag == Constants._Wall) 
-				{
+				if (getTag == Constants._Wall) {
 
 					checkUpdate = false;
 
 					thisTrans.DOKill (true);
-					thisTrans.DOMove (getBoxWeapon.position, 0.5f, true).OnComplete (() => 
-					{
+					thisTrans.DOMove (getBoxWeapon.position, 0.5f, true).OnComplete (() => {
 						checkUpdate = true;
 					});
 					break;
@@ -356,8 +339,7 @@ public class PlayerController : MonoBehaviour
 			//playerDash ( );
 		}
 
-		if (!dashing) 
-		{
+		if (!dashing) {
 			interactPlayer ();
 			playerMove (getDeltaTime);
 		}
@@ -372,33 +354,24 @@ public class PlayerController : MonoBehaviour
 
 		float speed = Mathf.Abs (Xmove) + Mathf.Abs (Ymove) * 2;
 	
-		if ( speed == 0 )
-		{
+		if (speed == 0) {
 			currSpeed = 0;
 		}
 		
 		animPlayer.SetFloat ("Velocity", speed);
 		float getSpeed = MoveSpeed;
 
-		if (driveBox) 
-		{
-			if(	currSpeed < MoveSpeed * SpeedReduceOnBox )
-			{
-				currSpeed += ((MoveSpeed * SpeedReduceOnBox) / TimeAccelBox ) * getDeltaTime ;
+		if (driveBox) {
+			if (currSpeed < MoveSpeed * SpeedReduceOnBox) {
+				currSpeed += ((MoveSpeed * SpeedReduceOnBox) / TimeAccelBox) * getDeltaTime;
 			}
 
 			getSpeed = currSpeed;
 			thisWB.CurrTime += (float)getDeltaTime / thisWB.TimeFullFill;
 			thisWB.ThisGauge.fillAmount = thisWB.CurrTime;
-			if ( thisWB.ThisGauge.fillAmount == 1 )
-			{
-				thisWB.ThisGauge.GetComponentInChildren<RainbowColor>().enabled = true;
-				thisWB.ThisGauge.GetComponentInChildren<RainbowScale>().enabled = true;
-			}
+	
 			TimeWBox += getDeltaTime;
-		}
-		else if (shooting) 
-		{
+		} else if (shooting) {
 			getSpeed *= SpeedReduce;
 		} 
 
@@ -408,127 +381,98 @@ public class PlayerController : MonoBehaviour
 		thisTrans.position += getSpeed * new Vector3 (Xmove, 0, Ymove);
 	}
 
-	void playerAim(float getDeltaTime)
-    {
-        float Xaim = inputPlayer.GetAxis("AimX");
-        float Yaim = inputPlayer.GetAxis("AimY");
+	void playerAim (float getDeltaTime)
+	{
+		float Xaim = inputPlayer.GetAxis ("AimX");
+		float Yaim = inputPlayer.GetAxis ("AimY");
 
-        Vector2 stickInput = new Vector2(Xaim, Yaim);
+		Vector2 stickInput = new Vector2 (Xaim, Yaim);
 
-        if (stickInput.magnitude < radialDeadZone)
-        {
-            stickInput = Vector2.zero;
-        }
-        else
-        {
-            float actuFocus = aimSensitivity;
+		if (stickInput.magnitude < radialDeadZone) {
+			stickInput = Vector2.zero;
+		} else {
+			float actuFocus = aimSensitivity;
 
-            if (thisWeapon != null)
-            {
-                RaycastHit hit;
-                if (Physics.Raycast(thisWeapon.SpawnBullet.position, thisTrans.forward, out hit))
-                {
-                    if (hit.transform.tag == Constants._Enemy)
-                    {
-                        Vector3 targetDir = hit.transform.position - transform.position;
-                        float angle = Vector3.Angle(targetDir, transform.forward);
+			if (thisWeapon != null) {
+				RaycastHit hit;
+				if (Physics.Raycast (thisWeapon.SpawnBullet.position, thisTrans.forward, out hit)) {
+					if (hit.transform.tag == Constants._Enemy) {
+						Vector3 targetDir = hit.transform.position - transform.position;
+						float angle = Vector3.Angle (targetDir, transform.forward);
 
-                        if (angle < angleAimSensitivity)
-                        {
-                            actuFocus = aimSensitivityEnemy;
-                        }
-                    }
-                }
-            }
+						if (angle < angleAimSensitivity) {
+							actuFocus = aimSensitivityEnemy;
+						}
+					}
+				}
+			}
 
-            Quaternion newAngle = Quaternion.LookRotation(new Vector3(Xaim, 0, Yaim), thisTrans.up);
+			Quaternion newAngle = Quaternion.LookRotation (new Vector3 (Xaim, 0, Yaim), thisTrans.up);
 
-            float difAngle = Quaternion.Angle(thisTrans.rotation, newAngle);
+			float difAngle = Quaternion.Angle (thisTrans.rotation, newAngle);
 
-            if (difAngle > maxAngle)
-            {
-                if (driveBox)
-                {
-                    thisTrans.localRotation = Quaternion.Slerp(thisTrans.rotation, newAngle, SmoothRotateOnBox * getDeltaTime);
-                }
-                else
-                {
-                    thisTrans.localRotation = Quaternion.Slerp(thisTrans.rotation, newAngle, actuFocus * getDeltaTime);
-                }
-            }
-        }
+			if (difAngle > maxAngle) {
+				if (driveBox) {
+					thisTrans.localRotation = Quaternion.Slerp (thisTrans.rotation, newAngle, SmoothRotateOnBox * getDeltaTime);
+				} else {
+					thisTrans.localRotation = Quaternion.Slerp (thisTrans.rotation, newAngle, actuFocus * getDeltaTime);
+				}
+			}
+		}
 
-    }
+	}
 
 	void playerShoot (float getDeltaTime)
 	{
 		float shootInput = inputPlayer.GetAxis ("Shoot");
-		if (!canShoot) 
-		{
-			if (shootInput > 0) 
-			{
-				if (driveBox) 
-				{
+		if (!canShoot) {
+			if (shootInput > 0) {
+				if (driveBox) {
 					thisWB.AttackCauld ();
 					return;
 				}
 
 				useBoxWeapon ();
-			} 
-			else 
-			{
+			} else {
 				return;
 			}
 
 		}
 
-		if (shootInput == 1 && checkShootScore) 
-		{
-			if ( thisWeapon != null && thisWeapon.SpeEffet != null && thisWeapon.getCapacity > 0 )
-			{
-				getEffect = (GameObject) Instantiate ( thisWeapon.SpeEffet, thisWeapon.SpawnBullet );
-				getEffect.GetComponent<BulletAbstract>().thisPlayer = this;
-				getEffect.transform.rotation = Quaternion.LookRotation(thisTrans.forward, thisTrans.up);
+		if (shootInput == 1 && checkShootScore) {
+			if (thisWeapon != null && thisWeapon.SpeEffet != null && thisWeapon.getCapacity > 0) {
+				getEffect = (GameObject)Instantiate (thisWeapon.SpeEffet, thisWeapon.SpawnBullet);
+				getEffect.GetComponent<BulletAbstract> ().thisPlayer = this;
+				getEffect.transform.rotation = Quaternion.LookRotation (thisTrans.forward, thisTrans.up);
 
-				if ( thisWeapon.SpeEffet == null )
-				{
-					thisObjAudio = Manager.Audm.OpenAudio(AudioType.Shoot, thisWeapon.NameMusic );
+				if (thisWeapon.SpeEffet != null) {
+					thisObjAudio = Manager.Audm.OpenAudio (AudioType.Shoot, thisWeapon.NameMusic);
 				}
 			}
 
 			checkShootScore = false;
 			SpawmShoot++;
-		} 
-		else if (shootInput < 0.3f) 
-		{
-			if ( getEffect != null )
-			{
-				Destroy ( getEffect );
-				if ( thisObjAudio != null )
-				{
-					Destroy(thisObjAudio);
+		} else if (shootInput < 0.3f) {
+			if (getEffect != null) {
+				Destroy (getEffect);
+				if (thisObjAudio != null) {
+					Destroy (thisObjAudio);
 				}
 			}
 			checkShootScore = true;
-		}
-		else if ( thisWeapon != null && thisWeapon.getCapacity == 0 && getEffect != null )
-		{
-			Destroy ( getEffect );
+		} else if (thisWeapon != null && thisWeapon.getCapacity == 0 && getEffect != null) {
+			Destroy (getEffect);
 		}
 
-		if (shootInput == 0 && checkAuto) 
-		{
+		if (shootInput == 0 && checkAuto) {
 			checkShoot = true;
 		}
 		
-		if (shootInput > 0.3f && thisWeapon != null && checkShoot) 
-		{
-			if (!autoShoot) 
-			{
+		if (shootInput > 0.3f && thisWeapon != null && checkShoot) {
+			if (!autoShoot) {
 				checkAuto = false;
 				checkShoot = false;
-				DOVirtual.DelayedCall (CdShoot, () => 
-				{
+				DOVirtual.DelayedCall (CdShoot, () => {
 					checkAuto = true;
 				});
 			}
@@ -536,8 +480,7 @@ public class PlayerController : MonoBehaviour
 			thisWeapon.weaponShoot (thisTrans);
 			animPlayer.SetBool ("Attack", true);
 			shooting = true;
-			if (thisWeapon != null) 
-			{ //&& thisWeapon.Damage == 1)
+			if (thisWeapon != null) { //&& thisWeapon.Damage == 1)
 				//Debug.Log("Shoot");
 				if (thisWeapon.Damage <= Manager.VibM.DamagesLow)
 					Manager.VibM.ShootLowVibration (inputPlayer);
@@ -546,13 +489,10 @@ public class PlayerController : MonoBehaviour
 				else if (thisWeapon.Damage > Manager.VibM.DamagesLow && thisWeapon.Damage <= Manager.VibM.DamagesMedium)
 					Manager.VibM.ShootHighVibration (inputPlayer);
 			}
-		} 
-		else 
-		{
+		} else {
 			animPlayer.SetBool ("Attack", false);
 
-			if ( !autoShoot || shootInput < 0.3f )
-			{
+			if (!autoShoot || shootInput < 0.3f) {
 				shooting = false;
 			}
 		}
@@ -560,11 +500,9 @@ public class PlayerController : MonoBehaviour
 
 	public void AddItem ()
 	{
-		if (AllItem.Count <= nbItemBeforeBigBag) 
-		{
+		if (AllItem.Count <= nbItemBeforeBigBag) {
 			animPlayer.SetTrigger ("Bag_Up");
-		} else if (AllItem.Count > nbItemBeforeBigBag) 
-		{
+		} else if (AllItem.Count > nbItemBeforeBigBag) {
 			animPlayer.SetTrigger ("Bag_Up2");
 		}
 	}
@@ -598,16 +536,14 @@ public class PlayerController : MonoBehaviour
 
 	void useBoxWeapon ()
 	{
-		if (Manager.GameCont.WeaponB.CanControl) 
-		{
-            if ( thisWB.ThisGauge == null )
-			{
-				thisWB.ThisGauge = Manager.Ui.CauldronGauge.transform.Find("Cauldron Inside").GetComponent<Image>();
+		if (Manager.GameCont.WeaponB.CanControl) {
+			if (thisWB.ThisGauge == null) {
+				thisWB.ThisGauge = Manager.Ui.CauldronGauge.transform.Find ("Cauldron Inside").GetComponent<Image> ();
 			}
 			
 			Manager.Ui.checkDrive = false;
-			Manager.Ui.CauldronGauge.GetComponent<CanvasGroup>().DOKill(true);
-            Manager.Ui.CauldronGauge.GetComponent<CanvasGroup>().DOFade(1,0.3f);
+			Manager.Ui.CauldronGauge.GetComponent<CanvasGroup> ().DOKill (true);
+			Manager.Ui.CauldronGauge.GetComponent<CanvasGroup> ().DOFade (1, 0.3f);
 
 			GetCamFoll.UpdateTarget (thisTrans);
 			WeaponPos.gameObject.SetActive (false);
@@ -621,16 +557,14 @@ public class PlayerController : MonoBehaviour
 			getBoxWeapon.DOLocalRotateQuaternion (Quaternion.identity, 0.5f);
 
 			driveBox = true;
-		} 
-		else if (driveBox)
-		{
-			Manager.Ui.CauldronGauge.GetComponent<CanvasGroup>().DOKill(true);
+		} else if (driveBox) {
+			Manager.Ui.CauldronGauge.GetComponent<CanvasGroup> ().DOKill (true);
 			
 			currSpeed = 0;
-			thisWB.GetComponent<Collider>().isTrigger = false;
+			thisWB.GetComponent<Collider> ().isTrigger = false;
 			thisWB.gameObject.tag = Constants._BoxTag;
-			thisWB.transform.DOKill(true);
-            Manager.Ui.CauldronGauge.GetComponent<CanvasGroup>().DOFade(0,0.3f);
+			thisWB.transform.DOKill (true);
+			Manager.Ui.CauldronGauge.GetComponent<CanvasGroup> ().DOFade (0, 0.3f);
 			Manager.Ui.checkDrive = false;
 			AmmoUI.GetComponent<CanvasGroup> ().alpha = 1;
 			getBoxWeapon.DOKill ();
@@ -659,8 +593,7 @@ public class PlayerController : MonoBehaviour
 		CurrLootScore += CurrItem;
 		CurrItem = 0;
 
-		for (int a = 0; a < getBagItems.Length; a++) 
-		{
+		for (int a = 0; a < getBagItems.Length; a++) {
 			currTrans = getBagItems [a].transform;
 			currTrans.DOKill ();
 
@@ -681,12 +614,9 @@ public class PlayerController : MonoBehaviour
 		float getRange2 = Random.Range (-0.2f, 0.21f);
 		float getRange3 = Random.Range (-0.2f, 0.21f);
 		currTrans.DOScale (Vector3.one, 0.5f);
-		currTrans.DOLocalMove (new Vector3 (getRange,getRange2,getRange3) + Vector3.zero + Vector3.up * 5, 0.5f).OnComplete (() => 
-		{
-			currTrans.DOLocalMove (Vector3.zero, 0.5f).OnComplete (() => 
-			{
-				currTrans.DOScale (Vector3.zero, 0.5f).OnComplete (() => 
-				{
+		currTrans.DOLocalMove (new Vector3 (getRange, getRange2, getRange3) + Vector3.zero + Vector3.up * 5, 0.5f).OnComplete (() => {
+			currTrans.DOLocalMove (Vector3.zero, 0.5f).OnComplete (() => {
+				currTrans.DOScale (Vector3.zero, 0.5f).OnComplete (() => {
 					Destroy (currTrans.gameObject);
 				});
 			});
@@ -700,8 +630,7 @@ public class PlayerController : MonoBehaviour
 		canTakeDmg = false;
 		dead = true;
 
-		if (driveBox) 
-		{
+		if (driveBox) {
 			useBoxWeapon ();
 		}
 
@@ -720,14 +649,11 @@ public class PlayerController : MonoBehaviour
 		getDist -= checkBorderDead (thisTrans.position + getDirect * DistProjDead);
 		allHit = Physics.RaycastAll (thisTrans.position, getDirect, getDist);
 
-		foreach (RaycastHit thisRay in allHit) 
-		{
+		foreach (RaycastHit thisRay in allHit) {
 			getTag = thisRay.collider.tag;
 
-			if (getTag == Constants._Wall) 
-			{
-				if (thisRay.distance < getDist) 
-				{
+			if (getTag == Constants._Wall) {
+				if (thisRay.distance < getDist) {
 					getDist = thisRay.distance - 1;
 					getTime = TimeProjDead / (DistProjDead / getDist);
 				}
@@ -754,14 +680,13 @@ public class PlayerController : MonoBehaviour
             Destroy(getList[a]);	
         }*/
 
-		lostItem();
+		lostItem ();
 	}
 
-	void lostItem ( )
+	void lostItem ()
 	{
 		GameObject[] getList = AllItem.ToArray ();
-		if (getList.Length > 0 ) 
-		{
+		if (getList.Length > 0) {
 			int a;
 			ItemLost getItem;
 			GameObject newObj = (GameObject)Instantiate (ItemLostObj, thisTrans.position, thisTrans.rotation);
@@ -777,15 +702,13 @@ public class PlayerController : MonoBehaviour
 			newObj.GetComponent<ItemObjLost> ().NbrItem = getNbr;
 			thisPFP.GetComponent<CanvasGroup> ().DOFade (1, 0.1f);
 			
-			for (a = getList.Length - 1; a > getList.Length * 0.5f; a--) 
-			{
+			for (a = getList.Length - 1; a > getList.Length * 0.5f; a--) {
 				getItem = getList [a].transform.GetComponent<ItemLost> ();
 				getItem.gameObject.SetActive (true);
 				getItem.transform.localScale = Vector3.one;
 				getItem.transform.localPosition = Vector3.zero;
 
-				if (!getItem) 
-				{
+				if (!getItem) {
 					getItem = getList [a].AddComponent<ItemLost> ();
 				}
 
@@ -795,8 +718,7 @@ public class PlayerController : MonoBehaviour
 			}
 
 			getList = AllItem.ToArray ();
-			for (a = 0; a < getList.Length; a++) 
-			{
+			for (a = 0; a < getList.Length; a++) {
 				Destroy (getList [a]);
 			}
 
@@ -808,21 +730,17 @@ public class PlayerController : MonoBehaviour
 	void OnTriggerEnter (Collider thisColl)
 	{
 		string getTag = thisColl.tag;
-		if (thisColl.tag == Constants._EnterCont) 
-		{
+		if (thisColl.tag == Constants._EnterCont) {
 			canEnterBox = true;
-		} 
-		else if (getTag == Constants._EnemyBullet && canTakeDmg && checkUpdate/*|| getTag == Constants._Enemy*/) 
-		{
+		} else if (getTag == Constants._EnemyBullet && canTakeDmg && checkUpdate/*|| getTag == Constants._Enemy*/) {
 			lifePlayer--;
 
 			Manager.VibM.StunVibration (inputPlayer);
 
-            Manager.VibM.StunVibration(inputPlayer);
-            animPlayer.SetTrigger("Damage");
+			Manager.VibM.StunVibration (inputPlayer);
+			animPlayer.SetTrigger ("Damage");
 
-			DOVirtual.DelayedCall (TimeToRegen, () => 
-			{
+			DOVirtual.DelayedCall (TimeToRegen, () => {
 				lifePlayer = LifePlayer;
 			});
 		}
@@ -830,8 +748,7 @@ public class PlayerController : MonoBehaviour
 
 	void OnTriggerExit (Collider thisColl)
 	{
-		if (thisColl.tag == Constants._EnterCont) 
-		{
+		if (thisColl.tag == Constants._EnterCont) {
 			canEnterBox = false;
 		}
 	}
