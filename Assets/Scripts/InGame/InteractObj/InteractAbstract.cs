@@ -47,15 +47,17 @@ public class InteractAbstract : MonoBehaviour
 				{
 					multEffect (false);
 				});
-			}
 
-			if ( thisEvnt.ThisMat != null )
-			{
-				foreach ( Renderer thisMat in GetComponentsInChildren<Renderer>() )
+				if ( thisEvnt.ThisMat != null )
 				{
-					thisMat.material = thisEvnt.ThisMat;
+					foreach ( Renderer thisMat in GetComponentsInChildren<Renderer>() )
+					{
+						thisMat.material = thisEvnt.ThisMat;
+					}
 				}
 			}
+
+			
         };
 
         Manager.Event.Register(thisAct);
