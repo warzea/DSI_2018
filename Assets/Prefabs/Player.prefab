@@ -1067,13 +1067,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IdPlayer: 0
   LifePlayer: 5
-  TimeToRegen: 3
-  MoveSpeed: 13
-  SlowDriveBack: 0.7
+  TimeToRegen: 30
+  MoveSpeed: 14
   ItemLostObj: {fileID: 1330381900745004, guid: 0540fd0faddbcfd46bb2584e8d68fc5c,
     type: 2}
   radialDeadZone: 0.3
   maxAngle: 3
+  DistThrowWeap: 2
+  SpeedThrow: 2
   DistToDropItem: 6
   nbItemBeforeBigBag: 10
   animPlayer: {fileID: 95255310504812768}
@@ -1089,6 +1090,7 @@ MonoBehaviour:
   GetSpeed: 0
   SpeedReduce: 0.5
   SpeedReduceOnBox: 0.35
+  TimeAccelBox: 5
   SmoothRotateOnBox: 2.8
   aimSensitivity: 10
   aimSensitivityEnemy: 1.5
