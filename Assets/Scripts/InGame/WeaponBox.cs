@@ -83,6 +83,9 @@ public class WeaponBox : MonoBehaviour
 	{
 		if ( ThisGauge.fillAmount == 1 )
 		{
+			ThisGauge.GetComponentInChildren<RainbowColor>().enabled = false;
+			ThisGauge.GetComponentInChildren<RainbowScale>().enabled = false;
+			
 			ThisGauge.fillAmount = 0;
 			CurrTime = 0;
 

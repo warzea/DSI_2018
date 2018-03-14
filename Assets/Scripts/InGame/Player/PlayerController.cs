@@ -11,53 +11,71 @@ public class PlayerController : MonoBehaviour
 
 	[HideInInspector]
 	public int IdPlayer;
+	
+	[Header("Caract Player")]
 	public int LifePlayer = 3;
 	public int TimeToRegen = 3;
 	public float MoveSpeed;
-	public GameObject ItemLostObj;
+	[Space]
+
+	[Header("Aime")]
+	public float aimSensitivity = 10;
+	public float aimSensitivityEnemy = 2;
 	public float radialDeadZone = 0.3f;
 	public float maxAngle = 2;
-	public float DistThrowWeap = 2;
-	public float SpeedThrow = 2;
+	[Space]
 
-	//public float DashDistance = 5;
-	//public float DashTime = 1;
-	public float DistToDropItem = 1;
-	public int nbItemBeforeBigBag = 10;
-	public Animator animPlayer;
-	public Transform WeaponPos;
-	public Transform BagPos;
-	public Transform BoxPlace;
+	[Header("Dead")]
 	public float DistProjDead;
 	public float TimeProjDead;
 	public float TimeDead = 1;
 	public float TimeInvincible;
 	public int PourcLootLost = 20;
-	[HideInInspector]
-	public float CdShoot = 0;
+	[Space]
+	
+	[Header("Bag info")]
+	public float DistToDropItem = 1;
+	public int nbItemBeforeBigBag = 10;
+	[Space]
+	
+	[Header("Reference")]
+	public GameObject ItemLostObj;
+	public Animator animPlayer;
+	public Transform WeaponPos;
+	public Transform BagPos;
+	public Transform BoxPlace;
+	public Transform AmmoUI;
+	public Text WeapText;
+	[Space]
 
-	[HideInInspector]
-	public float GetSpeed = 0;
+	[Header("WeaponInfo")]
+	public float DistThrowWeap = 2;
+	public float SpeedThrow = 2;
+	[Space]
 
-	[HideInInspector]
-	public float SpeedReduce;
+	[Header("Cauldron")]
 	[Range (0, 1)]
 	[Tooltip ("Speed reduce pendant qu'on pousse la caisse")]
 	public float SpeedReduceOnBox = 0.1f;
 	public float TimeAccelBox = 5f;
 	public float SmoothRotateOnBox = 10;
 
-	public float aimSensitivity = 10;
-	public float aimSensitivityEnemy = 2;
+	[Header("UI Pos")]
+	public float UiAmmoX;
+	public float UiAmmoY;
 
 	[HideInInspector]
+	public float CdShoot = 0;
+	[HideInInspector]
+	public float GetSpeed = 0;
+	[HideInInspector]
+	public float SpeedReduce;
+	[HideInInspector]
 	public List<GameObject> AllItem;
-
 	[HideInInspector]
 	public bool driveBox = false;
 	[HideInInspector]
 	public bool dead = false;
-
 	[HideInInspector]
 	public List<EnemyInfo> AllEnemy;
 
@@ -99,12 +117,9 @@ public class PlayerController : MonoBehaviour
 	[HideInInspector]
 	public bool checkAward = false;
 	// -----
-	public Transform AmmoUI;
-	public float UiAmmoX;
-	public float UiAmmoY;
+
 	[HideInInspector]
 	public int CurrItem = 0;
-    
 	[HideInInspector]
 	public Image UiAmmo;
 	[HideInInspector]
@@ -115,7 +130,9 @@ public class PlayerController : MonoBehaviour
 	public bool checkShoot = true;
 	[HideInInspector]
 	public bool checkAuto = false;
+	[HideInInspector]
 	public bool canCauldron = false;
+	
 	PlayerController thisPC;
 	WeaponAbstract thisWeapon;
 	Transform thisTrans;
@@ -143,9 +160,7 @@ public class PlayerController : MonoBehaviour
 	bool checkUIBorderY = false;
 	bool checkUpdate = true;
 
-	public Text WeapText;
 	Tween tweenRegen;
-
 	#endregion
 
 	#region Mono
@@ -370,6 +385,11 @@ public class PlayerController : MonoBehaviour
 			getSpeed = currSpeed;
 			thisWB.CurrTime += (float)getDeltaTime / thisWB.TimeFullFill;
 			thisWB.ThisGauge.fillAmount = thisWB.CurrTime;
+			if ( thisWB.ThisGauge.fillAmount == 1 )
+			{
+				thisWB.ThisGauge.GetComponentInChildren<RainbowColor>().enabled = true;
+				thisWB.ThisGauge.GetComponentInChildren<RainbowScale>().enabled = true;
+			}
 			TimeWBox += getDeltaTime;
 		}
 		else if (shooting) 
