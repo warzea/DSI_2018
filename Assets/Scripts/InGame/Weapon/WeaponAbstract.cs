@@ -7,6 +7,8 @@ public class WeaponAbstract : MonoBehaviour
 {
     #region Variables
     public GameObject SpeEffet;
+    public GameObject ExploWeapon;
+    public GameObject PrefabExplo;
     public string NameMusic;
     public float TimeBackPush = 0.1f;
     public int WeightRandom = 0;
@@ -170,7 +172,14 @@ public class WeaponAbstract : MonoBehaviour
             thisBA.TimeStay = 0.2f;
             thisBA.thisPlayer = getPC;
             thisBA.Projectil = true;
-            thisBA.canExplose = true;
+            
+            if ( ExploWeapon!= null && PrefabExplo != null )
+            {
+                thisBA.canExplose = true;
+                thisBA.GetEffect = ExploWeapon;
+                thisBA.PrefabExplosion = PrefabExplo;
+            }
+            
             thisBA.Diameter = 3;
             thisBA.BulletRange = playerTrans.GetComponent<PlayerController>().DistThrowWeap;
             thisBA.MoveSpeed = playerTrans.GetComponent<PlayerController>().SpeedThrow;

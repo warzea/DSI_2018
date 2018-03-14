@@ -49,10 +49,11 @@ public class BulletAbstract : MonoBehaviour
 
     //bool checkEnd = false;
     [HideInInspector]
-    public bool canExplose;
+    public bool canExplose = false;
     bool checkEnd = false;
     bool blockUpdate = false;
     float getDistScale = 0;
+    float timeEffect = 0.1f;
     bool checkUpdate = true;
     #endregion
 
@@ -79,6 +80,16 @@ public class BulletAbstract : MonoBehaviour
         if (ThisTrajectoir == Trajectoir.Nothing)
         {
             checkUpdate = false;
+        }
+
+        if ( GetEffect != null )
+        {
+            ParticleSystem thisPart = GetEffect.GetComponentInChildren<ParticleSystem>();
+
+            if ( thisPart != null )
+            {
+                timeEffect = thisPart.duration;
+            }
         }
 
         checkRayCast ( );
@@ -113,34 +124,18 @@ public class BulletAbstract : MonoBehaviour
         }
         else if (!checkEnd)
         {
-            Debug.Log("ici");
             if (canExplose)
             {
-                Debug.Log("ici2");
                 instExplo(thisTrans.position);
 
                 if (Projectil)
                 {
-                    Debug.Log("ici3");
-
                     destObj(TimeStay);
 
                     blockUpdate = true;
-                    if (GetEffect != null)
-                    {
-                        Debug.Log("ici");
-
-                        Instantiate(GetEffect, thisTrans.position, Quaternion.identity);
-                    }
-                    SphereCollider thisSphere = gameObject.AddComponent<SphereCollider>();
-                    //thisSphere.radius = Diameter;
-                    thisSphere.isTrigger = true;
-                    thisTrans.localScale = new Vector3(Diameter, Diameter, Diameter);
                 }
                 else
                 {
-                    Debug.Log("ici4");
-
                     destObj(0);
                 }
             }
@@ -193,10 +188,10 @@ public class BulletAbstract : MonoBehaviour
 
     void instExplo(Vector3 thisPos)
     {
-        Debug.Log("A    lex le pd");
         GameObject thisObj = (GameObject)Instantiate(PrefabExplosion, thisPos, thisTrans.rotation);
         ExploScript getExplo = thisObj.GetComponent<ExploScript>();
 
+        getExplo.TimeEffect = timeEffect;
         if (getExplo.TimeStay == 0)
         {
             getExplo.TimeStay = TimeStay;
@@ -258,40 +253,14 @@ public class BulletAbstract : MonoBehaviour
                 if (Projectil)
                 {
                     blockUpdate = true;
-                    if (GetEffect != null)
-                    {
-                        Instantiate(GetEffect, thisTrans.position, Quaternion.identity);
-                    }
-
-                    SphereCollider thisSphere = gameObject.AddComponent<SphereCollider>();
-                    //thisSphere.radius = Diameter;
-                    thisSphere.isTrigger = true;
-                    thisTrans.localScale = new Vector3(Diameter, Diameter, Diameter);
                 }
 
                 instExplo(collision.ClosestPoint(thisTrans.position));
             }
 
-            if (!Through)
+            if (!Through && !canExplose)
             {
-                if (canExplose)
-                {
-                    if (Projectil)
-                    {
-                        if (GetEffect != null && GetEffect.GetComponent<ParticleSystem>())
-                        {
-                            destObj(GetEffect.GetComponent<ParticleSystem>().main.duration);
-                        }
-                        else
-                        {
-                            destObj(1.5f);
-                        }
-                    }
-                }
-                else
-                {
-                    destObj();
-                }
+                destObj();
             }
         }
         else if (collision.tag == Constants._Wall && Projectil)
