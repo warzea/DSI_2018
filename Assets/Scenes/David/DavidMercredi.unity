@@ -1929,6 +1929,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1060134924738590, guid: 5e9ee2a51299d904db4de8b0b7cd7b3e, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5e9ee2a51299d904db4de8b0b7cd7b3e, type: 2}
   m_IsPrefabParent: 0
@@ -2676,6 +2680,16 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114940564612134464, guid: 09c0fcd273fc2424693f3e4b734896bb,
+        type: 2}
+      propertyPath: posRespawn.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114615207581199468, guid: 09c0fcd273fc2424693f3e4b734896bb,
+        type: 2}
+      propertyPath: posRespawn.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4707250982502558, guid: 09c0fcd273fc2424693f3e4b734896bb, type: 2}
       propertyPath: m_LocalPosition.x
       value: 431
@@ -4267,6 +4281,10 @@ Prefab:
     - target: {fileID: 1761805416676882, guid: b475873df400d4f109fd46964cc99f7d, type: 2}
       propertyPath: m_Name
       value: AgentMonster (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1761805416676882, guid: b475873df400d4f109fd46964cc99f7d, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b475873df400d4f109fd46964cc99f7d, type: 2}
