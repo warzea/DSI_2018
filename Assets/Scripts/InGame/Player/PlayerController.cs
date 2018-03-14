@@ -11,7 +11,6 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
 	#region Variables
-
 	[HideInInspector]
 	public int IdPlayer;
 
@@ -43,6 +42,7 @@ public class PlayerController : MonoBehaviour
 	[Space]
 
 	[Header ("Reference")]
+	public Transform SpawnBullet;
 	public GameObject ItemLostObj;
 	public Animator animPlayer;
 	public Transform WeaponPos;
@@ -246,6 +246,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if (thisWeap != null)
 		{
+			thisWeap.SpawnBullet = SpawnBullet;
 			thisWeap.OnFloor = false;
 			autoShoot = thisWeap.AutoShoot;
 			SpeedReduce = thisWeap.SpeedReduce;

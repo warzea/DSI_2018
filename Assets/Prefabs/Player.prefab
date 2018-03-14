@@ -569,7 +569,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1955598467694948}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.37, y: 0.943, z: 0.5}
+  m_LocalPosition: {x: 0.37, y: 0.94, z: 1.65}
   m_LocalScale: {x: 1, y: 1.0000005, z: 1.0000005}
   m_Children: []
   m_Father: {fileID: 4054685957464306}
@@ -1075,6 +1075,7 @@ MonoBehaviour:
   PourcLootLost: 20
   DistToDropItem: 6
   nbItemBeforeBigBag: 10
+  SpawnBullet: {fileID: 4246215549971970}
   ItemLostObj: {fileID: 1330381900745004, guid: 0540fd0faddbcfd46bb2584e8d68fc5c,
     type: 2}
   animPlayer: {fileID: 95720146484201416}
@@ -1083,7 +1084,6 @@ MonoBehaviour:
   BoxPlace: {fileID: 4412137378519398}
   AmmoUI: {fileID: 0}
   WeapText: {fileID: 0}
-  weaponMesh: []
   DistThrowWeap: 11
   SpeedThrow: 21
   SpeedReduceOnBox: 0.35
@@ -1122,6 +1122,7 @@ MonoBehaviour:
   checkShoot: 1
   checkAuto: 0
   canCauldron: 0
+  thisObjAudio: {fileID: 0}
 --- !u!135 &135883529401051248
 SphereCollider:
   m_ObjectHideFlags: 1

@@ -39,7 +39,7 @@ public class AudioManager : ManagerParent
 		{
 			for (a = 0; a < getAMF.Count; a++)
 			{
-				for (b = 0; b < getAMF [b].AllMF.Count; b++)
+				for (b = 0; b < getAMF [a].AllMF.Count; b++)
 				{
 					if (getAMF [a].AllMF [b].ThisType == thisType)
 					{
