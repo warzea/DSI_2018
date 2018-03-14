@@ -425,8 +425,6 @@ public class PlayerController : MonoBehaviour
                     {
                         Vector3 targetDir = hit.transform.position - transform.position;
                         float angle = Vector3.Angle(targetDir, transform.forward);
-                        Debug.Log(angle);
-
 
                         if (angle < angleAimSensitivity)
                         {
