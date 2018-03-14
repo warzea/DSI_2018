@@ -232,23 +232,28 @@ public class UiManager : ManagerParent
         }
     }
 
+    public bool OnTuto = true;
+
     public void CauldronButtons(bool visible = false)
     {
-        if (!visible)
+        if ( OnTuto)
         {
-            nbrCauld--;
-            if (nbrCauld <= 0 && !checkDrive)
+            if (!visible)
             {
+                nbrCauld--;
                 ButtonsInteract.GetComponent<CanvasGroup>().DOFade(0, .1f);
+            }
+            else
+            {
+                nbrCauld++;
+                ButtonsInteract.GetComponent<CanvasGroup>().DOFade(1, .1f);
             }
         }
         else
         {
-            nbrCauld++;
-            ButtonsInteract.GetComponent<CanvasGroup>().DOFade(1, .1f);
+            CauldronButtonBonus ( visible );
         }
     }
-
 
     public void PopPotions(PotionType type) // poser ressource : 20 - 40 - 60 - 80 et 100
     {
@@ -411,8 +416,10 @@ public class UiManager : ManagerParent
             setAllMenu.Add(thisUi.ThisMenu, thisUi);
         }
 
+        GaugeButtonBonus = (GameObject)Instantiate(GaugeButtonBonus, GetInGame);
+
         CauldronGauge = (GameObject)Instantiate(CauldronGauge, GetInGame);
-        CauldronGauge.SetActive(false);
+        CauldronGauge.GetComponent<CanvasGroup>().DOFade (0,0);
 
         ButtonsInteract = (GameObject)Instantiate(ButtonsInteract, GetInGame);
         AllMenu = setAllMenu;
