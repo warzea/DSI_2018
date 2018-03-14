@@ -33,6 +33,7 @@ public class InteractAbstract : MonoBehaviour
 
 		valDrop = ValueOnDrop;
 	}
+
 	void Start ( )
 	{
 		System.Action<ChestEvent> thisAct = delegate (ChestEvent thisEvnt)
@@ -64,7 +65,7 @@ public class InteractAbstract : MonoBehaviour
 					{
 						if (thisMat.material.name == Constants._MatChest + " (Instance)")
 						{
-							thisMat.material.SetFloat ("_GoldTransition", 1);
+							StartCoroutine (waitRightValue (thisMat.material, "_GoldTransition", 1, 0));
 							thisMat.material.SetFloat ("_Desaturate", 0);
 						}
 					}
@@ -76,19 +77,26 @@ public class InteractAbstract : MonoBehaviour
 
 		Manager.Event.Register (thisAct);
 	}
+
+	float Transition;
+	IEnumerator waitRightValue (Material thisMat, string name, int maxValue, int currVal)
+	{
+		WaitForEndOfFrame thisF = new WaitForEndOfFrame ( );
+		Transition = currVal;
+
+		DOTween.To (( )=> Transition, x => Transition = x, maxValue, 0.3f);
+
+		while (Transition != maxValue)
+		{
+			thisMat.SetFloat (name, Transition);
+			yield return thisF;
+		}
+	}
 	#endregion
 
 	#region Public Methods
 	public void OnInteract (PlayerController thisPlayer)
 	{
-		/*
-		if ( NbrTouchToDrop > 0 )
-		{
-			NbrTouchToDrop --;
-
-            transform.DOKill(true);
-
-        }*/
 		if (NbrItem > 0)
 		{
 			NbrItem--;
@@ -145,7 +153,7 @@ public class InteractAbstract : MonoBehaviour
 				{
 					if (thisMat.material.name == Constants._MatChest + " (Instance)")
 					{
-						thisMat.material.SetFloat ("_Desaturate", 1);
+						StartCoroutine (waitRightValue (thisMat.material, "_Desaturate", 1, 0));
 					}
 				}
 			}
