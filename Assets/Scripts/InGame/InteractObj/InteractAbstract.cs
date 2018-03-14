@@ -1,122 +1,153 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+
 using DG.Tweening;
 
-public class InteractAbstract : MonoBehaviour 
+using UnityEngine;
+
+public class InteractAbstract : MonoBehaviour
 {
 	#region Variables
 	public int NbrItem = 10;
 	public int ValueOnDrop = 5;
 	public int NbrDropByDrop = 2;
 	public int NbrTouchToDrop = 2;
-	public GameObject[] ItemDrop;
+	public GameObject [ ] ItemDrop;
 	Transform thisTrans;
 	bool checkItem = true;
 	int valDrop;
 	Tween thisT;
 	#endregion
-	
+
 	#region Mono
-	void Awake () 
+	void Awake ( )
 	{
-		thisTrans = transform;
+		if (transform.childCount > 0)
+		{
+			thisTrans = transform.GetChild (0);
+		}
+		else
+		{
+			thisTrans = transform;
+		}
+
 		valDrop = ValueOnDrop;
 	}
 	void Start ( )
 	{
 		System.Action<ChestEvent> thisAct = delegate (ChestEvent thisEvnt)
-        {
+		{
 			Camera getCam = Manager.GameCont.MainCam;
-			Vector3 getCamPos = getCam.WorldToViewportPoint(thisTrans.position);
+			Vector3 getCamPos = getCam.WorldToViewportPoint (thisTrans.position);
 
-            if (getCamPos.x > 1f || getCamPos.x < 0f || getCamPos.y > 1f || getCamPos.y < 0f)
-            {
+			if (getCamPos.x > 1f || getCamPos.x < 0f || getCamPos.y > 1f || getCamPos.y < 0f)
+			{
 
 			}
 			else
 			{
-				if ( thisT != null)
+				if (thisT != null)
 				{
-					thisT.Kill();
+					thisT.Kill ( );
 				}
-				
-           		valDrop *= thisEvnt.Mult;
+
+				valDrop *= thisEvnt.Mult;
 				multEffect (true);
-				thisT = DOVirtual.DelayedCall(thisEvnt.TimeMult, () =>
+				thisT = DOVirtual.DelayedCall (thisEvnt.TimeMult, ( )=>
 				{
 					multEffect (false);
 				});
 
-				if ( thisEvnt.ThisMat != null )
+				if (NbrItem > 0)
 				{
-					foreach ( Renderer thisMat in GetComponentsInChildren<Renderer>() )
+					foreach (Renderer thisMat in GetComponentsInChildren<Renderer> ( ))
 					{
-						thisMat.material = thisEvnt.ThisMat;
+						if (thisMat.material.name == Constants._MatChest + " (Instance)")
+						{
+							thisMat.material.SetFloat ("_GoldTransition", 1);
+							thisMat.material.SetFloat ("_Desaturate", 0);
+						}
 					}
 				}
+
 			}
 
-			
-        };
+		};
 
-        Manager.Event.Register(thisAct);
+		Manager.Event.Register (thisAct);
 	}
 	#endregion
-	
+
 	#region Public Methods
-	public void OnInteract ( PlayerController thisPlayer )
+	public void OnInteract (PlayerController thisPlayer)
 	{
+		/*
 		if ( NbrTouchToDrop > 0 )
 		{
 			NbrTouchToDrop --;
-		}
-		else if ( NbrItem > 0 )
+
+            transform.DOKill(true);
+
+        }*/
+		if (NbrItem > 0)
 		{
-            NbrItem--;
+			NbrItem--;
 
-            thisPlayer.CurrItem += NbrDropByDrop * valDrop;
+			transform.DOKill (true);
 
-			Manager.Ui.AllPotGet[thisPlayer.IdPlayer].GetComponent<PotionFollowP>().NewValue ( thisPlayer.CurrItem );
+			transform.DOShakeScale (.25f, .3f, 15, 0);
+
+			float rdmRotZ = UnityEngine.Random.Range (-30, 30);
+			float rdmPosZ = UnityEngine.Random.Range (-1, 1);
+
+			transform.DOPunchRotation (new Vector3 (0, 0, rdmRotZ), .3f, 3, 1).SetEase (Ease.InCirc);
+			transform.DOPunchPosition (new Vector3 (0, 1, rdmPosZ), .3f, 3, 1).SetEase (Ease.InCirc);
+
+			thisPlayer.CurrItem += NbrDropByDrop * valDrop;
+
+			Manager.Ui.AllPotGet [thisPlayer.IdPlayer].GetComponent<PotionFollowP> ( ).NewValue (thisPlayer.CurrItem);
 
 			int b;
-			for ( int a = 0; a < Random.Range(5, 20); a ++ )
+			for (int a = 0; a < Random.Range (2, 8); a++)
 			{
-				DOVirtual.DelayedCall ( Random.Range(0, 0.2f), ()=> 
+				DOVirtual.DelayedCall (Random.Range (0, 0.2f), ( )=>
 				{
-					for ( b = 0; b < valDrop; b ++ )
+					GameObject newItem = (GameObject)Instantiate (ItemDrop [Random.Range (0, ItemDrop.Length - 1)], thisPlayer.BagPos);
+					Transform getTrans = newItem.transform;
+					getTrans.position = thisTrans.position + new Vector3 (Random.Range (-0.5f, 0.51f), 0, Random.Range (-0.5f, 0.51f));
+
+					getTrans.DOLocalMove (Vector3.zero + Vector3.up * 3, 0.5f).OnComplete (( )=>
 					{
-						GameObject newItem = (GameObject) Instantiate (ItemDrop[Random.Range(0, ItemDrop.Length - 1)], thisPlayer.BagPos);
-						Transform getTrans = newItem.transform;
-						getTrans.position = thisTrans.position + new Vector3 ( Random.Range(-0.5f, 0.51f), 0, Random.Range(-0.5f, 0.51f) );
-							
-						getTrans.DOLocalMove(Vector3.zero + Vector3.up * 3, 0.5f).OnComplete ( () => 
+						getTrans.DOScale (Vector3.zero, 0.5f).OnComplete (( )=>
 						{
-							getTrans.DOScale(Vector3.zero, 0.5f).OnComplete( () => 
-							{
-								newItem.SetActive(false);
-							});
-								
-							getTrans.DOLocalMove(Vector3.zero, 0.5f);
+							newItem.SetActive (false);
 						});
 
-						if ( thisPlayer.AllItem.Count < 20 )
-						{
-							thisPlayer.AllItem.Add(newItem);
-						}
-						else
-						{
-							Destroy(newItem, 1.1f);
-						}
+						getTrans.DOLocalMove (Vector3.zero, 0.5f);
+					});
+
+					if (thisPlayer.AllItem.Count < 20)
+					{
+						thisPlayer.AllItem.Add (newItem);
+					}
+					else
+					{
+						Destroy (newItem, 1.1f);
 					}
 				});
-					
 			}
 
-			if ( NbrItem == 0 && checkItem )
+			if (NbrItem == 0 && checkItem)
 			{
 				checkItem = false;
-				thisPlayer.NbrChest ++;
+				thisPlayer.NbrChest++;
+				foreach (Renderer thisMat in GetComponentsInChildren<Renderer> ( ))
+				{
+					if (thisMat.material.name == Constants._MatChest + " (Instance)")
+					{
+						thisMat.material.SetFloat ("_Desaturate", 1);
+					}
+				}
 			}
 		}
 	}
@@ -124,7 +155,7 @@ public class InteractAbstract : MonoBehaviour
 
 	#region Private Methods
 
-	void multEffect ( bool isEnable )
+	void multEffect (bool isEnable)
 	{
 
 	}
