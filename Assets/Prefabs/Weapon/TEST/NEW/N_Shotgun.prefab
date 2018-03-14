@@ -124,6 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c6bfe4600766d64c85f4f9c20b7243a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpeEffet: {fileID: 0}
   WeightRandom: 0
   AutoShoot: 1
   Projectile: 0
@@ -133,7 +134,7 @@ MonoBehaviour:
   FireRate: 0.45
   CoolDown: 0
   BackPush: 8
-  SpeedReduce: 0.5
+  SpeedReduce: 0.75
   Damage: 1
   Range: 6
   NbrBullet: 0
@@ -152,6 +153,7 @@ MonoBehaviour:
   SpawnBullet: {fileID: 4076233017719882}
   canShoot: 1
   OnFloor: 1
+  getCapacity: 0
 --- !u!136 &136431105348348278
 CapsuleCollider:
   m_ObjectHideFlags: 1

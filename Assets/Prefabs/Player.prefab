@@ -1074,6 +1074,7 @@ MonoBehaviour:
     type: 2}
   radialDeadZone: 0.3
   maxAngle: 3
+  DistThrowWeap: 11
   DistToDropItem: 6
   nbItemBeforeBigBag: 10
   animPlayer: {fileID: 95255310504812768}
