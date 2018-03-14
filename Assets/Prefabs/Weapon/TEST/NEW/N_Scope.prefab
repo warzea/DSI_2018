@@ -124,6 +124,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c6bfe4600766d64c85f4f9c20b7243a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpeEffet: {fileID: 0}
+  ExploWeapon: {fileID: 0}
+  PrefabExplo: {fileID: 0}
+  NameMusic: 
+  TimeBackPush: 0.1
   WeightRandom: 0
   AutoShoot: 1
   Projectile: 1
@@ -133,7 +138,7 @@ MonoBehaviour:
   FireRate: 0.5
   CoolDown: 0
   BackPush: 11
-  SpeedReduce: 0.25
+  SpeedReduce: 0.8
   Damage: 1
   Range: 15
   NbrBullet: 1
@@ -148,10 +153,11 @@ MonoBehaviour:
   SpeedZone: 0
   TimeDest: 0.1
   Diameter: 7
-  Bullet: {fileID: 1530796011795326, guid: 7debebcea0d258f4a9f5dc489d6103cf, type: 2}
+  Bullet: {fileID: 1530796011795326, guid: 43cb6db06663de344a2b69921ccad52e, type: 2}
   SpawnBullet: {fileID: 4217749020865902}
   canShoot: 1
   OnFloor: 1
+  getCapacity: 0
 --- !u!136 &136949148174443122
 CapsuleCollider:
   m_ObjectHideFlags: 1

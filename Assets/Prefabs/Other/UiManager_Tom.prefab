@@ -5701,6 +5701,7 @@ MonoBehaviour:
   EndScreenButton: {fileID: 114453834599673828}
   AllPotGet: []
   checkDrive: 0
+  OnTuto: 1
 --- !u!114 &114668411564510010
 MonoBehaviour:
   m_ObjectHideFlags: 1

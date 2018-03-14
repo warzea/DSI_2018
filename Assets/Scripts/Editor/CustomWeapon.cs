@@ -35,6 +35,10 @@ public class CustomWeapon : Editor
 	SerializedProperty Bullet;
 	SerializedProperty SpawnBullet;
 	SerializedProperty SpeEffet;
+	SerializedProperty TimeBackPush;
+	SerializedProperty NameMusic;
+	SerializedProperty ExploWeapon;
+	SerializedProperty PrefabExplo;
 	GUIContent Empty;
 	#endregion
 	
@@ -46,6 +50,11 @@ public class CustomWeapon : Editor
 	{
 		Empty = new GUIContent ( "" );
 		SpeEffet = serializedObject.FindProperty("SpeEffet");
+		TimeBackPush = serializedObject.FindProperty("TimeBackPush");
+		NameMusic = serializedObject.FindProperty("NameMusic");
+
+		ExploWeapon = serializedObject.FindProperty("ExploWeapon");
+		PrefabExplo = serializedObject.FindProperty("PrefabExplo");
 		
 		WeightRandom = serializedObject.FindProperty("WeightRandom");
 		Bullet = serializedObject.FindProperty("Bullet");
@@ -110,8 +119,17 @@ public class CustomWeapon : Editor
 		//buttonStyle.normal.textColor = Color.red;
 		serializedObject.Update ( );
 		
+		EditorGUILayout.PropertyField ( TimeBackPush );
 		EditorGUILayout.PropertyField ( SpeEffet );
+		EditorGUILayout.PropertyField ( ExploWeapon );
+		EditorGUILayout.PropertyField ( PrefabExplo );
+		
 		EditorGUILayout.PropertyField ( WeightRandom );
+
+		if ( myTarget.SpeEffet == null )
+		{
+			EditorGUILayout.PropertyField ( NameMusic );
+		}
 		
 		EditorGUILayout.Space();
 		EditorGUILayout.BeginVertical();

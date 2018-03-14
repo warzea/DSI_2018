@@ -134,7 +134,7 @@ MonoBehaviour:
   FireRate: 0.2
   CoolDown: 0
   BackPush: 7
-  SpeedReduce: 0.7
+  SpeedReduce: 0.85
   Damage: 1
   Range: 9
   NbrBullet: 7
@@ -149,7 +149,7 @@ MonoBehaviour:
   SpeedZone: 0
   TimeDest: 0
   Diameter: 0
-  Bullet: {fileID: 1530796011795326, guid: 7debebcea0d258f4a9f5dc489d6103cf, type: 2}
+  Bullet: {fileID: 1506817777360964, guid: 232c6ddd5eb1a0f4f93fc4aff3461b29, type: 2}
   SpawnBullet: {fileID: 4586582115452524}
   canShoot: 1
   OnFloor: 1

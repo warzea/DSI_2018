@@ -139,6 +139,7 @@ public class UiManager : ManagerParent
         ammoTwWait.Kill(true);
     }
 
+    // 1
     public void EndScreenStart()
     {
         GetInGame.transform.DOLocalMoveY(200, .3f).SetEase(Ease.InOutSine);
@@ -177,7 +178,6 @@ public class UiManager : ManagerParent
                 TextScoreTotal.transform.parent.DOScale(1, .25f);
                 TextScoreTotal.transform.parent.GetComponent<CanvasGroup>().DOFade(1, .25f);
 
-
                 EndScreenWeaponBox.transform.DOLocalMoveX(3300, 0);
                 EndScreenWeaponBox.transform.DOLocalMoveX(660, 1).SetEase(Ease.InBounce);
                 EndScreenWeaponBox.transform.DOShakeScale(1f, .4f, 18, 0);
@@ -188,16 +188,14 @@ public class UiManager : ManagerParent
     }
 
 
-
-    public void EndScreenMedals()
+    // 2
+    public void EndScreenMedals ( Transform thisObj, int thisID)
     {
-        for (int i = 0; i < 3; i++)
-        {
-            var medal = Instantiate(EndScreenMedal, transform.position, Quaternion.identity, PlayersEndScreen[i].transform.GetChild(3).transform);
-            medal.transform.localPosition += new Vector3(0, 50, 0);
-        }
+        thisObj = PlayersEndScreen[thisID].transform.GetChild(3).transform;
+        thisObj.localPosition += new Vector3(0, 50, 0);
     }
 
+    // 3
     public void EndScreenFinished()
     {
         EndScreenFX.gameObject.SetActive(true);
@@ -212,6 +210,7 @@ public class UiManager : ManagerParent
         
     }
 
+    
     public void EndScreenAll()
     {
         foreach (Transform trans in EndScreenContainer.transform)
@@ -326,23 +325,28 @@ public class UiManager : ManagerParent
         }
     }
 
+    public bool OnTuto = true;
+
     public void CauldronButtons(bool visible = false)
     {
-        if (!visible)
+        if ( OnTuto)
         {
-            nbrCauld--;
-            if (nbrCauld <= 0 && !checkDrive)
+            if (!visible)
             {
+                nbrCauld--;
                 ButtonsInteract.GetComponent<CanvasGroup>().DOFade(0, .1f);
+            }
+            else
+            {
+                nbrCauld++;
+                ButtonsInteract.GetComponent<CanvasGroup>().DOFade(1, .1f);
             }
         }
         else
         {
-            nbrCauld++;
-            ButtonsInteract.GetComponent<CanvasGroup>().DOFade(1, .1f);
+            CauldronButtonBonus ( visible );
         }
     }
-
 
     public void PopPotions(PotionType type) // poser ressource : 20 - 40 - 60 - 80 et 100
     {
@@ -514,8 +518,11 @@ public class UiManager : ManagerParent
             setAllMenu.Add(thisUi.ThisMenu, thisUi);
         }
 
+        EndScreenContainer.transform.parent.GetComponent<Canvas>().worldCamera = Manager.GameCont.MainCam;
+        GaugeButtonBonus = (GameObject)Instantiate(GaugeButtonBonus, GetInGame);
+
         CauldronGauge = (GameObject)Instantiate(CauldronGauge, GetInGame);
-        CauldronGauge.SetActive(false);
+        CauldronGauge.GetComponent<CanvasGroup>().DOFade (0,0);
 
         ButtonsInteract = (GameObject)Instantiate(ButtonsInteract, GetInGame);
         AllMenu = setAllMenu;

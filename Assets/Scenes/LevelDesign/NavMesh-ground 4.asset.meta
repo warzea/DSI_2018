@@ -1,5 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
+guid: 04cc4101f56cfaf43a18438c45a94c0c
+timeCreated: 1520963536
+licenseType: Free
+=======
 guid: d2ab14c8d9bef98459ce01386a40cfbf
+>>>>>>> Alexandre
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 0

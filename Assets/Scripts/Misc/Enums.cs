@@ -13,7 +13,8 @@ public enum MenuType
 public enum ScoreType
 {
 	Nothing,
-	BoxWeapon
+	BoxWeapon,
+	EndScore
 }
 
 public enum Trajectoir
@@ -51,10 +52,7 @@ public enum AudioType
 	FxSound,
 	OtherSound,
 	Other,
-	Acceleration,
-	SteroKill,
-	PunchVoice,
 	MusicTrash,
-    Madnesse
+	Shoot
 }
 

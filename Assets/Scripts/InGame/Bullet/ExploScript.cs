@@ -9,17 +9,25 @@ public class ExploScript : MonoBehaviour
 	public float ScaleExplo;
 
 	public float TimeStay;
+	public float TimeEffect;
 	float currScale = 0;
 	#endregion
 	
 	#region Mono
 	void Start ( )
 	{
+		if ( TimeStay == 0 )
+		{
+			TimeStay = TimeEffect;
+		}
+		
 		transform.localScale = new Vector3(ScaleExplo, ScaleExplo, ScaleExplo);
+
 		if ( GetEffect != null )
 		{
-			Instantiate(GetEffect, transform.position, Quaternion.identity);
+			Destroy ( (GameObject) Instantiate(GetEffect, transform.position, Quaternion.identity), TimeEffect );
 		}
+		
 		Destroy ( gameObject, TimeStay );
 	}
 	#endregion

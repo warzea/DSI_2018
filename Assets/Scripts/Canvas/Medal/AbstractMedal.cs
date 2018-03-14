@@ -22,11 +22,18 @@ public abstract class AbstractMedal : MonoBehaviour
 
 	public void GoTarget ( PlayerController equaContr = null, string Text = "" )
 	{
-		ThisPlayer.checkAward = true;
+		if ( equaContr.NbrAward > 2 )
+		{
+			return;
+		}
+
+		gameObject.SetActive(true);
+		Manager.Ui.EndScreenMedals(thisTrans, ThisPlayer.NbrAward);
+		ThisPlayer.NbrAward ++;
 
 		if ( equaContr != null )
 		{
-			equaContr.checkAward = true;
+			equaContr.NbrAward ++;
 			GameObject thisObj = (GameObject) Instantiate (gameObject, thisTrans.parent );
 			thisObj.GetComponent<AbstractMedal>().ThisPlayer = equaContr;
 			thisObj.GetComponent<AbstractMedal>().GoTarget();

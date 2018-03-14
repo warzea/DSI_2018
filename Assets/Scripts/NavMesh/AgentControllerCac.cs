@@ -127,7 +127,6 @@ public class AgentControllerCac : MonoBehaviour
                 {
                     animAgent.SetBool("Move", false);
                     animAgent.SetTrigger("MeleeAttack");
-                    Debug.Log("Shhooottt");
                     focusPlayer.GetComponent<PlayerController>().GetDamage(transform);
                 }
             }
@@ -161,7 +160,7 @@ public class AgentControllerCac : MonoBehaviour
     IEnumerator WaitRespawn()
     {
         animAgent.SetBool("Move", false);
-        //animAgent.SetTrigger("Die");
+        animAgent.SetTrigger("Die");
         yield return new WaitForSeconds(timeBeforeDepop);
         Instantiate(MeshDestroy, transform.position, transform.rotation);
         Vector3 newPos = agentsM.CheckBestcheckPoint(focusPlayer.transform);

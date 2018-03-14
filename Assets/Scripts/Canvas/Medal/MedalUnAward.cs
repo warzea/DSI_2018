@@ -14,7 +14,7 @@ public class MedalUnAward : AbstractMedal
 		{
 			for ( int a = 0; a < allPlayer.Length; a ++ )
 			{
-				if ( allPlayer[a].checkAward == false )
+				if ( allPlayer[a].NbrAward == 0 )
 				{
 					GameObject thisObj = (GameObject) Instantiate (gameObject, thisTrans.parent );
 					thisObj.GetComponent<AbstractMedal>().ThisPlayer = allPlayer[a];
