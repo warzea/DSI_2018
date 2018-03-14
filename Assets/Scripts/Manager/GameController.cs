@@ -29,6 +29,7 @@ public class GameController : ManagerParent
     [HideInInspector]
     public List<GameObject> Players;
     public Material [] PlayerMaterial;
+    public GameObject[] PlayerTrail;
     public AbstractMedal [] AllMedal;
 
     List<PlayerController> getPlayerCont;
@@ -159,6 +160,7 @@ public class GameController : ManagerParent
                     if (thisMat.gameObject.name == "Corpus")
                     {
                         thisMat.material = PlayerMaterial [a];
+                        Instantiate(PlayerTrail[a], thisMat.gameObject.transform.position, Quaternion.identity, thisMat.gameObject.transform);
                         break;
                     }
                 }
