@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 135674131210696902}
   - component: {fileID: 114103938945640018}
   m_Layer: 9
-  m_Name: ExploBullet
+  m_Name: ExploScope
   m_TagString: BulletPlayer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8accfa6ebaaaa824e86855a09eff9744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GetEffect: {fileID: 1014007151106268, guid: f7b742139528dac43be9e788582286da, type: 2}
+  GetEffect: {fileID: 1304559643393178, guid: 585e32d4f09165044bcbfeae3358472e, type: 2}
   ScaleExplo: 0
   TimeStay: 0
   TimeEffect: 0
