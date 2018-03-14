@@ -73,47 +73,44 @@ public class InteractAbstract : MonoBehaviour
 		}
 		else if ( NbrItem > 0 )
 		{
+            NbrItem--;
 
-			thisPlayer.CurrItem += NbrDropByDrop * valDrop;
+            thisPlayer.CurrItem += NbrDropByDrop * valDrop;
 
 			Manager.Ui.AllPotGet[thisPlayer.IdPlayer].GetComponent<PotionFollowP>().NewValue ( thisPlayer.CurrItem );
 
 			int b;
 			for ( int a = 0; a < Random.Range(5, 20); a ++ )
 			{
-				if ( NbrItem > 0 )
+				DOVirtual.DelayedCall ( Random.Range(0, 0.2f), ()=> 
 				{
-					DOVirtual.DelayedCall ( Random.Range(0, 0.2f), ()=> 
+					for ( b = 0; b < valDrop; b ++ )
 					{
-						for ( b = 0; b < valDrop; b ++ )
-						{
-							GameObject newItem = (GameObject) Instantiate (ItemDrop[Random.Range(0, ItemDrop.Length - 1)], thisPlayer.BagPos);
-							Transform getTrans = newItem.transform;
-							getTrans.position = thisTrans.position + new Vector3 ( Random.Range(-0.5f, 0.51f), 0, Random.Range(-0.5f, 0.51f) );
+						GameObject newItem = (GameObject) Instantiate (ItemDrop[Random.Range(0, ItemDrop.Length - 1)], thisPlayer.BagPos);
+						Transform getTrans = newItem.transform;
+						getTrans.position = thisTrans.position + new Vector3 ( Random.Range(-0.5f, 0.51f), 0, Random.Range(-0.5f, 0.51f) );
 							
-							getTrans.DOLocalMove(Vector3.zero + Vector3.up * 3, 0.5f).OnComplete ( () => 
+						getTrans.DOLocalMove(Vector3.zero + Vector3.up * 3, 0.5f).OnComplete ( () => 
+						{
+							getTrans.DOScale(Vector3.zero, 0.5f).OnComplete( () => 
 							{
-								getTrans.DOScale(Vector3.zero, 0.5f).OnComplete( () => 
-								{
-									newItem.SetActive(false);
-								});
-								
-								getTrans.DOLocalMove(Vector3.zero, 0.5f);
+								newItem.SetActive(false);
 							});
+								
+							getTrans.DOLocalMove(Vector3.zero, 0.5f);
+						});
 
-							if ( thisPlayer.AllItem.Count < 20 )
-							{
-								thisPlayer.AllItem.Add(newItem);
-							}
-							else
-							{
-								Destroy(newItem, 1.1f);
-							}
+						if ( thisPlayer.AllItem.Count < 20 )
+						{
+							thisPlayer.AllItem.Add(newItem);
 						}
-					});
+						else
+						{
+							Destroy(newItem, 1.1f);
+						}
+					}
+				});
 					
-					NbrItem --;
-				}
 			}
 
 			if ( NbrItem == 0 && checkItem )
