@@ -2838,7 +2838,7 @@ Prefab:
         type: 2}
       propertyPath: StartWeapon
       value: 
-      objectReference: {fileID: 1294729226091156, guid: 9e537c0ffddff9248b8d488acd4c88b9,
+      objectReference: {fileID: 1117256704115732, guid: f5de41277b861c04bb366c198f1da51c,
         type: 2}
     - target: {fileID: 114006546364699532, guid: 09c0fcd273fc2424693f3e4b734896bb,
         type: 2}
