@@ -7,7 +7,10 @@ public class WeaponAbstract : MonoBehaviour
 {
     #region Variables
     public GameObject SpeEffet;
-
+    public GameObject ExploWeapon;
+    public GameObject PrefabExplo;
+    public string NameMusic;
+    public float TimeBackPush = 0.1f;
     public int WeightRandom = 0;
     public bool AutoShoot = true;
     public bool Projectile = false;
@@ -119,8 +122,11 @@ public class WeaponAbstract : MonoBehaviour
                     }
                 }
             }
-            
-            playerTrans.DOLocalMove ( playerTrans.localPosition - playerTrans.forward * getDist * getDir, 0.1f );
+
+            if ( getDist != 0 )
+            {
+                playerTrans.DOLocalMove ( playerTrans.localPosition - playerTrans.forward * getDist * getDir, TimeBackPush );
+            }
 
             getCapacity--;
             canShoot = false;
@@ -131,13 +137,17 @@ public class WeaponAbstract : MonoBehaviour
             if ( getCapacity == 0 )
             {
                 Manager.Ui.WeaponEmpty(getPC.IdPlayer);
-                playerTrans.GetComponent<PlayerController>().autoShoot = false;
-                playerTrans.GetComponent<PlayerController>().CdShoot = 0;
-                playerTrans.GetComponent<PlayerController>().checkShoot = false;
-                playerTrans.GetComponent<PlayerController>().checkAuto = true;
+                getPC.autoShoot = false;
+                getPC.CdShoot = 0;
+                getPC.checkShoot = false;
+                getPC.checkAuto = true;
             }
 
-            
+            if ( SpeEffet == null )
+            {
+                getPC.thisAud.OpenAudio(AudioType.Shoot, NameMusic, false, null, true );
+            }
+
             customWeapon(playerTrans);
         }
         else if (getCapacity <= 0)
@@ -162,7 +172,14 @@ public class WeaponAbstract : MonoBehaviour
             thisBA.TimeStay = 0.2f;
             thisBA.thisPlayer = getPC;
             thisBA.Projectil = true;
-            thisBA.canExplose = true;
+            
+            if ( ExploWeapon!= null && PrefabExplo != null )
+            {
+                thisBA.canExplose = true;
+                thisBA.GetEffect = ExploWeapon;
+                thisBA.PrefabExplosion = PrefabExplo;
+            }
+            
             thisBA.Diameter = 3;
             thisBA.BulletRange = playerTrans.GetComponent<PlayerController>().DistThrowWeap;
             thisBA.MoveSpeed = playerTrans.GetComponent<PlayerController>().SpeedThrow;

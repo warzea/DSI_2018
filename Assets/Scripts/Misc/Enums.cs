@@ -51,10 +51,7 @@ public enum AudioType
 	FxSound,
 	OtherSound,
 	Other,
-	Acceleration,
-	SteroKill,
-	PunchVoice,
 	MusicTrash,
-    Madnesse
+	Shoot
 }
 
