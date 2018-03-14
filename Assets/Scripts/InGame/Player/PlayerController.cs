@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
 	[HideInInspector]
 	public int IdPlayer;
 
+	public AnimationCurve CurveAcceleration;
+
 	[Header ("Caract Player")]
 	public int LifePlayer = 3;
 	public int TimeToRegen = 3;
@@ -402,7 +404,7 @@ public class PlayerController : MonoBehaviour
 
 		if (checkAcc)
 		{
-			accel = DOTween.To (() => currSpeed, x => currSpeed = x, MoveSpeed * SpeedReduceOnBox, TimeAccelBox).SetEase (Ease.InOutExpo);
+			accel = DOTween.To (() => currSpeed, x => currSpeed = x, MoveSpeed * SpeedReduceOnBox, TimeAccelBox).SetEase (CurveAcceleration);
 			checkAcc = false;
 		}
 
@@ -649,7 +651,7 @@ public class PlayerController : MonoBehaviour
 			}
 
 			currSpeed = 0;
-			accel = DOTween.To (() => currSpeed, x => currSpeed = x, MoveSpeed * SpeedReduceOnBox, TimeAccelBox).SetEase (Ease.InOutExpo);
+			accel = DOTween.To (() => currSpeed, x => currSpeed = x, MoveSpeed * SpeedReduceOnBox, TimeAccelBox).SetEase (CurveAcceleration);
 
 			Manager.Ui.checkDrive = false;
 			Manager.Ui.CauldronGauge.GetComponent<CanvasGroup> ().DOKill (true);
