@@ -11,6 +11,7 @@ public class BulletAbstract : MonoBehaviour
     public GameObject GetEffect;
     public Trajectoir ThisTrajectoir;
     public float MoveSpeed = 10;
+    public string NameAudio = "";
     public float DefinitiveDestroy = 5;
     [HideInInspector]
     public Vector3 direction = Vector3.zero;
@@ -49,10 +50,11 @@ public class BulletAbstract : MonoBehaviour
 
     //bool checkEnd = false;
     [HideInInspector]
-    public bool canExplose;
+    public bool canExplose = false;
     bool checkEnd = false;
     bool blockUpdate = false;
     float getDistScale = 0;
+    float timeEffect = 0.1f;
     bool checkUpdate = true;
     #endregion
 
@@ -76,37 +78,34 @@ public class BulletAbstract : MonoBehaviour
             playZone();
         }
 
-        if ( ThisTrajectoir == Trajectoir.Nothing )
+        if (ThisTrajectoir == Trajectoir.Nothing)
         {
             checkUpdate = false;
         }
 
-        RaycastHit[] allHit;
-        string getTag;
-
-        allHit = Physics.RaycastAll ( playerTrans.position, playerTrans.forward, BulletRange );
-    
-        foreach ( RaycastHit thisRay in allHit )
+        if ( GetEffect != null )
         {
-            getTag = thisRay.collider.tag;
-            
-            if ( getTag == Constants._Wall && thisRay.distance < BulletRange )
+            ParticleSystem thisPart = GetEffect.GetComponentInChildren<ParticleSystem>();
+
+            if ( thisPart != null )
             {
-                BulletRange = thisRay.distance - 0.5f;
+                timeEffect = thisPart.duration;
             }
         }
+
+        checkRayCast ( );
     }
     #endregion
 
     #region Public Methods
     void Update()
     {
-        if ( blockUpdate || !checkUpdate)
+        if (blockUpdate || !checkUpdate)
         {
             return;
         }
 
-        if (!Projectil )
+        if (!Projectil)
         {
             thisTrans.position = newPos + thisTrans.forward * getDistScale;
             thisTrans.localScale = startPos;
@@ -125,37 +124,29 @@ public class BulletAbstract : MonoBehaviour
             }
         }
         else if (!checkEnd)
-        {   
-            if (canExplose )
+        {
+            if (canExplose)
             {
-                if ( Projectil )
-                {
-                    destObj ( TimeStay );
-                
-                    blockUpdate = true;
-                    if (GetEffect != null)
-                    {
-                        Instantiate(GetEffect, thisTrans.position, Quaternion.identity);
-                    }
+                instExplo(thisTrans.position);
 
-                    SphereCollider thisSphere = gameObject.AddComponent<SphereCollider>();
-                    //thisSphere.radius = Diameter;
-                    thisSphere.isTrigger = true;
-                    thisTrans.localScale = new Vector3(Diameter, Diameter, Diameter);
-                } 
+                if (Projectil)
+                {
+                    destObj(TimeStay);
+
+                    blockUpdate = true;
+                }
                 else
                 {
-                    instExplo( thisTrans.position );
-                    destObj ( 0 );
+                    destObj(0);
                 }
             }
-            else if ( Projectil )
+            else if (Projectil)
             {
-                destObj ( 0 );
+                destObj(0);
             }
             else
             {
-                destObj ( TimeStay );
+                destObj(TimeStay);
             }
             //Destroy ( gameObject, TimeStay );
             checkEnd = true;
@@ -164,6 +155,24 @@ public class BulletAbstract : MonoBehaviour
     #endregion
 
     #region Private Methods
+    async void checkRayCast ( )
+    {
+        RaycastHit[] allHit;
+        string getTag;
+
+        allHit = Physics.RaycastAll ( playerTrans.position, playerTrans.forward, BulletRange );
+    
+        foreach ( RaycastHit thisRay in allHit )
+        {
+            getTag = thisRay.collider.tag;
+            
+            if ( getTag == Constants._Wall && thisRay.distance < BulletRange )
+            {
+                BulletRange = thisRay.distance - 0.5f;
+            }
+        }
+    }
+
     Tween t1;
     Tween t2;
     void playZone()
@@ -174,21 +183,24 @@ public class BulletAbstract : MonoBehaviour
         t1 = DOTween.To(() => getDistScale, x => getDistScale = x, BulletRange * 0.5f * FarEffect, TimeFarEffect);
         t2 = DOTween.To(() => startPos, x => startPos = x, new Vector3(WidthRange, 5, BulletRange), SpeedZone).OnComplete(() =>
         {
-            destObj ( TimeStay );
+            destObj(TimeStay);
         });
     }
 
-    void instExplo ( Vector3 thisPos )
+    void instExplo(Vector3 thisPos)
     {
-        GameObject thisObj = (GameObject) Instantiate ( PrefabExplosion, thisPos, thisTrans.rotation );
+        GameObject thisObj = (GameObject)Instantiate(PrefabExplosion, thisPos, thisTrans.rotation);
         ExploScript getExplo = thisObj.GetComponent<ExploScript>();
 
-        if ( getExplo.TimeStay == 0 )
+        Manager.Audm.OpenAudio(AudioType.Other, NameAudio);
+
+        getExplo.TimeEffect = timeEffect;
+        if (getExplo.TimeStay == 0)
         {
             getExplo.TimeStay = TimeStay;
         }
 
-        if ( !getExplo.GetEffect )
+        if (!getExplo.GetEffect)
         {
             getExplo.GetEffect = GetEffect;
         }
@@ -239,80 +251,52 @@ public class BulletAbstract : MonoBehaviour
                 }
             }
 
-            if (canExplose )
+            if (canExplose)
             {
-                if ( Projectil)
+                if (Projectil)
                 {
                     blockUpdate = true;
-                    if (GetEffect != null)
-                    {
-                        Instantiate(GetEffect, thisTrans.position, Quaternion.identity);
-                    }
+                }
 
-                    SphereCollider thisSphere = gameObject.AddComponent<SphereCollider>();
-                    //thisSphere.radius = Diameter;
-                    thisSphere.isTrigger = true;
-                    thisTrans.localScale = new Vector3(Diameter, Diameter, Diameter);
-                }
-                else
-                {
-                    instExplo( collision.ClosestPoint ( thisTrans.position ) );
-                }
+                instExplo(collision.ClosestPoint(thisTrans.position));
             }
 
-            if (!Through)
+            if (!Through && !canExplose)
             {
-                if (canExplose )
-                {
-                    if ( Projectil )
-                    {
-                        if (GetEffect != null && GetEffect.GetComponent<ParticleSystem>())
-                        {
-                            destObj ( GetEffect.GetComponent<ParticleSystem>().main.duration );
-                        }
-                        else
-                        {
-                            destObj ( 1.5f ); 
-                        }
-                    }
-                }
-                else
-                {
-                    destObj ( );
-                }
+                destObj();
             }
         }
-        else if (collision.tag == Constants._Wall && Projectil )
+        else if (collision.tag == Constants._Wall && Projectil)
         {
-            destObj ( );
+            destObj();
         }
     }
 
-    void destObj ( float delay = 0 )
+    void destObj(float delay = 0)
     {
         t1.Kill();
         t2.Kill();
-        
+
         StartCoroutine(waitDest(delay));
     }
 
-    IEnumerator waitDest ( float delay)
+    IEnumerator waitDest(float delay)
     {
         yield return new WaitForSeconds(delay);
 
         MeshRenderer thisMr = GetComponentInChildren<MeshRenderer>();
         Collider thisC = GetComponent<Collider>();
-        if ( thisMr != null && thisC != null )
+        if (thisMr != null && thisC != null)
         {
             thisMr.enabled = false;
             thisC.enabled = false;
-            Destroy (gameObject, DefinitiveDestroy);
+            Destroy(gameObject, DefinitiveDestroy);
         }
         else
         {
-            Destroy (gameObject);
+            Destroy(gameObject);
         }
     }
-    
+
     #endregion
 }
