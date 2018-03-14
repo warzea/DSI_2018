@@ -1069,31 +1069,36 @@ MonoBehaviour:
   LifePlayer: 5
   TimeToRegen: 3
   MoveSpeed: 13
-  ItemLostObj: {fileID: 1330381900745004, guid: 0540fd0faddbcfd46bb2584e8d68fc5c,
-    type: 2}
+  angleAimSensitivity: 4
+  aimSensitivity: 10
+  aimSensitivityEnemy: 1.5
   radialDeadZone: 0.3
   maxAngle: 3
-  DistThrowWeap: 11
-  SpeedThrow: 21
-  DistToDropItem: 6
-  nbItemBeforeBigBag: 10
-  animPlayer: {fileID: 95255310504812768}
-  WeaponPos: {fileID: 4522346009082788}
-  BagPos: {fileID: 4248657163601990}
-  BoxPlace: {fileID: 4998498178062740}
   DistProjDead: 10
   TimeProjDead: 0.8
   TimeDead: 1
   TimeInvincible: 1.2
   PourcLootLost: 20
-  CdShoot: 0
-  GetSpeed: 0
-  SpeedReduce: 0.5
+  DistToDropItem: 6
+  nbItemBeforeBigBag: 10
+  ItemLostObj: {fileID: 1330381900745004, guid: 0540fd0faddbcfd46bb2584e8d68fc5c,
+    type: 2}
+  animPlayer: {fileID: 95255310504812768}
+  WeaponPos: {fileID: 4522346009082788}
+  BagPos: {fileID: 4248657163601990}
+  BoxPlace: {fileID: 4998498178062740}
+  AmmoUI: {fileID: 0}
+  WeapText: {fileID: 0}
+  DistThrowWeap: 11
+  SpeedThrow: 21
   SpeedReduceOnBox: 0.35
   TimeAccelBox: 2
   SmoothRotateOnBox: 4.2
-  aimSensitivity: 10
-  aimSensitivityEnemy: 1.5
+  UiAmmoX: 50
+  UiAmmoY: -50
+  CdShoot: 0
+  GetSpeed: 0
+  SpeedReduce: 0.5
   AllItem: []
   driveBox: 0
   dead: 0
@@ -1115,9 +1120,6 @@ MonoBehaviour:
   currentEnemy: 0
   LostItem: 0
   checkAward: 0
-  AmmoUI: {fileID: 0}
-  UiAmmoX: 50
-  UiAmmoY: -50
   CurrItem: 0
   UiAmmo: {fileID: 0}
   currInt: {fileID: 0}
@@ -1125,7 +1127,6 @@ MonoBehaviour:
   checkShoot: 1
   checkAuto: 0
   canCauldron: 0
-  WeapText: {fileID: 0}
 --- !u!114 &114717990859517940
 MonoBehaviour:
   m_ObjectHideFlags: 1

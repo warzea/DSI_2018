@@ -130,7 +130,7 @@ MonoBehaviour:
   Projectile: 1
   Through: 0
   Explosion: 0
-  BulletCapacity: 90
+  BulletCapacity: 80
   FireRate: 0.1
   CoolDown: 0
   BackPush: 24
