@@ -4,107 +4,109 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class WeaponBox : MonoBehaviour 
+public class WeaponBox : MonoBehaviour
 {
-	#region Variables
-	public Material BonusMat;
-	public Image ThisGauge;
-	public string NameMusic = "";
-	public float SpeedAttack = 1;
-	public float RangeAttack = 1;
-	public float DelayAttack = 1;
-	public int SpeMultRessources = 2;
-	public int StayMult = 5;
-	public float InvincibleTime = 1;
-	Transform GetTrans;
-	public int pourcLoot = 10;
-	public int MinLost = 10;
-	public int ItemOneGauge = 100;
-	public GameObject[] AllWeapon;
-	public float DelayNewWeapon = 1;
-	[Tooltip("Time to full fill")]
-	public float TimeFullFill = 6;
-	[HideInInspector]
-	public float CurrTime = 0;
+    #region Variables
+    public Material BonusMat;
+    public Image ThisGauge;
+    public string NameMusic = "";
+    public float SpeedAttack = 1;
+    public float RangeAttack = 1;
+    public float DelayAttack = 1;
+    public int SpeMultRessources = 2;
+    public int StayMult = 5;
+    public float InvincibleTime = 1;
+    Transform GetTrans;
+    public int pourcLoot = 10;
+    public int MinLost = 10;
+    public int ItemOneGauge = 100;
+    public GameObject[] AllWeapon;
+    public float DelayNewWeapon = 1;
+    [Tooltip("Time to full fill")]
+    public float TimeFullFill = 6;
+    [HideInInspector]
+    public float CurrTime = 0;
 
-	[HideInInspector]
-	public int NbrItem = 0;
+    [HideInInspector]
+    public int NbrItem = 0;
 
-	[HideInInspector]
-	public bool CanControl = true;
+    [HideInInspector]
+    public bool CanControl = true;
 
-	List<PlayerWeapon> updateWeapon; 
-	List<Tween> getAllTween;
-	Transform getChild;
-	int nbrTotalSlide = 1;
-	bool invc = false;
-	bool checkAttack = false;
-	#endregion
-	
-	#region Mono
-	void Awake ( )
-	{
-		getAllTween = new List<Tween>();
-		updateWeapon = new List<PlayerWeapon>();
-		GetTrans = transform;
-		getChild = GetTrans.Find("Inside");
-		for ( int a = 0; a < 4; a ++)
-		{
-			updateWeapon.Add ( new PlayerWeapon () );
-			updateWeapon[a].IDPlayer = a;
-		}
-	}
-	#endregion
-	
-	#region Public Methods
-	public void AttackCauld ( )
-	{
-		if ( !checkAttack )
-		{
-			GetComponent<Collider>().isTrigger = true;
-			checkAttack = true;
-			gameObject.tag = Constants._PlayerBullet;
+    List<PlayerWeapon> updateWeapon;
+    List<Tween> getAllTween;
+    Transform getChild;
+    int nbrTotalSlide = 1;
+    bool invc = false;
+    bool checkAttack = false;
+    #endregion
 
-			GetTrans.DOLocalMoveZ ( RangeAttack, SpeedAttack * 0.5f ).OnComplete( () =>
-			{
-				GetTrans.DOLocalMoveZ ( 0, SpeedAttack * 0.5f ).OnComplete( () =>
-				{
-					GetComponent<Collider>().isTrigger = false;
-					gameObject.tag = Constants._BoxTag;
-				});
-			});		
-			DOVirtual.DelayedCall(DelayAttack + SpeedAttack, ( ) => 
-			{
-				checkAttack = false;
-			});
-		}
-	}
+    #region Mono
+    void Awake()
+    {
+        getAllTween = new List<Tween>();
+        updateWeapon = new List<PlayerWeapon>();
+        GetTrans = transform;
+        getChild = GetTrans.Find("Inside");
+        for (int a = 0; a < 4; a++)
+        {
+            updateWeapon.Add(new PlayerWeapon());
+            updateWeapon[a].IDPlayer = a;
+        }
+    }
+    #endregion
 
-	public void ActionSpe ( )
-	{
-		if ( ThisGauge.fillAmount == 1 )
-		{
-			ThisGauge.GetComponentInChildren<RainbowColor>().enabled = false;
-			ThisGauge.GetComponentInChildren<RainbowScale>().enabled = false;
+    #region Public Methods
+    public void AttackCauld()
+    {
+        if (!checkAttack)
+        {
+            GetComponent<Collider>().isTrigger = true;
+            checkAttack = true;
+            gameObject.tag = Constants._PlayerBullet;
 
-			ThisGauge.fillAmount = 0;
-			CurrTime = 0;
+            GetTrans.DOLocalMoveZ(RangeAttack, SpeedAttack * 0.5f).OnComplete(() =>
+        {
+            GetTrans.DOLocalMoveZ(0, SpeedAttack * 0.5f).OnComplete(() =>
+            {
+                GetComponent<Collider>().isTrigger = false;
+                gameObject.tag = Constants._BoxTag;
+            });
+        });
+            DOVirtual.DelayedCall(DelayAttack + SpeedAttack, () =>
+            {
+                checkAttack = false;
+            });
+        }
+    }
 
-			var newMult = new ChestEvent ( );
-			newMult.Mult = SpeMultRessources;
-			newMult.TimeMult = StayMult;
-			newMult.ThisMat = BonusMat;
-			newMult.Raise ( );
-		}
-	}
+    public void ActionSpe()
+    {
+        if (ThisGauge.fillAmount == 1)
+        {
+            ThisGauge.GetComponentInChildren<RainbowColor>().enabled = false;
+            ThisGauge.GetComponentInChildren<RainbowScale>().enabled = false;
 
-    public void GetWeapon (PlayerController thisPlayer, GameObject newObj = null)
+            ThisGauge.fillAmount = 0;
+            CurrTime = 0;
+
+            var newMult = new ChestEvent();
+            newMult.Mult = SpeMultRessources;
+            newMult.TimeMult = StayMult;
+            newMult.ThisMat = BonusMat;
+            newMult.Raise();
+        }
+    }
+
+    public void GetWeapon(PlayerController thisPlayer, GameObject newObj = null)
     {
         getChild.DOKill(true);
-        getChild.DORotate(new Vector3(0,0,1080), 2, RotateMode.LocalAxisAdd).SetEase(Ease.InSine);
-        getChild.DOLocalMoveY(3, 2).SetEase(Ease.InSine).OnComplete(()=> {
+        getChild.DORotate(new Vector3(0, 0, 1080), 2, RotateMode.LocalAxisAdd).SetEase(Ease.InSine);
+        getChild.DOLocalMoveY(3, 2).SetEase(Ease.InSine).OnComplete(() =>
+        {
             getChild.DOShakeScale(.5f, .3f, 18, 0);
-            getChild.DOLocalMoveY(0.5f, .6f).SetEase(Ease.InElastic).OnComplete(()=> {
+            getChild.DOLocalMoveY(0.5f, .6f).SetEase(Ease.InElastic).OnComplete(() =>
+            {
 
                 getChild.DOShakeScale(1f, .4f, 18, 0);
             });
@@ -112,19 +114,23 @@ public class WeaponBox : MonoBehaviour
     }
 
 
-    public void NewWeapon ( PlayerController thisPlayer, GameObject newObj = null )
-	{
+    public void NewWeapon(PlayerController thisPlayer, GameObject newObj = null)
+    {
         //TRANSFO CANON
-		getChild.DOKill(true);
-        getChild.DOShakeScale(.15f, .8f, 25, 0).OnComplete(() => { 
+        getChild.DOKill(true);
+        getChild.DOShakeScale(.15f, .8f, 25, 0).OnComplete(() =>
+        {
 
-            getChild.DOScaleZ(1.75f, .1f).SetEase(Ease.Linear).OnComplete(() => {
+            getChild.DOScaleZ(1.75f, .1f).SetEase(Ease.Linear).OnComplete(() =>
+            {
 
                 getChild.DOScaleZ(3.5f, .1f).SetEase(Ease.Linear);
 
-                DOVirtual.DelayedCall(.1f, () => {
+                DOVirtual.DelayedCall(.1f, () =>
+                {
 
-                    getChild.DOScaleZ(1.3f, .1f).SetEase(Ease.OutSine).OnComplete(()=> {
+                    getChild.DOScaleZ(1.3f, .1f).SetEase(Ease.OutSine).OnComplete(() =>
+                    {
 
                         getChild.DOShakeScale(.2f, .3f, 18, 0);
                     });
@@ -134,30 +140,33 @@ public class WeaponBox : MonoBehaviour
 
         Manager.Ui.WeaponChangeIG(thisPlayer.IdPlayer);
 
-		if ( newObj == null )
-		{
-			newObj = (GameObject) Instantiate ( AllWeapon[Random.Range(0, AllWeapon.Length)], GetTrans );
-		}
-		else
-		{
-			List<GameObject> getWeap = new List<GameObject>(AllWeapon);
-			getWeap.Add ( newObj );
-			AllWeapon = getWeap.ToArray();
-		}
+        if (newObj == null)
+        {
+            newObj = (GameObject)Instantiate(AllWeapon[Random.Range(0, AllWeapon.Length)], GetTrans);
+        }
+        else
+        {
+            List<GameObject> getWeap = new List<GameObject>(AllWeapon);
+            getWeap.Add(newObj);
+            AllWeapon = getWeap.ToArray();
+        }
 
-		Transform objTrans = newObj.transform;
-		objTrans.position = GetTrans.position;
-		objTrans.localScale = Vector3.zero;
+        Transform objTrans = newObj.transform;
 
-		thisPlayer.WeaponSwitch ++;
-		int currId = thisPlayer.IdPlayer;
+        Vector3 scaleWeapon = objTrans.localScale;
 
-		if ( updateWeapon[currId] != null )
-		{
-			Destroy ( updateWeapon[currId].CurrObj );
-		}
+        objTrans.position = GetTrans.position;
+        objTrans.localScale = Vector3.zero;
 
-		updateWeapon[currId].CurrObj = newObj;
+        thisPlayer.WeaponSwitch++;
+        int currId = thisPlayer.IdPlayer;
+
+        if (updateWeapon[currId] != null)
+        {
+            Destroy(updateWeapon[currId].CurrObj);
+        }
+
+        updateWeapon[currId].CurrObj = newObj;
 
         DOVirtual.DelayedCall(DelayNewWeapon, () =>
         {
@@ -165,194 +174,194 @@ public class WeaponBox : MonoBehaviour
             Manager.Ui.WeaponNew(thisPlayer.IdPlayer);
         });
 
-		DOVirtual.DelayedCall ( DelayNewWeapon * 0.25f, () =>
-		{
-			objTrans.DOScale ( Vector3.one, DelayNewWeapon * 0.5f );
-			objTrans.DOLocalRotateQuaternion ( Quaternion.identity, DelayNewWeapon * 0.65f );
-			objTrans.DOLocalMove ( Vector3.zero + Vector3.up * 5, DelayNewWeapon * 0.65f).OnComplete ( () =>
-			{
-				objTrans.SetParent(thisPlayer.WeaponPos);
-				objTrans.DOLocalRotateQuaternion ( Quaternion.identity, DelayNewWeapon * 0.1f );
-				objTrans.DOLocalMove ( Vector3.zero, DelayNewWeapon * 0.1f ).OnComplete ( () =>
-				{
-					thisPlayer.UpdateWeapon ( newObj.GetComponent<WeaponAbstract>() );
+        DOVirtual.DelayedCall(DelayNewWeapon * 0.25f, () =>
+      {
+          objTrans.DOScale(scaleWeapon, DelayNewWeapon * 0.5f);
+          //  objTrans.DOLocalRotateQuaternion(Quaternion.identity, DelayNewWeapon * 0.65f);
+          objTrans.DOLocalMove(Vector3.zero + Vector3.up * 5, DelayNewWeapon * 0.65f).OnComplete(() =>
+        {
+            objTrans.SetParent(thisPlayer.WeaponPos);
+            //    objTrans.DOLocalRotateQuaternion(Quaternion.identity, DelayNewWeapon * 0.1f);
+            objTrans.DOLocalMove(Vector3.zero, DelayNewWeapon * 0.1f).OnComplete(() =>
+         {
+             thisPlayer.UpdateWeapon(newObj.GetComponent<WeaponAbstract>());
 
-					updateWeapon[currId].CurrObj = null;
-				});
-			});
-		} );
-	}
+             updateWeapon[currId].CurrObj = null;
+         });
+        });
+      });
+    }
 
-	int lastNbr = 1;
+    int lastNbr = 1;
 
-	public void AddItem ( int lenghtItem, bool inv = false )
-	{
-        if(inv)
-		{
+    public void AddItem(int lenghtItem, bool inv = false)
+    {
+        if (inv)
+        {
             Manager.Ui.PopPotions(PotionType.Less);
-		}
+        }
 
         NbrItem += lenghtItem;
 
-		int currNbr = NbrItem - (nbrTotalSlide - 1) * ItemOneGauge;
-		Image[] getFeedBack = Manager.Ui.GaugeFeedback;
-		float getWait = 0;
-		bool checkCurr = false;
-		
-		for ( int a = 0; a < getAllTween.Count; a ++ )
-		{
-			getAllTween[a].Kill(true);
-		}
-		getAllTween.Clear();
+        int currNbr = NbrItem - (nbrTotalSlide - 1) * ItemOneGauge;
+        Image[] getFeedBack = Manager.Ui.GaugeFeedback;
+        float getWait = 0;
+        bool checkCurr = false;
 
-		Manager.Ui.GetGauge.DOKill(true);
-		Manager.Ui.GetGauge.DOFillAmount ( (float)currNbr / ItemOneGauge, 0.5f ).OnComplete ( () =>
-		{
-			if ( currNbr > (float)ItemOneGauge * 0.9f )
-			{
-				Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = false;
-				Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = true;
-			}
-			else if ( currNbr < (float)ItemOneGauge * 0.1f )
-			{
-				Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = false;
-				Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = true;
-			}
-			else
-			{
-				Manager.Ui.GetGauge.GetComponentsInChildren<Image>()[1].DOColor(Color.white,0);				
-				Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = false;
-				Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = false;
-			}
-		});
-		
-		Manager.Ui.GetScores.UpdateValue( NbrItem, ScoreType.BoxWeapon, false );
-		int getCal = lastNbr;
-		while ( currNbr >= lastNbr * (ItemOneGauge * 0.2)  && lastNbr * (ItemOneGauge * 0.2) <= ItemOneGauge )
-		{
-			int thisNbr = lastNbr;
-			DOVirtual.DelayedCall (0.1f * (lastNbr - getCal + 0.5f), () => 
-			{
-				Manager.Ui.GaugeLevelGet(thisNbr - 1);
-			});
-			lastNbr++;
-		}
-	
-		while ( currNbr > ItemOneGauge )
-		{
-			lastNbr = 1;
-			checkCurr = true;
-			nbrTotalSlide ++;
-			Manager.Ui.MultiplierNew( nbrTotalSlide );
-			currNbr -=ItemOneGauge;
-		}	
-		
-		if ( checkCurr )
-		{
-			Tween getTween;
-			getTween = DOVirtual.DelayedCall(0.5f, () =>
-			{
-				getTween = Manager.Ui.GetGauge.DOFillAmount ( 0, 0.5f ).OnComplete ( () =>
-				{
-					lastNbr = 1;
-					while ( currNbr >= lastNbr * (ItemOneGauge * 0.2) )
-					{
-						int thisNbr = lastNbr;
-						getTween = DOVirtual.DelayedCall (0.1f * lastNbr, () => 
-						{
-							Manager.Ui.GaugeLevelGet(thisNbr - 1);
-						});
-						lastNbr++;
-					}
-			
-					getTween = Manager.Ui.GetGauge.DOFillAmount ( (float) currNbr / ItemOneGauge, 0.5f ).OnComplete ( () =>
-					{
-						if ( currNbr > (float)ItemOneGauge * 0.9f )
-						{
-							Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = false;
-							Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = true;
-						}
-						else if ( currNbr < (float)ItemOneGauge * 0.1f )
-						{
-							Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = false;
-							Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = true;
-						}
-						else
-						{
-							Manager.Ui.GetGauge.GetComponentsInChildren<Image>()[1].DOColor(Color.white,0);				
-							Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = false;
-							Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = false;
-						}
-					});
+        for (int a = 0; a < getAllTween.Count; a++)
+        {
+            getAllTween[a].Kill(true);
+        }
+        getAllTween.Clear();
+
+        Manager.Ui.GetGauge.DOKill(true);
+        Manager.Ui.GetGauge.DOFillAmount((float)currNbr / ItemOneGauge, 0.5f).OnComplete(() =>
+   {
+       if (currNbr > (float)ItemOneGauge * 0.9f)
+       {
+           Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = false;
+           Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = true;
+       }
+       else if (currNbr < (float)ItemOneGauge * 0.1f)
+       {
+           Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = false;
+           Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = true;
+       }
+       else
+       {
+           Manager.Ui.GetGauge.GetComponentsInChildren<Image>()[1].DOColor(Color.white, 0);
+           Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = false;
+           Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = false;
+       }
+   });
+
+        Manager.Ui.GetScores.UpdateValue(NbrItem, ScoreType.BoxWeapon, false);
+        int getCal = lastNbr;
+        while (currNbr >= lastNbr * (ItemOneGauge * 0.2) && lastNbr * (ItemOneGauge * 0.2) <= ItemOneGauge)
+        {
+            int thisNbr = lastNbr;
+            DOVirtual.DelayedCall(0.1f * (lastNbr - getCal + 0.5f), () =>
+           {
+               Manager.Ui.GaugeLevelGet(thisNbr - 1);
+           });
+            lastNbr++;
+        }
+
+        while (currNbr > ItemOneGauge)
+        {
+            lastNbr = 1;
+            checkCurr = true;
+            nbrTotalSlide++;
+            Manager.Ui.MultiplierNew(nbrTotalSlide);
+            currNbr -= ItemOneGauge;
+        }
+
+        if (checkCurr)
+        {
+            Tween getTween;
+            getTween = DOVirtual.DelayedCall(0.5f, () =>
+            {
+                getTween = Manager.Ui.GetGauge.DOFillAmount(0, 0.5f).OnComplete(() =>
+           {
+               lastNbr = 1;
+               while (currNbr >= lastNbr * (ItemOneGauge * 0.2))
+               {
+                   int thisNbr = lastNbr;
+                   getTween = DOVirtual.DelayedCall(0.1f * lastNbr, () =>
+                       {
+                           Manager.Ui.GaugeLevelGet(thisNbr - 1);
+                       });
+                   lastNbr++;
+               }
+
+               getTween = Manager.Ui.GetGauge.DOFillAmount((float)currNbr / ItemOneGauge, 0.5f).OnComplete(() =>
+              {
+                  if (currNbr > (float)ItemOneGauge * 0.9f)
+                  {
+                      Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = false;
+                      Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = true;
+                  }
+                  else if (currNbr < (float)ItemOneGauge * 0.1f)
+                  {
+                      Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = false;
+                      Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = true;
+                  }
+                  else
+                  {
+                      Manager.Ui.GetGauge.GetComponentsInChildren<Image>()[1].DOColor(Color.white, 0);
+                      Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = false;
+                      Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = false;
+                  }
+              });
 
 
-				});
-			});
-			getAllTween.Add ( getTween );
-		}
-	}
+           });
+            });
+            getAllTween.Add(getTween);
+        }
+    }
 
-	public void TakeHit ( )
-	{
-		if ( invc )
-		{
-			return;
-		}
+    public void TakeHit()
+    {
+        if (invc)
+        {
+            return;
+        }
 
-		invc = true;
+        invc = true;
 
-		DOVirtual.DelayedCall(InvincibleTime, () =>
-		{
-			invc = false;
-		});
-		
-		int calLost = (int)((NbrItem * pourcLoot) * 0.01f);
-		
-		if ( calLost < MinLost )
-		{
-			calLost = MinLost;
-		}
+        DOVirtual.DelayedCall(InvincibleTime, () =>
+        {
+            invc = false;
+        });
 
-		if ( calLost > NbrItem - (nbrTotalSlide - 1) * ItemOneGauge)
-		{
-			if ( nbrTotalSlide > 1 )
-			{
-				NbrItem = ItemOneGauge + ( NbrItem - (nbrTotalSlide - 1) * ItemOneGauge - calLost );
-				nbrTotalSlide --;
-				Manager.Ui.MultiplierNew(nbrTotalSlide);
-			}
-		}
-		else
-		{
-			NbrItem -= calLost;
-		}
-		
-		int getMult = (int)NbrItem / ItemOneGauge + 1;
-		if ( getMult > nbrTotalSlide )
-		{
-			Manager.Ui.MultiplierNew(getMult);
-			nbrTotalSlide = getMult;
-		}
-		else if ( getMult < nbrTotalSlide )
-		{
-			nbrTotalSlide = getMult;
-		}
-		
-		
-		AddItem(0, true);
-	}
-	#endregion
+        int calLost = (int)((NbrItem * pourcLoot) * 0.01f);
 
-	#region Private Methods
-	void OnTriggerEnter ( Collider thisColl )
-	{
+        if (calLost < MinLost)
+        {
+            calLost = MinLost;
+        }
 
-		string tag = thisColl.tag;
-		if ( tag == Constants._EnemyBullet )
-		{
-			TakeHit ();
-		}
-	}
-	#endregion
+        if (calLost > NbrItem - (nbrTotalSlide - 1) * ItemOneGauge)
+        {
+            if (nbrTotalSlide > 1)
+            {
+                NbrItem = ItemOneGauge + (NbrItem - (nbrTotalSlide - 1) * ItemOneGauge - calLost);
+                nbrTotalSlide--;
+                Manager.Ui.MultiplierNew(nbrTotalSlide);
+            }
+        }
+        else
+        {
+            NbrItem -= calLost;
+        }
+
+        int getMult = (int)NbrItem / ItemOneGauge + 1;
+        if (getMult > nbrTotalSlide)
+        {
+            Manager.Ui.MultiplierNew(getMult);
+            nbrTotalSlide = getMult;
+        }
+        else if (getMult < nbrTotalSlide)
+        {
+            nbrTotalSlide = getMult;
+        }
+
+
+        AddItem(0, true);
+    }
+    #endregion
+
+    #region Private Methods
+    void OnTriggerEnter(Collider thisColl)
+    {
+
+        string tag = thisColl.tag;
+        if (tag == Constants._EnemyBullet)
+        {
+            TakeHit();
+        }
+    }
+    #endregion
 
 }
