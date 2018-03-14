@@ -26,6 +26,7 @@ public class GameController : ManagerParent
     [HideInInspector]
     public List<GameObject> Players;
     public Material[] PlayerMaterial;
+    public AbstractMedal[] AllMedal;
 
     List<PlayerController> getPlayerCont;
     #endregion
@@ -50,7 +51,36 @@ public class GameController : ManagerParent
     public void EndGame()
     {
         Players.Clear();
-        Manager.Ui.OpenThisMenu(MenuType.SelectPlayer);
+        Manager.Ui.EndScreenStart();
+
+
+        DOVirtual.DelayedCall(2, () => 
+        {
+            
+
+            ScoreInfo[] allSc = Manager.Ui.GetScores.AllScore.ToArray();
+            ScoreInfo thisScore = allSc[0];
+            
+            for (int a = 0; a < allSc.Length; a++)
+            {
+                if ( allSc[a].ScoreTpe == ScoreType.BoxWeapon )
+                {
+                    thisScore = allSc[a];
+                    break;
+                }
+            }
+
+            DOVirtual.DelayedCall(1, () => 
+            {
+                for ( int a = 0; a < AllMedal.Length; a ++ )
+                {
+                    AllMedal[a].StartCheck ( getPlayerCont.ToArray ( ) );
+                }
+            });
+
+            Manager.Ui.GetScores.UpdateValue ( thisScore.FinalScore, ScoreType.EndScore );
+
+        });
     }
 
     public void EtatAgent ( bool thisEtat )
@@ -58,7 +88,7 @@ public class GameController : ManagerParent
         var newEtat = new AgentEvent ( );
         newEtat.AgentChecking = thisEtat;
         newEtat.Raise ( );
-       /* System.Action <AgentEvent> thisAct = delegate( AgentEvent thisEvnt )
+        /*System.Action <AgentEvent> thisAct = delegate( AgentEvent thisEvnt )
         {
             thisEvnt.AgentChecking = thisEtat;
         };
@@ -99,8 +129,6 @@ public class GameController : ManagerParent
             MainCam = Camera.main;
             GetCameraFollow = MainCam.transform.parent.GetComponent<CameraFollow>();
         }
-
-       
     }
 
     void SpawnPlayer()

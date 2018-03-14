@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour
 	[HideInInspector]
 	public int LostItem = 0;
 	[HideInInspector]
-	public bool checkAward = false;
+	public int NbrAward = 0;
 	// -----
 
 	[HideInInspector]
@@ -144,6 +144,7 @@ public class PlayerController : MonoBehaviour
 	Camera getCam;
 	WeaponBox thisWB;
 	GameObject getEffect;
+	AudioSource thisObjAudio;
 
 	int lifePlayer;
 	float currSpeed;
@@ -162,6 +163,7 @@ public class PlayerController : MonoBehaviour
 	bool checkUpdate = true;
 
 	Tween tweenRegen;
+
 	#endregion
 
 	#region Mono
@@ -246,10 +248,12 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	public void GetDamage (Transform thisEnemy, int intDmg = 1)
-	{
-		if (canTakeDmg && checkUpdate) {
-			lifePlayer -= intDmg;
+    public void GetDamage(Transform thisEnemy, int intDmg = 1)
+    {
+        if (canTakeDmg && checkUpdate)
+        {
+            lifePlayer -= intDmg;
+            animPlayer.SetTrigger("Damage");
 
 			if (lifePlayer <= 0 && !dead) {
 				animeDead (thisEnemy.position);
@@ -485,6 +489,11 @@ public class PlayerController : MonoBehaviour
 				getEffect = (GameObject) Instantiate ( thisWeapon.SpeEffet, thisWeapon.SpawnBullet );
 				getEffect.GetComponent<BulletAbstract>().thisPlayer = this;
 				getEffect.transform.rotation = Quaternion.LookRotation(thisTrans.forward, thisTrans.up);
+
+				if ( thisWeapon.SpeEffet == null )
+				{
+					thisObjAudio = Manager.Audm.OpenAudio(AudioType.Shoot, thisWeapon.NameMusic );
+				}
 			}
 
 			checkShootScore = false;
@@ -495,6 +504,10 @@ public class PlayerController : MonoBehaviour
 			if ( getEffect != null )
 			{
 				Destroy ( getEffect );
+				if ( thisObjAudio != null )
+				{
+					Destroy(thisObjAudio);
+				}
 			}
 			checkShootScore = true;
 		}
@@ -795,29 +808,23 @@ public class PlayerController : MonoBehaviour
 	void OnTriggerEnter (Collider thisColl)
 	{
 		string getTag = thisColl.tag;
-		if (thisColl.tag == Constants._EnterCont) {
+		if (thisColl.tag == Constants._EnterCont) 
+		{
 			canEnterBox = true;
-		} else if (getTag == Constants._EnemyBullet && canTakeDmg && checkUpdate/*|| getTag == Constants._Enemy*/) {
+		} 
+		else if (getTag == Constants._EnemyBullet && canTakeDmg && checkUpdate/*|| getTag == Constants._Enemy*/) 
+		{
 			lifePlayer--;
 
 			Manager.VibM.StunVibration (inputPlayer);
 
-			if (lifePlayer <= 0 && !dead) 
-			{
-				animeDead (thisColl.transform.position);
-			} 
-			else 
-			{
-				if (tweenRegen != null) 
-				{
-					tweenRegen.Kill ();
-				}
+            Manager.VibM.StunVibration(inputPlayer);
+            animPlayer.SetTrigger("Damage");
 
-				DOVirtual.DelayedCall (TimeToRegen, () => 
-				{
-					lifePlayer = LifePlayer;
-				});
-			}
+			DOVirtual.DelayedCall (TimeToRegen, () => 
+			{
+				lifePlayer = LifePlayer;
+			});
 		}
 	}
 
