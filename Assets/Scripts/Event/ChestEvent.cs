@@ -7,6 +7,7 @@ public class ChestEvent : GameEvent
 	#region Variables
 	public int Mult;
 	public float TimeMult;
+	public Material ThisMat;
 	#endregion
 	
 	#region Mono

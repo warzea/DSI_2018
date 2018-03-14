@@ -7,7 +7,7 @@ using DG.Tweening;
 public class WeaponBox : MonoBehaviour 
 {
 	#region Variables
-
+	public Material BonusMat;
 	public Image ThisGauge;
 	public float SpeedAttack = 1;
 	public float RangeAttack = 1;
@@ -84,13 +84,16 @@ public class WeaponBox : MonoBehaviour
 
 	public void ActionSpe ( )
 	{
-		if ( CurrTime >= TimeFullFill )
+		Debug.Log( CurrTime + " / " + TimeFullFill );
+		if ( ThisGauge.fillAmount == 1 )
 		{
+			ThisGauge.fillAmount = 0;
 			CurrTime = 0;
 
 			var newMult = new ChestEvent ( );
 			newMult.Mult = SpeMultRessources;
 			newMult.TimeMult = StayMult;
+			newMult.ThisMat = BonusMat;
 			newMult.Raise ( );
 		}
 	}
