@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
+using DG.Tweening;
+
+using Rewired;
+
 using UnityEngine;
 using UnityEngine.UI;
-using Rewired;
-using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,7 +14,7 @@ public class PlayerController : MonoBehaviour
 
 	[HideInInspector]
 	public int IdPlayer;
-	
+
 	[Header ("Caract Player")]
 	public int LifePlayer = 3;
 	public int TimeToRegen = 3;
@@ -33,12 +36,12 @@ public class PlayerController : MonoBehaviour
 	public float TimeInvincible;
 	public int PourcLootLost = 20;
 	[Space]
-	
+
 	[Header ("Bag info")]
 	public float DistToDropItem = 1;
 	public int nbItemBeforeBigBag = 10;
 	[Space]
-	
+
 	[Header ("Reference")]
 	public GameObject ItemLostObj;
 	public Animator animPlayer;
@@ -133,7 +136,7 @@ public class PlayerController : MonoBehaviour
 	public bool checkAuto = false;
 	[HideInInspector]
 	public bool canCauldron = false;
-	
+
 	PlayerController thisPC;
 	WeaponAbstract thisWeapon;
 	Transform thisTrans;
@@ -150,13 +153,13 @@ public class PlayerController : MonoBehaviour
 
 	int lifePlayer;
 	float currSpeed;
-	
+
 	bool shooting = false;
 	bool dashing = false;
 	bool canDash = true;
 	bool canEnterBox = false;
 	bool canShoot = true;
-	
+
 	bool canTakeDmg = true;
 	bool checkShootScore = true;
 
@@ -176,11 +179,12 @@ public class PlayerController : MonoBehaviour
 		lifePlayer = LifePlayer;
 		thisPC = GetComponent<PlayerController> ();
 
-		System.Array thisArray = System.Enum.GetValues (typeof(TypeEnemy));
+		System.Array thisArray = System.Enum.GetValues (typeof (TypeEnemy));
 
-		for (int a = 0; a < thisArray.Length; a++) {
+		for (int a = 0; a < thisArray.Length; a++)
+		{
 			AllEnemy.Add (new EnemyInfo ());
-			AllEnemy [a].ThisType = (TypeEnemy)thisArray.GetValue (a);
+			AllEnemy [a].ThisType = (TypeEnemy) thisArray.GetValue (a);
 		}
 	}
 
@@ -202,28 +206,34 @@ public class PlayerController : MonoBehaviour
 	{
 		thisRig.velocity = Vector3.zero;
 
-		if (!checkUpdate) {
+		if (!checkUpdate)
+		{
 			return;
 		}
 
 		float getDeltaTime = Time.deltaTime;
 
-		if (!dead) {
+		if (!dead)
+		{
 			inputAction (getDeltaTime);
 		}
 
 		checkBorder ();
 
-		if (!checkUIBorder) {
+		if (!checkUIBorder)
+		{
 			AmmoUI.position = getCam.WorldToScreenPoint (thisTrans.position);
 			AmmoUI.localPosition -= Vector3.right * UiAmmoX + Vector3.up * UiAmmoY;
-		} else {
+		}
+		else
+		{
 			AmmoUI.position = getCam.WorldToScreenPoint (thisTrans.position);
 
 			AmmoUI.localPosition += Vector3.right * UiAmmoX + Vector3.up * UiAmmoY;
 		}
 
-		if (AllItem.Count > 0 && Vector3.Distance (thisTrans.position, getBoxWeapon.position) < DistToDropItem) {
+		if (AllItem.Count > 0 && Vector3.Distance (thisTrans.position, getBoxWeapon.position) < DistToDropItem)
+		{
 			emptyBag ();
 		}
 	}
@@ -234,24 +244,29 @@ public class PlayerController : MonoBehaviour
 
 	public void UpdateWeapon (WeaponAbstract thisWeap = null)
 	{
-		if (thisWeap != null) {
+		if (thisWeap != null)
+		{
 			thisWeap.OnFloor = false;
 			autoShoot = thisWeap.AutoShoot;
 			SpeedReduce = thisWeap.SpeedReduce;
 			thisWeapon = thisWeap;
 			CdShoot = thisWeap.CoolDown;
-		} else {
+		}
+		else
+		{
 			thisWeapon = null;
 		}
 	}
 
 	public void GetDamage (Transform thisEnemy, int intDmg = 1)
 	{
-		if (canTakeDmg && checkUpdate) {
+		if (canTakeDmg && checkUpdate)
+		{
 			lifePlayer -= intDmg;
 			animPlayer.SetTrigger ("Damage");
 
-			if (lifePlayer <= 0 && !dead) {
+			if (lifePlayer <= 0 && !dead)
+			{
 				animeDead (thisEnemy.position);
 			}
 		}
@@ -266,43 +281,56 @@ public class PlayerController : MonoBehaviour
 		Vector3 getCamPos = getCam.WorldToViewportPoint (thisTrans.position);
 		Vector3 getDir = Vector3.zero;
 
-		if (getCamPos.x > 0.97f) {
+		if (getCamPos.x > 0.97f)
+		{
 			getDir -= Vector3.right;
 			thisTrans.position = new Vector3 (getCam.ViewportToWorldPoint (new Vector3 (0.97f, getCamPos.y, getCamPos.z)).x, thisTrans.position.y, thisTrans.position.z);
-		} else if (getCamPos.x < 0.03f) {
+		}
+		else if (getCamPos.x < 0.03f)
+		{
 			getDir += Vector3.right;
 			thisTrans.position = new Vector3 (getCam.ViewportToWorldPoint (new Vector3 (0.03f, getCamPos.y, getCamPos.z)).x, thisTrans.position.y, thisTrans.position.z);
 		}
 
-		if (getCam.WorldToViewportPoint (thisTrans.position).x < 0.1f) {
+		if (getCam.WorldToViewportPoint (thisTrans.position).x < 0.1f)
+		{
 			checkUIBorder = true;
-		} else {
+		}
+		else
+		{
 			checkUIBorder = false;
 		}
 
-		if (getCamPos.y > 0.85f) {
+		if (getCamPos.y > 0.85f)
+		{
 			getDir -= Vector3.up;
 			thisTrans.position = new Vector3 (thisTrans.position.x, thisTrans.position.y, getCam.ViewportToWorldPoint (new Vector3 (getCamPos.x, 0.85f, getCamPos.z)).z);
-		} else if (getCamPos.y < 0.03f) {
+		}
+		else if (getCamPos.y < 0.03f)
+		{
 			getDir += Vector3.up;
 			thisTrans.position = new Vector3 (thisTrans.position.x, thisTrans.position.y, getCam.ViewportToWorldPoint (new Vector3 (getCamPos.x, 0.03f, getCamPos.z)).z);
 		}
 
-		if (getDir != Vector3.zero) {
-			RaycastHit[] allHit;
+		if (getDir != Vector3.zero)
+		{
+			RaycastHit [] allHit;
 			string getTag;
 
 			allHit = Physics.RaycastAll (thisTrans.position, getDir, 0.5f);
 
-			foreach (RaycastHit thisRay in allHit) {
+			foreach (RaycastHit thisRay in allHit)
+			{
 				getTag = thisRay.collider.tag;
 
-				if (getTag == Constants._Wall) {
+				if (getTag == Constants._Wall)
+				{
 
 					checkUpdate = false;
 
 					thisTrans.DOKill (true);
-					thisTrans.DOMove (getBoxWeapon.position, 0.5f, true).OnComplete (() => {
+					thisTrans.DOMove (getBoxWeapon.position, 0.5f, true).OnComplete (() =>
+					{
 						checkUpdate = true;
 					});
 					break;
@@ -316,15 +344,21 @@ public class PlayerController : MonoBehaviour
 		Vector3 getCamPos = getCam.WorldToViewportPoint (customPos);
 		Vector3 getDist = customPos;
 
-		if (getCamPos.x > 0.97f) {
+		if (getCamPos.x > 0.97f)
+		{
 			customPos = new Vector3 (getCam.ViewportToWorldPoint (new Vector3 (0.97f, getCamPos.y, getCamPos.z)).x, customPos.y, customPos.z);
-		} else if (getCamPos.x < 0.03f) {
+		}
+		else if (getCamPos.x < 0.03f)
+		{
 			customPos = new Vector3 (getCam.ViewportToWorldPoint (new Vector3 (0.03f, getCamPos.y, getCamPos.z)).x, customPos.y, customPos.z);
 		}
 
-		if (getCamPos.y > 0.97f) {
+		if (getCamPos.y > 0.97f)
+		{
 			customPos = new Vector3 (customPos.x, customPos.y, getCam.ViewportToWorldPoint (new Vector3 (getCamPos.x, 0.97f, getCamPos.z)).z);
-		} else if (getCamPos.y < 0.03f) {
+		}
+		else if (getCamPos.y < 0.03f)
+		{
 			customPos = new Vector3 (customPos.x, customPos.y, getCam.ViewportToWorldPoint (new Vector3 (getCamPos.x, 0.03f, getCamPos.z)).z);
 		}
 
@@ -335,11 +369,13 @@ public class PlayerController : MonoBehaviour
 	{
 		playerShoot (getDeltaTime);
 
-		if (canDash) {
+		if (canDash)
+		{
 			//playerDash ( );
 		}
 
-		if (!dashing) {
+		if (!dashing)
+		{
 			interactPlayer ();
 			playerMove (getDeltaTime);
 		}
@@ -353,27 +389,43 @@ public class PlayerController : MonoBehaviour
 		float Ymove = inputPlayer.GetAxis ("MoveY");
 
 		float speed = Mathf.Abs (Xmove) + Mathf.Abs (Ymove) * 2;
-	
-		if (speed == 0) {
+
+		if (speed == 0)
+		{
 			currSpeed = 0;
 		}
-		
+
 		animPlayer.SetFloat ("Velocity", speed);
 		float getSpeed = MoveSpeed;
 
-		if (driveBox) {
-			if (currSpeed < MoveSpeed * SpeedReduceOnBox) {
+		if (driveBox)
+		{
+			if (currSpeed < MoveSpeed * SpeedReduceOnBox)
+			{
 				currSpeed += ((MoveSpeed * SpeedReduceOnBox) / TimeAccelBox) * getDeltaTime;
 			}
 
 			getSpeed = currSpeed;
-			thisWB.CurrTime += (float)getDeltaTime / thisWB.TimeFullFill;
+			thisWB.CurrTime += (float) getDeltaTime / thisWB.TimeFullFill;
 			thisWB.ThisGauge.fillAmount = thisWB.CurrTime;
-	
+
+			if (thisWB.ThisGauge.fillAmount == 1)
+			{
+				try
+				{
+					thisWB.ThisGauge.GetComponentInChildren<RainbowColor> ().enabled = true;
+				}
+				catch
+				{
+					Debug.Log ("Raimbo jauge empty");
+				}
+			}
 			TimeWBox += getDeltaTime;
-		} else if (shooting) {
+		}
+		else if (shooting)
+		{
 			getSpeed *= SpeedReduce;
-		} 
+		}
 
 		getSpeed = getDeltaTime * getSpeed;
 		TotalDist += getSpeed;
@@ -388,19 +440,26 @@ public class PlayerController : MonoBehaviour
 
 		Vector2 stickInput = new Vector2 (Xaim, Yaim);
 
-		if (stickInput.magnitude < radialDeadZone) {
+		if (stickInput.magnitude < radialDeadZone)
+		{
 			stickInput = Vector2.zero;
-		} else {
+		}
+		else
+		{
 			float actuFocus = aimSensitivity;
 
-			if (thisWeapon != null) {
+			if (thisWeapon != null)
+			{
 				RaycastHit hit;
-				if (Physics.Raycast (thisWeapon.SpawnBullet.position, thisTrans.forward, out hit)) {
-					if (hit.transform.tag == Constants._Enemy) {
+				if (Physics.Raycast (thisWeapon.SpawnBullet.position, thisTrans.forward, out hit))
+				{
+					if (hit.transform.tag == Constants._Enemy)
+					{
 						Vector3 targetDir = hit.transform.position - transform.position;
 						float angle = Vector3.Angle (targetDir, transform.forward);
 
-						if (angle < angleAimSensitivity) {
+						if (angle < angleAimSensitivity)
+						{
 							actuFocus = aimSensitivityEnemy;
 						}
 					}
@@ -411,10 +470,14 @@ public class PlayerController : MonoBehaviour
 
 			float difAngle = Quaternion.Angle (thisTrans.rotation, newAngle);
 
-			if (difAngle > maxAngle) {
-				if (driveBox) {
+			if (difAngle > maxAngle)
+			{
+				if (driveBox)
+				{
 					thisTrans.localRotation = Quaternion.Slerp (thisTrans.rotation, newAngle, SmoothRotateOnBox * getDeltaTime);
-				} else {
+				}
+				else
+				{
 					thisTrans.localRotation = Quaternion.Slerp (thisTrans.rotation, newAngle, actuFocus * getDeltaTime);
 				}
 			}
@@ -425,54 +488,72 @@ public class PlayerController : MonoBehaviour
 	void playerShoot (float getDeltaTime)
 	{
 		float shootInput = inputPlayer.GetAxis ("Shoot");
-		if (!canShoot) {
-			if (shootInput > 0) {
-				if (driveBox) {
+		if (!canShoot)
+		{
+			if (shootInput > 0)
+			{
+				if (driveBox)
+				{
 					thisWB.AttackCauld ();
 					return;
 				}
 
 				useBoxWeapon ();
-			} else {
+			}
+			else
+			{
 				return;
 			}
 
 		}
 
-		if (shootInput == 1 && checkShootScore) {
-			if (thisWeapon != null && thisWeapon.SpeEffet != null && thisWeapon.getCapacity > 0) {
-				getEffect = (GameObject)Instantiate (thisWeapon.SpeEffet, thisWeapon.SpawnBullet);
+		if (shootInput == 1 && checkShootScore)
+		{
+			if (thisWeapon != null && thisWeapon.SpeEffet != null && thisWeapon.getCapacity > 0)
+			{
+				getEffect = (GameObject) Instantiate (thisWeapon.SpeEffet, thisWeapon.SpawnBullet);
 				getEffect.GetComponent<BulletAbstract> ().thisPlayer = this;
 				getEffect.transform.rotation = Quaternion.LookRotation (thisTrans.forward, thisTrans.up);
 
-				if (thisWeapon.SpeEffet != null) {
+				if (thisWeapon.SpeEffet != null)
+				{
 					thisObjAudio = Manager.Audm.OpenAudio (AudioType.Shoot, thisWeapon.NameMusic);
 				}
 			}
 
 			checkShootScore = false;
 			SpawmShoot++;
-		} else if (shootInput < 0.3f) {
-			if (getEffect != null) {
+		}
+		else if (shootInput < 0.3f)
+		{
+			if (getEffect != null)
+			{
 				Destroy (getEffect);
-				if (thisObjAudio != null) {
+				if (thisObjAudio != null)
+				{
 					Destroy (thisObjAudio);
 				}
 			}
 			checkShootScore = true;
-		} else if (thisWeapon != null && thisWeapon.getCapacity == 0 && getEffect != null) {
+		}
+		else if (thisWeapon != null && thisWeapon.getCapacity == 0 && getEffect != null)
+		{
 			Destroy (getEffect);
 		}
 
-		if (shootInput == 0 && checkAuto) {
+		if (shootInput == 0 && checkAuto)
+		{
 			checkShoot = true;
 		}
-		
-		if (shootInput > 0.3f && thisWeapon != null && checkShoot) {
-			if (!autoShoot) {
+
+		if (shootInput > 0.3f && thisWeapon != null && checkShoot)
+		{
+			if (!autoShoot)
+			{
 				checkAuto = false;
 				checkShoot = false;
-				DOVirtual.DelayedCall (CdShoot, () => {
+				DOVirtual.DelayedCall (CdShoot, () =>
+				{
 					checkAuto = true;
 				});
 			}
@@ -480,7 +561,8 @@ public class PlayerController : MonoBehaviour
 			thisWeapon.weaponShoot (thisTrans);
 			animPlayer.SetBool ("Attack", true);
 			shooting = true;
-			if (thisWeapon != null) { //&& thisWeapon.Damage == 1)
+			if (thisWeapon != null)
+			{ //&& thisWeapon.Damage == 1)
 				//Debug.Log("Shoot");
 				if (thisWeapon.Damage <= Manager.VibM.DamagesLow)
 					Manager.VibM.ShootLowVibration (inputPlayer);
@@ -489,10 +571,13 @@ public class PlayerController : MonoBehaviour
 				else if (thisWeapon.Damage > Manager.VibM.DamagesLow && thisWeapon.Damage <= Manager.VibM.DamagesMedium)
 					Manager.VibM.ShootHighVibration (inputPlayer);
 			}
-		} else {
+		}
+		else
+		{
 			animPlayer.SetBool ("Attack", false);
 
-			if (!autoShoot || shootInput < 0.3f) {
+			if (!autoShoot || shootInput < 0.3f)
+			{
 				shooting = false;
 			}
 		}
@@ -500,9 +585,12 @@ public class PlayerController : MonoBehaviour
 
 	public void AddItem ()
 	{
-		if (AllItem.Count <= nbItemBeforeBigBag) {
+		if (AllItem.Count <= nbItemBeforeBigBag)
+		{
 			animPlayer.SetTrigger ("Bag_Up");
-		} else if (AllItem.Count > nbItemBeforeBigBag) {
+		}
+		else if (AllItem.Count > nbItemBeforeBigBag)
+		{
 			animPlayer.SetTrigger ("Bag_Up2");
 		}
 	}
@@ -511,23 +599,32 @@ public class PlayerController : MonoBehaviour
 	{
 		bool interactInput = inputPlayer.GetButtonDown ("Interact");
 
-		if (interactInput) {
+		if (interactInput)
+		{
 			NbrTouchInteract++;
-			if (canEnterBox || driveBox) {
+			if (canEnterBox || driveBox)
+			{
 				useBoxWeapon ();
 				return;
 			}
 		}
-		if (inputPlayer.GetButtonDown ("Cauldron")) {   
-			if (canCauldron) {
-				if (thisWeapon != null) {
+		if (inputPlayer.GetButtonDown ("Cauldron"))
+		{
+			if (canCauldron)
+			{
+				if (thisWeapon != null)
+				{
 					Destroy (thisWeapon.gameObject);
 				}
 
 				Manager.GameCont.WeaponB.NewWeapon (thisPC);
-			} else if (driveBox) {
+			}
+			else if (driveBox)
+			{
 				thisWB.ActionSpe ();
-			} else if (currInt != null) {
+			}
+			else if (currInt != null)
+			{
 				currInt.OnInteract (thisPC);
 				AddItem ();
 			}
@@ -536,11 +633,13 @@ public class PlayerController : MonoBehaviour
 
 	void useBoxWeapon ()
 	{
-		if (Manager.GameCont.WeaponB.CanControl) {
-			if (thisWB.ThisGauge == null) {
+		if (Manager.GameCont.WeaponB.CanControl)
+		{
+			if (thisWB.ThisGauge == null)
+			{
 				thisWB.ThisGauge = Manager.Ui.CauldronGauge.transform.Find ("Cauldron Inside").GetComponent<Image> ();
 			}
-			
+
 			Manager.Ui.checkDrive = false;
 			Manager.Ui.CauldronGauge.GetComponent<CanvasGroup> ().DOKill (true);
 			Manager.Ui.CauldronGauge.GetComponent<CanvasGroup> ().DOFade (1, 0.3f);
@@ -557,9 +656,11 @@ public class PlayerController : MonoBehaviour
 			getBoxWeapon.DOLocalRotateQuaternion (Quaternion.identity, 0.5f);
 
 			driveBox = true;
-		} else if (driveBox) {
+		}
+		else if (driveBox)
+		{
 			Manager.Ui.CauldronGauge.GetComponent<CanvasGroup> ().DOKill (true);
-			
+
 			currSpeed = 0;
 			thisWB.GetComponent<Collider> ().isTrigger = false;
 			thisWB.gameObject.tag = Constants._BoxTag;
@@ -584,7 +685,7 @@ public class PlayerController : MonoBehaviour
 	{
 		Manager.Ui.PopPotions (PotionType.Plus);
 		animPlayer.SetTrigger ("BagUnfull");
-		GameObject[] getBagItems = AllItem.ToArray ();
+		GameObject [] getBagItems = AllItem.ToArray ();
 		Transform getBoxTrans = getBoxWeapon;
 		Transform currTrans;
 
@@ -593,7 +694,8 @@ public class PlayerController : MonoBehaviour
 		CurrLootScore += CurrItem;
 		CurrItem = 0;
 
-		for (int a = 0; a < getBagItems.Length; a++) {
+		for (int a = 0; a < getBagItems.Length; a++)
+		{
 			currTrans = getBagItems [a].transform;
 			currTrans.DOKill ();
 
@@ -602,21 +704,24 @@ public class PlayerController : MonoBehaviour
 			currTrans.SetParent (getBoxTrans);
 
 			//currTrans.position = BagPos.position + new Vector3 (Random.Range (-0.2f, 0.21f), 3, Random.Range (-0.2f, 0.21f));
-			
+
 			dropItem (currTrans);
 		}
 		AllItem.Clear ();
 	}
 
 	void dropItem (Transform currTrans)
-	{	
+	{
 		float getRange = Random.Range (-0.2f, 0.21f);
 		float getRange2 = Random.Range (-0.2f, 0.21f);
 		float getRange3 = Random.Range (-0.2f, 0.21f);
 		currTrans.DOScale (Vector3.one, 0.5f);
-		currTrans.DOLocalMove (new Vector3 (getRange, getRange2, getRange3) + Vector3.zero + Vector3.up * 5, 0.5f).OnComplete (() => {
-			currTrans.DOLocalMove (Vector3.zero, 0.5f).OnComplete (() => {
-				currTrans.DOScale (Vector3.zero, 0.5f).OnComplete (() => {
+		currTrans.DOLocalMove (new Vector3 (getRange, getRange2, getRange3) + Vector3.zero + Vector3.up * 5, 0.5f).OnComplete (() =>
+		{
+			currTrans.DOLocalMove (Vector3.zero, 0.5f).OnComplete (() =>
+			{
+				currTrans.DOScale (Vector3.zero, 0.5f).OnComplete (() =>
+				{
 					Destroy (currTrans.gameObject);
 				});
 			});
@@ -630,7 +735,8 @@ public class PlayerController : MonoBehaviour
 		canTakeDmg = false;
 		dead = true;
 
-		if (driveBox) {
+		if (driveBox)
+		{
 			useBoxWeapon ();
 		}
 
@@ -644,16 +750,19 @@ public class PlayerController : MonoBehaviour
 		float getTime = TimeProjDead;
 		string getTag;
 
-		RaycastHit[] allHit;
+		RaycastHit [] allHit;
 
 		getDist -= checkBorderDead (thisTrans.position + getDirect * DistProjDead);
 		allHit = Physics.RaycastAll (thisTrans.position, getDirect, getDist);
 
-		foreach (RaycastHit thisRay in allHit) {
+		foreach (RaycastHit thisRay in allHit)
+		{
 			getTag = thisRay.collider.tag;
 
-			if (getTag == Constants._Wall) {
-				if (thisRay.distance < getDist) {
+			if (getTag == Constants._Wall)
+			{
+				if (thisRay.distance < getDist)
+				{
 					getDist = thisRay.distance - 1;
 					getTime = TimeProjDead / (DistProjDead / getDist);
 				}
@@ -664,14 +773,16 @@ public class PlayerController : MonoBehaviour
 
 		thisTrans.DOLocalMove (thisTrans.localPosition + getDirect * getDist, getTime);
 
-		DOVirtual.DelayedCall (getTime + TimeDead + TimeProjDead - getTime, () => {
+		DOVirtual.DelayedCall (getTime + TimeDead + TimeProjDead - getTime, () =>
+		{
 			GetComponent<Collider> ().isTrigger = false;
 			WeaponPos.gameObject.SetActive (true);
 			lifePlayer = LifePlayer;
 			dead = false;
 			thisWeapon.canShoot = true;
 
-			DOVirtual.DelayedCall (TimeInvincible, () => {
+			DOVirtual.DelayedCall (TimeInvincible, () =>
+			{
 				canTakeDmg = true;
 			});
 		});
@@ -685,30 +796,33 @@ public class PlayerController : MonoBehaviour
 
 	void lostItem ()
 	{
-		GameObject[] getList = AllItem.ToArray ();
-		if (getList.Length > 0) {
+		GameObject [] getList = AllItem.ToArray ();
+		if (getList.Length > 0)
+		{
 			int a;
 			ItemLost getItem;
-			GameObject newObj = (GameObject)Instantiate (ItemLostObj, thisTrans.position, thisTrans.rotation);
-			GameObject newObjUi = (GameObject)Instantiate (Manager.Ui.PotionGet, Manager.Ui.GetInGame);
+			GameObject newObj = (GameObject) Instantiate (ItemLostObj, thisTrans.position, thisTrans.rotation);
+			GameObject newObjUi = (GameObject) Instantiate (Manager.Ui.PotionGet, Manager.Ui.GetInGame);
 			PotionFollowP thisPFP = newObjUi.GetComponent<PotionFollowP> ();
 			newObj.GetComponent<ItemObjLost> ().ThisObj = newObjUi;
 			thisPFP.ThisPlayer = newObj.transform;
 			thisPFP.getCam = getCam;
 
-			int getNbr = (int)(CurrItem - (CurrItem * PourcLootLost) * 0.01f);
+			int getNbr = (int) (CurrItem - (CurrItem * PourcLootLost) * 0.01f);
 			LostItem += CurrItem;
 			thisPFP.Nbr = getNbr;
 			newObj.GetComponent<ItemObjLost> ().NbrItem = getNbr;
 			thisPFP.GetComponent<CanvasGroup> ().DOFade (1, 0.1f);
-			
-			for (a = getList.Length - 1; a > getList.Length * 0.5f; a--) {
+
+			for (a = getList.Length - 1; a > getList.Length * 0.5f; a--)
+			{
 				getItem = getList [a].transform.GetComponent<ItemLost> ();
 				getItem.gameObject.SetActive (true);
 				getItem.transform.localScale = Vector3.one;
 				getItem.transform.localPosition = Vector3.zero;
 
-				if (!getItem) {
+				if (!getItem)
+				{
 					getItem = getList [a].AddComponent<ItemLost> ();
 				}
 
@@ -718,7 +832,8 @@ public class PlayerController : MonoBehaviour
 			}
 
 			getList = AllItem.ToArray ();
-			for (a = 0; a < getList.Length; a++) {
+			for (a = 0; a < getList.Length; a++)
+			{
 				Destroy (getList [a]);
 			}
 
@@ -730,9 +845,12 @@ public class PlayerController : MonoBehaviour
 	void OnTriggerEnter (Collider thisColl)
 	{
 		string getTag = thisColl.tag;
-		if (thisColl.tag == Constants._EnterCont) {
+		if (thisColl.tag == Constants._EnterCont)
+		{
 			canEnterBox = true;
-		} else if (getTag == Constants._EnemyBullet && canTakeDmg && checkUpdate/*|| getTag == Constants._Enemy*/) {
+		}
+		else if (getTag == Constants._EnemyBullet && canTakeDmg && checkUpdate /*|| getTag == Constants._Enemy*/ )
+		{
 			lifePlayer--;
 
 			Manager.VibM.StunVibration (inputPlayer);
@@ -740,7 +858,8 @@ public class PlayerController : MonoBehaviour
 			Manager.VibM.StunVibration (inputPlayer);
 			animPlayer.SetTrigger ("Damage");
 
-			DOVirtual.DelayedCall (TimeToRegen, () => {
+			DOVirtual.DelayedCall (TimeToRegen, () =>
+			{
 				lifePlayer = LifePlayer;
 			});
 		}
@@ -748,7 +867,8 @@ public class PlayerController : MonoBehaviour
 
 	void OnTriggerExit (Collider thisColl)
 	{
-		if (thisColl.tag == Constants._EnterCont) {
+		if (thisColl.tag == Constants._EnterCont)
+		{
 			canEnterBox = false;
 		}
 	}
@@ -771,6 +891,3 @@ public class PlayerController : MonoBehaviour
 
 	#endregion
 }
-
-
-

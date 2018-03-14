@@ -74,6 +74,8 @@ public class GameController : ManagerParent
             {
                 for ( int a = 0; a < AllMedal.Length; a ++ )
                 {
+		            AllMedal[a].gameObject.SetActive(true);
+                        
                     AllMedal[a].StartCheck ( getPlayerCont.ToArray ( ) );
                 }
             });

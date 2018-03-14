@@ -22,12 +22,15 @@ public abstract class AbstractMedal : MonoBehaviour
 
 	public void GoTarget ( PlayerController equaContr = null, string Text = "" )
 	{
+		Debug.Log("1");
 		if ( equaContr.NbrAward > 2 )
 		{
+			gameObject.SetActive(false);
+			
 			return;
 		}
+		Debug.Log("2");
 
-		gameObject.SetActive(true);
 		Manager.Ui.EndScreenMedals(thisTrans, ThisPlayer.NbrAward);
 		ThisPlayer.NbrAward ++;
 
