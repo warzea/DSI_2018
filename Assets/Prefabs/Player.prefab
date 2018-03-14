@@ -1078,11 +1078,12 @@ MonoBehaviour:
   ItemLostObj: {fileID: 1330381900745004, guid: 0540fd0faddbcfd46bb2584e8d68fc5c,
     type: 2}
   animPlayer: {fileID: 95720146484201416}
-  WeaponPos: {fileID: 4246215549971970}
+  WeaponPos: {fileID: 4824209845070160}
   BagPos: {fileID: 4172327163606488}
   BoxPlace: {fileID: 4412137378519398}
   AmmoUI: {fileID: 0}
   WeapText: {fileID: 0}
+  weaponMesh: []
   DistThrowWeap: 11
   SpeedThrow: 21
   SpeedReduceOnBox: 0.35

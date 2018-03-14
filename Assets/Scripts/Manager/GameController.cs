@@ -54,40 +54,40 @@ public class GameController : ManagerParent
         Manager.Ui.EndScreenStart();
 
 
-        DOVirtual.DelayedCall(2, () => 
+        DOVirtual.DelayedCall(2, () =>
         {
-            
+
 
             ScoreInfo[] allSc = Manager.Ui.GetScores.AllScore.ToArray();
             ScoreInfo thisScore = allSc[0];
-            
+
             for (int a = 0; a < allSc.Length; a++)
             {
-                if ( allSc[a].ScoreTpe == ScoreType.BoxWeapon )
+                if (allSc[a].ScoreTpe == ScoreType.BoxWeapon)
                 {
                     thisScore = allSc[a];
                     break;
                 }
             }
 
-            DOVirtual.DelayedCall(1, () => 
+            DOVirtual.DelayedCall(1, () =>
             {
-                for ( int a = 0; a < AllMedal.Length; a ++ )
+                for (int a = 0; a < AllMedal.Length; a++)
                 {
-                    AllMedal[a].StartCheck ( getPlayerCont.ToArray ( ) );
+                    AllMedal[a].StartCheck(getPlayerCont.ToArray());
                 }
             });
 
-            Manager.Ui.GetScores.UpdateValue ( thisScore.FinalScore, ScoreType.EndScore );
+            Manager.Ui.GetScores.UpdateValue(thisScore.FinalScore, ScoreType.EndScore);
 
         });
     }
 
-    public void EtatAgent ( bool thisEtat )
+    public void EtatAgent(bool thisEtat)
     {
-        var newEtat = new AgentEvent ( );
+        var newEtat = new AgentEvent();
         newEtat.AgentChecking = thisEtat;
-        newEtat.Raise ( );
+        newEtat.Raise();
         /*System.Action <AgentEvent> thisAct = delegate( AgentEvent thisEvnt )
         {
             thisEvnt.AgentChecking = thisEtat;
@@ -114,17 +114,18 @@ public class GameController : ManagerParent
             GetPlayersInput[a].EnablePlayer = false;
         }
 
-        if ( WeaponB == null )
+        if (WeaponB == null)
         {
-            WeaponB = (WeaponBox) FindObjectOfType(typeof(WeaponBox));
+            WeaponB = (WeaponBox)FindObjectOfType(typeof(WeaponBox));
         }
 
-        if ( StartWeapon == null)
+        if (StartWeapon == null)
         {
             StartWeapon = WeaponB.AllWeapon[0];
+
         }
 
-        if ( MainCam == null )
+        if (MainCam == null)
         {
             MainCam = Camera.main;
             GetCameraFollow = MainCam.transform.parent.GetComponent<CameraFollow>();
@@ -138,7 +139,7 @@ public class GameController : ManagerParent
         GameObject getPlayer;
         GameObject getWeapon;
         GameObject[] getPlayerHud = Manager.Ui.PlayersHUD;
-        
+
         List<GameObject> getPotGets = new List<GameObject>();
 
         for (int a = 0; a < getPlayers.Length; a++)
@@ -151,12 +152,12 @@ public class GameController : ManagerParent
                 getPlayer = (GameObject)Instantiate(PlayerPrefab);
                 getPlayer.name = getPlayer.name + "+" + a.ToString();
 
-                foreach ( Renderer thisMat in getPlayer.GetComponentsInChildren<Renderer>())
+                foreach (Renderer thisMat in getPlayer.GetComponentsInChildren<Renderer>())
                 {
-                   thisMat.material = PlayerMaterial[a];
+                    thisMat.material = PlayerMaterial[a];
                 }
-                
-                if ( PlayerPosSpawn != null )
+
+                if (PlayerPosSpawn != null)
                 {
                     getPlayer.transform.position = PlayerPosSpawn.position + new Vector3(a * 1.5f, 0, 0);
                 }
@@ -176,12 +177,12 @@ public class GameController : ManagerParent
                 getWeapon = (GameObject)Instantiate(Manager.Ui.PotionGet, Manager.Ui.GetInGame);
                 getWeapon.GetComponent<PotionFollowP>().getCam = MainCam;
                 getWeapon.GetComponent<PotionFollowP>().ThisPlayer = getPlayer.transform;
-                getPotGets.Add ( getWeapon);
+                getPotGets.Add(getWeapon);
 
                 getWeapon = (GameObject)Instantiate(StartWeapon, getPC.WeaponPos.transform);
                 getWeapon.transform.localPosition = Vector3.zero;
                 getWeapon.transform.localRotation = Quaternion.identity;
-
+                getWeapon.transform.localScale = new Vector3(0.01165743f, 0.01258486f, 0.01180339f);
                 //getPlayer.GetComponent<PlayerController>().WeapText = Manager.Ui.textWeapon[a];
 
                 getPC.UpdateWeapon(getWeapon.GetComponent<WeaponAbstract>());
