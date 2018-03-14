@@ -309,7 +309,7 @@ MonoBehaviour:
   ThisTrajectoir: 1
   MoveSpeed: 10
   NameAudio: 
-  DefinitiveDestroy: 5
+  DefinitiveDestroy: 1
   direction: {x: 0, y: 0, z: 0}
   BulletDamage: 1
   BulletRange: 10
