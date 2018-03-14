@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 4b107748714537b42be871d58cf44e71
 timeCreated: 1521027609
+=======
+guid: 7e1cc8b26257d894da6b734fac0774b5
+timeCreated: 1521026062
+>>>>>>> Clarisse
 licenseType: Free
 DefaultImporter:
   externalObjects: {}
