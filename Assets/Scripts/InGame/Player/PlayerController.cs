@@ -14,11 +14,11 @@ public class PlayerController : MonoBehaviour
 	public int LifePlayer = 3;
 	public int TimeToRegen = 3;
 	public float MoveSpeed;
-	[Range(0,1)]
-	public float SlowDriveBack = 0.5f;
 	public GameObject ItemLostObj;
 	public float radialDeadZone = 0.3f;
 	public float maxAngle = 2;
+	public float DistThrowWeap = 2;
+	public float SpeedThrow = 2;
 
 	//public float DashDistance = 5;
 	//public float DashTime = 1;
@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
 	[Range (0, 1)]
 	[Tooltip ("Speed reduce pendant qu'on pousse la caisse")]
 	public float SpeedReduceOnBox = 0.1f;
+	public float TimeAccelBox = 5f;
 	public float SmoothRotateOnBox = 10;
 
 	public float aimSensitivity = 10;
@@ -124,9 +125,11 @@ public class PlayerController : MonoBehaviour
 	Player inputPlayer;
 	Camera getCam;
 	WeaponBox thisWB;
+	GameObject getEffect;
 
 	int lifePlayer;
-
+	float currSpeed;
+	
 	bool shooting = false;
 	bool dashing = false;
 	bool canDash = true;
@@ -348,40 +351,36 @@ public class PlayerController : MonoBehaviour
 		float Ymove = inputPlayer.GetAxis ("MoveY");
 
 		float speed = Mathf.Abs (Xmove) + Mathf.Abs (Ymove) * 2;
-
+	
+		if ( speed == 0 )
+		{
+			currSpeed = 0;
+		}
+		
 		animPlayer.SetFloat ("Velocity", speed);
 		float getSpeed = MoveSpeed;
 
-		if (shooting) 
+		if (driveBox) 
+		{
+			if(	currSpeed < MoveSpeed * SpeedReduceOnBox )
+			{
+				currSpeed += ((MoveSpeed * SpeedReduceOnBox) / TimeAccelBox ) * getDeltaTime ;
+			}
+
+			getSpeed = currSpeed;
+			thisWB.CurrTime += (float)getDeltaTime / thisWB.TimeFullFill;
+			thisWB.ThisGauge.fillAmount = thisWB.CurrTime;
+			TimeWBox += getDeltaTime;
+		}
+		else if (shooting) 
 		{
 			getSpeed *= SpeedReduce;
 		} 
-		else if (driveBox) 
-		{
-			Xmove = 0;
-			thisWB.CurrTime += getDeltaTime;
-			thisWB.ThisGauge.value = thisWB.CurrTime;
-			TimeWBox += getDeltaTime;
-			getSpeed *= SpeedReduceOnBox;
-		}
 
 		getSpeed = getDeltaTime * getSpeed;
 		TotalDist += getSpeed;
 
-		if ( !driveBox )
-		{
-			thisTrans.position += getSpeed * new Vector3 (Xmove, 0, Ymove);
-		}
-		else if ( Mathf.Abs(Ymove)  > radialDeadZone )
-		{
-			Quaternion newAngle = Quaternion.LookRotation (new Vector3 (Xmove, 0, Ymove), thisTrans.up);
-
-			if ( Ymove < 0 )
-			{
-				Ymove *= SlowDriveBack;
-			}
-			thisTrans.position += getSpeed * Ymove * thisTrans.forward;
-		}
+		thisTrans.position += getSpeed * new Vector3 (Xmove, 0, Ymove);
 	}
 
 	void playerAim (float getDeltaTime)
@@ -455,12 +454,27 @@ public class PlayerController : MonoBehaviour
 
 		if (shootInput == 1 && checkShootScore) 
 		{
+			if ( thisWeapon != null && thisWeapon.SpeEffet != null && thisWeapon.getCapacity > 0 )
+			{
+				getEffect = (GameObject) Instantiate ( thisWeapon.SpeEffet, thisWeapon.SpawnBullet );
+				getEffect.GetComponent<BulletAbstract>().thisPlayer = this;
+				getEffect.transform.rotation = Quaternion.LookRotation(thisTrans.forward, thisTrans.up);
+			}
+
 			checkShootScore = false;
 			SpawmShoot++;
 		} 
 		else if (shootInput < 0.3f) 
 		{
+			if ( getEffect != null )
+			{
+				Destroy ( getEffect );
+			}
 			checkShootScore = true;
+		}
+		else if ( thisWeapon != null && thisWeapon.getCapacity == 0 && getEffect != null )
+		{
+			Destroy ( getEffect );
 		}
 
 		if (shootInput == 0 && checkAuto) 
@@ -497,7 +511,11 @@ public class PlayerController : MonoBehaviour
 		else 
 		{
 			animPlayer.SetBool ("Attack", false);
-			shooting = false;
+
+			if ( !autoShoot || shootInput < 0.3f )
+			{
+				shooting = false;
+			}
 		}
 	}
 
@@ -543,7 +561,11 @@ public class PlayerController : MonoBehaviour
 	{
 		if (Manager.GameCont.WeaponB.CanControl) 
 		{
-			thisWB.ThisGauge.gameObject.SetActive (true);
+            if ( thisWB.ThisGauge == null )
+			{
+				thisWB.ThisGauge = Manager.Ui.CauldronGauge.transform.Find("Cauldron Inside").GetComponent<Image>();
+			}
+            Manager.Ui.CauldronGauge.SetActive (true);
 			Manager.Ui.CauldronButtons (true);
 			GetCamFoll.UpdateTarget (thisTrans);
 			WeaponPos.gameObject.SetActive (false);
@@ -559,11 +581,12 @@ public class PlayerController : MonoBehaviour
 			driveBox = true;
 		} 
 		else if (driveBox)
-		 {
+		{
+			currSpeed = 0;
 			thisWB.GetComponent<Collider>().isTrigger = false;
 			thisWB.gameObject.tag = Constants._BoxTag;
 			thisWB.transform.DOKill(true);
-			thisWB.ThisGauge.gameObject.SetActive (false);
+            Manager.Ui.CauldronGauge.SetActive (false);
 			Manager.Ui.checkDrive = false;
 			Manager.Ui.CauldronButtons (false);
 			AmmoUI.GetComponent<CanvasGroup> ().alpha = 1;
@@ -591,6 +614,7 @@ public class PlayerController : MonoBehaviour
 		Manager.GameCont.WeaponB.AddItem (CurrItem);
 		CurrScore += CurrItem;
 		CurrLootScore += CurrItem;
+		CurrItem = 0;
 
 		for (int a = 0; a < getBagItems.Length; a++) 
 		{
@@ -601,7 +625,7 @@ public class PlayerController : MonoBehaviour
 			currTrans.SetParent (null);
 			currTrans.SetParent (getBoxTrans);
 
-			currTrans.position = BagPos.position + new Vector3 (Random.Range (-0.2f, 0.21f), 3, Random.Range (-0.2f, 0.21f));
+			//currTrans.position = BagPos.position + new Vector3 (Random.Range (-0.2f, 0.21f), 3, Random.Range (-0.2f, 0.21f));
 			
 			dropItem (currTrans);
 		}
@@ -609,14 +633,18 @@ public class PlayerController : MonoBehaviour
 	}
 
 	void dropItem (Transform currTrans)
-	{
-		DOVirtual.DelayedCall (Random.Range (0, 0.2f), () => {
-			currTrans.DOLocalMove (Vector3.zero + Vector3.up * 3, 1f).OnComplete (() => {
-				currTrans.DOLocalMove (Vector3.zero, 0.5f);
-				currTrans.DOScale (Vector3.one, 0.5f).OnComplete (() => {
-					currTrans.DOScale (Vector3.zero, 0.7f).OnComplete (() => {
-						Destroy (currTrans.gameObject);
-					});
+	{	
+		float getRange = Random.Range (-0.2f, 0.21f);
+		float getRange2 = Random.Range (-0.2f, 0.21f);
+		float getRange3 = Random.Range (-0.2f, 0.21f);
+		currTrans.DOScale (Vector3.one, 0.5f);
+		currTrans.DOLocalMove (new Vector3 (getRange,getRange2,getRange3) + Vector3.zero + Vector3.up * 5, 0.5f).OnComplete (() => 
+		{
+			currTrans.DOLocalMove (Vector3.zero, 0.5f).OnComplete (() => 
+			{
+				currTrans.DOScale (Vector3.zero, 0.5f).OnComplete (() => 
+				{
+					Destroy (currTrans.gameObject);
 				});
 			});
 		});
@@ -638,7 +666,7 @@ public class PlayerController : MonoBehaviour
 		GetComponent<Collider> ().isTrigger = true;
 
 		Vector3 getDirect = Vector3.Normalize (thisTrans.position - pointColl);
-		getDirect = new Vector3 (getDirect.x, thisTrans.localPosition.y, getDirect.z);
+		getDirect = new Vector3 (getDirect.x, 0, getDirect.z);
 
 		float getDist = DistProjDead;
 		float getTime = TimeProjDead;

@@ -103,13 +103,13 @@ Shader "SH_particleSimpleCircle"
 }
 /*ASEBEGIN
 Version=14101
-1927;29;1586;824;1181.19;292.4586;1.072323;True;True
-Node;AmplifyShaderEditor.Vector2Node;4;-803,291;Float;False;Constant;_Vector0;Vector 0;0;0;Create;0.5,0.5;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
+1927;29;1586;824;1262.686;279.5907;1.072323;True;True
 Node;AmplifyShaderEditor.TextureCoordinatesNode;1;-828,147;Float;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.Vector2Node;4;-803,291;Float;False;Constant;_Vector0;Vector 0;0;0;Create;0.5,0.5;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
 Node;AmplifyShaderEditor.DistanceOpNode;3;-540,162;Float;False;2;0;FLOAT2;0,0,0,0;False;1;FLOAT2;0,0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.StepOpNode;13;-289,154;Float;False;2;0;FLOAT;0.0;False;1;FLOAT;0.5;False;1;FLOAT;0
 Node;AmplifyShaderEditor.VertexColorNode;5;-501,-190;Float;False;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;14;-193,-20;Float;False;2;2;0;COLOR;0.0;False;1;FLOAT;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.StepOpNode;13;-289,154;Float;False;2;0;FLOAT;0.0;False;1;FLOAT;0.5;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;14;-193,-20;Float;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.TemplateMasterNode;18;20,-70;Float;False;True;2;Float;ASEMaterialInspector;0;5;SH_particleSimpleCircle;0b6a9f8b4f707c74ca64c0be8e590de0;Particles Alpha Blended;4;One;One;0;One;Zero;Off;True;True;True;False;2;0;FLOAT4;0,0,0,0;False;1;FLOAT3;0,0,0;False;0
 WireConnection;3;0;1;0
 WireConnection;3;1;4;0
@@ -118,4 +118,4 @@ WireConnection;14;0;5;0
 WireConnection;14;1;13;0
 WireConnection;18;0;14;0
 ASEEND*/
-//CHKSM=50BFF4A5DE3405C98E93E3A44B24928D28370D83
+//CHKSM=44A62165AE63A3228B8A53D2DE2FB5C194C337E1

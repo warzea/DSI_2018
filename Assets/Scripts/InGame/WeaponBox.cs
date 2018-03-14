@@ -7,8 +7,8 @@ using DG.Tweening;
 public class WeaponBox : MonoBehaviour 
 {
 	#region Variables
-	[HideInInspector]
-	public Slider ThisGauge;
+	public Material BonusMat;
+	public Image ThisGauge;
 	public float SpeedAttack = 1;
 	public float RangeAttack = 1;
 	public float DelayAttack = 1;
@@ -54,13 +54,6 @@ public class WeaponBox : MonoBehaviour
 		}
 	}
 
-	void Start ( )
-	{
-		if ( ThisGauge == null )
-		{
-			ThisGauge = Manager.Ui.CauldronGauge.GetComponent<Slider>();
-		}
-	}
 	#endregion
 	
 	#region Public Methods
@@ -91,13 +84,16 @@ public class WeaponBox : MonoBehaviour
 
 	public void ActionSpe ( )
 	{
-		if ( CurrTime >= TimeFullFill )
+		Debug.Log( CurrTime + " / " + TimeFullFill );
+		if ( ThisGauge.fillAmount == 1 )
 		{
+			ThisGauge.fillAmount = 0;
 			CurrTime = 0;
 
 			var newMult = new ChestEvent ( );
 			newMult.Mult = SpeMultRessources;
 			newMult.TimeMult = StayMult;
+			newMult.ThisMat = BonusMat;
 			newMult.Raise ( );
 		}
 	}
@@ -196,7 +192,6 @@ public class WeaponBox : MonoBehaviour
 
 	public void AddItem ( int lenghtItem, bool inv = false )
 	{
-
         if(inv)
 		{
             Manager.Ui.PopPotions(PotionType.Less);
@@ -236,14 +231,6 @@ public class WeaponBox : MonoBehaviour
 				Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = false;
 			}
 		});
-		/*if ( !inv )
-		{
-			//updateFeed ( getFeedBack, 0, currNbr, inv );
-		}
-		else
-		{
-			//updateFeed ( getFeedBack, getFeedBack.Length - 1, currNbr, inv );
-		}*/
 		
 		//Manager.Ui.ScoreText.text = NbrItem.ToString();
 
@@ -313,81 +300,6 @@ public class WeaponBox : MonoBehaviour
 		}
 	}
 
-    void updateFeed ( Image[] getFeedBack, int currInd, int currNbr, bool inv = false )
-	{
-
-
-        float getTime = 0.1f;
-		float getCal = (currNbr - 20 * currInd ) * 0.05f;
-		if ( getCal < 0 )
-		{
-			getCal = 0;
-		}
-		if ( getFeedBack[currInd].fillAmount == getCal )
-		{
-			if ( !inv )
-			{
-				currInd ++;
-				if ( currInd < getFeedBack.Length )
-				{
-					updateFeed ( getFeedBack, currInd, currNbr, inv );
-				}
-			}
-			else
-			{
-				currInd --;
-				if ( currInd >= 0 )
-				{
-					updateFeed ( getFeedBack, currInd, currNbr, inv );
-				}
-			}
-		}
-		else
-		{
-			Tween getTween;
-			getFeedBack[currInd].DOKill();
-			getTween = getFeedBack[currInd].DOFillAmount(getCal, getTime).OnComplete (() => 
-			{
-				if ( !inv )
-				{
-					currInd ++;
-
-					if ( currInd < getFeedBack.Length )
-					{
-						updateFeed ( getFeedBack, currInd, currNbr, inv );
-					}
-				}
-				else
-				{
-					currInd --;
-
-					if ( currInd >= 0 )
-					{
-						updateFeed ( getFeedBack, currInd, currNbr, inv );
-					}
-				}
-				
-			});
-			getAllTween.Add(getTween);
-		}
-	}
-
-	void resetFeed ( Image[] getFeedBack, int currInd )
-	{
-		Tween getTween;
-		getFeedBack[currInd].DOKill();
-		getTween = getFeedBack[currInd].DOFillAmount(0, 0.1f).OnComplete (() => 
-		{
-			currInd --;
-
-			if ( currInd >= 0 )
-			{
-				resetFeed ( getFeedBack, currInd );
-			}
-		});
-		getAllTween.Add(getTween);
-	}
-
 	public void TakeHit ( )
 	{
 		if ( invc )
@@ -403,21 +315,25 @@ public class WeaponBox : MonoBehaviour
 		});
 		
 		int calLost = (int)((NbrItem * pourcLoot) * 0.01f);
-
+		
 		if ( calLost < MinLost )
 		{
 			calLost = MinLost;
-
-			if ( calLost > NbrItem )
-			{
-				calLost = NbrItem;
-			}
 		}
 
-		NbrItem -= calLost;
-		
-		
-		//Manager.Ui.ScoreText.text = NbrItem.ToString();
+		if ( calLost > NbrItem - (nbrTotalSlide - 1) * ItemOneGauge)
+		{
+			if ( nbrTotalSlide > 1 )
+			{
+				NbrItem = ItemOneGauge + ( NbrItem - (nbrTotalSlide - 1) * ItemOneGauge - calLost );
+				nbrTotalSlide --;
+				Manager.Ui.MultiplierNew(nbrTotalSlide);
+			}
+		}
+		else
+		{
+			NbrItem -= calLost;
+		}
 		
 		int getMult = (int)NbrItem / ItemOneGauge + 1;
 		if ( getMult > nbrTotalSlide )

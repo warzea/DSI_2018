@@ -11,6 +11,7 @@ public class BulletAbstract : MonoBehaviour
     public GameObject GetEffect;
     public Trajectoir ThisTrajectoir;
     public float MoveSpeed = 10;
+    public float DefinitiveDestroy = 5;
     [HideInInspector]
     public Vector3 direction = Vector3.zero;
 
@@ -52,7 +53,7 @@ public class BulletAbstract : MonoBehaviour
     bool checkEnd = false;
     bool blockUpdate = false;
     float getDistScale = 0;
-
+    bool checkUpdate = true;
     #endregion
 
     #region Mono
@@ -75,6 +76,11 @@ public class BulletAbstract : MonoBehaviour
             playZone();
         }
 
+        if ( ThisTrajectoir == Trajectoir.Nothing )
+        {
+            checkUpdate = false;
+        }
+
         RaycastHit[] allHit;
         string getTag;
 
@@ -95,7 +101,7 @@ public class BulletAbstract : MonoBehaviour
     #region Public Methods
     void Update()
     {
-        if (blockUpdate )
+        if ( blockUpdate || !checkUpdate)
         {
             return;
         }
@@ -286,7 +292,27 @@ public class BulletAbstract : MonoBehaviour
     {
         t1.Kill();
         t2.Kill();
-        Destroy (gameObject, delay);
+        
+        StartCoroutine(waitDest(delay));
     }
+
+    IEnumerator waitDest ( float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        MeshRenderer thisMr = GetComponentInChildren<MeshRenderer>();
+        Collider thisC = GetComponent<Collider>();
+        if ( thisMr != null && thisC != null )
+        {
+            thisMr.enabled = false;
+            thisC.enabled = false;
+            Destroy (gameObject, DefinitiveDestroy);
+        }
+        else
+        {
+            Destroy (gameObject);
+        }
+    }
+    
     #endregion
 }

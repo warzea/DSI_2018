@@ -6,6 +6,8 @@ using DG.Tweening;
 public class WeaponAbstract : MonoBehaviour
 {
     #region Variables
+    public GameObject SpeEffet;
+
     public int WeightRandom = 0;
     public bool AutoShoot = true;
     public bool Projectile = false;
@@ -69,7 +71,8 @@ public class WeaponAbstract : MonoBehaviour
 	public bool OnFloor = true;
 
     Transform getGargabe;
-    int getCapacity;
+    [HideInInspector]
+    public int getCapacity;
 
     IEnumerator GetEnumerator;
 
@@ -134,6 +137,7 @@ public class WeaponAbstract : MonoBehaviour
                 playerTrans.GetComponent<PlayerController>().checkAuto = true;
             }
 
+            
             customWeapon(playerTrans);
         }
         else if (getCapacity <= 0)
@@ -160,7 +164,8 @@ public class WeaponAbstract : MonoBehaviour
             thisBA.Projectil = true;
             thisBA.canExplose = true;
             thisBA.Diameter = 3;
-            thisBA.BulletRange = Range;
+            thisBA.BulletRange = playerTrans.GetComponent<PlayerController>().DistThrowWeap;
+            thisBA.MoveSpeed = playerTrans.GetComponent<PlayerController>().SpeedThrow;
             thisBA.gameObject.tag = Constants._BulletPlayer;
             Destroy(GetComponent<WeaponAbstract>());
             Manager.GameCont.WeaponB.NewWeapon(getPC);
