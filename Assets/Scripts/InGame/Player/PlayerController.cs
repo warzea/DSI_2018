@@ -409,16 +409,18 @@ public class PlayerController : MonoBehaviour
 			thisWB.CurrTime += (float) getDeltaTime / thisWB.TimeFullFill;
 			thisWB.ThisGauge.fillAmount = thisWB.CurrTime;
 
-			if (thisWB.ThisGauge.fillAmount == 1)
+			if (thisWB.ThisGauge.fillAmount >= 1)
 			{
 				try
 				{
-					thisWB.ThisGauge.GetComponentInChildren<RainbowColor> ().enabled = true;
-                    thisWB.ThisGauge.GetComponentInChildren<RainbowScale>().enabled = true;
+                    Manager.Ui.GaugeButtonBonus.GetComponent<CanvasGroup>().DOFade(1, .1f);
+					thisWB.ThisGauge.transform.parent.GetComponentInChildren<RainbowColor>().enabled = true;
+                    thisWB.ThisGauge.transform.parent.GetComponentInChildren<RainbowScale>().enabled = true;
                 }
 				catch
-				{
-					Debug.Log ("Raimbo jauge empty");
+                {
+                    Manager.Ui.GaugeButtonBonus.GetComponent<CanvasGroup>().DOFade(0, .1f);
+                    Debug.Log ("Raimbo jauge empty");
 				}
 			}
 			TimeWBox += getDeltaTime;

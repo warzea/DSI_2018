@@ -119,10 +119,12 @@ public class WeaponBox : MonoBehaviour
 
             transform.GetChild(1).DOShakeScale(1f, .7f, 20, 0);
 
-            ThisGauge.GetComponentInChildren<RainbowColor>().enabled = false;
-			ThisGauge.GetComponentInChildren<RainbowScale>().enabled = false;
+            ThisGauge.transform.parent.GetComponentInChildren<RainbowColor>().enabled = false;
+			ThisGauge.transform.parent.GetComponentInChildren<RainbowScale>().enabled = false;
 
-			ThisGauge.fillAmount = 0;
+            ThisGauge.transform.parent.GetComponentInChildren<Image>().color = ThisGauge.transform.parent.GetComponentInChildren<RainbowColor>().colors[1];
+
+            ThisGauge.fillAmount = 0;
 			CurrTime = 0;
 
 			var newMult = new ChestEvent ( );
