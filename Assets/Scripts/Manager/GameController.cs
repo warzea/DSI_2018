@@ -75,7 +75,7 @@ public class GameController : ManagerParent
             {
                 for (int a = 0; a < AllMedal.Length; a++)
                 {
-                    Debug.Log ("medal : " + a + " / " + AllMedal.Length);
+                    Debug.Log (a);
                     AllMedal [a].gameObject.SetActive (true);
 
                     AllMedal [a].StartCheck (getPlayerCont.ToArray ());

@@ -1,40 +1,41 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
-public class MedalResources : AbstractMedal 
+public class MedalResources : AbstractMedal
 {
 	#region Variables
 	#endregion
-	
+
 	#region Mono
-	public override void StartCheck ( PlayerController[] allPlayer )
+	public override void StartCheck (PlayerController [] allPlayer)
 	{
-		PlayerController thisPlayer = allPlayer[0];
+		thisPlayer = allPlayer [0];
 		PlayerController thisPlayerEqua = null;
 
-		if ( allPlayer.Length > 1 )
+		if (allPlayer.Length > 1)
 		{
-			for ( int a = 1; a < allPlayer.Length; a ++ )
+			for (int a = 1; a < allPlayer.Length; a++)
 			{
-				if ( thisPlayer.CurrLootScore < allPlayer[a].CurrLootScore )
+				if (thisPlayer.CurrLootScore < allPlayer [a].CurrLootScore)
 				{
-					thisPlayer = allPlayer[a];
+					thisPlayer = allPlayer [a];
 					thisPlayerEqua = null;
 				}
-				else if ( thisPlayer.CurrLootScore == allPlayer[a].CurrLootScore  )
+				else if (thisPlayer.CurrLootScore == allPlayer [a].CurrLootScore)
 				{
-					thisPlayerEqua = allPlayer[a];
+					thisPlayerEqua = allPlayer [a];
 				}
 			}
-			
-			GoTarget(thisPlayerEqua);
+
+			GoTarget (thisPlayerEqua);
 		}
 	}
 	#endregion
-	
+
 	#region Public Methods
-	
+
 	#endregion
 
 	#region Private Methods

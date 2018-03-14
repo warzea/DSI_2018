@@ -194,10 +194,10 @@ public class UiManager : ManagerParent
     }
 
     // 2
-    public void EndScreenMedals (Transform thisObj, int thisID)
+    public void EndScreenMedals (Transform thisObj, int thisID, int nbr)
     {
-        //thisObj = PlayersEndScreen [thisID].transform.GetChild (3).transform;
-        //thisObj.localPosition += new Vector3 (0, 50, 0);
+        thisObj.position = PlayersEndScreen [thisID].transform.GetChild (3).transform.position;
+        thisObj.localPosition += new Vector3 (0, 50 * nbr, 0);
     }
 
     // 3
