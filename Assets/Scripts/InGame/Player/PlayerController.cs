@@ -144,7 +144,9 @@ public class PlayerController : MonoBehaviour
 	Camera getCam;
 	WeaponBox thisWB;
 	GameObject getEffect;
-	AudioSource thisObjAudio;
+
+	[HideInInspector]
+	public AudioSource thisObjAudio;
 
 	int lifePlayer;
 	float currSpeed;
