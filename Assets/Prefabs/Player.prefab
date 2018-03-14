@@ -1163,7 +1163,7 @@ MonoBehaviour:
   IdPlayer: 0
   LifePlayer: 5
   TimeToRegen: 3
-  MoveSpeed: 13
+  MoveSpeed: 14
   angleAimSensitivity: 4
   aimSensitivity: 10
   aimSensitivityEnemy: 1.5
@@ -1186,9 +1186,9 @@ MonoBehaviour:
   WeapText: {fileID: 0}
   DistThrowWeap: 11
   SpeedThrow: 21
-  SpeedReduceOnBox: 0.35
-  TimeAccelBox: 2
-  SmoothRotateOnBox: 4.2
+  SpeedReduceOnBox: 0.75
+  TimeAccelBox: 0.5
+  SmoothRotateOnBox: 7
   UiAmmoX: 50
   UiAmmoY: -50
   CdShoot: 0
@@ -1222,6 +1222,7 @@ MonoBehaviour:
   checkShoot: 1
   checkAuto: 0
   canCauldron: 0
+  thisObjAudio: {fileID: 0}
 --- !u!135 &135883529401051248
 SphereCollider:
   m_ObjectHideFlags: 1
