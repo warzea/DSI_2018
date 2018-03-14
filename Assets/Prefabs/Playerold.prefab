@@ -1068,7 +1068,7 @@ MonoBehaviour:
   IdPlayer: 0
   LifePlayer: 5
   TimeToRegen: 3
-  MoveSpeed: 13
+  MoveSpeed: 14
   angleAimSensitivity: 6
   aimSensitivity: 10
   aimSensitivityEnemy: 1.5
@@ -1089,12 +1089,11 @@ MonoBehaviour:
   BoxPlace: {fileID: 4998498178062740}
   AmmoUI: {fileID: 0}
   WeapText: {fileID: 0}
-  thisAud: {fileID: 0}
   DistThrowWeap: 11
   SpeedThrow: 2
-  SpeedReduceOnBox: 0.35
-  TimeAccelBox: 5
-  SmoothRotateOnBox: 2.8
+  SpeedReduceOnBox: 1
+  TimeAccelBox: 0.5
+  SmoothRotateOnBox: 7
   UiAmmoX: 50
   UiAmmoY: -50
   CdShoot: 0
@@ -1120,7 +1119,7 @@ MonoBehaviour:
   NbrEnemy: 0
   currentEnemy: 0
   LostItem: 0
-  checkAward: 0
+  NbrAward: 0
   CurrItem: 0
   UiAmmo: {fileID: 0}
   currInt: {fileID: 0}
@@ -1128,6 +1127,7 @@ MonoBehaviour:
   checkShoot: 1
   checkAuto: 0
   canCauldron: 0
+  thisObjAudio: {fileID: 0}
 --- !u!114 &114717990859517940
 MonoBehaviour:
   m_ObjectHideFlags: 1

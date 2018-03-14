@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class AbstractMedal : MonoBehaviour
 {
 	#region Variables
-	public PlayerController ThisPlayer;
+	public PlayerController thisPlayer;
 	protected Transform thisTrans;
 	public float Score;
+	public string ThisString;
+	public Text ThisText;
 	#endregion
 
 	#region Mono
@@ -26,23 +29,27 @@ public abstract class AbstractMedal : MonoBehaviour
 
 	public void GoTarget (PlayerController equaContr = null, string Text = "")
 	{
-		Debug.Log ("1");
-		if (equaContr.NbrAward > 2)
+		Debug.Log (thisPlayer.NbrAward);
+		if (thisPlayer.NbrAward > 2)
 		{
 			gameObject.SetActive (false);
 
 			return;
 		}
-		Debug.Log (ThisPlayer);
 
-		//Manager.Ui.EndScreenMedals (thisTrans, ThisPlayer.IdPlayer);
-		ThisPlayer.NbrAward++;
+		if (ThisText != null)
+		{
+			ThisText.text = ThisString;
+		}
+
+		Manager.Ui.EndScreenMedals (thisTrans, thisPlayer.IdPlayer, thisPlayer.NbrAward);
+		thisPlayer.NbrAward++;
 
 		if (equaContr != null)
 		{
 			equaContr.NbrAward++;
 			GameObject thisObj = (GameObject) Instantiate (gameObject, thisTrans.parent);
-			thisObj.GetComponent<AbstractMedal> ().ThisPlayer = equaContr;
+			thisObj.GetComponent<AbstractMedal> ().thisPlayer = equaContr;
 			thisObj.GetComponent<AbstractMedal> ().GoTarget ();
 		}
 	}

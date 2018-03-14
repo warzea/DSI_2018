@@ -1,40 +1,41 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
-public class MedalChest : AbstractMedal 
+public class MedalChest : AbstractMedal
 {
 	#region Variables
 	#endregion
-	
+
 	#region Mono
-	public override void StartCheck ( PlayerController[] allPlayer )
+	public override void StartCheck (PlayerController [] allPlayer)
 	{
-		PlayerController thisPlayer = allPlayer[0];
+		thisPlayer = allPlayer [0];
 		PlayerController thisPlayerEqua = null;
 
-		if ( allPlayer.Length > 1 )
+		if (allPlayer.Length > 1)
 		{
-			for ( int a = 1; a < allPlayer.Length; a ++ )
+			for (int a = 1; a < allPlayer.Length; a++)
 			{
-				if ( thisPlayer.NbrChest < allPlayer[a].NbrChest )
+				if (thisPlayer.NbrChest < allPlayer [a].NbrChest)
 				{
-					thisPlayer = allPlayer[a];
+					thisPlayer = allPlayer [a];
 					thisPlayerEqua = null;
 				}
-				else if ( thisPlayer.NbrChest == allPlayer[a].NbrChest  )
+				else if (thisPlayer.NbrChest == allPlayer [a].NbrChest)
 				{
-					thisPlayerEqua = allPlayer[a];
+					thisPlayerEqua = allPlayer [a];
 				}
 			}
-			
-			GoTarget(thisPlayerEqua);
+
+			GoTarget (thisPlayerEqua);
 		}
 	}
 	#endregion
-	
+
 	#region Public Methods
-	
+
 	#endregion
 
 	#region Private Methods
