@@ -15,42 +15,34 @@ public abstract class AbstractMedal : MonoBehaviour
 	#endregion
 
 	#region Mono
-	void Start ()
+	void Awake ( )
 	{
 		thisTrans = transform;
 	}
 	#endregion
 
 	#region Public Methods
-	public virtual void StartCheck (PlayerController [] allPlayer)
+	public virtual void StartCheck (PlayerController [ ] allPlayer)
 	{
 
 	}
 
 	public void GoTarget (PlayerController equaContr = null, string Text = "")
 	{
-		Debug.Log (thisPlayer.NbrAward);
-		if (thisPlayer.NbrAward > 2)
-		{
-			gameObject.SetActive (false);
-
-			return;
-		}
-
 		if (ThisText != null)
 		{
-			ThisText.text = ThisString;
+			ThisText.text = ThisString + Score.ToString ( );
 		}
 
-		Manager.Ui.EndScreenMedals (thisTrans, thisPlayer.IdPlayer, thisPlayer.NbrAward);
+		Manager.GameCont.MedalInfo [thisPlayer.IdPlayer].ThisMedal.Add (this);
 		thisPlayer.NbrAward++;
 
 		if (equaContr != null)
 		{
 			equaContr.NbrAward++;
-			GameObject thisObj = (GameObject) Instantiate (gameObject, thisTrans.parent);
-			thisObj.GetComponent<AbstractMedal> ().thisPlayer = equaContr;
-			thisObj.GetComponent<AbstractMedal> ().GoTarget ();
+			GameObject thisObj = (GameObject)Instantiate (gameObject, thisTrans.parent);
+			thisObj.GetComponent<AbstractMedal> ( ).thisPlayer = equaContr;
+			thisObj.GetComponent<AbstractMedal> ( ).GoTarget ( );
 		}
 	}
 	#endregion

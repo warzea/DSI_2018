@@ -12,7 +12,7 @@ public class MedalEnemy : AbstractMedal
 	#endregion
 
 	#region Public Methods
-	public override void StartCheck (PlayerController [] allPlayer)
+	public override void StartCheck (PlayerController [ ] allPlayer)
 	{
 		thisPlayer = allPlayer [0];
 		PlayerController thisPlayerEqua = null;
@@ -31,9 +31,10 @@ public class MedalEnemy : AbstractMedal
 					thisPlayerEqua = allPlayer [a];
 				}
 			}
+			Score = thisPlayer.NbrEnemy;
 			GoTarget (thisPlayerEqua);
 
-			int b;
+			/*int b;
 			for (int a = 1; a < allPlayer.Length; a++)
 			{
 				thisPlayer = allPlayer [0];
@@ -41,28 +42,38 @@ public class MedalEnemy : AbstractMedal
 
 				for (b = 0; b < allPlayer.Length; b++)
 				{
-					if (thisPlayer.AllEnemy [b].NbrEnemy < allPlayer [a].AllEnemy [b].NbrEnemy)
+					for (int c = 0; c < allPlayer [a].AllEnemy.Count; c++)
 					{
-						thisPlayer = allPlayer [a];
-						thisPlayerEqua = null;
+						if (thisPlayer.AllEnemy [b].NbrEnemy < allPlayer [a].AllEnemy [b].NbrEnemy)
+						{
+							thisPlayer = allPlayer [a];
+							thisPlayerEqua = null;
+						}
+						else if (thisPlayer.AllEnemy [b].NbrEnemy == allPlayer [a].AllEnemy [b].NbrEnemy)
+						{
+							thisPlayerEqua = allPlayer [a];
+						}
 					}
-					else if (thisPlayer.NbrEnemy == allPlayer [a].NbrEnemy)
-					{
-						thisPlayerEqua = allPlayer [a];
-					}
+
 				}
 
-				GameObject thisObj = (GameObject) Instantiate (gameObject, thisTrans.parent);
-				thisObj.GetComponent<AbstractMedal> ().thisPlayer = thisPlayerEqua;
-				thisObj.GetComponent<AbstractMedal> ().GoTarget ();
+				GameObject thisObj = (GameObject)Instantiate (gameObject, thisTrans.parent);
+				thisObj.GetComponent<AbstractMedal> ( ).thisPlayer = thisPlayerEqua;
+				thisObj.GetComponent<AbstractMedal> ( ).GoTarget ( );
+				thisObj.GetComponent<AbstractMedal> ( ).Score = thisPlayer.NbrEnemy;
 
 				if (thisPlayerEqua != null)
 				{
-					thisObj = (GameObject) Instantiate (gameObject, thisTrans.parent);
-					thisObj.GetComponent<AbstractMedal> ().thisPlayer = thisPlayerEqua;
-					thisObj.GetComponent<AbstractMedal> ().GoTarget ();
+					thisObj = (GameObject)Instantiate (gameObject, thisTrans.parent);
+					thisObj.GetComponent<AbstractMedal> ( ).thisPlayer = thisPlayerEqua;
+					thisObj.GetComponent<AbstractMedal> ( ).GoTarget ( );
 				}
-			}
+			}*/
+		}
+		else
+		{
+			Score = thisPlayer.NbrEnemy;
+			GoTarget ( );
 		}
 	}
 

@@ -9,7 +9,7 @@ public class MedalMaxKill : AbstractMedal
 	#endregion
 
 	#region Mono
-	public override void StartCheck (PlayerController [] allPlayer)
+	public override void StartCheck (PlayerController [ ] allPlayer)
 	{
 		thisPlayer = allPlayer [0];
 		PlayerController thisPlayerEqua = null;
@@ -29,7 +29,13 @@ public class MedalMaxKill : AbstractMedal
 				}
 			}
 
+			Score = thisPlayer.CurrKillScore;
 			GoTarget (thisPlayerEqua);
+		}
+		else
+		{
+			Score = thisPlayer.CurrKillScore;
+			GoTarget ( );
 		}
 	}
 	#endregion

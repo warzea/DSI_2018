@@ -9,7 +9,7 @@ public class MedalCatchW : AbstractMedal
 	#endregion
 
 	#region Mono
-	public override void StartCheck (PlayerController [] allPlayer)
+	public override void StartCheck (PlayerController [ ] allPlayer)
 	{
 		thisPlayer = allPlayer [0];
 		PlayerController thisPlayerEqua = null;
@@ -29,7 +29,13 @@ public class MedalCatchW : AbstractMedal
 				}
 			}
 
+			Score = thisPlayer.WeaponCatch;
 			GoTarget (thisPlayerEqua);
+		}
+		else
+		{
+			Score = thisPlayer.WeaponCatch;
+			GoTarget ( );
 		}
 	}
 	#endregion
