@@ -65,14 +65,14 @@ public class GameController : ManagerParent
             ScoreInfo [ ] allSc = Manager.Ui.GetScores.AllScore.ToArray ( );
             ScoreInfo thisScore = allSc [0];
 
-            for (int a = 0; a < allSc.Length; a++)
-            {
-                if (allSc [a].ScoreTpe == ScoreType.BoxWeapon)
-                {
-                    thisScore = allSc [a];
-                    break;
-                }
-            }
+           for (int a = 0; a < allSc.Length; a++)
+           {
+               if (allSc[a].ScoreTpe == ScoreType.BoxWeapon)
+               {
+                   thisScore = allSc[a];
+                   break;
+               }
+           }
 
             DOVirtual.DelayedCall (1, ( )=>
             {
@@ -103,12 +103,12 @@ public class GameController : ManagerParent
                 }
             });
 
-            Manager.Ui.GetScores.UpdateValue (thisScore.FinalScore, ScoreType.EndScore);
+           Manager.Ui.GetScores.UpdateValue(thisScore.FinalScore, ScoreType.EndScore);
 
-        });
+       });
     }
 
-    public void EtatAgent (bool thisEtat)
+    public void EtatAgent(bool thisEtat)
     {
         var newEtat = new AgentEvent ( );
         newEtat.AgentChecking = thisEtat;
@@ -152,7 +152,7 @@ public class GameController : ManagerParent
 
         if (StartWeapon == null)
         {
-            StartWeapon = WeaponB.AllWeapon [0];
+            StartWeapon = WeaponB.AllWeapon[0];
         }
 
         if (MainCam == null)
@@ -174,10 +174,10 @@ public class GameController : ManagerParent
 
         for (int a = 0; a < getPlayers.Length; a++)
         {
-            getPlayers [a].ReadyPlayer = false;
-            getPlayerHud [a].SetActive (getPlayers [a].EnablePlayer);
+            getPlayers[a].ReadyPlayer = false;
+            getPlayerHud[a].SetActive(getPlayers[a].EnablePlayer);
 
-            if (getPlayers [a].EnablePlayer)
+            if (getPlayers[a].EnablePlayer)
             {
                 getPlayer = (GameObject)Instantiate (PlayerPrefab);
                 getPlayer.name = getPlayer.name + "+" + a.ToString ( );
@@ -194,11 +194,11 @@ public class GameController : ManagerParent
 
                 if (PlayerPosSpawn != null)
                 {
-                    getPlayer.transform.position = PlayerPosSpawn.position + new Vector3 (a * 1.5f, 0, 0);
+                    getPlayer.transform.position = PlayerPosSpawn.position + new Vector3(a * 1.5f, 0, 0);
                 }
                 else
                 {
-                    getPlayer.transform.position = new Vector3 (a * 1.5f, 0, 0);
+                    getPlayer.transform.position = new Vector3(a * 1.5f, 0, 0);
                 }
 
                 getPC = getPlayer.GetComponent<PlayerController> ( );
@@ -217,7 +217,7 @@ public class GameController : ManagerParent
                 getWeapon = (GameObject)Instantiate (StartWeapon, getPC.WeaponPos.transform);
                 getWeapon.transform.localPosition = Vector3.zero;
                 //getWeapon.transform.localRotation = Quaternion.identity;
-                getWeapon.transform.localScale = new Vector3 (0.01165743f, 0.01258486f, 0.01180339f);
+                getWeapon.transform.localScale = new Vector3(0.01165743f, 0.01258486f, 0.01180339f);
 
                 //getPlayer.GetComponent<PlayerController>().WeapText = Manager.Ui.textWeapon[a];
 
@@ -246,11 +246,11 @@ public class GameController : ManagerParent
 
         for (a = 0; a < playerCont.Length; a++)
         {
-            if (playerCont [a].LifePlayer < playerCont [getID].LifePlayer && !playerCont [a].dead)
+            if (playerCont[a].LifePlayer < playerCont[getID].LifePlayer && !playerCont[a].dead)
             {
                 getID = a;
             }
-            else if (playerCont [a].LifePlayer == playerCont [getID].LifePlayer && !playerCont [a].dead)
+            else if (playerCont[a].LifePlayer == playerCont[getID].LifePlayer && !playerCont[a].dead)
             {
                 if (Random.Range (0, 2)== 0)
                 {
@@ -259,12 +259,12 @@ public class GameController : ManagerParent
             }
         }
 
-        if (playerCont [getID].dead)
+        if (playerCont[getID].dead)
         {
             check = false;
             for (a = 0; a < playerCont.Length; a++)
             {
-                if (!playerCont [a].dead)
+                if (!playerCont[a].dead)
                 {
                     getID = a;
                     check = true;
@@ -282,15 +282,15 @@ public class GameController : ManagerParent
             }
         }
 
-        lowLife = playerCont [getID].gameObject;
+        lowLife = playerCont[getID].gameObject;
 
         for (a = 0; a < playerCont.Length; a++)
         {
-            if (playerCont [a].LifePlayer > playerCont [getID].LifePlayer)
+            if (playerCont[a].LifePlayer > playerCont[getID].LifePlayer)
             {
                 getID = a;
             }
-            else if (playerCont [a].LifePlayer == playerCont [getID].LifePlayer)
+            else if (playerCont[a].LifePlayer == playerCont[getID].LifePlayer)
             {
                 if (Random.Range (0, 2)== 0)
                 {
@@ -299,14 +299,14 @@ public class GameController : ManagerParent
             }
         }
 
-        maxLife = playerCont [getID].gameObject;
+        maxLife = playerCont[getID].gameObject;
 
         check = false;
         for (a = 0; a < playerCont.Length; a++)
         {
-            if (playerCont [a].driveBox)
+            if (playerCont[a].driveBox)
             {
-                boxWeapon = playerCont [a].gameObject;
+                boxWeapon = playerCont[a].gameObject;
                 check = true;
                 break;
             }
@@ -314,10 +314,10 @@ public class GameController : ManagerParent
 
         if (!check)
         {
-            boxWeapon = playerCont [Random.Range (0, playerCont.Length)].gameObject;
+            boxWeapon = playerCont[Random.Range(0, playerCont.Length)].gameObject;
         }
 
-        Manager.AgentM.ChangeEtatFocus (lowLife, maxLife, boxWeapon);
+        Manager.AgentM.ChangeEtatFocus(lowLife, maxLife, boxWeapon);
 
         DOVirtual.DelayedCall (TimerCheckPlayer, ( )=>
         {

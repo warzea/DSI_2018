@@ -11,7 +11,7 @@ public class slider_positionplayer : MonoBehaviour
     private Vector3 posDepart;
     private float distance = 0;
     private float maxdistance;
-
+    float valuePos;
     void Start()
     {
         posDepart = Cauldron.transform.position;
@@ -21,9 +21,10 @@ public class slider_positionplayer : MonoBehaviour
     void Update()
     {
         distance = Vector3.Distance(Cauldron.position, posFinal.position);
-        if (distance <= 1 && distance >= 0)
+        float valuePos = 1 - (distance / maxdistance);
+
+        if (valuePos <= 1 && valuePos >= 0)
         {
-            float valuePos = 1 - (distance / maxdistance);
             sliderCanvas.value = valuePos;
         }
     }

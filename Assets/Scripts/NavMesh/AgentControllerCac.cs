@@ -35,6 +35,8 @@ public class AgentControllerCac : MonoBehaviour
 
     public GameObject MeshDestroy;
 
+	private float timeAttack = 2f;
+
     void Start()
     {
         myEtatAgent = AgentEtat.aliveAgent;
@@ -48,6 +50,7 @@ public class AgentControllerCac : MonoBehaviour
 
         Manager.Event.Register(thisAct);
         navAgent.speed = speedVsPlayer;
+		timeAttack = Random.Range (timeLeftAgentAttacCac - 0.1f, timeLeftAgentAttacCac + 0.1f);
     }
     void Awake()
     {
@@ -111,7 +114,7 @@ public class AgentControllerCac : MonoBehaviour
     public void ShootCac()
     {
 
-        if (timeAgent > timeLeftAgentAttacCac)
+		if (timeAgent > timeAttack)
         {
             if (focusPlayer != null)
             {
@@ -130,6 +133,7 @@ public class AgentControllerCac : MonoBehaviour
                     focusPlayer.GetComponent<PlayerController>().GetDamage(transform);
                 }
             }
+			timeAttack = Random.Range (timeLeftAgentAttacCac - 0.1f, timeLeftAgentAttacCac + 0.1f);
             timeAgent = 0;
         }
     }
