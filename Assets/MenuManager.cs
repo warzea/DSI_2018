@@ -31,6 +31,11 @@ public class MenuManager : MonoBehaviour {
 
     public PlayableDirector timelineDirector;
     public MenuButton firstItemMenu;
+    public MenuButton creditsItem;
+
+    public CanvasGroup Credits;
+
+    bool CreditsOpened;
 
     Player player1, player2, player3, player4;
 
