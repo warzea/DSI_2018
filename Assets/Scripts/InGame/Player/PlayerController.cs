@@ -369,10 +369,7 @@ public class PlayerController : MonoBehaviour
 			getSpeed = currSpeed;
 			thisWB.CurrTime += (float)getDeltaTime / thisWB.TimeFullFill;
 			thisWB.ThisGauge.fillAmount = thisWB.CurrTime;
-			if (thisWB.ThisGauge.fillAmount == 1) {
-				thisWB.ThisGauge.GetComponentInChildren<RainbowColor> ().enabled = true;
-				thisWB.ThisGauge.GetComponentInChildren<RainbowScale> ().enabled = true;
-			}
+	
 			TimeWBox += getDeltaTime;
 		} else if (shooting) {
 			getSpeed *= SpeedReduce;
