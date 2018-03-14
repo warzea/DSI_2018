@@ -142,6 +142,7 @@ public class UiManager : ManagerParent
     // 1
     public void EndScreenStart ()
     {
+        EndScreenWeaponBox.SetActive (true);
         GetInGame.transform.DOLocalMoveY (200, .3f).SetEase (Ease.InOutSine);
 
         EndScreenContainer.DOFade (1, .2f);

@@ -12,7 +12,7 @@ public abstract class AbstractMedal : MonoBehaviour
 	#endregion
 
 	#region Mono
-	void Awake ()
+	void Start ()
 	{
 		thisTrans = transform;
 	}
@@ -33,9 +33,9 @@ public abstract class AbstractMedal : MonoBehaviour
 
 			return;
 		}
-		Debug.Log ("2");
+		Debug.Log (ThisPlayer);
 
-		Manager.Ui.EndScreenMedals (thisTrans, ThisPlayer.IdPlayer);
+		//Manager.Ui.EndScreenMedals (thisTrans, ThisPlayer.IdPlayer);
 		ThisPlayer.NbrAward++;
 
 		if (equaContr != null)

@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 7fb187a072cfb1c4a8ca4d8bf4b112d2
 timeCreated: 1521044760
+=======
+guid: ba38e8f1b92a20c4ab9dcdb3d27842f2
+timeCreated: 1521044927
+>>>>>>> Alexandre
 licenseType: Free
 NativeFormatImporter:
   externalObjects: {}
