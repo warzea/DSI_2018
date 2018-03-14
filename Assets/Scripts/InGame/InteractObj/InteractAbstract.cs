@@ -67,13 +67,27 @@ public class InteractAbstract : MonoBehaviour
 	#region Public Methods
 	public void OnInteract ( PlayerController thisPlayer )
 	{
+        /*
 		if ( NbrTouchToDrop > 0 )
 		{
 			NbrTouchToDrop --;
-		}
-		else if ( NbrItem > 0 )
+
+            transform.DOKill(true);
+
+        }*/
+		if ( NbrItem > 0 )
 		{
             NbrItem--;
+            
+            transform.DOKill(true);
+
+            transform.DOShakeScale(.25f, .3f, 15, 0);
+
+            float rdmRotZ = UnityEngine.Random.Range(-30, 30);
+            float rdmPosZ = UnityEngine.Random.Range(-1, 1);
+
+            transform.DOPunchRotation(new Vector3(0, 0, rdmRotZ), .3f, 3, 1).SetEase(Ease.InCirc);
+            transform.DOPunchPosition(new Vector3(0, 1, rdmPosZ), .3f, 3, 1).SetEase(Ease.InCirc);
 
             thisPlayer.CurrItem += NbrDropByDrop * valDrop;
 
