@@ -47,7 +47,17 @@ public class InteractAbstract : MonoBehaviour
 				{
 					multEffect (false);
 				});
+
+				if ( thisEvnt.ThisMat != null )
+				{
+					foreach ( Renderer thisMat in GetComponentsInChildren<Renderer>() )
+					{
+						thisMat.material = thisEvnt.ThisMat;
+					}
+				}
 			}
+
+			
         };
 
         Manager.Event.Register(thisAct);
@@ -61,9 +71,10 @@ public class InteractAbstract : MonoBehaviour
 		{
 			NbrTouchToDrop --;
 		}
-		else 
+		else if ( NbrItem > 0 )
 		{
-			thisPlayer.CurrItem += NbrDropByDrop * ValueOnDrop;
+
+			thisPlayer.CurrItem += NbrDropByDrop * valDrop;
 
 			Manager.Ui.AllPotGet[thisPlayer.IdPlayer].GetComponent<PotionFollowP>().NewValue ( thisPlayer.CurrItem );
 
@@ -96,7 +107,7 @@ public class InteractAbstract : MonoBehaviour
 							}
 							else
 							{
-								Destroy(newItem, 1);
+								Destroy(newItem, 1.1f);
 							}
 						}
 					});

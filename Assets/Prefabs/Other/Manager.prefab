@@ -1927,7 +1927,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4707250982502558}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4282300125738132
 Transform:
@@ -1993,7 +1993,7 @@ Transform:
   m_Children:
   - {fileID: 4254250473890392}
   m_Father: {fileID: 4707250982502558}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4468510823019694
 Transform:
@@ -2019,7 +2019,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4707250982502558}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4518572631200406
 Transform:
@@ -2033,7 +2033,7 @@ Transform:
   m_Children:
   - {fileID: 224103898794787956}
   m_Father: {fileID: 4707250982502558}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4612537260025546
 Transform:
@@ -2096,11 +2096,11 @@ Transform:
   m_Children:
   - {fileID: 4695019296671218}
   - {fileID: 4175802251140258}
-  - {fileID: 4966607110826706}
   - {fileID: 4518572631200406}
   - {fileID: 4348142322103540}
   - {fileID: 4477541246955844}
   - {fileID: 4265074938997230}
+  - {fileID: 4966607110826706}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2141,7 +2141,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4707250982502558}
-  m_RootOrder: 2
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &82430556441988762
 AudioSource:
@@ -3940,14 +3940,15 @@ MonoBehaviour:
     type: 2}
   GetGauge: {fileID: 114702374234531948}
   GaugeBackground: {fileID: 114780701233932990}
+  GaugeButtonBonus: {fileID: 0}
   GaugeFeedback:
   - {fileID: 114773876507973550}
   - {fileID: 114200363979416790}
   - {fileID: 114161167998236734}
   - {fileID: 114633861585144218}
   - {fileID: 114698390753030462}
-  ButtonsInteract: {fileID: 225492348697701646}
   WhiteBackground: {fileID: 114948527857685714}
+  ButtonsInteract: {fileID: 225492348697701646}
   PlayerText:
   - {fileID: 1133045893180010, guid: 3226def034a507644a45fbf4efe09563, type: 2}
   - {fileID: 1271515614323310, guid: 02dc3b0f2d1d4554aa8a8c5f23cf45de, type: 2}

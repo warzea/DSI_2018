@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c6bfe4600766d64c85f4f9c20b7243a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpeEffet: {fileID: 1530796011795326, guid: 11f2cea504004b245a6d9e7fa10eef4d, type: 2}
+  SpeEffet: {fileID: 0}
   WeightRandom: 0
   AutoShoot: 1
   Projectile: 0
@@ -134,7 +134,7 @@ MonoBehaviour:
   FireRate: 0.3
   CoolDown: 0
   BackPush: 1
-  SpeedReduce: 0.5
+  SpeedReduce: 0.95
   Damage: 1
   Range: 28
   NbrBullet: 0
@@ -149,7 +149,7 @@ MonoBehaviour:
   SpeedZone: 0
   TimeDest: 0.2
   Diameter: 2
-  Bullet: {fileID: 1530796011795326, guid: fdc806cde44807143ac8d767e7824cf6, type: 2}
+  Bullet: {fileID: 1530796011795326, guid: 7debebcea0d258f4a9f5dc489d6103cf, type: 2}
   SpawnBullet: {fileID: 4940790349217874}
   canShoot: 1
   OnFloor: 1

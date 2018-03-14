@@ -25,9 +25,12 @@ public class UiManager : ManagerParent
     public GameObject CauldronGauge;
     public Image GetGauge;
     public Image GaugeBackground;
+    public GameObject GaugeButtonBonus;
     public Image[] GaugeFeedback;
-    public CanvasGroup ButtonsInteract;
     public Image WhiteBackground;
+
+    [Header("TUTO")]
+    public GameObject ButtonsInteract;
 
     public GameObject[] PlayerText;
 
@@ -211,23 +214,46 @@ public class UiManager : ManagerParent
     int nbrCauld = 0;
     [HideInInspector]
     public bool checkDrive = false;
-    public void CauldronButtons(bool visible = false)
+
+    public void CauldronButtonBonus(bool visible = false)
     {
         if (!visible)
         {
             nbrCauld--;
             if (nbrCauld <= 0 && !checkDrive)
             {
-                ButtonsInteract.DOFade(0, .1f);
+                GaugeButtonBonus.GetComponent<CanvasGroup>().DOFade(0, .1f);
             }
         }
         else
         {
             nbrCauld++;
-            ButtonsInteract.DOFade(1, .1f);
+            GaugeButtonBonus.GetComponent<CanvasGroup>().DOFade(1, .1f);
         }
     }
 
+    public bool OnTuto = true;
+
+    public void CauldronButtons(bool visible = false)
+    {
+        if ( OnTuto)
+        {
+            if (!visible)
+            {
+                nbrCauld--;
+                ButtonsInteract.GetComponent<CanvasGroup>().DOFade(0, .1f);
+            }
+            else
+            {
+                nbrCauld++;
+                ButtonsInteract.GetComponent<CanvasGroup>().DOFade(1, .1f);
+            }
+        }
+        else
+        {
+            CauldronButtonBonus ( visible );
+        }
+    }
 
     public void PopPotions(PotionType type) // poser ressource : 20 - 40 - 60 - 80 et 100
     {
@@ -302,9 +328,7 @@ public class UiManager : ManagerParent
         float rdmZ = UnityEngine.Random.Range(ShakeMinRot, ShakeMaxRot);
 
         Transform getT = Manager.GameCont.MainCam.transform;
-
-
-        float dir = -1;
+        
         shakeTwPos = getT.transform.DOPunchPosition(new Vector3(rdmX, 0, rdmX), ShakeDurationPos, 2, 1);
         shakeTwRot = getT.transform.DOPunchRotation(new Vector3(0, 0, rdmZ), ShakeDurationRot, 2, 1);
 
@@ -392,8 +416,12 @@ public class UiManager : ManagerParent
             setAllMenu.Add(thisUi.ThisMenu, thisUi);
         }
 
+        GaugeButtonBonus = (GameObject)Instantiate(GaugeButtonBonus, GetInGame);
+
         CauldronGauge = (GameObject)Instantiate(CauldronGauge, GetInGame);
-        CauldronGauge.SetActive(false);
+        CauldronGauge.GetComponent<CanvasGroup>().DOFade (0,0);
+
+        ButtonsInteract = (GameObject)Instantiate(ButtonsInteract, GetInGame);
         AllMenu = setAllMenu;
 
         OpenThisMenu(MenuType.SelectPlayer);
