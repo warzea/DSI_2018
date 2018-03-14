@@ -23,6 +23,9 @@ public class Manager : MonoBehaviour
 
 	static VibrationManager vibM;
 	public static VibrationManager VibM { get { return vibM; } }
+
+	static AudioManager audM;
+	public static AudioManager Audm { get { return audM; } }
 	#endregion
 	
 	#region Mono
@@ -61,6 +64,7 @@ public class Manager : MonoBehaviour
 		InitializeManager ( ref agentM );
 		InitializeManager ( ref agentMC );
 		InitializeManager ( ref vibM );
+		InitializeManager ( ref audM );
 	}
 
 	void InitializeManager<T>(ref T manager) where T : ManagerParent

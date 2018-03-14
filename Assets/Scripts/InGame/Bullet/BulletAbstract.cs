@@ -11,6 +11,7 @@ public class BulletAbstract : MonoBehaviour
     public GameObject GetEffect;
     public Trajectoir ThisTrajectoir;
     public float MoveSpeed = 10;
+    public string NameAudio = "";
     public float DefinitiveDestroy = 5;
     [HideInInspector]
     public Vector3 direction = Vector3.zero;
@@ -190,6 +191,8 @@ public class BulletAbstract : MonoBehaviour
     {
         GameObject thisObj = (GameObject)Instantiate(PrefabExplosion, thisPos, thisTrans.rotation);
         ExploScript getExplo = thisObj.GetComponent<ExploScript>();
+
+        Manager.Audm.OpenAudio(AudioType.Other, NameAudio);
 
         getExplo.TimeEffect = timeEffect;
         if (getExplo.TimeStay == 0)

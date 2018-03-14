@@ -13,7 +13,8 @@ public enum MenuType
 public enum ScoreType
 {
 	Nothing,
-	BoxWeapon
+	BoxWeapon,
+	EndScore
 }
 
 public enum Trajectoir
