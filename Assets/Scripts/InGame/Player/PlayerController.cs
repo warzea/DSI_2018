@@ -414,7 +414,8 @@ public class PlayerController : MonoBehaviour
 				try
 				{
 					thisWB.ThisGauge.GetComponentInChildren<RainbowColor> ().enabled = true;
-				}
+                    thisWB.ThisGauge.GetComponentInChildren<RainbowScale>().enabled = true;
+                }
 				catch
 				{
 					Debug.Log ("Raimbo jauge empty");

@@ -33,6 +33,8 @@ public class WeaponBox : MonoBehaviour
 	[HideInInspector]
 	public bool CanControl = true;
 
+    public SpriteRenderer circleEffect;
+
 	List<PlayerWeapon> updateWeapon; 
 	List<Tween> getAllTween;
 	Transform getChild;
@@ -82,9 +84,20 @@ public class WeaponBox : MonoBehaviour
 
 	public void ActionSpe ( )
 	{
-		if ( ThisGauge.fillAmount == 1 )
+		if ( ThisGauge.fillAmount >= 1 )
 		{
-			ThisGauge.GetComponentInChildren<RainbowColor>().enabled = false;
+            transform.DOKill(true);
+            getChild.DOKill(true);
+
+            var circle = Instantiate(circleEffect, transform.position, Quaternion.identity, transform);
+            circle.transform.DOLocalMove(Vector3.zero, 0);
+            circle.transform.DORotate(new Vector3(-90, 0, 0), 0, RotateMode.LocalAxisAdd);
+            circle.DOFade(0, 1f);
+            circle.transform.DOScale(6, 1);
+
+            transform.GetChild(1).DOShakeScale(1f, .7f, 20, 0);
+
+            ThisGauge.GetComponentInChildren<RainbowColor>().enabled = false;
 			ThisGauge.GetComponentInChildren<RainbowScale>().enabled = false;
 
 			ThisGauge.fillAmount = 0;
@@ -101,6 +114,7 @@ public class WeaponBox : MonoBehaviour
     public void GetWeapon (PlayerController thisPlayer, GameObject newObj = null)
     {
         getChild.DOKill(true);
+        transform.GetChild(1).DOKill(true);
         getChild.DORotate(new Vector3(0,0,1080), 2, RotateMode.LocalAxisAdd).SetEase(Ease.InSine);
         getChild.DOLocalMoveY(3, 2).SetEase(Ease.InSine).OnComplete(()=> {
             getChild.DOShakeScale(.5f, .3f, 18, 0);
@@ -110,6 +124,7 @@ public class WeaponBox : MonoBehaviour
             });
         });
     }
+
 
 
     public void NewWeapon ( PlayerController thisPlayer, GameObject newObj = null )
@@ -220,7 +235,7 @@ public class WeaponBox : MonoBehaviour
 			}
 			else
 			{
-				Manager.Ui.GetGauge.GetComponentsInChildren<Image>()[1].DOColor(Color.white,0);				
+				Manager.Ui.GetGauge.GetComponentsInChildren<Image>()[1].DOColor(new Color32(1,1,1,0),0);				
 				Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = false;
 				Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = false;
 			}
@@ -279,7 +294,7 @@ public class WeaponBox : MonoBehaviour
 						}
 						else
 						{
-							Manager.Ui.GetGauge.GetComponentsInChildren<Image>()[1].DOColor(Color.white,0);				
+							Manager.Ui.GetGauge.GetComponentsInChildren<Image>()[1].DOColor(new Color32(1,1,1,0),0);				
 							Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = false;
 							Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = false;
 						}

@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+<<<<<<< HEAD
+guid: deadf68b2354fe3478e7492b1be321bd
+timeCreated: 1521043115
+licenseType: Free
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+=======
+guid: e07480bd60fa2f64c9e2601cad605217
+timeCreated: 1521043052
+licenseType: Free
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+>>>>>>> Clarisse
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
