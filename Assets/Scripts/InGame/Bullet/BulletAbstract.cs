@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+
 using DG.Tweening;
+
+using UnityEngine;
 
 public class BulletAbstract : MonoBehaviour
 {
@@ -69,24 +71,29 @@ public class BulletAbstract : MonoBehaviour
 		startPos = thisTrans.position;
 		newPos = startPos;
 
-		if (direction == Vector3.zero) {
+		if (direction == Vector3.zero)
+		{
 			direction = thisTrans.forward;
 		}
 
-		if (!Projectil) {
+		if (!Projectil)
+		{
 			getBox = gameObject.AddComponent<BoxCollider> ();
 			getBox.isTrigger = true;
 			playZone ();
 		}
 
-		if (ThisTrajectoir == Trajectoir.Nothing) {
+		if (ThisTrajectoir == Trajectoir.Nothing)
+		{
 			checkUpdate = false;
 		}
 
-		if (GetEffect != null) {
+		if (GetEffect != null)
+		{
 			ParticleSystem thisPart = GetEffect.GetComponentInChildren<ParticleSystem> ();
 
-			if (thisPart != null) {
+			if (thisPart != null)
+			{
 				timeEffect = thisPart.duration;
 			}
 		}
@@ -100,11 +107,13 @@ public class BulletAbstract : MonoBehaviour
 
 	void Update ()
 	{
-		if (blockUpdate || !checkUpdate) {
+		if (blockUpdate || !checkUpdate)
+		{
 			return;
 		}
 
-		if (!Projectil) {
+		if (!Projectil)
+		{
 			thisTrans.position = newPos + thisTrans.forward * getDistScale;
 			thisTrans.localScale = startPos;
 			//getBox.center =  * 0.5f;
@@ -112,26 +121,38 @@ public class BulletAbstract : MonoBehaviour
 			return;
 		}
 
-		if (Vector3.Distance (startPos, thisTrans.position) < BulletRange) {
-			switch (ThisTrajectoir) {
-			case Trajectoir.Standard:
-				thisTrans.localPosition += direction * Time.deltaTime * MoveSpeed;
-				break;
+		if (Vector3.Distance (startPos, thisTrans.position) < BulletRange)
+		{
+			switch (ThisTrajectoir)
+			{
+				case Trajectoir.Standard:
+					thisTrans.localPosition += direction * Time.deltaTime * MoveSpeed;
+					break;
 			}
-		} else if (!checkEnd) {
-			if (canExplose) {
+		}
+		else if (!checkEnd)
+		{
+			if (canExplose)
+			{
 				instExplo (thisTrans.position);
 
-				if (Projectil) {
+				if (Projectil)
+				{
 					destObj (TimeStay);
 
 					blockUpdate = true;
-				} else {
+				}
+				else
+				{
 					destObj (0);
 				}
-			} else if (Projectil) {
+			}
+			else if (Projectil)
+			{
 				destObj (0);
-			} else {
+			}
+			else
+			{
 				destObj (TimeStay);
 			}
 			//Destroy ( gameObject, TimeStay );
@@ -145,15 +166,17 @@ public class BulletAbstract : MonoBehaviour
 
 	async void checkRayCast ()
 	{
-		RaycastHit[] allHit;
+		RaycastHit [] allHit;
 		string getTag;
 
 		allHit = Physics.RaycastAll (playerTrans.position, playerTrans.forward, BulletRange);
-    
-		foreach (RaycastHit thisRay in allHit) {
+
+		foreach (RaycastHit thisRay in allHit)
+		{
 			getTag = thisRay.collider.tag;
-            
-			if (getTag == Constants._Wall && thisRay.distance < BulletRange) {
+
+			if (getTag == Constants._Wall && thisRay.distance < BulletRange)
+			{
 				BulletRange = thisRay.distance - 0.5f;
 			}
 		}
@@ -168,24 +191,27 @@ public class BulletAbstract : MonoBehaviour
 		startPos = Vector3.zero;
 
 		t1 = DOTween.To (() => getDistScale, x => getDistScale = x, BulletRange * 0.5f * FarEffect, TimeFarEffect);
-		t2 = DOTween.To (() => startPos, x => startPos = x, new Vector3 (WidthRange, 5, BulletRange), SpeedZone).OnComplete (() => {
+		t2 = DOTween.To (() => startPos, x => startPos = x, new Vector3 (WidthRange, 5, BulletRange), SpeedZone).OnComplete (() =>
+		{
 			destObj (TimeStay);
 		});
 	}
 
 	void instExplo (Vector3 thisPos)
 	{
-		GameObject thisObj = (GameObject)Instantiate (PrefabExplosion, thisPos, thisTrans.rotation);
+		GameObject thisObj = (GameObject) Instantiate (PrefabExplosion, thisPos, thisTrans.rotation);
 		ExploScript getExplo = thisObj.GetComponent<ExploScript> ();
 
 		Manager.Audm.OpenAudio (AudioType.Other, NameAudio);
 
 		getExplo.TimeEffect = timeEffect;
-		if (getExplo.TimeStay == 0) {
+		if (getExplo.TimeStay == 0)
+		{
 			getExplo.TimeStay = TimeStay;
 		}
 
-		if (!getExplo.GetEffect) {
+		if (!getExplo.GetEffect)
+		{
 			getExplo.GetEffect = GetEffect;
 		}
 		getExplo.ScaleExplo = Diameter;
@@ -193,11 +219,13 @@ public class BulletAbstract : MonoBehaviour
 
 	void OnTriggerEnter (Collider collision)
 	{
-		if (blockUpdate) {
+		if (blockUpdate)
+		{
 			return;
 		}
 
-		if (collision.tag == Constants._Enemy) {
+		if (collision.tag == Constants._Enemy)
+		{
 			thisPlayer.CurrScore++;
 			thisPlayer.CurrKillScore++;
 			thisPlayer.ShootSucceed++;
@@ -208,36 +236,48 @@ public class BulletAbstract : MonoBehaviour
 			thisController = collision.GetComponent<AgentController> ();
 			thisControllerCac = collision.GetComponent<AgentControllerCac> ();
 
-			if (thisPlayer.currentEnemy > thisPlayer.NbrEnemy) {
+			if (thisPlayer.currentEnemy > thisPlayer.NbrEnemy)
+			{
 				thisPlayer.NbrEnemy = thisPlayer.currentEnemy;
 			}
 
-			for (int a = 0; a < thisPlayer.AllEnemy.Count; a++) {
-				if (thisController != null) {
-					if (thisPlayer.AllEnemy [a].ThisType == thisController.ThisType) {
+			for (int a = 0; a < thisPlayer.AllEnemy.Count; a++)
+			{
+				if (thisController != null)
+				{
+					if (thisPlayer.AllEnemy [a].ThisType == thisController.ThisType)
+					{
 						thisPlayer.AllEnemy [a].NbrEnemy++;
 						break;
 					}
-				} else {
-					if (thisPlayer.AllEnemy [a].ThisType == thisControllerCac.ThisType) {
+				}
+				else
+				{
+					if (thisPlayer.AllEnemy [a].ThisType == thisControllerCac.ThisType)
+					{
 						thisPlayer.AllEnemy [a].NbrEnemy++;
 						break;
 					}
 				}
 			}
 
-			if (canExplose) {
-				if (Projectil) {
+			if (canExplose)
+			{
+				if (Projectil)
+				{
 					blockUpdate = true;
 				}
 
 				instExplo (collision.ClosestPoint (thisTrans.position));
 			}
 
-			if (!Through && !canExplose) {
+			if (!Through && !canExplose)
+			{
 				destObj ();
 			}
-		} else if (collision.tag == Constants._Wall && Projectil) {
+		}
+		else if (collision.tag == Constants._Wall && Projectil)
+		{
 			destObj ();
 		}
 	}
@@ -256,11 +296,14 @@ public class BulletAbstract : MonoBehaviour
 
 		MeshRenderer thisMr = GetComponentInChildren<MeshRenderer> ();
 		Collider thisC = GetComponent<Collider> ();
-		if (thisMr != null && thisC != null) {
+		if (thisMr != null && thisC != null)
+		{
 			thisMr.enabled = false;
 			thisC.enabled = false;
 			Destroy (gameObject, DefinitiveDestroy);
-		} else {
+		}
+		else
+		{
 			Destroy (gameObject);
 		}
 	}
