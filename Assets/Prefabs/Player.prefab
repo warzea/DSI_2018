@@ -1761,7 +1761,7 @@ MonoBehaviour:
   LifePlayer: 5
   TimeToRegen: 3
   MoveSpeed: 13
-  angleAimSensitivity: 6
+  angleAimSensitivity: 4
   aimSensitivity: 10
   aimSensitivityEnemy: 1.5
   radialDeadZone: 0.3
@@ -1782,10 +1782,10 @@ MonoBehaviour:
   AmmoUI: {fileID: 0}
   WeapText: {fileID: 0}
   DistThrowWeap: 11
-  SpeedThrow: 2
+  SpeedThrow: 21
   SpeedReduceOnBox: 0.35
-  TimeAccelBox: 5
-  SmoothRotateOnBox: 2.8
+  TimeAccelBox: 2
+  SmoothRotateOnBox: 4.2
   UiAmmoX: 50
   UiAmmoY: -50
   CdShoot: 0
