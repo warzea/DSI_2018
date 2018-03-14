@@ -235,7 +235,7 @@ public class WeaponBox : MonoBehaviour
 			}
 			else
 			{
-				Manager.Ui.GetGauge.GetComponentsInChildren<Image>()[1].DOColor(Color.white,0);				
+				Manager.Ui.GetGauge.GetComponentsInChildren<Image>()[1].DOColor(new Color32(1,1,1,0),0);				
 				Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = false;
 				Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = false;
 			}
@@ -294,7 +294,7 @@ public class WeaponBox : MonoBehaviour
 						}
 						else
 						{
-							Manager.Ui.GetGauge.GetComponentsInChildren<Image>()[1].DOColor(Color.white,0);				
+							Manager.Ui.GetGauge.GetComponentsInChildren<Image>()[1].DOColor(new Color32(1,1,1,0),0);				
 							Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[1].enabled = false;
 							Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor>()[0].enabled = false;
 						}
