@@ -244,6 +244,7 @@ public class PlayerController : MonoBehaviour
         if (canTakeDmg && checkUpdate)
         {
             lifePlayer -= intDmg;
+            animPlayer.SetTrigger("Damage");
 
             if (lifePlayer <= 0 && !dead)
             {
@@ -823,6 +824,7 @@ public class PlayerController : MonoBehaviour
             lifePlayer--;
 
             Manager.VibM.StunVibration(inputPlayer);
+            animPlayer.SetTrigger("Damage");
 
             if (lifePlayer <= 0 && !dead)
             {
