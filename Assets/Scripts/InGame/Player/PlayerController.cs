@@ -47,7 +47,6 @@ public class PlayerController : MonoBehaviour
 	public Transform BoxPlace;
 	public Transform AmmoUI;
 	public Text WeapText;
-	public AudioManager thisAud;
 	[Space]
 
 	[Header("WeaponInfo")]
@@ -117,7 +116,7 @@ public class PlayerController : MonoBehaviour
 	[HideInInspector]
 	public int LostItem = 0;
 	[HideInInspector]
-	public bool checkAward = false;
+	public int NbrAward = 0;
 	// -----
 
 	[HideInInspector]
@@ -145,6 +144,7 @@ public class PlayerController : MonoBehaviour
 	Camera getCam;
 	WeaponBox thisWB;
 	GameObject getEffect;
+	AudioSource thisObjAudio;
 
 	int lifePlayer;
 	float currSpeed;
@@ -181,10 +181,6 @@ public class PlayerController : MonoBehaviour
 			AllEnemy.Add (new EnemyInfo ());
 			AllEnemy [a].ThisType = (TypeEnemy)thisArray.GetValue (a);
 		}
-		if ( thisAud == null )
-		{
-			thisAud = GetComponentInChildren<AudioManager>();
-		}
 	}
 
 	void Start ()
@@ -199,7 +195,6 @@ public class PlayerController : MonoBehaviour
 		getCam = Manager.GameCont.MainCam;
 		GetCamFoll = Manager.GameCont.GetCameraFollow;
 		thisWB = getBoxWeapon.GetComponent<WeaponBox> ();
-		thisAud.InitializeManager();
 	}
 
 	void Update ()
@@ -497,7 +492,7 @@ public class PlayerController : MonoBehaviour
 
 				if ( thisWeapon.SpeEffet == null )
 				{
-					thisAud.OpenAudio(AudioType.Shoot, thisWeapon.NameMusic, true, null, true );
+					thisObjAudio = Manager.Audm.OpenAudio(AudioType.Shoot, thisWeapon.NameMusic );
 				}
 			}
 
@@ -509,7 +504,10 @@ public class PlayerController : MonoBehaviour
 			if ( getEffect != null )
 			{
 				Destroy ( getEffect );
-				thisAud.CloseAudio(AudioType.Shoot);
+				if ( thisObjAudio != null )
+				{
+					Destroy(thisObjAudio);
+				}
 			}
 			checkShootScore = true;
 		}
