@@ -1061,10 +1061,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IdPlayer: 0
   LifePlayer: 5
-  TimeToRegen: 3
+  TimeToRegen: 4
   MoveSpeed: 14
   angleAimSensitivity: 4
-  aimSensitivity: 10
+  aimSensitivity: 12
   aimSensitivityEnemy: 1.5
   radialDeadZone: 0.3
   maxAngle: 3
@@ -1105,7 +1105,7 @@ MonoBehaviour:
       outSlope: 0.45128167
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.2011916
+      time: 0.21399373
       value: 0.34372103
       inSlope: 2.3011541
       outSlope: 2.3011541
