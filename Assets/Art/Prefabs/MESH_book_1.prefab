@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4594364787668896}
   - component: {fileID: 33135535142317418}
   - component: {fileID: 23361383500250618}
-  - component: {fileID: 95912555412492066}
   m_Layer: 0
   m_Name: MESH_book_1
   m_TagString: Untagged
@@ -83,20 +82,3 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1464858277913396}
   m_Mesh: {fileID: 4300000, guid: a6d99a3ce898dc44ca8ef4f3e4afac85, type: 3}
---- !u!95 &95912555412492066
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1464858277913396}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: a6d99a3ce898dc44ca8ef4f3e4afac85, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1

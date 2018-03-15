@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4370348399160340}
   - component: {fileID: 33497408462158640}
   - component: {fileID: 23697747436816392}
-  - component: {fileID: 95543070343093412}
   m_Layer: 0
   m_Name: MESH_easel
   m_TagString: Untagged
@@ -83,20 +82,3 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1719644409355724}
   m_Mesh: {fileID: 4300000, guid: cdf7d7b4d80ce4f4ba5ab2a750091a30, type: 3}
---- !u!95 &95543070343093412
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1719644409355724}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: cdf7d7b4d80ce4f4ba5ab2a750091a30, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1

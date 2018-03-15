@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4787680446431670}
   - component: {fileID: 33243859860403174}
   - component: {fileID: 23816204336458652}
-  - component: {fileID: 95723955696489220}
   m_Layer: 0
   m_Name: DoubleWall
   m_TagString: Untagged
@@ -39,7 +38,6 @@ GameObject:
   - component: {fileID: 4203569979514870}
   - component: {fileID: 33097656579485772}
   - component: {fileID: 23479939074667114}
-  - component: {fileID: 95818124702691512}
   m_Layer: 0
   m_Name: MESH_wall (7)
   m_TagString: Untagged
@@ -156,37 +154,3 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1318955681288144}
   m_Mesh: {fileID: 4300000, guid: 959f40107a0f65640bfed57a64ad39fb, type: 3}
---- !u!95 &95723955696489220
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1318955681288144}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 959f40107a0f65640bfed57a64ad39fb, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
---- !u!95 &95818124702691512
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1668699940735154}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 959f40107a0f65640bfed57a64ad39fb, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1

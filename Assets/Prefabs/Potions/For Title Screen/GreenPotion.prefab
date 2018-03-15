@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23187668124799172}
   - component: {fileID: 95949655541335648}
   m_Layer: 0
-  m_Name: MESH_phial_pyramidal
+  m_Name: GreenPotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

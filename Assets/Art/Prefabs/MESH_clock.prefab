@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4363795697509758}
   - component: {fileID: 33369439257194580}
   - component: {fileID: 23888410308202456}
-  - component: {fileID: 95062422969456752}
   m_Layer: 0
   m_Name: MESH_clock
   m_TagString: Untagged
@@ -83,20 +82,3 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1573160308953646}
   m_Mesh: {fileID: 4300000, guid: 5e4ed94ff82f8004ca713418ec4b6d9c, type: 3}
---- !u!95 &95062422969456752
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1573160308953646}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 5e4ed94ff82f8004ca713418ec4b6d9c, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1

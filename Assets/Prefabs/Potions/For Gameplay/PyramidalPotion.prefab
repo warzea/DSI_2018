@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23158180409107464}
   - component: {fileID: 95827022986069374}
   m_Layer: 0
-  m_Name: GreenPotion 1
+  m_Name: PyramidalPotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
