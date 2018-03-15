@@ -471,11 +471,11 @@ public class PlayerController : MonoBehaviour
 					Debug.Log ("Raimbo jauge empty");
 				}
 			}
+
 			TimeWBox += getDeltaTime;
 		}
 		else if (shooting)
 		{
-
 			getSpeed *= SpeedReduce;
 		}
 
@@ -553,7 +553,7 @@ public class PlayerController : MonoBehaviour
 			{
 				if (driveBox)
 				{
-					thisWB.AttackCauld ();
+					thisWB.AttackCauld (thisTrans);
 					return;
 				}
 
