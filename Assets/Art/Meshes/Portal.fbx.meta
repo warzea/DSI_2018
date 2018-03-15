@@ -1,7 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 59042ff23dbc71140be628095b43d28f
 timeCreated: 1521125557
 licenseType: Free
+=======
+guid: 09960a61a2426754db8331c3e721646d
+timeCreated: 1521125765
+licenseType: Pro
+>>>>>>> David_Branch
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
