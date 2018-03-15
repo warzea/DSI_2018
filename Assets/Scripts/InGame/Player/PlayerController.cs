@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
 	public int LifePlayer = 3;
 	public int TimeToRegen = 3;
 	public float MoveSpeed;
+	public string NameHitSong;
 	[Space]
 
 	[Header ("Aime")]
@@ -265,6 +266,8 @@ public class PlayerController : MonoBehaviour
 	{
 		if (canTakeDmg && checkUpdate)
 		{
+			Manager.Audm.OpenAudio (AudioType.Other, NameHitSong);
+
 			lifePlayer -= intDmg;
 			animPlayer.SetTrigger ("Damage");
 
@@ -885,6 +888,7 @@ public class PlayerController : MonoBehaviour
 		}
 		else if (getTag == Constants._EnemyBullet && canTakeDmg && checkUpdate /*|| getTag == Constants._Enemy*/ )
 		{
+			Manager.Audm.OpenAudio (AudioType.Other, NameHitSong);
 			lifePlayer--;
 
 			Manager.VibM.StunVibration (inputPlayer);
