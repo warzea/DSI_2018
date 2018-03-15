@@ -173,7 +173,7 @@ MonoBehaviour:
   Damage: 1
   Range: 9
   NbrBullet: 7
-  ScaleBullet: 2
+  ScaleBullet: 1
   SpeedBullet: 90
   Gust: 0
   SpaceBullet: 0

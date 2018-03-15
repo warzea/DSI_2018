@@ -179,8 +179,8 @@ MonoBehaviour:
   SpaceBullet: 0
   Angle: 0
   TimeFarEffect: 0.2
-  FarEffect: 1
-  WidthRange: 0.2
+  FarEffect: 6
+  WidthRange: 0.4
   SpeedZone: 0
   TimeDest: 0.2
   Diameter: 2

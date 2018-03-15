@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 135674131210696902}
   - component: {fileID: 114103938945640018}
   m_Layer: 9
-  m_Name: ExploScope
+  m_Name: ExploRailgun
   m_TagString: BulletPlayer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,10 +52,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8accfa6ebaaaa824e86855a09eff9744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GetEffect: {fileID: 0}
-  ScaleExplo: 0
-  TimeStay: 0
-  TimeEffect: 0
+  GetEffect: {fileID: 1824441329617484, guid: e9c18d179df048948ba7c30b66120fed, type: 2}
+  ScaleExplo: 1
+  TimeStay: 1
+  TimeEffect: 1
 --- !u!135 &135674131210696902
 SphereCollider:
   m_ObjectHideFlags: 1
