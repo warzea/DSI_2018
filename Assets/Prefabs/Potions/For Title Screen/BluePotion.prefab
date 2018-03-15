@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23119440408207568}
   - component: {fileID: 95369062192899190}
   m_Layer: 0
-  m_Name: MESH_phial_rectangle
+  m_Name: BluePotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
