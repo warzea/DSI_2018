@@ -201,6 +201,8 @@ public class GameController : ManagerParent
                     }
                 }
 
+                Debug.Log(Manager.Ui.PlayersAmmo[a].name);
+
                 getPC = getPlayer.GetComponent<PlayerController>();
                 getPC.IdPlayer = getPlayers[a].IdPlayer;
                 getPC.AmmoUI = Manager.Ui.PlayersAmmo[a].transform;
