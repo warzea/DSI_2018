@@ -196,6 +196,8 @@ public class UiManager : ManagerParent
     // 2
     public void EndScreenMedals (Transform thisObj, int thisID, int nbr)
     {
+        UnityEngine.Debug.Log("EndScreenMedals");
+
         thisObj.position = PlayersEndScreen [thisID].transform.GetChild (3).transform.position;
         thisObj.localPosition += new Vector3 (0, 50 * nbr, 0);
     }
@@ -203,7 +205,9 @@ public class UiManager : ManagerParent
     // 3
     public void EndScreenFinished ()
     {
-        ScoreText.transform.DOPunchScale(Vector3.one * .4f, 1.5f, 10, .5f);
+        UnityEngine.Debug.Log("Finshed");
+        
+        Manager.Ui.GetScores.AllScore[1].ScoreText.transform.DOPunchScale(Vector3.one * .4f, 1.5f, 10, .5f);
 
         EndScreenFX.gameObject.SetActive (true);
         EndScreenFX.GetComponent<Animator>().SetTrigger("EvenMore");
