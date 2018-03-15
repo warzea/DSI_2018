@@ -95,8 +95,6 @@ public class WeaponBox : MonoBehaviour
             GetComponent<Collider> ().isTrigger = true;
             checkAttack = true;
 
-            //COUCOU COMMENT CA VA LES PROGS LOL JE SUIS UN GD MDR JE SUIS TROP FORT
-
             gameObject.tag = Constants._PlayerBullet;
             float getRange = RangeAttack;
 
@@ -117,8 +115,6 @@ public class WeaponBox : MonoBehaviour
                     }
                 }
             }
-
-            Debug.Log (getRange);
 
             GetTrans.DOLocalRotate (new Vector3 (0, 360, 0), SpeedAttack * 0.5f + SpeedAttack * 0.5f, RotateMode.LocalAxisAdd);
             GetTrans.DOLocalMoveZ (getRange, SpeedAttack * 0.5f).OnComplete (() =>
