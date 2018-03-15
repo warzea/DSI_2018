@@ -51,7 +51,7 @@ public class Scores : MonoBehaviour
 	#endregion
 
 	#region Private Methods
-	IEnumerator updateValue (WaitForEndOfFrame thisF, ScoreInfo thisInfo, System.Action thisAct)
+	IEnumerator updateValue (WaitForEndOfFrame thisF, ScoreInfo thisInfo, System.Action thisAct = null)
 	{
 		while (thisInfo.FinalScore != thisInfo.ScoreValue)
 		{
@@ -59,8 +59,11 @@ public class Scores : MonoBehaviour
 			yield return thisF;
 		}
 
-		thisAct.Invoke ();
-	}
+        try {
+		    thisAct.Invoke ();
+        }
+        catch { }
+    }
 	#endregion
 
 }

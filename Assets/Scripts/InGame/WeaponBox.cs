@@ -263,8 +263,8 @@ public class WeaponBox : MonoBehaviour
 
             Material mat = getChild.GetComponent<Renderer> ().material;
             mat.DOKill (true);
-            Debug.Log (mat);
-            mat.DOColor (Color.red, .15f).OnComplete (() =>
+            //Debug.Log (mat);
+            mat.DOColor (Color.red, .15f).OnComplete (( )=>
             {
                 mat.DOColor (Color.white, .15f);
             });
