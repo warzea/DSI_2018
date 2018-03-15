@@ -1086,8 +1086,8 @@ MonoBehaviour:
   WeapText: {fileID: 0}
   DistThrowWeap: 11
   SpeedThrow: 21
-  SpeedReduceOnBox: 0.75
-  TimeAccelBox: 2.5
+  SpeedReduceOnBox: 0.78
+  TimeAccelBox: 2.2
   SmoothRotateOnBox: 7
   CurveAcceleration:
     serializedVersion: 2
@@ -1099,16 +1099,22 @@ MonoBehaviour:
       outSlope: 2
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.108742975
+      time: 0.08741119
       value: 0.28858098
       inSlope: 0.45128167
       outSlope: 0.45128167
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.21399373
-      value: 0.34372103
-      inSlope: 2.3011541
-      outSlope: 2.3011541
+      time: 0.204045
+      value: 0.3363663
+      inSlope: 1.8499775
+      outSlope: 1.8499775
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.38325915
+      value: 0.78775966
+      inSlope: 1.2076823
+      outSlope: 1.2076823
       tangentMode: 0
     - serializedVersion: 2
       time: 1
