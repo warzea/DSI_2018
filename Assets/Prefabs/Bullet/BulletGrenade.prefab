@@ -330,9 +330,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PrefabExplosion: {fileID: 1530796011795326, guid: 6ed916362e889e64e83cb698562d1b26,
     type: 2}
-  GetEffect: {fileID: 142746, guid: a183756d778416d4d885ecf041d1acda, type: 2}
+  GetEffect: {fileID: 1014007151106268, guid: f7b742139528dac43be9e788582286da, type: 2}
   ThisTrajectoir: 0
   MoveSpeed: 1
+  NameAudio: grenade_frog_explosion
   DefinitiveDestroy: 5
   direction: {x: 0, y: 0, z: 0}
   BulletDamage: 1

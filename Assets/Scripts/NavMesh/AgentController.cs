@@ -43,6 +43,8 @@ public class AgentController : MonoBehaviour
 
     private Camera cam;
 
+	private float timeAttack = 2f;
+
 
     void Awake()
     {
@@ -50,7 +52,6 @@ public class AgentController : MonoBehaviour
         navAgent = transform.GetComponent<NavMeshAgent>();
         myFocusEtatAgent = CibleAgent.nothing;
         myEtatAgent = AgentEtat.aliveAgent;
-        timeLeftAgentshoot = Random.Range(timeLeftAgentshoot - 0.3f, timeLeftAgentshoot + 0.3f);
     }
 
     void Start()
@@ -66,6 +67,9 @@ public class AgentController : MonoBehaviour
         };
 
         Manager.Event.Register(thisAct);
+
+		timeAttack = Random.Range (timeLeftAgentshoot - 0.2f, timeLeftAgentshoot + 0.2f);
+
     }
 
     void Update()
@@ -119,7 +123,7 @@ public class AgentController : MonoBehaviour
     public void ShootAgent()
     {
         timeAgent += Time.deltaTime;
-        if (timeAgent > timeLeftAgentshoot)
+		if (timeAgent > timeAttack)
         {
             float distance = Vector3.Distance(transform.position, myFocusPlayer.transform.position);
 
@@ -145,6 +149,7 @@ public class AgentController : MonoBehaviour
                     }
                 }
             }
+			timeAttack = Random.Range (timeLeftAgentshoot - 0.2f, timeLeftAgentshoot + 0.2f);
             timeAgent = 0;
         }
     }
