@@ -158,7 +158,8 @@ MonoBehaviour:
     type: 2}
   PrefabExplo: {fileID: 1530796011795326, guid: ba9e0344ee4dac64a90e0ca8a6368c32,
     type: 2}
-  NameMusic: 
+  NameMusic: shotgun_bullet
+  MusicExplo: 
   TimeBackPush: 0.1
   WeightRandom: 0
   AutoShoot: 1
