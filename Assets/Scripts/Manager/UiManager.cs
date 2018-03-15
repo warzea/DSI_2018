@@ -58,6 +58,7 @@ public class UiManager : ManagerParent
     public GameObject EndScreenMedal;
     public CanvasGroup EndScreenMenu;
     public Button EndScreenButton;
+    public Image EndScreenTransition;
 
     [HideInInspector]
     public GameObject [] AllPotGet;
@@ -147,7 +148,7 @@ public class UiManager : ManagerParent
 
         EndScreenContainer.DOFade (1, .2f);
 
-        UnityEngine.Debug.Log ("EndScree");
+        //UnityEngine.Debug.Log ("EndScree");
 
         for (int i = 0; i < 4; i++)
         {
@@ -205,7 +206,7 @@ public class UiManager : ManagerParent
     // 3
     public void EndScreenFinished ()
     {
-        UnityEngine.Debug.Log("Finshed");
+        //UnityEngine.Debug.Log("Finshed");
         
         Manager.Ui.GetScores.AllScore[1].ScoreText.transform.DOPunchScale(Vector3.one * .4f, 1.5f, 10, .5f);
 
