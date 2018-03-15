@@ -116,7 +116,21 @@ public class WeaponBox : MonoBehaviour
 
             GetTrans.GetChild (1).DOShakeScale (1f, .7f, 20, 0);
 
-            ThisGauge.transform.parent.GetComponentInChildren<Image>().color = ThisGauge.transform.parent.GetComponentInChildren<RainbowColor>().colors[1];
+            ThisGauge.transform.parent.GetComponentInChildren<RainbowColor>().enabled = false;
+            ThisGauge.transform.parent.GetComponentInChildren<RainbowScale>().enabled = false;
+
+            ThisGauge.transform.parent.GetComponentInChildren<RainbowColor>().transform.GetComponent<Image>().color = ThisGauge.transform.parent.GetComponentInChildren<RainbowColor>().colors[1];
+            
+
+            var circle = Instantiate(circleEffect, transform.position, Quaternion.identity, transform);
+            circle.transform.DOLocalMove(Vector3.zero, 0);
+            circle.transform.DORotate(new Vector3(-90, 0, 0), 0, RotateMode.LocalAxisAdd);
+            circle.DOFade(0, 1f);
+            circle.transform.DOScale(6, 1);
+
+            transform.GetChild(1).DOShakeScale(1f, .7f, 20, 0);
+
+
 
             ThisGauge.fillAmount = 0;
             CurrTime = 0;
