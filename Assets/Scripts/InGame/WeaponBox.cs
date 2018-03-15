@@ -497,7 +497,10 @@ public class WeaponBox : MonoBehaviour
         }
 
         NbrItem -= calLost;
-
+        if (NbrItem < 0)
+        {
+            NbrItem = 0;
+        }
         int getMult = (int)NbrItem / ItemOneGauge + 1;
         if (getMult > nbrTotalSlide)
         {
