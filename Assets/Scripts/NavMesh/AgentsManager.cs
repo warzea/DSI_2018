@@ -137,7 +137,7 @@ public class AgentsManager : ManagerParent
 
                 if (getCamPos.x > 0.97f || getCamPos.x < 0.03f || getCamPos.y > 0.97f || getCamPos.y < 0.03f)
                 {
-                    float distanceAgent = Vector3.Distance(posRespawn[i].localPosition, posTarget.localPosition);
+                    float distanceAgent = Vector3.Distance(posRespawn[i].position, posTarget.position);
 
                     if (distanceSave > distanceAgent)
                     {

@@ -115,7 +115,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 2edce7ee36ceca2438c4a41c62f0a081, type: 3}
+  - {fileID: 2100000, guid: 8071742482f24dd4891342e887490f8c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -159,6 +159,7 @@ MonoBehaviour:
   PrefabExplo: {fileID: 1530796011795326, guid: ba9e0344ee4dac64a90e0ca8a6368c32,
     type: 2}
   NameMusic: grenade_frog
+  MusicExplo: 
   TimeBackPush: 0.1
   WeightRandom: 0
   AutoShoot: 1

@@ -18,7 +18,7 @@ Shader "FX_Pentacle"
 	SubShader
 	{
 		Tags{ "RenderType" = "TransparentCutout"  "Queue" = "Geometry+0" "IsEmissive" = "true"  }
-		Cull Back
+		Cull Off
 		Blend One Zero , One One
 		CGPROGRAM
 		#include "UnityShaderVariables.cginc"
@@ -64,25 +64,25 @@ Shader "FX_Pentacle"
 }
 /*ASEBEGIN
 Version=14101
-1927;29;1378;824;1556.899;732.5982;1.53;True;False
+1927;29;1906;1004;1556.899;732.5982;1.53;True;True
 Node;AmplifyShaderEditor.RangedFloatNode;25;-1015.85,-47.15819;Float;False;InstancedProperty;_TimePower;TimePower;4;0;Create;10;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleTimeNode;27;-946.9992,-319.4982;Float;False;1;0;FLOAT;1.0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;24;-773.9373,-236.8781;Float;False;2;2;0;FLOAT;0.0;False;1;FLOAT;0.0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SinOpNode;26;-647.1185,-109.8882;Float;False;1;0;FLOAT;0.0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.TextureCoordinatesNode;5;-1393.487,404.6808;Float;True;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.ColorNode;7;-777.8163,-468.7311;Float;False;InstancedProperty;_Color0;Color 0;2;0;Create;0,0,0,0;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.ColorNode;21;-529.5663,-631.4163;Float;False;InstancedProperty;_Color1;Color 1;3;0;Create;0,0,0,0;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.TextureCoordinatesNode;5;-1393.487,404.6808;Float;True;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SinOpNode;26;-647.1185,-109.8882;Float;False;1;0;FLOAT;0.0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;20;-260.7334,-100.2103;Float;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.RotatorNode;6;-1063.759,170.5262;Float;False;3;0;FLOAT2;0,0;False;1;FLOAT2;0.5,0.5;False;2;FLOAT;1.0;False;1;FLOAT2;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;20;-260.7334,-100.2103;Float;False;2;2;0;COLOR;0.0;False;1;FLOAT;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.ColorNode;21;-529.5663,-631.4163;Float;False;InstancedProperty;_Color1;Color 1;3;0;Create;0,0,0,0;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SamplerNode;1;-763.9578,353.4467;Float;True;Property;_TextureSample0;Texture Sample 0;1;0;Create;Assets/Art/FXShader/Texture/pentacle_1.png;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0.0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1.0;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SimpleAddOpNode;22;-176.2954,-367.5945;Float;False;2;2;0;COLOR;0.0;False;1;COLOR;0.0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.StandardSurfaceOutputNode;0;222.52,-253.9799;Float;False;True;2;Float;ASEMaterialInspector;0;0;Standard;FX_Pentacle;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;Back;0;0;False;0;0;Custom;0.5;True;True;0;True;TransparentCutout;Geometry;All;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;False;0;255;255;0;0;0;0;0;0;0;0;False;2;15;10;25;False;0.5;True;0;Zero;Zero;4;One;One;OFF;Add;0;False;0;0,0,0,0;VertexOffset;True;False;Cylindrical;False;Relative;0;;0;-1;-1;-1;0;0;0;False;0;0;16;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT;0.0;False;4;FLOAT;0.0;False;5;FLOAT;0.0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0.0;False;9;FLOAT;0.0;False;10;FLOAT;0.0;False;13;FLOAT3;0,0,0;False;11;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;14;FLOAT4;0,0,0,0;False;15;FLOAT3;0,0,0;False;0
+Node;AmplifyShaderEditor.SimpleAddOpNode;22;-176.2954,-367.5945;Float;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0.0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.StandardSurfaceOutputNode;0;222.52,-253.9799;Float;False;True;2;Float;ASEMaterialInspector;0;0;Standard;FX_Pentacle;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;Off;0;0;False;0;0;Custom;0.5;True;True;0;True;TransparentCutout;Geometry;All;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;False;0;255;255;0;0;0;0;0;0;0;0;False;2;15;10;25;False;0.5;True;0;Zero;Zero;4;One;One;OFF;Add;0;False;0;0,0,0,0;VertexOffset;True;False;Cylindrical;False;Relative;0;;0;-1;-1;-1;0;0;0;False;0;0;16;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT;0.0;False;4;FLOAT;0.0;False;5;FLOAT;0.0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0.0;False;9;FLOAT;0.0;False;10;FLOAT;0.0;False;13;FLOAT3;0,0,0;False;11;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;14;FLOAT4;0,0,0,0;False;15;FLOAT3;0,0,0;False;0
 WireConnection;24;0;27;0
 WireConnection;24;1;25;0
 WireConnection;26;0;24;0
-WireConnection;6;0;5;0
 WireConnection;20;0;7;0
 WireConnection;20;1;26;0
+WireConnection;6;0;5;0
 WireConnection;1;1;6;0
 WireConnection;22;0;21;0
 WireConnection;22;1;20;0
@@ -90,4 +90,4 @@ WireConnection;0;0;22;0
 WireConnection;0;2;21;0
 WireConnection;0;10;1;1
 ASEEND*/
-//CHKSM=D01EED4382998A85401781A5B9356B5874EC395E
+//CHKSM=DA696F7DD47080D9B4020B5A2BCEADED1C9937D6
