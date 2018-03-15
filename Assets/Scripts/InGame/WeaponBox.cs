@@ -252,14 +252,14 @@ public class WeaponBox : MonoBehaviour
 
             Material mat = getChild.GetComponent<Renderer> ( ).material;
             mat.DOKill (true);
-            Debug.Log (mat);
+            //Debug.Log (mat);
             mat.DOColor (Color.red, .15f).OnComplete (( )=>
             {
                 mat.DOColor (Color.white, .15f);
             });
 
             transform.DOPunchRotation (new Vector3 (0, rdmY, rdmZ), .3f, 3, 1).SetEase (Ease.InBounce);
-            transform.DOPunchPosition (new Vector3 (rdmY / 10, rdmZ / 10, 0), .3f, 3, 1).SetEase (Ease.InBounce);
+            getChild.DOPunchPosition (new Vector3 (rdmY / 10, rdmZ / 10, 0), .3f, 3, 1).SetEase (Ease.InBounce);
 
         }
 

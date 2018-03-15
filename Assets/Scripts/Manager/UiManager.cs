@@ -203,7 +203,10 @@ public class UiManager : ManagerParent
     // 3
     public void EndScreenFinished ()
     {
+        ScoreText.transform.DOPunchScale(Vector3.one * .4f, 1.5f, 10, .5f);
+
         EndScreenFX.gameObject.SetActive (true);
+        EndScreenFX.GetComponent<Animator>().SetTrigger("EvenMore");
 
         DOVirtual.DelayedCall (1f, () =>
         {
@@ -483,7 +486,7 @@ public class UiManager : ManagerParent
         }
         if (Input.GetKeyDown (KeyCode.T))
         {
-            EndScreenStart ();
+            Manager.GameCont.EndGame();
         }
         if (Input.GetKeyDown (KeyCode.L))
         {
