@@ -10,18 +10,16 @@ public class MenuSong : MonoBehaviour
 	#endregion
 
 	#region Mono
-	void Awake ()
+	void Awake ( )
 	{
-		ThisAudM = GetComponent<AudioManager> ();
-		ThisAudM.Initialize ();
+		ThisAudM = GetComponent<AudioManager> ( );
+		ThisAudM.Initialize ( );
 	}
 	#endregion
 
 	#region Public Methods
 	public void LaunchSong (string NameSong)
-	{
-		ThisAudM.OpenAudio (AudioType.Other, NameSong);
-	}
+	{ }
 	#endregion
 
 	#region Private Methods
