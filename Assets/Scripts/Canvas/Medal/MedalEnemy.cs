@@ -1,67 +1,79 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
-public class MedalEnemy : AbstractMedal 
+public class MedalEnemy : AbstractMedal
 {
 	#region Variables
 	#endregion
-	
+
 	#region Mono
 	#endregion
-	
+
 	#region Public Methods
-	public override void StartCheck ( PlayerController[] allPlayer )
+	public override void StartCheck (PlayerController [ ] allPlayer)
 	{
-		PlayerController thisPlayer = allPlayer[0];
+		thisPlayer = allPlayer [0];
 		PlayerController thisPlayerEqua = null;
 
-		if ( allPlayer.Length > 1 )
+		if (allPlayer.Length > 1)
 		{
-			for ( int a = 1; a < allPlayer.Length; a ++ )
+			for (int a = 1; a < allPlayer.Length; a++)
 			{
-				if ( thisPlayer.NbrEnemy < allPlayer[a].NbrEnemy )
+				if (thisPlayer.NbrEnemy < allPlayer [a].NbrEnemy)
 				{
-					thisPlayer = allPlayer[a];
+					thisPlayer = allPlayer [a];
 					thisPlayerEqua = null;
 				}
-				else if ( thisPlayer.NbrEnemy == allPlayer[a].NbrEnemy  )
+				else if (thisPlayer.NbrEnemy == allPlayer [a].NbrEnemy)
 				{
-					thisPlayerEqua = allPlayer[a];
+					thisPlayerEqua = allPlayer [a];
 				}
 			}
-			GoTarget(thisPlayerEqua);
+			Score = thisPlayer.NbrEnemy;
+			GoTarget (thisPlayerEqua);
 
-			int b;
-			for ( int a = 1; a < allPlayer.Length; a ++ )
+			/*int b;
+			for (int a = 1; a < allPlayer.Length; a++)
 			{
-				thisPlayer = allPlayer[0];
+				thisPlayer = allPlayer [0];
 				thisPlayerEqua = null;
 
-				for ( b = 0; b < allPlayer.Length; b ++ )
+				for (b = 0; b < allPlayer.Length; b++)
 				{
-					if ( thisPlayer.AllEnemy[b].NbrEnemy < allPlayer[a].AllEnemy[b].NbrEnemy )
+					for (int c = 0; c < allPlayer [a].AllEnemy.Count; c++)
 					{
-						thisPlayer = allPlayer[a];
-						thisPlayerEqua = null;
+						if (thisPlayer.AllEnemy [b].NbrEnemy < allPlayer [a].AllEnemy [b].NbrEnemy)
+						{
+							thisPlayer = allPlayer [a];
+							thisPlayerEqua = null;
+						}
+						else if (thisPlayer.AllEnemy [b].NbrEnemy == allPlayer [a].AllEnemy [b].NbrEnemy)
+						{
+							thisPlayerEqua = allPlayer [a];
+						}
 					}
-					else if ( thisPlayer.NbrEnemy == allPlayer[a].NbrEnemy  )
-					{
-						thisPlayerEqua = allPlayer[a];
-					}
+
 				}
 
-				GameObject thisObj = (GameObject) Instantiate (gameObject, thisTrans.parent );
-				thisObj.GetComponent<AbstractMedal>().ThisPlayer = thisPlayerEqua;
-				thisObj.GetComponent<AbstractMedal>().GoTarget();
-				
-				if ( thisPlayerEqua != null )
+				GameObject thisObj = (GameObject)Instantiate (gameObject, thisTrans.parent);
+				thisObj.GetComponent<AbstractMedal> ( ).thisPlayer = thisPlayerEqua;
+				thisObj.GetComponent<AbstractMedal> ( ).GoTarget ( );
+				thisObj.GetComponent<AbstractMedal> ( ).Score = thisPlayer.NbrEnemy;
+
+				if (thisPlayerEqua != null)
 				{
-					thisObj = (GameObject) Instantiate (gameObject, thisTrans.parent );
-					thisObj.GetComponent<AbstractMedal>().ThisPlayer = thisPlayerEqua;
-					thisObj.GetComponent<AbstractMedal>().GoTarget();
+					thisObj = (GameObject)Instantiate (gameObject, thisTrans.parent);
+					thisObj.GetComponent<AbstractMedal> ( ).thisPlayer = thisPlayerEqua;
+					thisObj.GetComponent<AbstractMedal> ( ).GoTarget ( );
 				}
-			}
+			}*/
+		}
+		else
+		{
+			Score = thisPlayer.NbrEnemy;
+			GoTarget ( );
 		}
 	}
 
@@ -71,4 +83,3 @@ public class MedalEnemy : AbstractMedal
 	#endregion
 
 }
-

@@ -377,6 +377,8 @@ MonoBehaviour:
   GetEffect: {fileID: 142746, guid: a183756d778416d4d885ecf041d1acda, type: 2}
   ThisTrajectoir: 0
   MoveSpeed: 1
+  NameAudio: 
+  DefinitiveDestroy: 0.3
   direction: {x: 0, y: 0, z: 0}
   BulletDamage: 1
   BulletRange: 10

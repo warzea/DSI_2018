@@ -2,48 +2,47 @@
 using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class AbstractMedal : MonoBehaviour
 {
 	#region Variables
-	public PlayerController ThisPlayer;
+	public PlayerController thisPlayer;
 	protected Transform thisTrans;
 	public float Score;
+	public string ThisString;
+	public Text ThisText;
 	#endregion
 
 	#region Mono
-	void Start ()
+	void Awake ( )
 	{
 		thisTrans = transform;
 	}
 	#endregion
 
 	#region Public Methods
-	public virtual void StartCheck (PlayerController [] allPlayer)
+	public virtual void StartCheck (PlayerController [ ] allPlayer)
 	{
 
 	}
 
 	public void GoTarget (PlayerController equaContr = null, string Text = "")
 	{
-		Debug.Log ("1");
-		if (equaContr.NbrAward > 2)
+		if (ThisText != null)
 		{
-			gameObject.SetActive (false);
-
-			return;
+			ThisText.text = ThisString + Score.ToString ( );
 		}
-		Debug.Log (ThisPlayer);
 
-		//Manager.Ui.EndScreenMedals (thisTrans, ThisPlayer.IdPlayer);
-		ThisPlayer.NbrAward++;
+		Manager.GameCont.MedalInfo [thisPlayer.IdPlayer].ThisMedal.Add (this);
+		thisPlayer.NbrAward++;
 
 		if (equaContr != null)
 		{
 			equaContr.NbrAward++;
-			GameObject thisObj = (GameObject) Instantiate (gameObject, thisTrans.parent);
-			thisObj.GetComponent<AbstractMedal> ().ThisPlayer = equaContr;
-			thisObj.GetComponent<AbstractMedal> ().GoTarget ();
+			GameObject thisObj = (GameObject)Instantiate (gameObject, thisTrans.parent);
+			thisObj.GetComponent<AbstractMedal> ( ).thisPlayer = equaContr;
+			thisObj.GetComponent<AbstractMedal> ( ).GoTarget ( );
 		}
 	}
 	#endregion

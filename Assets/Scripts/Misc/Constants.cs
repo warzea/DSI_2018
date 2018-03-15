@@ -1,5 +1,6 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
+using UnityEngine;
 
 public static class Constants
 {
@@ -23,7 +24,11 @@ public static class Constants
     #region PlayerPref
     #endregion
 
-
     #region Other
+    #endregion
+
+    #region Material Name
+    public const string _MatChest = "MAT_chest";
+    public const string _GoldTransition = "GoldTransition";
     #endregion
 }
