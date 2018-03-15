@@ -16,7 +16,7 @@ public class MenuButton : Button {
 
     public override void OnSelect(UnityEngine.EventSystems.BaseEventData eventData)
     {
-        Debug.Log("Select + " + transform.gameObject.name);
+        //Debug.Log("Select + " + transform.gameObject.name);
 
         GetComponentsInChildren<RainbowColor>()[0].enabled = true;
         GetComponentsInChildren<RainbowMove>()[0].enabled = true;
@@ -42,9 +42,35 @@ public class MenuButton : Button {
 
         if (gameObject.name == "Restart")
         {
+            Debug.Log("Restart");
 
             GameObject myEventSystem = GameObject.Find("Rewired Event System");
             myEventSystem.GetComponent<UnityEngine.EventSystems.EventSystem>().SetSelectedGameObject(null);
+
+            Manager.Ui.EndScreenTransition.DOFade(1, .5f).OnComplete(() => {
+                DOVirtual.DelayedCall(1.5f, () => {
+
+                    StartCoroutine(MenuManager.Singleton.LoadLevel(false));
+                });
+            });
+
+        }
+
+
+        if (gameObject.name == "Back To Menu")
+        {
+            Debug.Log("Menu");
+
+            GameObject myEventSystem = GameObject.Find("Rewired Event System");
+            myEventSystem.GetComponent<UnityEngine.EventSystems.EventSystem>().SetSelectedGameObject(null);
+
+            Manager.Ui.EndScreenTransition.DOFade(1, .5f).OnComplete(() => {
+                DOVirtual.DelayedCall(1.5f, () => {
+
+                    StartCoroutine(MenuManager.Singleton.LoadMenu());
+                });
+            });
+
         }
 
         if (gameObject.name == "Credits" && Credits.Singleton.canPressCredits)
