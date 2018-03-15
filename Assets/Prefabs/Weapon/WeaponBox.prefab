@@ -45,6 +45,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1315475556167078
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4391412908987054}
+  - component: {fileID: 33720251477707214}
+  - component: {fileID: 23541566836803484}
+  m_Layer: 0
+  m_Name: cauldron
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1362042216562444
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,8 +124,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4279158102363542}
   - component: {fileID: 65400283961105054}
-  - component: {fileID: 23681826378398952}
-  - component: {fileID: 33740169598720720}
   m_Layer: 8
   m_Name: Inside
   m_TagString: EnterContainer
@@ -122,14 +137,15 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1362042216562444}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.7, y: 0.57, z: 1.91}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.7, y: 0.6, z: -11.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4694695353103302}
   - {fileID: 4279158102363542}
   - {fileID: 4275390990359154}
   - {fileID: 4887017902820720}
+  - {fileID: 4391412908987054}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -140,7 +156,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1828572515100370}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.044999838, y: 0.52, z: 0.00999999}
+  m_LocalPosition: {x: 0.044999838, y: 0.71, z: 0.00999999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4970090870780694}
@@ -160,6 +176,19 @@ Transform:
   m_Father: {fileID: 4070923493568338}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!4 &4391412908987054
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1315475556167078}
+  m_LocalRotation: {x: -0.71239966, y: -0, z: -0, w: 0.70177406}
+  m_LocalPosition: {x: 0.28232527, y: -0.05, z: -0.04309368}
+  m_LocalScale: {x: 1.3389317, y: 1.3389322, z: 1.3389322}
+  m_Children: []
+  m_Father: {fileID: 4070923493568338}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: -90.86099, y: 0, z: 0}
 --- !u!4 &4694695353103302
 Transform:
   m_ObjectHideFlags: 1
@@ -180,7 +209,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1005119467046928}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.099999905, y: 0.19, z: -0.20999992}
+  m_LocalPosition: {x: 0.099999905, y: 0.38, z: -0.20999992}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4070923493568338}
@@ -199,12 +228,12 @@ Transform:
   m_Father: {fileID: 4275390990359154}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23681826378398952
+--- !u!23 &23541566836803484
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1933992694225564}
+  m_GameObject: {fileID: 1315475556167078}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -213,7 +242,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 4ef4a2c1af03a904192b0cb249c0586b, type: 2}
+  - {fileID: 2100000, guid: 00a429b34674da34fa2ee9a9a045bae4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -221,7 +250,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_PreserveUVs: 1
+  m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 0
@@ -233,13 +262,13 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33740169598720720
+--- !u!33 &33720251477707214
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1933992694225564}
-  m_Mesh: {fileID: 4300000, guid: 5c6d7ec83a05f6e429398533ab71cca7, type: 3}
+  m_GameObject: {fileID: 1315475556167078}
+  m_Mesh: {fileID: 4300000, guid: 94eb0b52fb6d8944bbf096350be3496b, type: 3}
 --- !u!65 &65400283961105054
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -309,6 +338,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BonusMat: {fileID: 2100000, guid: 0aa37164acf594e03876b4e0b590280e, type: 2}
   ThisGauge: {fileID: 0}
+  AddResSong: ressources_added
+  GiveWeapSong: give_weapon
+  CauldHitSong: cauldron_attack
   SpeedAttack: 0.25
   RangeAttack: 1.4
   DelayAttack: 0.35
@@ -318,20 +350,14 @@ MonoBehaviour:
   pourcLoot: 2
   MinLost: 1
   ItemOneGauge: 1500
-  AllWeapon:
-  - {fileID: 1294729226091156, guid: 9e537c0ffddff9248b8d488acd4c88b9, type: 2}
-  - {fileID: 1710333208426710, guid: 9f39bc799258c874e94d822387524985, type: 2}
-  - {fileID: 1180992830767308, guid: 59e29fb570b191c42a4fda2b01a0aa32, type: 2}
-  - {fileID: 1868345327832182, guid: 805d0df3037a9bf43b55b0e915a65eee, type: 2}
-  - {fileID: 1889261419105248, guid: 8a6dc1e2e3bbad14189e95e460ab8c2b, type: 2}
-  - {fileID: 1909916809828264, guid: c02548164cfaf7645ab6e5f2a5d2eb36, type: 2}
-  - {fileID: 1117256704115732, guid: f5de41277b861c04bb366c198f1da51c, type: 2}
-  - {fileID: 1593376080157516, guid: 67ccdcadbf94d7e4682d0a58a343252e, type: 2}
+  AllStartWeap: []
+  AllOtherWeap: []
   DelayNewWeapon: 1
   TimeFullFill: 45
   CurrTime: 0
   NbrItem: 0
   CanControl: 1
+  circleEffect: {fileID: 0}
 --- !u!114 &114620685492680398
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -412,7 +438,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1629008864
+  randomSeed: 1785967501
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3779,7 +3805,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1487978401
+  randomSeed: -2063807807
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -7152,7 +7178,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1742903105
+  randomSeed: -581579404
   InitialModule:
     serializedVersion: 3
     enabled: 1
