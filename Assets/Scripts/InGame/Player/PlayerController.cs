@@ -251,6 +251,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if (thisWeap != null)
 		{
+			Manager.Ui.NewWeapPic (thisWeap.name, IdPlayer);
 			thisWeap.SpawnBullet = SpawnBullet;
 			thisWeap.OnFloor = false;
 			autoShoot = thisWeap.AutoShoot;
@@ -409,6 +410,16 @@ public class PlayerController : MonoBehaviour
 	{
 		float Xmove = inputPlayer.GetAxis ("MoveX");
 		float Ymove = inputPlayer.GetAxis ("MoveY");
+
+		RaycastHit hit;
+		if (Physics.Raycast (thisTrans.position, new Vector3 (Xmove, 0, Ymove), out hit))
+		{
+			if (hit.transform.tag == Constants._Wall && hit.distance < 0.5f)
+			{
+				Xmove *= 0.1f;
+				Ymove *= 0.1f;
+			}
+		}
 
 		float speed = Mathf.Abs (Xmove) + Mathf.Abs (Ymove) * 2;
 

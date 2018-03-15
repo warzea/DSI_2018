@@ -1,7 +1,19 @@
 fileFormatVersion: 2
-guid: 73c0a9f47f55755489178376e1533991
-timeCreated: 1521129298
+<<<<<<< HEAD
+<<<<<<< HEAD
+guid: bd6c18ed8091c78429969cafe628389c
+timeCreated: 1521130013
 licenseType: Free
+=======
+guid: 7ca60e939b43a6744b69db62e33c8c3e
+timeCreated: 1521129608
+licenseType: Pro
+>>>>>>> David_Branch
+=======
+guid: 16bbdf9f80a14ed4694b2ae00232ecde
+timeCreated: 1521129374
+licenseType: Free
+>>>>>>> LoicTolinos
 DefaultImporter:
   externalObjects: {}
   userData: 
