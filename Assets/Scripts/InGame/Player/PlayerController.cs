@@ -239,7 +239,10 @@ public class PlayerController : MonoBehaviour
 
 		if (AllItem.Count > 0 && Vector3.Distance (thisTrans.position, getBoxWeapon.position) < DistToDropItem)
 		{
-			emptyBag ();
+			if (Tweenbag == null || !Tweenbag.IsActive ())
+			{
+				emptyBag ();
+			}
 		}
 	}
 
@@ -726,6 +729,7 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	Tween Tweenbag;
 	void emptyBag ()
 	{
 		Manager.Ui.PopPotions (PotionType.Plus);
@@ -744,7 +748,7 @@ public class PlayerController : MonoBehaviour
 
 		animPlayer.SetTrigger ("BagUnfull");
 
-		DOVirtual.DelayedCall (2.1f, () =>
+		Tweenbag = DOVirtual.DelayedCall (2.1f, () =>
 		{
 			BagObj.SetParent (currBagParent);
 
