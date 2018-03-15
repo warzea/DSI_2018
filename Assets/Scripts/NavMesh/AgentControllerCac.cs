@@ -35,8 +35,9 @@ public class AgentControllerCac : MonoBehaviour
 
     public GameObject MeshDestroy;
 
-	private float timeAttack = 2f;
+    private float timeAttack = 2f;
 
+    public GameObject particleHit;
     void Start()
     {
         navAgent = transform.GetComponent<NavMeshAgent>();
@@ -53,9 +54,9 @@ public class AgentControllerCac : MonoBehaviour
 
         Manager.Event.Register(thisAct);
         navAgent.speed = speedVsPlayer;
-		timeAttack = Random.Range (timeLeftAgentAttacCac - 0.1f, timeLeftAgentAttacCac + 0.1f);
+        timeAttack = Random.Range(timeLeftAgentAttacCac - 0.1f, timeLeftAgentAttacCac + 0.1f);
 
-      
+
     }
 
 
@@ -115,7 +116,7 @@ public class AgentControllerCac : MonoBehaviour
     public void ShootCac()
     {
 
-		if (timeAgent > timeAttack)
+        if (timeAgent > timeAttack)
         {
             if (focusPlayer != null)
             {
@@ -134,7 +135,7 @@ public class AgentControllerCac : MonoBehaviour
                     focusPlayer.GetComponent<PlayerController>().GetDamage(transform);
                 }
             }
-			timeAttack = Random.Range (timeLeftAgentAttacCac - 0.1f, timeLeftAgentAttacCac + 0.1f);
+            timeAttack = Random.Range(timeLeftAgentAttacCac - 0.1f, timeLeftAgentAttacCac + 0.1f);
             timeAgent = 0;
         }
     }
@@ -189,6 +190,8 @@ public class AgentControllerCac : MonoBehaviour
     {
         if (other.tag == "BulletPlayer")
         {
+            GameObject explo = Instantiate(particleHit, transform.position, transform.rotation);
+            Destroy(explo, 1f);
             lifeAgent = lifeAgent - 1;
             if (lifeAgent <= 0 && AgentEtat.aliveAgent == myEtatAgent)
             {

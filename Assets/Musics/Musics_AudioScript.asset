@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0b54c21d6e3c5b43bf2d1d26e8302ae, type: 3}
+  m_Name: Musics_AudioScript
+  m_EditorClassIdentifier: 
+  AllMF:
+  - ThisType: 0
+    SetAudio:
+    - AudioName: menu
+      Volume: 1
+      Pitch: 1
+      Audio: {fileID: 8300000, guid: 30507769ceda71e4a82cfe6b6ef5bf3a, type: 3}
+    - AudioName: gameplay
+      Volume: 1
+      Pitch: 1
+      Audio: {fileID: 8300000, guid: 880d49620724ef44783470de58fb2499, type: 3}
+    - AudioName: score
+      Volume: 1
+      Pitch: 1
+      Audio: {fileID: 8300000, guid: d7fd8788586b9434da043b3d7a1d5246, type: 3}

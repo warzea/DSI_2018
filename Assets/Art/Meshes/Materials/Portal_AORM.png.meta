@@ -1,7 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 2b09ab29281f4c1458fd295df00dca83
 timeCreated: 1521125548
 licenseType: Free
+=======
+guid: 467fce5e9cc80804a9c53f1a3ffc524e
+timeCreated: 1521125762
+licenseType: Pro
+>>>>>>> David_Branch
 TextureImporter:
   fileIDToRecycleName: {}
   externalObjects: {}
