@@ -94,6 +94,9 @@ public class WeaponBox : MonoBehaviour
         {
             GetComponent<Collider> ().isTrigger = true;
             checkAttack = true;
+
+            //COUCOU COMMENT CA VA LES PROGS LOL JE SUIS UN GD MDR JE SUIS TROP FORT
+
             gameObject.tag = Constants._PlayerBullet;
             float getRange = RangeAttack;
 
@@ -110,7 +113,6 @@ public class WeaponBox : MonoBehaviour
                 {
                     if (thisRay.distance - 1f < getRange)
                     {
-                        Debug.Log (thisRay.distance + " / RAY ");
                         getRange = thisRay.distance - 1;
                     }
                 }
