@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 public class LazerRenderer : MonoBehaviour
@@ -11,22 +12,29 @@ public class LazerRenderer : MonoBehaviour
     public float distMaxLaser = 100;
 
     // Use this for initialization
-    void Start()
+    void Start ()
     {
-        lineLaser = transform.GetComponent<LineRenderer>();
+        lineLaser = transform.GetComponent<LineRenderer> ();
         myTransform = this.transform;
 
     }
 
     // Update is called once per frame
-    void Update()
+    void Update ()
     {
         RaycastHit hit;
-        if (Physics.Raycast(myTransform.position, myTransform.forward, out hit))
+        if (Physics.Raycast (myTransform.position, myTransform.forward, out hit))
         {
-            lineLaser.SetPosition(1, new Vector3(0, 0, distMaxLaser));
+            if (hit.collider.tag == Constants._Wall)
+            {
+                distMaxLaser = hit.distance;
+            }
+            else
+            {
+                distMaxLaser = 50;
+            }
+
+            lineLaser.SetPosition (1, new Vector3 (0, 0, distMaxLaser));
         }
-
-
     }
 }
