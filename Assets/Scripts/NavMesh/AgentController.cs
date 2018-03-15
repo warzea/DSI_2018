@@ -15,6 +15,7 @@ public class AgentController : MonoBehaviour
     public GameObject myFocusPlayer;
     public int lifeAgent = 1;
     public float timeBeforeDepop = 2f;
+    public float timeBeforeAlive = 1f;
 
     public Animator animAgent;
 
