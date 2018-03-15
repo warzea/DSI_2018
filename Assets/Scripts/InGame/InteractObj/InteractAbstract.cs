@@ -40,7 +40,7 @@ public class InteractAbstract : MonoBehaviour
 
     void Start ()
     {
-        animChest = transform.GetComponent<Animator> ();
+        animChest = thisTrans.GetComponentInChildren<Animator> ();
         System.Action<ChestEvent> thisAct = delegate (ChestEvent thisEvnt)
         {
             Camera getCam = Manager.GameCont.MainCam;
