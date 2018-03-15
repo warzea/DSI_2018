@@ -15,7 +15,7 @@ MonoBehaviour:
   - ThisType: 6
     SetAudio:
     - AudioName: grenade_frog
-      Volume: 1
+      Volume: 5
       Pitch: 1
       Audio: {fileID: 8300000, guid: ee7cd469a88d9c04789755ad00735648, type: 3}
     - AudioName: laser_wand
@@ -23,7 +23,7 @@ MonoBehaviour:
       Pitch: 1
       Audio: {fileID: 8300000, guid: f8a1936b7cf05e24c923ab2ecc827828, type: 3}
     - AudioName: machinegun_gust
-      Volume: 1
+      Volume: 6
       Pitch: 1
       Audio: {fileID: 8300000, guid: 0f883307a58639e4e81b9b4b2352f999, type: 3}
     - AudioName: machinegun_spread

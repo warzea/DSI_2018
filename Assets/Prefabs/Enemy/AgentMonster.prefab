@@ -1492,6 +1492,7 @@ MonoBehaviour:
   SpeedBulletAgent: 5
   timeLeftAgentshoot: 1.4
   distanceShoot: 15
+  mycollider: {fileID: 136426290240739386}
   myFocusEtatAgent: 0
   myEtatAgent: 0
   checkUpdate: 0
