@@ -280,6 +280,9 @@ public class MenuManager : MonoBehaviour {
                         player1Ready = true;
                     });
 
+
+                    var fx = Instantiate(PlayersMesh[8].gameObject, PlayersMesh[0].transform.position, Quaternion.identity, PlayersMesh[0].transform);
+
                     Transform p1 = canvasSelect.transform.GetChild(0).transform;
 
                     p1.GetComponentsInChildren<Text>()[1].text = "READY !";
@@ -298,6 +301,10 @@ public class MenuManager : MonoBehaviour {
                     p1.GetComponentsInChildren<Text>()[1].text = "GET READY \n PRESS";
                     p1.GetComponentInChildren<Image>().DOFade(1, .05f);
 
+
+                    var fx = Instantiate(PlayersMesh[8].gameObject, PlayersMesh[0].transform.position, Quaternion.identity, PlayersMesh[0].transform);
+
+                   
                     PlayersMesh[0].gameObject.SetActive(false);
 
                 }
@@ -317,6 +324,9 @@ public class MenuManager : MonoBehaviour {
                     p2.GetComponentsInChildren<Text>()[1].text = "READY !";
                     p2.GetComponentInChildren<Image>().DOFade(0, .05f);
 
+
+                    var fx = Instantiate(PlayersMesh[8].gameObject, PlayersMesh[1].transform.position, Quaternion.identity, PlayersMesh[1].transform);
+
                     PlayersMesh[0].gameObject.SetActive(true);
                 }
                 else
@@ -329,6 +339,9 @@ public class MenuManager : MonoBehaviour {
 
                     p2.GetComponentsInChildren<Text>()[1].text = "GET READY \n PRESS";
                     p2.GetComponentInChildren<Image>().DOFade(1, .05f);
+
+
+                    var fx = Instantiate(PlayersMesh[8].gameObject, PlayersMesh[1].transform.position, Quaternion.identity, PlayersMesh[1].transform);
 
                     PlayersMesh[1].gameObject.SetActive(false);
 
@@ -349,6 +362,9 @@ public class MenuManager : MonoBehaviour {
                     p3.GetComponentsInChildren<Text>()[1].text = "READY !";
                     p3.GetComponentInChildren<Image>().DOFade(0, .05f);
 
+
+                    var fx = Instantiate(PlayersMesh[8].gameObject, PlayersMesh[2].transform.position, Quaternion.identity, PlayersMesh[2].transform);
+
                     PlayersMesh[2].gameObject.SetActive(true);
                 }
                 else
@@ -361,6 +377,9 @@ public class MenuManager : MonoBehaviour {
 
                     p3.GetComponentsInChildren<Text>()[1].text = "GET READY \n PRESS";
                     p3.GetComponentInChildren<Image>().DOFade(1, .05f);
+
+                    var fx = Instantiate(PlayersMesh[8].gameObject, PlayersMesh[2].transform.position, Quaternion.identity, PlayersMesh[2].transform);
+
 
                     PlayersMesh[3].gameObject.SetActive(false);
                 }
@@ -380,6 +399,9 @@ public class MenuManager : MonoBehaviour {
                     p4.GetComponentsInChildren<Text>()[1].text = "READY !";
                     p4.GetComponentInChildren<Image>().DOFade(0, .05f);
 
+
+                    var fx = Instantiate(PlayersMesh[8].gameObject, PlayersMesh[3].transform.position, Quaternion.identity, PlayersMesh[3].transform);
+
                     PlayersMesh[3].gameObject.SetActive(true);
                 }
                 else
@@ -392,6 +414,8 @@ public class MenuManager : MonoBehaviour {
 
                     p4.GetComponentsInChildren<Text>()[1].text = "GET READY \n PRESS";
                     p4.GetComponentInChildren<Image>().DOFade(1, .05f);
+                    
+                    var fx = Instantiate(PlayersMesh[8].gameObject, PlayersMesh[3].transform.position, Quaternion.identity, PlayersMesh[3].transform);
 
                     PlayersMesh[3].gameObject.SetActive(false);
                 }

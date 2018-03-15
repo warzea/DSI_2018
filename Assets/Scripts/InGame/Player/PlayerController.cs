@@ -125,31 +125,33 @@ public class PlayerController : MonoBehaviour
     public int NbrAward = 0;
     // -----
 
-    [HideInInspector]
-    public int CurrItem = 0;
-    [HideInInspector]
-    public Image UiAmmo;
-    [HideInInspector]
-    public InteractAbstract currInt;
-    [HideInInspector]
-    public bool autoShoot = true;
-    [HideInInspector]
-    public bool checkShoot = true;
-    [HideInInspector]
-    public bool checkAuto = false;
-    [HideInInspector]
-    public bool canCauldron = false;
+	[HideInInspector]
+	public int CurrItem = 0;
+	[HideInInspector]
+	public Image UiAmmo;
+	[HideInInspector]
+	public InteractAbstract currInt;
+	[HideInInspector]
+	public bool autoShoot = true;
+	[HideInInspector]
+	public bool checkShoot = true;
+	[HideInInspector]
+	public bool checkAuto = false;
+	[HideInInspector]
+	public bool canCauldron = false;
+	[HideInInspector]
+	public WeaponAbstract thisWeapon;
 
-    PlayerController thisPC;
-    WeaponAbstract thisWeapon;
-    Transform thisTrans;
-    Transform getBoxWeapon;
-    Rigidbody thisRig;
-    CameraFollow GetCamFoll;
-    Player inputPlayer;
-    Camera getCam;
-    WeaponBox thisWB;
-    GameObject getEffect;
+	PlayerController thisPC;
+
+	Transform thisTrans;
+	Transform getBoxWeapon;
+	Rigidbody thisRig;
+	CameraFollow GetCamFoll;
+	Player inputPlayer;
+	Camera getCam;
+	WeaponBox thisWB;
+	GameObject getEffect;
 
     [HideInInspector]
     public AudioSource thisObjAudio;

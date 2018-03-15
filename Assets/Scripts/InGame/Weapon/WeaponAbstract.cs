@@ -156,45 +156,51 @@ public class WeaponAbstract : MonoBehaviour
         {
             canShoot = false;
 
-            PlayerController getPC = playerTrans.GetComponent<PlayerController> ();
-            getPC.WeaponThrow++;
-            Transform getTrans = transform;
-            Vector3 getForward = playerTrans.forward;
-
-            if (getPC.thisObjAudio != null)
-            {
-                Destroy (getPC.thisObjAudio);
-            }
-
-            getTrans.SetParent (null);
-            getPC.UpdateWeapon ();
-
             //getRigid.AddForce(getForward * ForceProjection, ForceMode.VelocityChange);
+            ThrowWeap (playerTrans);
 
-            GetComponent<Collider> ().enabled = true;
-            GetComponent<Collider> ().isTrigger = true;
-
-            BulletAbstract thisBA = getTrans.gameObject.AddComponent<BulletAbstract> ();
-            thisBA.direction = playerTrans.forward;
-            thisBA.TimeStay = 0.2f;
-            thisBA.thisPlayer = getPC;
-            thisBA.Projectil = true;
-
-            if (ExploWeapon != null && PrefabExplo != null)
-            {
-                thisBA.canExplose = true;
-                thisBA.NameAudio = MusicExplo;
-                thisBA.GetEffect = ExploWeapon;
-                thisBA.PrefabExplosion = PrefabExplo;
-            }
-
-            thisBA.Diameter = 3;
-            thisBA.BulletRange = playerTrans.GetComponent<PlayerController> ().DistThrowWeap;
-            thisBA.MoveSpeed = playerTrans.GetComponent<PlayerController> ().SpeedThrow;
-            thisBA.gameObject.tag = Constants._BulletPlayer;
-            Destroy (GetComponent<WeaponAbstract> ());
-            Manager.GameCont.WeaponB.NewWeapon (getPC);
+            Manager.GameCont.WeaponB.NewWeapon (playerTrans.GetComponent<PlayerController> ());
         }
+    }
+
+    public void ThrowWeap (Transform playerTrans)
+    {
+        Transform getTrans = transform;
+        getTrans.SetParent (null);
+
+        PlayerController getPC = playerTrans.GetComponent<PlayerController> ();
+        getPC.WeaponThrow++;
+        Vector3 getForward = playerTrans.forward;
+
+        if (getPC.thisObjAudio != null)
+        {
+            Destroy (getPC.thisObjAudio);
+        }
+
+        getPC.UpdateWeapon ();
+
+        GetComponent<Collider> ().enabled = true;
+        GetComponent<Collider> ().isTrigger = true;
+
+        BulletAbstract thisBA = getTrans.gameObject.AddComponent<BulletAbstract> ();
+        thisBA.direction = playerTrans.forward;
+        thisBA.TimeStay = 0.2f;
+        thisBA.thisPlayer = getPC;
+        thisBA.Projectil = true;
+
+        if (ExploWeapon != null && PrefabExplo != null)
+        {
+            thisBA.canExplose = true;
+            thisBA.NameAudio = MusicExplo;
+            thisBA.GetEffect = ExploWeapon;
+            thisBA.PrefabExplosion = PrefabExplo;
+        }
+
+        thisBA.Diameter = 3;
+        thisBA.BulletRange = playerTrans.GetComponent<PlayerController> ().DistThrowWeap;
+        thisBA.MoveSpeed = playerTrans.GetComponent<PlayerController> ().SpeedThrow;
+        thisBA.gameObject.tag = Constants._BulletPlayer;
+        Destroy (GetComponent<WeaponAbstract> ());
     }
     #endregion
 
