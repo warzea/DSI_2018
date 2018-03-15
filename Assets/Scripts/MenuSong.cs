@@ -6,7 +6,7 @@ using UnityEngine;
 public class MenuSong : MonoBehaviour
 {
 	#region Variables
-	public AudioManager ThisAudM;
+	AudioManager ThisAudM;
 	#endregion
 
 	#region Mono
@@ -18,7 +18,10 @@ public class MenuSong : MonoBehaviour
 	#endregion
 
 	#region Public Methods
-
+	public void LaunchSong (string NameSong)
+	{
+		ThisAudM.OpenAudio (AudioType.Other, NameSong);
+	}
 	#endregion
 
 	#region Private Methods

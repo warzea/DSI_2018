@@ -70,8 +70,12 @@ public class InteractAbstract : MonoBehaviour
                     {
                         if (thisMat.material.name == Constants._MatChest + " (Instance)")
                         {
-                            StartCoroutine (waitRightValue (thisMat.material, "_GoldTransition", 1, 0));
-                            thisMat.material.SetFloat ("_Desaturate", 0);
+                            DOVirtual.DelayedCall (Random.Range (0, 0.8f), () =>
+                            {
+                                StartCoroutine (waitRightValue (thisMat.material, "_GoldTransition", 1, 0));
+                                thisMat.material.SetFloat ("_Desaturate", 0);
+                            });
+
                         }
                     }
                 }
