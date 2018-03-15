@@ -11,7 +11,9 @@ public class WeaponBox : MonoBehaviour
     #region Variables
     public Material BonusMat;
     public Image ThisGauge;
-    public string NameMusic = "";
+    public string AddResSong = "ressources_added";
+    public string GiveWeapSong = "give_weapon";
+    public string CauldHitSong = "cauldron_attack";
     public float SpeedAttack = 1;
     public float RangeAttack = 1;
     public float DelayAttack = 1;
@@ -113,7 +115,7 @@ public class WeaponBox : MonoBehaviour
     {
         if (ThisGauge.fillAmount >= 1)
         {
-            transform.DOKill (true);
+            GetTrans.DOKill (true);
             getChild.DOKill (true);
 
             GetTrans.GetChild (1).DOShakeScale (1f, .7f, 20, 0);
@@ -159,6 +161,7 @@ public class WeaponBox : MonoBehaviour
 
     public void NewWeapon (PlayerController thisPlayer, GameObject newObj = null)
     {
+        Manager.Audm.OpenAudio (AudioType.OtherSound, GiveWeapSong);
         //TRANSFO CANON
         getChild.DOKill (true);
         getChild.DOShakeScale (.15f, .8f, 25, 0).OnComplete (() =>
@@ -249,9 +252,10 @@ public class WeaponBox : MonoBehaviour
     {
         if (inv)
         {
+            Manager.Audm.OpenAudio (AudioType.OtherSound, CauldHitSong);
             Manager.Ui.PopPotions (PotionType.Less);
 
-            transform.DOKill (true);
+            GetTrans.DOKill (true);
             getChild.DOKill (true);
 
             float rdmY = UnityEngine.Random.Range (-30, 30);
@@ -260,14 +264,18 @@ public class WeaponBox : MonoBehaviour
             Material mat = getChild.GetComponent<Renderer> ().material;
             mat.DOKill (true);
             //Debug.Log (mat);
-            mat.DOColor (Color.red, .15f).OnComplete (( )=>
+            mat.DOColor (Color.red, .15f).OnComplete (() =>
             {
                 mat.DOColor (Color.white, .15f);
             });
 
-            transform.DOPunchRotation (new Vector3 (0, rdmY, rdmZ), .3f, 3, 1).SetEase (Ease.InBounce);
-            getChild.DOPunchPosition (new Vector3 (rdmY / 10, rdmZ / 10, 0), .3f, 3, 1).SetEase (Ease.InBounce);
+            GetTrans.DOPunchRotation (new Vector3 (0, rdmY, rdmZ), .3f, 3, 1).SetEase (Ease.InBounce);
+            GetTrans.DOPunchPosition (new Vector3 (rdmY / 10, rdmZ / 10, 0), .3f, 3, 1).SetEase (Ease.InBounce);
 
+        }
+        else
+        {
+            Manager.Audm.OpenAudio (AudioType.OtherSound, AddResSong);
         }
 
         NbrItem += lenghtItem;

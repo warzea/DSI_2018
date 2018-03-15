@@ -9,7 +9,7 @@ Material:
   m_Name: MAT_simpleCircleOpaque
   m_Shader: {fileID: 4800000, guid: 4b603ac7789295847b187782439d0acf, type: 3}
   m_ShaderKeywords: 
-  m_LightmapFlags: 4
+  m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
