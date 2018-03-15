@@ -411,6 +411,16 @@ public class PlayerController : MonoBehaviour
 		float Xmove = inputPlayer.GetAxis ("MoveX");
 		float Ymove = inputPlayer.GetAxis ("MoveY");
 
+		RaycastHit hit;
+		if (Physics.Raycast (thisTrans.position, new Vector3 (Xmove, 0, Ymove), out hit))
+		{
+			if (hit.transform.tag == Constants._Wall && hit.distance < 0.5f)
+			{
+				Xmove *= 0.1f;
+				Ymove *= 0.1f;
+			}
+		}
+
 		float speed = Mathf.Abs (Xmove) + Mathf.Abs (Ymove) * 2;
 
 		if (speed == 0 && !checkAcc)
