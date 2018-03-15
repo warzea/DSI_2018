@@ -2108,8 +2108,8 @@ MonoBehaviour:
   animAgent: {fileID: 95401334705506166}
   distancePlayer: 4
   distanceWeaponBox: 5
-  speedVsCauldron: 15
-  speedVsPlayer: 8
+  speedVsCauldron: 12
+  speedVsPlayer: 6
   focusPlayer: {fileID: 0}
   timeBeforeDepop: 0.1
   timeLeftAgentAttacCac: 2
