@@ -170,7 +170,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Wizard_Ctrl/HIps/Bag 1
+    path: Wizard_Ctrl/HIps/Parent/Bag 1
   m_ScaleCurves:
   - curve:
       serializedVersion: 2
@@ -202,7 +202,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Wizard_Ctrl/HIps/Bag 1
+    path: Wizard_Ctrl/HIps/Parent/Bag 1
   m_FloatCurves:
   - curve:
       serializedVersion: 2
@@ -311,14 +311,14 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 1138689891
+      path: 1193417121
       attribute: 1
       script: {fileID: 0}
       typeID: 4
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 1138689891
+      path: 1193417121
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -615,7 +615,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.x
-    path: Wizard_Ctrl/HIps/Bag 1
+    path: Wizard_Ctrl/HIps/Parent/Bag 1
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -775,7 +775,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.y
-    path: Wizard_Ctrl/HIps/Bag 1
+    path: Wizard_Ctrl/HIps/Parent/Bag 1
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -935,7 +935,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.z
-    path: Wizard_Ctrl/HIps/Bag 1
+    path: Wizard_Ctrl/HIps/Parent/Bag 1
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -969,7 +969,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalScale.x
-    path: Wizard_Ctrl/HIps/Bag 1
+    path: Wizard_Ctrl/HIps/Parent/Bag 1
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1003,7 +1003,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalScale.y
-    path: Wizard_Ctrl/HIps/Bag 1
+    path: Wizard_Ctrl/HIps/Parent/Bag 1
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1037,7 +1037,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalScale.z
-    path: Wizard_Ctrl/HIps/Bag 1
+    path: Wizard_Ctrl/HIps/Parent/Bag 1
     classID: 4
     script: {fileID: 0}
   m_EulerEditorCurves: []
