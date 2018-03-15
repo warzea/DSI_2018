@@ -103,7 +103,7 @@ public class GameController : ManagerParent
                 }
             });
 
-            Manager.Ui.GetScores.UpdateValue (thisScore.FinalScore, ScoreType.EndScore);
+            Manager.Ui.GetScores.UpdateValue (thisScore.FinalScore, ScoreType.EndScore, false, Manager.Ui.EndScreenFinished);
 
         });
     }
