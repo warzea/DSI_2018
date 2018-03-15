@@ -40,6 +40,7 @@ public class WeaponBox : MonoBehaviour
     public bool CanControl = true;
 
     public SpriteRenderer circleEffect;
+    public GameObject FXSpecial;
 
     List<PlayerWeapon> updateWeapon;
     List<Tween> getAllTween;
@@ -56,19 +57,28 @@ public class WeaponBox : MonoBehaviour
             transform.DOKill (true);
             getChild.DOKill (true);
 
+            /*
+            var fx = Instantiate(FXSpecial, GetTrans.transform.position, Quaternion.identity, GetTrans.transform);
+            fx.transform.DOLocalMove(Vector3.zero, 0);
+            */
+
+
             float rdmY = UnityEngine.Random.Range (-30, 30);
             float rdmZ = UnityEngine.Random.Range (-30, 30);
 
-            Material mat = getChild.GetComponent<Renderer> ( ).material;
-            mat.DOKill (true);
-            Debug.Log (mat);
-            mat.DOColor (Color.red, .15f).OnComplete (( )=>
-            {
-                mat.DOColor (Color.white, .15f);
-            });
+            Material mat = getChild.GetComponent<Renderer>().material;
+            mat.DOKill(true);
+            Debug.Log(mat);
+            mat.DOColor(Color.red, .15f).OnComplete(() =>
+          {
+              mat.DOColor(Color.white, .15f);
+          });
 
             transform.DOPunchRotation (new Vector3 (0, rdmY, rdmZ), .3f, 3, 1).SetEase (Ease.InBounce);
             getChild.transform.DOPunchPosition (new Vector3 (rdmY / 16, rdmZ / 16, 0), .3f, 3, 1).SetEase (Ease.InBounce);
+
+
+
         }
     }
 
@@ -138,15 +148,19 @@ public class WeaponBox : MonoBehaviour
 
     public void ActionSpe ( )
     {
-        if (ThisGauge.fillAmount >= 1f)
+        if (ThisGauge.fillAmount >= .05f)
         {
             GetTrans.DOKill (true);
             getChild.DOKill (true);
 
+            var fx = Instantiate(FXSpecial, GetTrans.transform.position, Quaternion.identity, GetTrans.transform);
+            fx.transform.DOLocalMove(Vector3.zero, 0);
+
+
             GetTrans.transform.DOShakeScale (1f, .7f, 20, 0);
 
-            ThisGauge.transform.parent.GetComponentInChildren<RainbowColor> ( ).enabled = false;
-            ThisGauge.transform.parent.GetComponentInChildren<RainbowScale> ( ).enabled = false;
+            ThisGauge.transform.parent.GetComponentInChildren<RainbowColor>().enabled = false;
+            ThisGauge.transform.parent.GetComponentInChildren<RainbowScale>().enabled = false;
 
             ThisGauge.transform.parent.GetComponentInChildren<RainbowColor> ( ).transform.GetComponent<Image> ( ).color = ThisGauge.transform.parent.GetComponentInChildren<RainbowColor> ( ).colors [1];
 

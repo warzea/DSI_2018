@@ -37,6 +37,10 @@ public class MenuManager : MonoBehaviour
     public MenuButton creditsItem;
 
     public CanvasGroup Credits;
+    public CanvasGroup PressStart;
+    public CanvasGroup HowToPlay;
+
+    int PlayersReady;
 
     bool CreditsOpened;
 
@@ -153,10 +157,12 @@ public class MenuManager : MonoBehaviour
                         DOVirtual.DelayedCall (.3f, ( )=>
                         {
 
-                            backgroundFlash.DOFade (1, 1f).OnComplete (( )=>
-                            {
+                            HowToPlay.DOFade(1, 1f);
 
-                                StartCoroutine (LoadLevel (true));
+                            backgroundFlash.GetComponent<CanvasGroup>().DOFade(1, 1f).OnComplete(() => {
+
+
+                                StartCoroutine(LoadLevel(true));
 
                             });
 
@@ -181,11 +187,11 @@ public class MenuManager : MonoBehaviour
 
         if (menu)
         {
-            DOVirtual.DelayedCall (4, ( )=>
-            {
+            DOVirtual.DelayedCall(12, () => {
 
-                backgroundFlash.DOFade (0, .25f).OnComplete (( )=>
-                {
+                HowToPlay.DOFade(0, .25f);
+
+                backgroundFlash.DOFade(0, .25f).OnComplete(() => {
 
                     opLevel.allowSceneActivation = true;
                 });
@@ -206,7 +212,7 @@ public class MenuManager : MonoBehaviour
     public IEnumerator LoadMenu ( )
     {
 
-        AsyncOperation opMenu = SceneManager.LoadSceneAsync ("Menu", LoadSceneMode.Single);
+        AsyncOperation opMenu = SceneManager.LoadSceneAsync("Menu_Enviro", LoadSceneMode.Single);
 
         opMenu.allowSceneActivation = false;
 
@@ -288,7 +294,11 @@ public class MenuManager : MonoBehaviour
             {
                 if (!player1Ready)
                 {
-                    DOVirtual.DelayedCall (.05f, ( )=>
+
+
+                    PlayersReady += 1;
+
+                    DOVirtual.DelayedCall(.05f, () =>
                     {
                         player1Ready = true;
                     });
@@ -304,8 +314,10 @@ public class MenuManager : MonoBehaviour
                 }
                 else
                 {
-                    DOVirtual.DelayedCall (.05f, ( )=>
-                    {
+
+                    PlayersReady -= 1;
+
+                    DOVirtual.DelayedCall(.05f, () => {
                         player1Ready = false;
                     });
 
@@ -325,28 +337,35 @@ public class MenuManager : MonoBehaviour
             {
                 if (!player2Ready)
                 {
-                    DOVirtual.DelayedCall (.05f, ( )=>
+
+                    PlayersReady += 1;
+
+                    DOVirtual.DelayedCall(.05f, () =>
                     {
                         player2Ready = true;
                     });
 
-                    Transform p2 = canvasSelect.transform.GetChild (0).transform;
+                    Transform p2 = canvasSelect.transform.GetChild(1).transform;
 
                     p2.GetComponentsInChildren<Text> ( )[1].text = "READY !";
                     p2.GetComponentInChildren<Image> ( ).DOFade (0, .05f);
 
                     var fx = Instantiate (PlayersMesh [8].gameObject, PlayersMesh [1].transform.position, Quaternion.identity, PlayersMesh [1].transform);
 
-                    PlayersMesh [0].gameObject.SetActive (true);
+                    var fx = Instantiate(PlayersMesh[8].gameObject, PlayersMesh[1].transform.position, Quaternion.identity, PlayersMesh[1].transform);
+
+                    PlayersMesh[1].gameObject.SetActive(true);
                 }
                 else
                 {
-                    DOVirtual.DelayedCall (.05f, ( )=>
-                    {
+
+                    PlayersReady -= 1;
+
+                    DOVirtual.DelayedCall(.05f, () => {
                         player2Ready = false;
                     });
 
-                    Transform p2 = canvasSelect.transform.GetChild (0).transform;
+                    Transform p2 = canvasSelect.transform.GetChild(1).transform;
 
                     p2.GetComponentsInChildren<Text> ( )[1].text = "GET READY \n PRESS";
                     p2.GetComponentInChildren<Image> ( ).DOFade (1, .05f);
@@ -362,12 +381,15 @@ public class MenuManager : MonoBehaviour
             {
                 if (!player3Ready)
                 {
-                    DOVirtual.DelayedCall (.05f, ( )=>
+
+                    PlayersReady += 1;
+
+                    DOVirtual.DelayedCall(.05f, () =>
                     {
                         player3Ready = true;
                     });
 
-                    Transform p3 = canvasSelect.transform.GetChild (0).transform;
+                    Transform p3 = canvasSelect.transform.GetChild(2).transform;
 
                     p3.GetComponentsInChildren<Text> ( )[1].text = "READY !";
                     p3.GetComponentInChildren<Image> ( ).DOFade (0, .05f);
@@ -378,19 +400,21 @@ public class MenuManager : MonoBehaviour
                 }
                 else
                 {
-                    DOVirtual.DelayedCall (.05f, ( )=>
-                    {
+                    PlayersReady -= 1;
+
+                    DOVirtual.DelayedCall(.05f, () => {
                         player3Ready = false;
                     });
 
-                    Transform p3 = canvasSelect.transform.GetChild (0).transform;
+                    Transform p3 = canvasSelect.transform.GetChild(2).transform;
 
                     p3.GetComponentsInChildren<Text> ( )[1].text = "GET READY \n PRESS";
                     p3.GetComponentInChildren<Image> ( ).DOFade (1, .05f);
 
                     var fx = Instantiate (PlayersMesh [8].gameObject, PlayersMesh [2].transform.position, Quaternion.identity, PlayersMesh [2].transform);
 
-                    PlayersMesh [3].gameObject.SetActive (false);
+
+                    PlayersMesh[2].gameObject.SetActive(false);
                 }
             }
 
@@ -398,12 +422,15 @@ public class MenuManager : MonoBehaviour
             {
                 if (!player4Ready)
                 {
-                    DOVirtual.DelayedCall (.05f, ( )=>
+
+                    PlayersReady += 1;
+
+                    DOVirtual.DelayedCall(.05f, () =>
                     {
                         player4Ready = true;
                     });
 
-                    Transform p4 = canvasSelect.transform.GetChild (0).transform;
+                    Transform p4 = canvasSelect.transform.GetChild(3).transform;
 
                     p4.GetComponentsInChildren<Text> ( )[1].text = "READY !";
                     p4.GetComponentInChildren<Image> ( ).DOFade (0, .05f);
@@ -414,12 +441,13 @@ public class MenuManager : MonoBehaviour
                 }
                 else
                 {
-                    DOVirtual.DelayedCall (.05f, ( )=>
-                    {
+                    PlayersReady -= 1;
+
+                    DOVirtual.DelayedCall(.05f, () => {
                         player4Ready = false;
                     });
 
-                    Transform p4 = canvasSelect.transform.GetChild (0).transform;
+                    Transform p4 = canvasSelect.transform.GetChild(3).transform;
 
                     p4.GetComponentsInChildren<Text> ( )[1].text = "GET READY \n PRESS";
                     p4.GetComponentInChildren<Image> ( ).DOFade (1, .05f);
@@ -430,12 +458,19 @@ public class MenuManager : MonoBehaviour
                 }
             }
 
-            if (player1Ready && player2Ready && player3Ready && player4Ready)
+            if (PlayersReady >= 2)
             {
-                if (player1.GetButtonDown ("UIStart")|| player2.GetButtonDown ("UIStart")|| player3.GetButtonDown ("UIStart")|| player4.GetButtonDown ("UIStart"))
+                PressStart.DOFade(1, .1f);
+
+                if (player1.GetButtonDown("Start") || player2.GetButtonDown("Start") || player3.GetButtonDown("Start") || player4.GetButtonDown("Start"))
                 {
-                    PlayReady ( );
+                    PlayStart();
+
                 }
+            }
+            else if (PlayersReady <= 1)
+            {
+                PressStart.DOFade(0, .1f);
             }
 
         }
