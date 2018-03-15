@@ -129,7 +129,7 @@ public class WeaponBox : MonoBehaviour
             circle.DOFade (0, 1f);
             circle.transform.DOScale (6, 1);
 
-            transform.GetChild (1).DOShakeScale (1f, .7f, 20, 0);
+            GetTrans.GetChild (1).DOShakeScale (1f, .7f, 20, 0);
 
             ThisGauge.fillAmount = 0;
             CurrTime = 0;
