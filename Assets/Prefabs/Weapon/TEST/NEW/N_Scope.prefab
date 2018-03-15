@@ -173,7 +173,7 @@ MonoBehaviour:
   Damage: 1
   Range: 15
   NbrBullet: 1
-  ScaleBullet: 12
+  ScaleBullet: 3
   SpeedBullet: 25
   Gust: 0
   SpaceBullet: 0
@@ -183,7 +183,7 @@ MonoBehaviour:
   WidthRange: 0
   SpeedZone: 0
   TimeDest: 0.1
-  Diameter: 7
+  Diameter: 6
   Bullet: {fileID: 1530796011795326, guid: 43cb6db06663de344a2b69921ccad52e, type: 2}
   SpawnBullet: {fileID: 4217749020865902}
   canShoot: 1
