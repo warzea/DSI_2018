@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+
 using UnityEditor;
 
+using UnityEngine;
 
-[CustomEditor (typeof(WeaponAbstract))]
+[CustomEditor (typeof (WeaponAbstract))]
 public class CustomWeapon : Editor
 {
 	#region Variables
@@ -40,6 +41,7 @@ public class CustomWeapon : Editor
 	SerializedProperty NameMusic;
 	SerializedProperty ExploWeapon;
 	SerializedProperty PrefabExplo;
+	SerializedProperty MusicExplo;
 	GUIContent Empty;
 
 	#endregion
@@ -56,10 +58,11 @@ public class CustomWeapon : Editor
 		SpeEffet = serializedObject.FindProperty ("SpeEffet");
 		TimeBackPush = serializedObject.FindProperty ("TimeBackPush");
 		NameMusic = serializedObject.FindProperty ("NameMusic");
+		MusicExplo = serializedObject.FindProperty ("MusicExplo");
 
 		ExploWeapon = serializedObject.FindProperty ("ExploWeapon");
 		PrefabExplo = serializedObject.FindProperty ("PrefabExplo");
-		
+
 		WeightRandom = serializedObject.FindProperty ("WeightRandom");
 		Bullet = serializedObject.FindProperty ("Bullet");
 		SpawnBullet = serializedObject.FindProperty ("SpawnBullet");
@@ -115,19 +118,19 @@ public class CustomWeapon : Editor
 	public override void OnInspectorGUI ()
 	{
 		EditorGUILayout.LabelField ("Weapon Inspector", EditorStyles.boldLabel);
-		WeaponAbstract myTarget = (WeaponAbstract)target;
-		
+		WeaponAbstract myTarget = (WeaponAbstract) target;
+
 		var oldColor = GUI.backgroundColor;
 		var buttonStyle = new GUIStyle (EditorStyles.miniButton);
 		//buttonStyle.normal.textColor = Color.green;
 		//buttonStyle.normal.textColor = Color.red;
 		serializedObject.Update ();
-		
+
 		EditorGUILayout.PropertyField (TimeBackPush);
 		EditorGUILayout.PropertyField (SpeEffet);
 		EditorGUILayout.PropertyField (ExploWeapon);
 		EditorGUILayout.PropertyField (PrefabExplo);
-		
+
 		EditorGUILayout.PropertyField (WeightRandom);
 
 		EditorGUILayout.PropertyField (NameMusic);
@@ -145,51 +148,67 @@ public class CustomWeapon : Editor
 		EditorGUILayout.EndHorizontal ();
 		EditorGUILayout.EndVertical ();
 		EditorGUILayout.Space ();
-		
+
 		// -- bool
 		EditorGUILayout.BeginHorizontal ();
-		if (myTarget.AutoShoot) {
+		if (myTarget.AutoShoot)
+		{
 			GUI.backgroundColor = Color.green;
-		} else {
+		}
+		else
+		{
 			GUI.backgroundColor = Color.red;
 		}
 
-		if (GUILayout.Button ("AutoShoot", buttonStyle)) {
+		if (GUILayout.Button ("AutoShoot", buttonStyle))
+		{
 			myTarget.AutoShoot = !myTarget.AutoShoot;
 		}
 		//EditorGUILayout.PropertyField ( AutoShoot );
 
-		if (myTarget.Projectile) {
+		if (myTarget.Projectile)
+		{
 			GUI.backgroundColor = Color.green;
-		} else {
+		}
+		else
+		{
 			GUI.backgroundColor = Color.red;
 		}
 
-		if (GUILayout.Button ("It's a Projectile", buttonStyle)) {
+		if (GUILayout.Button ("It's a Projectile", buttonStyle))
+		{
 			myTarget.Projectile = !myTarget.Projectile;
 		}
 		EditorGUILayout.EndHorizontal ();
 		//EditorGUILayout.PropertyField ( Projectile );
-		
+
 		EditorGUILayout.BeginHorizontal ();
-		if (myTarget.Through) {
+		if (myTarget.Through)
+		{
 			GUI.backgroundColor = Color.green;
-		} else {
+		}
+		else
+		{
 			GUI.backgroundColor = Color.red;
 		}
 
-		if (GUILayout.Button ("Can Through", buttonStyle)) {
+		if (GUILayout.Button ("Can Through", buttonStyle))
+		{
 			myTarget.Through = !myTarget.Through;
 		}
 		//EditorGUILayout.PropertyField ( AutoShoot );
 
-		if (myTarget.Explosion) {
+		if (myTarget.Explosion)
+		{
 			GUI.backgroundColor = Color.green;
-		} else {
+		}
+		else
+		{
 			GUI.backgroundColor = Color.red;
 		}
 
-		if (GUILayout.Button ("Can Explose", buttonStyle)) {
+		if (GUILayout.Button ("Can Explose", buttonStyle))
+		{
 			myTarget.Explosion = !myTarget.Explosion;
 		}
 		EditorGUILayout.EndHorizontal ();
@@ -201,7 +220,7 @@ public class CustomWeapon : Editor
 
 		// -- 
 		GUI.backgroundColor = oldColor;
-		
+
 		EditorGUILayout.PropertyField (BulletCapacity);
 		EditorGUILayout.PropertyField (Damage);
 		EditorGUILayout.PropertyField (BackPush);
@@ -210,16 +229,18 @@ public class CustomWeapon : Editor
 
 		EditorGUILayout.Space ();
 		EditorGUILayout.LabelField ("WeaponCustom -------", EditorStyles.boldLabel);
-		
+
 		EditorGUI.indentLevel = 1;
-		
+
 		// si auto
-		if (myTarget.AutoShoot) {
+		if (myTarget.AutoShoot)
+		{
 			EditorGUILayout.LabelField ("AutoShoot -------", EditorStyles.boldLabel);
 			EditorGUILayout.PropertyField (FireRate);
 			EditorGUILayout.LabelField ("-------", EditorStyles.boldLabel);
-		}	// fin auto
-		else { // si manuel
+		} // fin auto
+		else
+		{ // si manuel
 			EditorGUILayout.LabelField ("ManualShoot -------", EditorStyles.boldLabel);
 			EditorGUILayout.PropertyField (CoolDown);
 			EditorGUILayout.LabelField ("-------", EditorStyles.boldLabel);
@@ -227,19 +248,24 @@ public class CustomWeapon : Editor
 		// fin manuel
 
 		// -- si Projectile 
-		if (myTarget.Projectile) {
+		if (myTarget.Projectile)
+		{
 			EditorGUILayout.LabelField ("Projectile -------", EditorStyles.boldLabel);
 			EditorGUILayout.PropertyField (NbrBullet);
 			EditorGUILayout.PropertyField (ScaleBullet);
 			EditorGUILayout.PropertyField (SpeedBullet);
 
-			if (myTarget.Gust) {
+			if (myTarget.Gust)
+			{
 				GUI.backgroundColor = Color.green;
-			} else {
+			}
+			else
+			{
 				GUI.backgroundColor = Color.red;
 			}
 
-			if (GUILayout.Button ("Gust", buttonStyle)) {
+			if (GUILayout.Button ("Gust", buttonStyle))
+			{
 				myTarget.Gust = !myTarget.Gust;
 			}
 
@@ -247,14 +273,16 @@ public class CustomWeapon : Editor
 			//EditorGUILayout.PropertyField ( Gust );
 
 			EditorGUI.indentLevel = 2;
-			
+
 			// -- si Gust 
-			if (myTarget.Gust) {
+			if (myTarget.Gust)
+			{
 				EditorGUILayout.LabelField ("Gust -------", EditorStyles.boldLabel);
 				EditorGUILayout.PropertyField (SpaceBulletTime);
 				EditorGUILayout.LabelField ("-------", EditorStyles.boldLabel);
 			} // -- fin Gust
-			else { // -- si spread
+			else
+			{ // -- si spread
 				EditorGUILayout.LabelField ("Spread -------", EditorStyles.boldLabel);
 				EditorGUILayout.PropertyField (Angle);
 				EditorGUILayout.LabelField ("-------", EditorStyles.boldLabel);
@@ -262,7 +290,9 @@ public class CustomWeapon : Editor
 			// -- fin spread
 			EditorGUI.indentLevel = 1;
 			EditorGUILayout.LabelField ("-------", EditorStyles.boldLabel);
-		} else { // -- fin projectile
+		}
+		else
+		{ // -- fin projectile
 			// -- si zone
 			EditorGUILayout.PropertyField (FarEffect);
 			EditorGUILayout.PropertyField (TimeFarEffect);
@@ -271,19 +301,21 @@ public class CustomWeapon : Editor
 			// -- fin zone
 		}
 
-		if (!myTarget.Projectile || myTarget.Explosion) {
+		if (!myTarget.Projectile || myTarget.Explosion)
+		{
 			EditorGUILayout.PropertyField (TimeDest);
 		}
 
 		EditorGUI.indentLevel = 2;
-		
-		if (myTarget.Explosion) {
+
+		if (myTarget.Explosion)
+		{
 			// -- si explosion
 			EditorGUILayout.LabelField ("Explosion -------", EditorStyles.boldLabel);
 			EditorGUILayout.PropertyField (Diameter);
 			EditorGUILayout.LabelField ("-------", EditorStyles.boldLabel);
 			// -- fin explostion
-		}	
+		}
 
 		EditorGUI.indentLevel = 0;
 		EditorGUILayout.LabelField ("-------", EditorStyles.boldLabel);
