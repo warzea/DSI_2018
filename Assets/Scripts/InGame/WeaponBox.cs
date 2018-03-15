@@ -161,30 +161,9 @@ public class WeaponBox : MonoBehaviour
 
     public void NewWeapon (PlayerController thisPlayer, GameObject newObj = null)
     {
+        bool checkNew = false;
+
         Manager.Audm.OpenAudio (AudioType.OtherSound, GiveWeapSong);
-        //TRANSFO CANON
-        getChild.DOKill (true);
-        getChild.DOShakeScale (.15f, .8f, 25, 0).OnComplete (() =>
-        {
-
-            getChild.DOScaleZ (1.75f, .1f).SetEase (Ease.Linear).OnComplete (() =>
-            {
-
-                getChild.DOScaleZ (3.5f, .1f).SetEase (Ease.Linear);
-
-                DOVirtual.DelayedCall (.1f, () =>
-                {
-
-                    getChild.DOScaleZ (1.3f, .1f).SetEase (Ease.OutSine).OnComplete (() =>
-                    {
-
-                        getChild.DOShakeScale (.2f, .3f, 18, 0);
-                    });
-                });
-            });
-        });
-
-        Manager.Ui.WeaponChangeIG (thisPlayer.IdPlayer);
 
         if (newObj == null)
         {
@@ -192,6 +171,7 @@ public class WeaponBox : MonoBehaviour
         }
         else
         {
+            checkNew = true;
             for (int a = 0; a < AllOtherWeap.Length; a++)
             {
                 if (AllOtherWeap [a].name == newObj.name)
@@ -202,14 +182,14 @@ public class WeaponBox : MonoBehaviour
                     break;
                 }
             }
-
         }
+
+        Manager.Ui.WeaponChangeIG (thisPlayer.IdPlayer);
 
         Transform objTrans = newObj.transform;
 
         Vector3 scaleWeapon = objTrans.localScale;
 
-        objTrans.position = GetTrans.position;
         objTrans.localScale = Vector3.zero;
 
         thisPlayer.WeaponSwitch++;
@@ -222,27 +202,86 @@ public class WeaponBox : MonoBehaviour
 
         updateWeapon [currId].CurrObj = newObj;
 
-        DOVirtual.DelayedCall (DelayNewWeapon, () =>
+        if (checkNew)
         {
+            GameObject otherWeap = (GameObject) Instantiate (newObj);
+            Transform otherWTrans = otherWeap.transform;
+
             thisPlayer.UiAmmo.fillAmount = 1;
             Manager.Ui.WeaponNew (thisPlayer.IdPlayer);
-        });
+
+            otherWTrans.SetParent (thisPlayer.WeaponPos);
+            otherWTrans.localPosition = Vector3.zero;
+
+            thisPlayer.thisWeapon.ThrowWeap (thisPlayer.transform);
+
+            otherWTrans.localScale = Vector3.one;
+            thisPlayer.UpdateWeapon (otherWeap.GetComponent<WeaponAbstract> ());
+            updateWeapon [currId].CurrObj = null;
+        }
+        else
+        {
+            objTrans.position = GetTrans.position;
+            //TRANSFO CANON
+            getChild.DOKill (true);
+            getChild.DOShakeScale (.15f, .8f, 25, 0).OnComplete (() =>
+            {
+                getChild.DOScaleZ (1.75f, .1f).SetEase (Ease.Linear).OnComplete (() =>
+                {
+                    getChild.DOScaleZ (3.5f, .1f).SetEase (Ease.Linear);
+
+                    DOVirtual.DelayedCall (.1f, () =>
+                    {
+                        getChild.DOScaleZ (1.3f, .1f).SetEase (Ease.OutSine).OnComplete (() =>
+                        {
+                            getChild.DOShakeScale (.2f, .3f, 18, 0);
+                        });
+                    });
+                });
+            });
+
+            DOVirtual.DelayedCall (DelayNewWeapon, () =>
+            {
+                thisPlayer.UiAmmo.fillAmount = 1;
+                Manager.Ui.WeaponNew (thisPlayer.IdPlayer);
+            });
+        }
 
         DOVirtual.DelayedCall (DelayNewWeapon * 0.25f, () =>
         {
-            objTrans.DOScale (scaleWeapon, DelayNewWeapon * 0.5f);
-            //  objTrans.DOLocalRotateQuaternion(Quaternion.identity, DelayNewWeapon * 0.65f);
-            objTrans.DOLocalMove (Vector3.zero + Vector3.up * 5, DelayNewWeapon * 0.65f).OnComplete (() =>
+            objTrans.DOScale (scaleWeapon * 2, DelayNewWeapon * 0.5f).OnComplete (() =>
             {
-                objTrans.SetParent (thisPlayer.WeaponPos);
-                //    objTrans.DOLocalRotateQuaternion(Quaternion.identity, DelayNewWeapon * 0.1f);
-                objTrans.DOLocalMove (Vector3.zero, DelayNewWeapon * 0.1f).OnComplete (() =>
-                {
-                    thisPlayer.UpdateWeapon (newObj.GetComponent<WeaponAbstract> ());
-
-                    updateWeapon [currId].CurrObj = null;
-                });
+                objTrans.DOScale (scaleWeapon, DelayNewWeapon * 0.15f);
             });
+
+            if (!checkNew)
+            {
+                objTrans.DOLocalMove (Vector3.zero + Vector3.up * 8, DelayNewWeapon * 0.65f).OnComplete (() =>
+                {
+
+                    objTrans.SetParent (thisPlayer.WeaponPos);
+                    //    objTrans.DOLocalRotateQuaternion(Quaternion.identity, DelayNewWeapon * 0.1f);
+                    objTrans.DOLocalMove (Vector3.zero, DelayNewWeapon * 0.1f).OnComplete (() =>
+                    {
+                        thisPlayer.UpdateWeapon (newObj.GetComponent<WeaponAbstract> ());
+
+                        updateWeapon [currId].CurrObj = null;
+                    });
+                });
+            }
+            else
+            {
+                objTrans.SetParent (GetTrans);
+
+                objTrans.DOLocalMove (Vector3.zero + Vector3.up * 9, 0.2f).OnComplete (() =>
+                {
+                    objTrans.DOLocalMove (Vector3.zero, 1);
+                    objTrans.DOScale (Vector3.zero, 1.5f).OnComplete (() =>
+                    {
+                        Destroy (objTrans.gameObject);
+                    });
+                });
+            }
         });
     }
 
@@ -381,6 +420,23 @@ public class WeaponBox : MonoBehaviour
     {
         if (invc)
         {
+            transform.DOKill(true);
+            getChild.DOKill(true);
+
+            float rdmY = UnityEngine.Random.Range(-30, 30);
+            float rdmZ = UnityEngine.Random.Range(-30, 30);
+
+            Material mat = getChild.GetComponent<Renderer>().material;
+            mat.DOKill(true);
+            Debug.Log(mat);
+            mat.DOColor(Color.red, .15f).OnComplete(() =>
+            {
+                mat.DOColor(Color.white, .15f);
+            });
+
+            transform.DOPunchRotation(new Vector3(0, rdmY, rdmZ), .3f, 3, 1).SetEase(Ease.InBounce);
+            getChild.transform.DOPunchPosition(new Vector3(rdmY / 16, rdmZ / 16, 0), .3f, 3, 1).SetEase(Ease.InBounce);
+
             return;
         }
 
