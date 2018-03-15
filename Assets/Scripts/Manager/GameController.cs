@@ -202,7 +202,7 @@ public class GameController : ManagerParent
                     }
                 }
 
-                getPlayer.GetComponentInChildren<LineRenderer>().gameObject.GetComponent<Renderer>().material = PlayerMaterial[a];
+                getPlayer.GetComponentInChildren<LineRenderer>().gameObject.GetComponent<Renderer>().material = LaserMaterial[a];
 
                 Debug.Log(Manager.Ui.PlayersAmmo[a].name);
 
