@@ -34,6 +34,8 @@ public class MenuManager : MonoBehaviour {
     public MenuButton creditsItem;
 
     public CanvasGroup Credits;
+    public CanvasGroup PressStart;
+    public CanvasGroup HowToPlay;
 
     bool CreditsOpened;
 
@@ -143,7 +145,9 @@ public class MenuManager : MonoBehaviour {
 
                         DOVirtual.DelayedCall(.3f, () => {
 
-                            backgroundFlash.DOFade(1, 1f).OnComplete(() => {
+                            HowToPlay.DOFade(1, 1f);
+
+                            backgroundFlash.GetComponent<CanvasGroup>().DOFade(1, 1f).OnComplete(() => {
 
 
                                 StartCoroutine(LoadLevel(true));
@@ -171,7 +175,9 @@ public class MenuManager : MonoBehaviour {
 
         if (menu)
         {
-            DOVirtual.DelayedCall(4, () => {
+            DOVirtual.DelayedCall(12, () => {
+
+                HowToPlay.DOFade(0, .25f);
 
                 backgroundFlash.DOFade(0, .25f).OnComplete(() => {
 
@@ -319,7 +325,7 @@ public class MenuManager : MonoBehaviour {
                         player2Ready = true;
                     });
 
-                    Transform p2 = canvasSelect.transform.GetChild(0).transform;
+                    Transform p2 = canvasSelect.transform.GetChild(1).transform;
 
                     p2.GetComponentsInChildren<Text>()[1].text = "READY !";
                     p2.GetComponentInChildren<Image>().DOFade(0, .05f);
@@ -327,7 +333,7 @@ public class MenuManager : MonoBehaviour {
 
                     var fx = Instantiate(PlayersMesh[8].gameObject, PlayersMesh[1].transform.position, Quaternion.identity, PlayersMesh[1].transform);
 
-                    PlayersMesh[0].gameObject.SetActive(true);
+                    PlayersMesh[1].gameObject.SetActive(true);
                 }
                 else
                 {
@@ -335,7 +341,7 @@ public class MenuManager : MonoBehaviour {
                         player2Ready = false;
                     });
 
-                    Transform p2 = canvasSelect.transform.GetChild(0).transform;
+                    Transform p2 = canvasSelect.transform.GetChild(1).transform;
 
                     p2.GetComponentsInChildren<Text>()[1].text = "GET READY \n PRESS";
                     p2.GetComponentInChildren<Image>().DOFade(1, .05f);
@@ -357,7 +363,7 @@ public class MenuManager : MonoBehaviour {
                         player3Ready = true;
                     });
 
-                    Transform p3 = canvasSelect.transform.GetChild(0).transform;
+                    Transform p3 = canvasSelect.transform.GetChild(2).transform;
 
                     p3.GetComponentsInChildren<Text>()[1].text = "READY !";
                     p3.GetComponentInChildren<Image>().DOFade(0, .05f);
@@ -373,7 +379,7 @@ public class MenuManager : MonoBehaviour {
                         player3Ready = false;
                     });
 
-                    Transform p3 = canvasSelect.transform.GetChild(0).transform;
+                    Transform p3 = canvasSelect.transform.GetChild(2).transform;
 
                     p3.GetComponentsInChildren<Text>()[1].text = "GET READY \n PRESS";
                     p3.GetComponentInChildren<Image>().DOFade(1, .05f);
@@ -381,7 +387,7 @@ public class MenuManager : MonoBehaviour {
                     var fx = Instantiate(PlayersMesh[8].gameObject, PlayersMesh[2].transform.position, Quaternion.identity, PlayersMesh[2].transform);
 
 
-                    PlayersMesh[3].gameObject.SetActive(false);
+                    PlayersMesh[2].gameObject.SetActive(false);
                 }
             }
 
@@ -394,7 +400,7 @@ public class MenuManager : MonoBehaviour {
                         player4Ready = true;
                     });
 
-                    Transform p4 = canvasSelect.transform.GetChild(0).transform;
+                    Transform p4 = canvasSelect.transform.GetChild(3).transform;
 
                     p4.GetComponentsInChildren<Text>()[1].text = "READY !";
                     p4.GetComponentInChildren<Image>().DOFade(0, .05f);
@@ -410,7 +416,7 @@ public class MenuManager : MonoBehaviour {
                         player4Ready = false;
                     });
 
-                    Transform p4 = canvasSelect.transform.GetChild(0).transform;
+                    Transform p4 = canvasSelect.transform.GetChild(3).transform;
 
                     p4.GetComponentsInChildren<Text>()[1].text = "GET READY \n PRESS";
                     p4.GetComponentInChildren<Image>().DOFade(1, .05f);
@@ -423,10 +429,17 @@ public class MenuManager : MonoBehaviour {
 
             if (player1Ready && player2Ready && player3Ready && player4Ready)
             {
-                if (player1.GetButtonDown("UIStart") || player2.GetButtonDown("UIStart") || player3.GetButtonDown("UIStart") || player4.GetButtonDown("UIStart"))
+                PressStart.DOFade(1, .1f);
+
+                if (player1.GetButtonDown("Start") || player2.GetButtonDown("Start") || player3.GetButtonDown("Start") || player4.GetButtonDown("Start"))
                 {
-                    PlayReady();
+                    PlayStart();
+
                 }
+            }
+            else
+            {
+                PressStart.DOFade(0, .1f);
             }
 
 
