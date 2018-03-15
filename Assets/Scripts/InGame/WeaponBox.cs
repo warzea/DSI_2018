@@ -115,7 +115,7 @@ public class WeaponBox : MonoBehaviour
     {
         if (ThisGauge.fillAmount >= .05f)
         {
-            GetTrans.DOKill (true); 
+            GetTrans.DOKill (true);
             getChild.DOKill (true);
 
             GetTrans.transform.DOShakeScale (1f, .7f, 20, 0);
@@ -167,10 +167,13 @@ public class WeaponBox : MonoBehaviour
 
         if (newObj == null)
         {
-            newObj = (GameObject) Instantiate (AllStartWeap [Random.Range (0, AllStartWeap.Length)], GetTrans);
+            GameObject thisObj = AllStartWeap [Random.Range (0, AllStartWeap.Length)];
+            Manager.Ui.NewWeapPic (thisObj.name, thisPlayer.IdPlayer);
+            newObj = (GameObject) Instantiate (thisObj, GetTrans);
         }
         else
         {
+            Manager.Ui.NewWeapPic (newObj.name, thisPlayer.IdPlayer);
             checkNew = true;
             for (int a = 0; a < AllOtherWeap.Length; a++)
             {
@@ -184,6 +187,7 @@ public class WeaponBox : MonoBehaviour
             }
         }
 
+        Manager.Ui.NewWeapPic (newObj.name, thisPlayer.IdPlayer);
         Manager.Ui.WeaponChangeIG (thisPlayer.IdPlayer);
 
         Transform objTrans = newObj.transform;
@@ -420,22 +424,22 @@ public class WeaponBox : MonoBehaviour
     {
         if (invc)
         {
-            transform.DOKill(true);
-            getChild.DOKill(true);
+            transform.DOKill (true);
+            getChild.DOKill (true);
 
-            float rdmY = UnityEngine.Random.Range(-30, 30);
-            float rdmZ = UnityEngine.Random.Range(-30, 30);
+            float rdmY = UnityEngine.Random.Range (-30, 30);
+            float rdmZ = UnityEngine.Random.Range (-30, 30);
 
-            Material mat = getChild.GetComponent<Renderer>().material;
-            mat.DOKill(true);
-            Debug.Log(mat);
-            mat.DOColor(Color.red, .15f).OnComplete(() =>
+            Material mat = getChild.GetComponent<Renderer> ().material;
+            mat.DOKill (true);
+            Debug.Log (mat);
+            mat.DOColor (Color.red, .15f).OnComplete (() =>
             {
-                mat.DOColor(Color.white, .15f);
+                mat.DOColor (Color.white, .15f);
             });
 
-            transform.DOPunchRotation(new Vector3(0, rdmY, rdmZ), .3f, 3, 1).SetEase(Ease.InBounce);
-            getChild.transform.DOPunchPosition(new Vector3(rdmY / 16, rdmZ / 16, 0), .3f, 3, 1).SetEase(Ease.InBounce);
+            transform.DOPunchRotation (new Vector3 (0, rdmY, rdmZ), .3f, 3, 1).SetEase (Ease.InBounce);
+            getChild.transform.DOPunchPosition (new Vector3 (rdmY / 16, rdmZ / 16, 0), .3f, 3, 1).SetEase (Ease.InBounce);
 
             return;
         }

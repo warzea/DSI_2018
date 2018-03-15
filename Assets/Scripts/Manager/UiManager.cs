@@ -13,6 +13,7 @@ public class UiManager : ManagerParent
     public Transform GetInGame;
     public Scores GetScores;
 
+    public WeapPicture [] WeapIcone;
     public GameObject [] PlayersHUD;
     public Image [] PlayersWeaponHUD;
     public GameObject [] PlayersAmmo;
@@ -139,11 +140,11 @@ public class UiManager : ManagerParent
         ammoTwScale2.Kill (true);
         ammoTwWait.Kill (true);
 
-        Transform getTrans = PlayersAmmo[PlayerId].transform;
+        Transform getTrans = PlayersAmmo [PlayerId].transform;
 
-        getTrans.GetComponentsInChildren<RainbowColor>()[0].enabled = false;
-        getTrans.GetComponentsInChildren<RainbowColor>()[1].enabled = false;
-        getTrans.GetComponentInChildren<RainbowScale>().enabled = false;
+        getTrans.GetComponentsInChildren<RainbowColor> () [0].enabled = false;
+        getTrans.GetComponentsInChildren<RainbowColor> () [1].enabled = false;
+        getTrans.GetComponentInChildren<RainbowScale> ().enabled = false;
     }
 
     // 1
@@ -203,7 +204,7 @@ public class UiManager : ManagerParent
     // 2
     public void EndScreenMedals (Transform thisObj, int thisID, int nbr)
     {
-        UnityEngine.Debug.Log("EndScreenMedals");
+        UnityEngine.Debug.Log ("EndScreenMedals");
 
         thisObj.position = PlayersEndScreen [thisID].transform.GetChild (3).transform.position;
         thisObj.localPosition += new Vector3 (0, 50 * nbr, 0);
@@ -213,11 +214,11 @@ public class UiManager : ManagerParent
     public void EndScreenFinished ()
     {
         //UnityEngine.Debug.Log("Finshed");
-        
-        Manager.Ui.GetScores.AllScore[1].ScoreText.transform.DOPunchScale(Vector3.one * .4f, 1.5f, 10, .5f);
+
+        Manager.Ui.GetScores.AllScore [1].ScoreText.transform.DOPunchScale (Vector3.one * .4f, 1.5f, 10, .5f);
 
         EndScreenFX.gameObject.SetActive (true);
-        EndScreenFX.GetComponent<Animator>().SetTrigger("EvenMore");
+        EndScreenFX.GetComponent<Animator> ().SetTrigger ("EvenMore");
 
         DOVirtual.DelayedCall (1f, () =>
         {
@@ -228,6 +229,18 @@ public class UiManager : ManagerParent
             });
         });
 
+    }
+
+    public void NewWeapPic (string thisWeap, int idPlayer)
+    {
+        for (int a = 0; a < WeapIcone.Length; a++)
+        {
+            if (WeapIcone [a].Weapon == thisWeap)
+            {
+                PlayersWeaponHUD [idPlayer].sprite = WeapIcone [a].ThisImage.sprite;
+                break;
+            }
+        }
     }
 
     public void EndScreenAll ()
@@ -250,8 +263,8 @@ public class UiManager : ManagerParent
         //HUD INGAME
         Transform getTrans = PlayersAmmo [PlayerId].transform;
 
-        getTrans.DOKill(true);
-        getTrans.GetComponentsInChildren<RainbowColor>()[0].transform.GetComponent<Image>().DOKill(true);
+        getTrans.DOKill (true);
+        getTrans.GetComponentsInChildren<RainbowColor> () [0].transform.GetComponent<Image> ().DOKill (true);
 
         getTrans.GetComponentsInChildren<RainbowColor> () [0].enabled = false;
         getTrans.GetComponentInChildren<RainbowScale> ().enabled = false;
@@ -290,7 +303,7 @@ public class UiManager : ManagerParent
 
     public void WeaponNew (int PlayerId)
     {
-        ResetTween(PlayerId);
+        ResetTween (PlayerId);
 
         //LE CHARGEUR REAPARAIT VISIBLE
         Transform getTrans = PlayersAmmo [PlayerId].transform;
@@ -503,7 +516,7 @@ public class UiManager : ManagerParent
         }
         if (Input.GetKeyDown (KeyCode.T))
         {
-            Manager.GameCont.EndGame();
+            Manager.GameCont.EndGame ();
         }
         if (Input.GetKeyDown (KeyCode.L))
         {
@@ -550,4 +563,11 @@ public class UiManager : ManagerParent
     }
 
     #endregion
+}
+
+[System.Serializable]
+public class WeapPicture
+{
+    public string Weapon;
+    public Image ThisImage;
 }
