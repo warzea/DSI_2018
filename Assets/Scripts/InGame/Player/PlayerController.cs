@@ -266,16 +266,28 @@ public class PlayerController : MonoBehaviour
 
 	public void GetDamage (Transform thisEnemy, int intDmg = 1)
 	{
-		if (canTakeDmg && checkUpdate)
+		if (canTakeDmg && checkUpdate && !dead)
 		{
 			Manager.Audm.OpenAudio (AudioType.Other, NameHitSong);
 
 			lifePlayer -= intDmg;
 			animPlayer.SetTrigger ("Damage");
 
-			if (lifePlayer <= 0 && !dead)
+			tweenRegen.Kill ();
+
+			if (lifePlayer <= 0)
 			{
 				animeDead (thisEnemy.position);
+			}
+			else
+			{
+				tweenRegen = DOVirtual.DelayedCall (TimeToRegen, () =>
+				{
+					if (lifePlayer < LifePlayer)
+					{
+						lifePlayer++;
+					}
+				});
 			}
 		}
 	}
@@ -826,9 +838,9 @@ public class PlayerController : MonoBehaviour
 			});
 		});
 		/*for ( a = 0; a < getList.Length; a ++ )
-        {
-            Destroy(getList[a]);	
-        }*/
+		{
+		    Destroy(getList[a]);	
+		}*/
 
 		lostItem ();
 	}
@@ -888,20 +900,31 @@ public class PlayerController : MonoBehaviour
 		{
 			canEnterBox = true;
 		}
-		else if (getTag == Constants._EnemyBullet && canTakeDmg && checkUpdate /*|| getTag == Constants._Enemy*/ )
+		else if (getTag == Constants._EnemyBullet && canTakeDmg && checkUpdate && !dead /*|| getTag == Constants._Enemy*/ )
 		{
 			Manager.Audm.OpenAudio (AudioType.Other, NameHitSong);
 			lifePlayer--;
+			tweenRegen.Kill ();
+
+			if (lifePlayer <= 0)
+			{
+				animeDead (thisColl.transform.position);
+			}
+			else
+			{
+				tweenRegen = DOVirtual.DelayedCall (TimeToRegen, () =>
+				{
+					if (lifePlayer < LifePlayer)
+					{
+						lifePlayer++;
+					}
+				});
+			}
 
 			Manager.VibM.StunVibration (inputPlayer);
 
 			Manager.VibM.StunVibration (inputPlayer);
 			animPlayer.SetTrigger ("Damage");
-
-			DOVirtual.DelayedCall (TimeToRegen, () =>
-			{
-				lifePlayer = LifePlayer;
-			});
 		}
 	}
 
@@ -917,16 +940,16 @@ public class PlayerController : MonoBehaviour
 	{
 		/*string getTag = thisColl.collider.tag;
 
-        if ( getTag == Constants._EnemyBullet || getTag == Constants._Enemy )
-        {
-            lifePlayer --;
+		if ( getTag == Constants._EnemyBullet || getTag == Constants._Enemy )
+		{
+		    lifePlayer --;
 
-            if ( lifePlayer <= 0 )
-            {
-                dead = true;
-                animeDead ( );
-            }
-        }*/
+		    if ( lifePlayer <= 0 )
+		    {
+		        dead = true;
+		        animeDead ( );
+		    }
+		}*/
 	}
 
 	#endregion

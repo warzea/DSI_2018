@@ -113,12 +113,12 @@ public class WeaponBox : MonoBehaviour
 
     public void ActionSpe ()
     {
-        if (ThisGauge.fillAmount >= 1)
+        if (ThisGauge.fillAmount >= .05f)
         {
-            GetTrans.DOKill (true);
+            GetTrans.DOKill (true); 
             getChild.DOKill (true);
 
-            GetTrans.GetChild (1).DOShakeScale (1f, .7f, 20, 0);
+            GetTrans.transform.DOShakeScale (1f, .7f, 20, 0);
 
             ThisGauge.transform.parent.GetComponentInChildren<RainbowColor> ().enabled = false;
             ThisGauge.transform.parent.GetComponentInChildren<RainbowScale> ().enabled = false;
