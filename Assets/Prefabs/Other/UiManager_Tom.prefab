@@ -3637,7 +3637,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisPlayer: {fileID: 0}
   Score: 0
-  ThisString: 
+  ThisString: Snichy Shaman
   ThisText: {fileID: 0}
 --- !u!114 &114004843439618786
 MonoBehaviour:
@@ -4516,7 +4516,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisPlayer: {fileID: 0}
   Score: 0
-  ThisString: 
+  ThisString: Meticulous Medium
   ThisText: {fileID: 0}
 --- !u!114 &114222638132277248
 MonoBehaviour:
@@ -4618,7 +4618,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisPlayer: {fileID: 0}
   Score: 0
-  ThisString: 
+  ThisString: Terminal Trickster
   ThisText: {fileID: 0}
 --- !u!114 &114241276695725104
 MonoBehaviour:
@@ -4672,7 +4672,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisPlayer: {fileID: 0}
   Score: 0
-  ThisString: 
+  ThisString: Common Curser
   ThisText: {fileID: 0}
 --- !u!114 &114248464592025956
 MonoBehaviour:
@@ -5315,7 +5315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisPlayer: {fileID: 0}
   Score: 0
-  ThisString: 
+  ThisString: Lonely Looser
   ThisText: {fileID: 0}
 --- !u!114 &114424712296741374
 MonoBehaviour:
@@ -5379,7 +5379,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisPlayer: {fileID: 0}
   Score: 0
-  ThisString: 
+  ThisString: Handy Hypnotist
   ThisText: {fileID: 0}
 --- !u!114 &114427247525988938
 MonoBehaviour:
@@ -6187,7 +6187,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisPlayer: {fileID: 0}
   Score: 0
-  ThisString: 
+  ThisString: Wandering Wizard
   ThisText: {fileID: 0}
 --- !u!114 &114573949308162490
 MonoBehaviour:
@@ -6873,7 +6873,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisPlayer: {fileID: 0}
   Score: 0
-  ThisString: 
+  ThisString: Exigent Enchanter
   ThisText: {fileID: 0}
 --- !u!114 &114686868780113060
 MonoBehaviour:
@@ -6920,7 +6920,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisPlayer: {fileID: 0}
   Score: 0
-  ThisString: 
+  ThisString: Designated Driver
   ThisText: {fileID: 0}
 --- !u!114 &114718092565067242
 MonoBehaviour:
@@ -7615,7 +7615,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisPlayer: {fileID: 0}
   Score: 0
-  ThisString: 
+  ThisString: Seeker Sorcerer
   ThisText: {fileID: 0}
 --- !u!114 &114828043945918816
 MonoBehaviour:
@@ -7996,7 +7996,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisPlayer: {fileID: 0}
   Score: 0
-  ThisString: 
+  ThisString: Virtuoso Voodoo
   ThisText: {fileID: 0}
 --- !u!114 &114864440510976304
 MonoBehaviour:
@@ -8011,7 +8011,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisPlayer: {fileID: 0}
   Score: 0
-  ThisString: 
+  ThisString: Rumble Ramble
   ThisText: {fileID: 0}
 --- !u!114 &114865601013158674
 MonoBehaviour:

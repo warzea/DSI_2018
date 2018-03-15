@@ -1,7 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
+guid: 8b78c5ab0ee3cc04b821bc804dda787d
+timeCreated: 1521125537
+licenseType: Free
+=======
 guid: 51a4bae5f10d76f4c8bf4ff4b14c57c2
 timeCreated: 1521125749
 licenseType: Pro
+>>>>>>> David_Branch
 DefaultImporter:
   externalObjects: {}
   userData: 

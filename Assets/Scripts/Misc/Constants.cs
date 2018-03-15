@@ -28,7 +28,7 @@ public static class Constants
     #endregion
 
     #region Material Name
-    public const string _MatChest = "MAT_chest_1_2";
+    public const string _MatChest = "MAT_chest";
     public const string _GoldTransition = "GoldTransition";
     #endregion
 }

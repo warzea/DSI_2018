@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Art/Meshes/Materials.meta
+<<<<<<< HEAD
+guid: ddd93f32b855af84c83e389d00a2c211
+=======
+guid: cd3feafa3005f094f9fd9c4adb9c4083
+>>>>>>> marie:Assets/Audio.meta
+folderAsset: yes
+timeCreated: 1520353836
+licenseType: Free
+=======
+guid: 8dbb114e300738b479045aa22fa76109
+folderAsset: yes
+timeCreated: 1521125749
+licenseType: Pro
+>>>>>>> David_Branch
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

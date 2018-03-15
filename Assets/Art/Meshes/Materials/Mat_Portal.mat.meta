@@ -1,7 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
+guid: c87c5a7f18d09f74697e6ae6fd7c5c68
+timeCreated: 1521125556
+licenseType: Free
+=======
 guid: 094022a17f59e4b4bbc8ffc81356e817
 timeCreated: 1521125764
 licenseType: Pro
+>>>>>>> David_Branch
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 0
