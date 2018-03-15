@@ -271,7 +271,7 @@ public class BulletAbstract : MonoBehaviour
                 instExplo(collision.ClosestPoint(thisTrans.position));
             }
 
-            if (!Through && !canExplose)
+            if (!Through)
             {
                 destObj();
             }

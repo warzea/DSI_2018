@@ -37,4 +37,5 @@ Material:
     - __dirty: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _TintColor: {r: 1, g: 1, b: 1, a: 0.5}
+    - _Color1: {r: 0.9862069, g: 1, b: 0, a: 1}
+    - _TintColor: {r: 1, g: 0.9724138, b: 0, a: 0.5}

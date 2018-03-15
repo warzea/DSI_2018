@@ -15,8 +15,6 @@ public class AgentController : MonoBehaviour
     public GameObject myFocusPlayer;
     public int lifeAgent = 1;
     public float timeBeforeDepop = 2f;
-    public float timeBeforeAlive = 1f;
-
     public Animator animAgent;
 
     [Header("------------------")]
@@ -46,7 +44,7 @@ public class AgentController : MonoBehaviour
 
     private float timeAttack = 2f;
 
-
+    public GameObject particleHit;
 
     void Awake()
     {
@@ -252,7 +250,8 @@ public class AgentController : MonoBehaviour
         if (other.tag == Constants._PlayerBullet && myEtatAgent == AgentEtat.aliveAgent)
         {
             BulletAbstract getBA = other.GetComponent<BulletAbstract>();
-
+            GameObject explo = Instantiate(particleHit, transform.position, transform.rotation);
+            Destroy(explo, 1f);
             if (getBA != null)
             {
                 lifeAgent -= getBA.BulletDamage;

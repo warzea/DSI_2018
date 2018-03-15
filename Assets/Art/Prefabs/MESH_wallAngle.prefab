@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4472811658968570}
   - component: {fileID: 33859715429081998}
   - component: {fileID: 23295731607322236}
-  - component: {fileID: 95745500452899606}
   m_Layer: 0
   m_Name: MESH_wallAngle
   m_TagString: Untagged
@@ -83,20 +82,3 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1392405050082776}
   m_Mesh: {fileID: 4300000, guid: addb3ff8565e04d4bb4ae11daeafaea7, type: 3}
---- !u!95 &95745500452899606
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1392405050082776}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: addb3ff8565e04d4bb4ae11daeafaea7, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
