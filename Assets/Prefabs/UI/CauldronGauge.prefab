@@ -75,6 +75,7 @@ GameObject:
   - component: {fileID: 114002927042091052}
   - component: {fileID: 222169115601311908}
   - component: {fileID: 114276247687103180}
+  - component: {fileID: 114195939201916976}
   m_Layer: 0
   m_Name: Cauldron Inside
   m_TagString: Untagged
@@ -94,6 +95,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
+--- !u!114 &114195939201916976
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1953482152675364}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 649fefe4a2e17314d90106d1b4e9fb89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: 0.15
+  scales:
+  - {x: 1, y: 1, z: 1}
+  - {x: 1.2, y: 1.2, z: 1.2}
+  easeType: 1
 --- !u!114 &114269343291262172
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -322,7 +339,7 @@ CanvasGroup:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1246058091811566}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0

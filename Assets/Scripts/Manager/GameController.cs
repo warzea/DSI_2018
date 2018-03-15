@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using Rewired;
+
 using DG.Tweening;
+
+using Rewired;
+
+using UnityEngine;
 
 public class GameController : ManagerParent
 {
@@ -26,8 +29,11 @@ public class GameController : ManagerParent
     [HideInInspector]
     public List<GameObject> Players;
     public Material[] PlayerMaterial;
+    public GameObject[] PlayerTrail;
     public AbstractMedal[] AllMedal;
 
+    [HideInInspector]
+    public List<MedalsPlayer> MedalInfo;
     List<PlayerController> getPlayerCont;
     #endregion
 
@@ -53,41 +59,60 @@ public class GameController : ManagerParent
         Players.Clear();
         Manager.Ui.EndScreenStart();
 
+        DOVirtual.DelayedCall(2, () =>
+       {
 
-        DOVirtual.DelayedCall(2, () => 
-        {
-            
+           ScoreInfo[] allSc = Manager.Ui.GetScores.AllScore.ToArray();
+           ScoreInfo thisScore = allSc[0];
 
-            ScoreInfo[] allSc = Manager.Ui.GetScores.AllScore.ToArray();
-            ScoreInfo thisScore = allSc[0];
-            
-            for (int a = 0; a < allSc.Length; a++)
-            {
-                if ( allSc[a].ScoreTpe == ScoreType.BoxWeapon )
-                {
-                    thisScore = allSc[a];
-                    break;
-                }
-            }
+           for (int a = 0; a < allSc.Length; a++)
+           {
+               if (allSc[a].ScoreTpe == ScoreType.BoxWeapon)
+               {
+                   thisScore = allSc[a];
+                   break;
+               }
+           }
 
-            DOVirtual.DelayedCall(1, () => 
-            {
-                for ( int a = 0; a < AllMedal.Length; a ++ )
-                {
-                    AllMedal[a].StartCheck ( getPlayerCont.ToArray ( ) );
-                }
-            });
+           DOVirtual.DelayedCall(1, () =>
+           {
+               for (int a = 0; a < AllMedal.Length; a++)
+               {
+                   AllMedal[a].gameObject.SetActive(true);
 
-            Manager.Ui.GetScores.UpdateValue ( thisScore.FinalScore, ScoreType.EndScore );
+                   AllMedal[a].StartCheck(getPlayerCont.ToArray());
+               }
 
-        });
+               int getVal;
+               MedalsPlayer thisMP;
+               for (int a = 0; a < MedalInfo.Count; a++)
+               {
+                   thisMP = MedalInfo[a];
+                   while (thisMP.ThisMedal.Count > 3)
+                   {
+                       getVal = Random.Range(0, thisMP.ThisMedal.Count);
+                       Destroy(thisMP.ThisMedal[getVal].gameObject);
+
+                       thisMP.ThisMedal.RemoveAt(getVal);
+                   }
+
+                   for (int b = 0; b < 3; b++)
+                   {
+                       Manager.Ui.EndScreenMedals(thisMP.ThisMedal[b].transform, thisMP.IDPlayer, b);
+                   }
+               }
+           });
+
+           Manager.Ui.GetScores.UpdateValue(thisScore.FinalScore, ScoreType.EndScore, false, Manager.Ui.EndScreenFinished);
+
+       });
     }
 
-    public void EtatAgent ( bool thisEtat )
+    public void EtatAgent(bool thisEtat)
     {
-        var newEtat = new AgentEvent ( );
+        var newEtat = new AgentEvent();
         newEtat.AgentChecking = thisEtat;
-        newEtat.Raise ( );
+        newEtat.Raise();
         /*System.Action <AgentEvent> thisAct = delegate( AgentEvent thisEvnt )
         {
             thisEvnt.AgentChecking = thisEtat;
@@ -96,12 +121,18 @@ public class GameController : ManagerParent
         Manager.Event.Raise(thisAct);*/
     }
 
-
     #endregion
 
     #region Private Methods
     protected override void InitializeManager()
     {
+        MedalInfo = new List<MedalsPlayer>();
+        for (int a = 0; a < 4; a++)
+        {
+            MedalInfo.Add(new MedalsPlayer());
+            MedalInfo[a].IDPlayer = a;
+            MedalInfo[a].ThisMedal = new List<AbstractMedal>();
+        }
         getPlayerCont = new List<PlayerController>();
         Garbage = transform.Find("Garbage");
         GetPlayersInput = new PlayerInfoInput[4];
@@ -114,17 +145,17 @@ public class GameController : ManagerParent
             GetPlayersInput[a].EnablePlayer = false;
         }
 
-        if ( WeaponB == null )
+        if (WeaponB == null)
         {
-            WeaponB = (WeaponBox) FindObjectOfType(typeof(WeaponBox));
+            WeaponB = (WeaponBox)FindObjectOfType(typeof(WeaponBox));
         }
 
-        if ( StartWeapon == null)
+        if (StartWeapon == null)
         {
-            StartWeapon = WeaponB.AllWeapon[0];
+            StartWeapon = WeaponB.AllStartWeap[0];
         }
 
-        if ( MainCam == null )
+        if (MainCam == null)
         {
             MainCam = Camera.main;
             GetCameraFollow = MainCam.transform.parent.GetComponent<CameraFollow>();
@@ -138,7 +169,7 @@ public class GameController : ManagerParent
         GameObject getPlayer;
         GameObject getWeapon;
         GameObject[] getPlayerHud = Manager.Ui.PlayersHUD;
-        
+
         List<GameObject> getPotGets = new List<GameObject>();
 
         for (int a = 0; a < getPlayers.Length; a++)
@@ -151,12 +182,7 @@ public class GameController : ManagerParent
                 getPlayer = (GameObject)Instantiate(PlayerPrefab);
                 getPlayer.name = getPlayer.name + "+" + a.ToString();
 
-                foreach ( Renderer thisMat in getPlayer.GetComponentsInChildren<Renderer>())
-                {
-                   thisMat.material = PlayerMaterial[a];
-                }
-                
-                if ( PlayerPosSpawn != null )
+                if (PlayerPosSpawn != null)
                 {
                     getPlayer.transform.position = PlayerPosSpawn.position + new Vector3(a * 1.5f, 0, 0);
                 }
@@ -164,6 +190,18 @@ public class GameController : ManagerParent
                 {
                     getPlayer.transform.position = new Vector3(a * 1.5f, 0, 0);
                 }
+
+                foreach (Renderer thisMat in getPlayer.GetComponentsInChildren<Renderer>())
+                {
+                    if (thisMat.gameObject.name == "Corpus")
+                    {
+                        thisMat.material = PlayerMaterial[a];
+                        Instantiate(PlayerTrail[a], getPlayer.transform.position, Quaternion.identity, getPlayer.transform);
+                        break;
+                    }
+                }
+
+                Debug.Log(Manager.Ui.PlayersAmmo[a].name);
 
                 getPC = getPlayer.GetComponent<PlayerController>();
                 getPC.IdPlayer = getPlayers[a].IdPlayer;
@@ -176,11 +214,12 @@ public class GameController : ManagerParent
                 getWeapon = (GameObject)Instantiate(Manager.Ui.PotionGet, Manager.Ui.GetInGame);
                 getWeapon.GetComponent<PotionFollowP>().getCam = MainCam;
                 getWeapon.GetComponent<PotionFollowP>().ThisPlayer = getPlayer.transform;
-                getPotGets.Add ( getWeapon);
+                getPotGets.Add(getWeapon);
 
                 getWeapon = (GameObject)Instantiate(StartWeapon, getPC.WeaponPos.transform);
                 getWeapon.transform.localPosition = Vector3.zero;
-                getWeapon.transform.localRotation = Quaternion.identity;
+                //getWeapon.transform.localRotation = Quaternion.identity;
+                getWeapon.transform.localScale = new Vector3(0.01165743f, 0.01258486f, 0.01180339f);
 
                 //getPlayer.GetComponent<PlayerController>().WeapText = Manager.Ui.textWeapon[a];
 
@@ -238,9 +277,9 @@ public class GameController : ManagerParent
             if (!check)
             {
                 DOVirtual.DelayedCall(TimerCheckPlayer, () =>
-                {
-                    checkPlayer();
-                });
+               {
+                   checkPlayer();
+               });
                 return;
             }
         }
@@ -283,10 +322,15 @@ public class GameController : ManagerParent
         Manager.AgentM.ChangeEtatFocus(lowLife, maxLife, boxWeapon);
 
         DOVirtual.DelayedCall(TimerCheckPlayer, () =>
-        {
-            checkPlayer();
-        });
+       {
+           checkPlayer();
+       });
     }
     #endregion
 }
 
+public class MedalsPlayer
+{
+    public List<AbstractMedal> ThisMedal;
+    public int IDPlayer;
+}
