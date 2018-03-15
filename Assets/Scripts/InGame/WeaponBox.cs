@@ -115,7 +115,7 @@ public class WeaponBox : MonoBehaviour
     {
         if (ThisGauge.fillAmount >= 1)
         {
-            transform.DOKill (true);
+            GetTrans.DOKill (true);
             getChild.DOKill (true);
 
             GetTrans.GetChild (1).DOShakeScale (1f, .7f, 20, 0);
@@ -264,7 +264,7 @@ public class WeaponBox : MonoBehaviour
             Material mat = getChild.GetComponent<Renderer> ().material;
             mat.DOKill (true);
             //Debug.Log (mat);
-            mat.DOColor (Color.red, .15f).OnComplete (( )=>
+            mat.DOColor (Color.red, .15f).OnComplete (() =>
             {
                 mat.DOColor (Color.white, .15f);
             });

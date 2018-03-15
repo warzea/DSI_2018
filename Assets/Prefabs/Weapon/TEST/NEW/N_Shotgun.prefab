@@ -115,7 +115,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 7450caefcf44d074f8584a686ca7b9d7, type: 3}
+  - {fileID: 2100000, guid: 8071742482f24dd4891342e887490f8c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -158,7 +158,8 @@ MonoBehaviour:
     type: 2}
   PrefabExplo: {fileID: 1530796011795326, guid: ba9e0344ee4dac64a90e0ca8a6368c32,
     type: 2}
-  NameMusic: 
+  NameMusic: shotgun_zone
+  MusicExplo: 
   TimeBackPush: 0.1
   WeightRandom: 0
   AutoShoot: 1
