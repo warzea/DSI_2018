@@ -29,6 +29,7 @@ public class AgentController : MonoBehaviour
     public float timeLeftAgentshoot = 2f;
     public float distanceShoot = 20;
 
+    public CapsuleCollider mycollider;
 
     public enum CibleAgent { lawPlayer, maxPlayer, leadPlayer, cauldron, randomPlayer, nothing };
     public enum AgentEtat { deadAgent, aliveAgent };
@@ -43,7 +44,8 @@ public class AgentController : MonoBehaviour
 
     private Camera cam;
 
-	private float timeAttack = 2f;
+    private float timeAttack = 2f;
+
 
 
     void Awake()
@@ -68,7 +70,7 @@ public class AgentController : MonoBehaviour
 
         Manager.Event.Register(thisAct);
 
-		timeAttack = Random.Range (timeLeftAgentshoot - 0.2f, timeLeftAgentshoot + 0.2f);
+        timeAttack = Random.Range(timeLeftAgentshoot - 0.2f, timeLeftAgentshoot + 0.2f);
 
     }
 
@@ -123,7 +125,7 @@ public class AgentController : MonoBehaviour
     public void ShootAgent()
     {
         timeAgent += Time.deltaTime;
-		if (timeAgent > timeAttack)
+        if (timeAgent > timeAttack)
         {
             float distance = Vector3.Distance(transform.position, myFocusPlayer.transform.position);
 
@@ -149,7 +151,7 @@ public class AgentController : MonoBehaviour
                     }
                 }
             }
-			timeAttack = Random.Range (timeLeftAgentshoot - 0.2f, timeLeftAgentshoot + 0.2f);
+            timeAttack = Random.Range(timeLeftAgentshoot - 0.2f, timeLeftAgentshoot + 0.2f);
             timeAgent = 0;
         }
     }
@@ -239,6 +241,7 @@ public class AgentController : MonoBehaviour
     {
         Vector3 newPos = agentsManager.CheckBestcheckPoint(myFocusPlayer.transform);
         navAgent.Warp(newPos);
+        mycollider.enabled = true;
         myEtatAgent = AgentEtat.aliveAgent;
         navAgent.isStopped = false;
         lifeAgent = 1;
@@ -263,6 +266,7 @@ public class AgentController : MonoBehaviour
             if (lifeAgent <= 0 && AgentEtat.aliveAgent == myEtatAgent)
             {
                 myEtatAgent = AgentEtat.deadAgent;
+                mycollider.enabled = false;
                 DeadFonction();
             }
             else
