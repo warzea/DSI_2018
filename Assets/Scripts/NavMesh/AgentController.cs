@@ -48,7 +48,6 @@ public class AgentController : MonoBehaviour
 
     void Awake()
     {
-        agentsManager = GameObject.Find("ManagerNavMesh").GetComponent<AgentsManager>();
         navAgent = transform.GetComponent<NavMeshAgent>();
         myFocusEtatAgent = CibleAgent.nothing;
         myEtatAgent = AgentEtat.aliveAgent;
@@ -56,6 +55,7 @@ public class AgentController : MonoBehaviour
 
     void Start()
     {
+        agentsManager = Manager.AgentM;
         parentBullet = Manager.GameCont.Garbage;
         navAgent.stoppingDistance = distanceShoot;
         cam = Manager.GameCont.MainCam;

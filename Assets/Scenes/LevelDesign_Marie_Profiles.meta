@@ -1,5 +1,9 @@
 fileFormatVersion: 2
 <<<<<<< HEAD
+guid: bdb6e1a2c7f1be64f9e4ba77e59596a5
+folderAsset: yes
+=======
+<<<<<<< HEAD
 guid: eba0179d1f81e6a4eb2adc750c2d71e9
 folderAsset: yes
 timeCreated: 1521060204
@@ -21,6 +25,7 @@ timeCreated: 1521064735
 >>>>>>> David_Branch
 >>>>>>> Alexandre
 licenseType: Free
+>>>>>>> Loic
 DefaultImporter:
   externalObjects: {}
   userData: 

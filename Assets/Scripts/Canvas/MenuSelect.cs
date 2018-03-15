@@ -27,7 +27,7 @@ public class MenuSelect : UiParent
 		{
 			if ( getPlayers[a].InputPlayer.GetButtonDown("Cauldron") )
 			{
-				Debug.Log("interact");
+				//Debug.Log("interact");
 				getPlayers[a].EnablePlayer = true;
 			}
 			else if ( getPlayers[a].InputPlayer.GetButtonDown("Cancel") )

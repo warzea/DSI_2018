@@ -12,6 +12,7 @@ public class WeaponAbstract : MonoBehaviour
     public GameObject ExploWeapon;
     public GameObject PrefabExplo;
     public string NameMusic;
+    public string MusicExplo = "";
     public float TimeBackPush = 0.1f;
     public int WeightRandom = 0;
     public bool AutoShoot = true;
@@ -83,7 +84,7 @@ public class WeaponAbstract : MonoBehaviour
     #endregion
 
     #region Mono
-    void Start ( )
+    void Start ()
     {
         getCapacity = BulletCapacity;
         getGargabe = Manager.GameCont.Garbage;
@@ -96,7 +97,7 @@ public class WeaponAbstract : MonoBehaviour
     {
         if (canShoot && getCapacity > 0 && !blockShoot)
         {
-            Manager.Ui.ScreenShake ( );
+            Manager.Ui.ScreenShake ();
 
             //playerTrans.localPosition -= playerTrans.forward * BackPush * Time.deltaTime;
             string getTag;
@@ -107,7 +108,7 @@ public class WeaponAbstract : MonoBehaviour
                 getDir = -1;
                 getDist = -getDist;
             }
-            RaycastHit [ ] allHit;
+            RaycastHit [] allHit;
 
             if (getDist > 0)
             {
@@ -132,8 +133,8 @@ public class WeaponAbstract : MonoBehaviour
             getCapacity--;
             canShoot = false;
 
-            PlayerController getPC = playerTrans.GetComponent<PlayerController> ( );
-            getPC.UiAmmo.fillAmount = (float)getCapacity / BulletCapacity;
+            PlayerController getPC = playerTrans.GetComponent<PlayerController> ();
+            getPC.UiAmmo.fillAmount = (float) getCapacity / BulletCapacity;
 
             if (getCapacity == 0)
             {
@@ -155,7 +156,7 @@ public class WeaponAbstract : MonoBehaviour
         {
             canShoot = false;
 
-            PlayerController getPC = playerTrans.GetComponent<PlayerController> ( );
+            PlayerController getPC = playerTrans.GetComponent<PlayerController> ();
             getPC.WeaponThrow++;
             Transform getTrans = transform;
             Vector3 getForward = playerTrans.forward;
@@ -166,14 +167,14 @@ public class WeaponAbstract : MonoBehaviour
             }
 
             getTrans.SetParent (null);
-            getPC.UpdateWeapon ( );
+            getPC.UpdateWeapon ();
 
             //getRigid.AddForce(getForward * ForceProjection, ForceMode.VelocityChange);
 
-            GetComponent<Collider> ( ).enabled = true;
-            GetComponent<Collider> ( ).isTrigger = true;
+            GetComponent<Collider> ().enabled = true;
+            GetComponent<Collider> ().isTrigger = true;
 
-            BulletAbstract thisBA = getTrans.gameObject.AddComponent<BulletAbstract> ( );
+            BulletAbstract thisBA = getTrans.gameObject.AddComponent<BulletAbstract> ();
             thisBA.direction = playerTrans.forward;
             thisBA.TimeStay = 0.2f;
             thisBA.thisPlayer = getPC;
@@ -182,15 +183,16 @@ public class WeaponAbstract : MonoBehaviour
             if (ExploWeapon != null && PrefabExplo != null)
             {
                 thisBA.canExplose = true;
+                thisBA.NameAudio = MusicExplo;
                 thisBA.GetEffect = ExploWeapon;
                 thisBA.PrefabExplosion = PrefabExplo;
             }
 
             thisBA.Diameter = 3;
-            thisBA.BulletRange = playerTrans.GetComponent<PlayerController> ( ).DistThrowWeap;
-            thisBA.MoveSpeed = playerTrans.GetComponent<PlayerController> ( ).SpeedThrow;
+            thisBA.BulletRange = playerTrans.GetComponent<PlayerController> ().DistThrowWeap;
+            thisBA.MoveSpeed = playerTrans.GetComponent<PlayerController> ().SpeedThrow;
             thisBA.gameObject.tag = Constants._BulletPlayer;
-            Destroy (GetComponent<WeaponAbstract> ( ));
+            Destroy (GetComponent<WeaponAbstract> ());
             Manager.GameCont.WeaponB.NewWeapon (getPC);
         }
     }
@@ -237,19 +239,19 @@ public class WeaponAbstract : MonoBehaviour
 
     void zoneShoot (Transform thisPlayer)
     {
-        GameObject getBullet = (GameObject)Instantiate (Bullet, SpawnBullet.position, thisPlayer.localRotation, getGargabe);
+        GameObject getBullet = (GameObject) Instantiate (Bullet, SpawnBullet.position, thisPlayer.localRotation, getGargabe);
 
-        setNewProj (getBullet.GetComponent<BulletAbstract> ( ), thisPlayer.GetComponent<PlayerController> ( ));
-        waitNewShoot ( );
+        setNewProj (getBullet.GetComponent<BulletAbstract> (), thisPlayer.GetComponent<PlayerController> ());
+        waitNewShoot ();
     }
 
     void gustProjectile (int nbrLeft, Transform thisPlayer)
     {
-        GameObject getBullet = (GameObject)Instantiate (Bullet, SpawnBullet.position, thisPlayer.localRotation, getGargabe);
+        GameObject getBullet = (GameObject) Instantiate (Bullet, SpawnBullet.position, thisPlayer.localRotation, getGargabe);
         getBullet.transform.localScale *= ScaleBullet;
-        setNewProj (getBullet.GetComponent<BulletAbstract> ( ), thisPlayer.GetComponent<PlayerController> ( ));
+        setNewProj (getBullet.GetComponent<BulletAbstract> (), thisPlayer.GetComponent<PlayerController> ());
 
-        DOVirtual.DelayedCall (SpaceBullet, ( )=>
+        DOVirtual.DelayedCall (SpaceBullet, () =>
         {
             nbrLeft--;
             if (nbrLeft > 0)
@@ -258,7 +260,7 @@ public class WeaponAbstract : MonoBehaviour
             }
             else
             {
-                waitNewShoot ( );
+                waitNewShoot ();
                 blockShoot = false;
             }
         });
@@ -266,14 +268,14 @@ public class WeaponAbstract : MonoBehaviour
     void spreadProjectile (Transform playerTrans)
     {
         float getAngle = Angle / NbrBullet;
-        int nbrMidle = (int)(NbrBullet * 0.5f);
+        int nbrMidle = (int) (NbrBullet * 0.5f);
         int addNumb = 0;
         int addOnPair = 0;
         bool getPair = true;
 
         GameObject getBullet;
         BulletAbstract getScript;
-        PlayerController thisPlayer = playerTrans.GetComponent<PlayerController> ( );
+        PlayerController thisPlayer = playerTrans.GetComponent<PlayerController> ();
 
         if (NbrBullet % 2 != 0)
         {
@@ -287,8 +289,8 @@ public class WeaponAbstract : MonoBehaviour
 
         for (int a = addOnPair; a < NbrBullet + addOnPair; a++)
         {
-            getBullet = (GameObject)Instantiate (Bullet, SpawnBullet.position, playerTrans.localRotation, getGargabe);
-            getScript = getBullet.GetComponent<BulletAbstract> ( );
+            getBullet = (GameObject) Instantiate (Bullet, SpawnBullet.position, playerTrans.localRotation, getGargabe);
+            getScript = getBullet.GetComponent<BulletAbstract> ();
             getBullet.transform.localScale *= ScaleBullet;
 
             setNewProj (getScript, thisPlayer);
@@ -299,22 +301,22 @@ public class WeaponAbstract : MonoBehaviour
             }
             else if (a < nbrMidle + addNumb + addOnPair)
             {
-                getScript.direction = (playerTrans.forward * (75 - a * getAngle)+ playerTrans.right * a * getAngle).normalized;
+                getScript.direction = (playerTrans.forward * (75 - a * getAngle) + playerTrans.right * a * getAngle).normalized;
             }
             else
             {
-                getScript.direction = (playerTrans.forward * (75 - (a - nbrMidle)* getAngle)- playerTrans.right * (a - nbrMidle)* getAngle).normalized;
+                getScript.direction = (playerTrans.forward * (75 - (a - nbrMidle) * getAngle) - playerTrans.right * (a - nbrMidle) * getAngle).normalized;
             }
         }
 
-        waitNewShoot ( );
+        waitNewShoot ();
     }
 
-    void waitNewShoot ( )
+    void waitNewShoot ()
     {
         if (FireRate > 0)
         {
-            DOVirtual.DelayedCall (FireRate, ( )=>
+            DOVirtual.DelayedCall (FireRate, () =>
             {
                 canShoot = true;
             });
@@ -330,9 +332,9 @@ public class WeaponAbstract : MonoBehaviour
         string tag = collisionInfo.collider.tag;
         if (tag == Constants._Player && OnFloor)
         {
-            GetComponent<Collider> ( ).enabled = false;
-            gameObject.tag = Constants._BulletPlayer;
-            PlayerController getPlayer = collisionInfo.gameObject.GetComponent<PlayerController> ( );
+            GetComponent<Collider> ().enabled = false;
+            gameObject.layer = LayerMask.NameToLayer (Constants._BulletPlayer);
+            PlayerController getPlayer = collisionInfo.gameObject.GetComponent<PlayerController> ();
             getPlayer.WeaponCatch++;
             Manager.GameCont.WeaponB.NewWeapon (getPlayer, gameObject);
         }
