@@ -39,6 +39,9 @@ public class AgentControllerCac : MonoBehaviour
 
     void Start()
     {
+        navAgent = transform.GetComponent<NavMeshAgent>();
+        agentsM = Manager.AgentMC;
+
         myEtatAgent = AgentEtat.aliveAgent;
         targetCauldron = Manager.GameCont.WeaponB.gameObject;
         System.Action<AgentEvent> thisAct = delegate (AgentEvent thisEvnt)
@@ -51,12 +54,10 @@ public class AgentControllerCac : MonoBehaviour
         Manager.Event.Register(thisAct);
         navAgent.speed = speedVsPlayer;
 		timeAttack = Random.Range (timeLeftAgentAttacCac - 0.1f, timeLeftAgentAttacCac + 0.1f);
+
+      
     }
-    void Awake()
-    {
-        navAgent = transform.GetComponent<NavMeshAgent>();
-        agentsM = GameObject.Find("ManagerNavMesh").GetComponent<AgentsManagerCac>();
-    }
+
 
     void Update()
     {
