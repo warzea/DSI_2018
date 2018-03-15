@@ -63,8 +63,11 @@ public class MenuManager : MonoBehaviour {
         player4 = ReInput.players.GetPlayer(3);
 
         DOVirtual.DelayedCall(3, () => {
-            firstItemMenu.Select();
+            if(firstItemMenu != null)
+                firstItemMenu.Select();
         });
+
+        Cursor.visible = false;
     }
 
     public void PlayReady()
@@ -142,7 +145,8 @@ public class MenuManager : MonoBehaviour {
 
                             backgroundFlash.DOFade(1, 1f).OnComplete(() => {
 
-                                StartCoroutine("LoadLevel");
+
+                                StartCoroutine(LoadLevel(true));
 
                             });
 
@@ -154,7 +158,7 @@ public class MenuManager : MonoBehaviour {
         
     }
 
-    IEnumerator LoadLevel()
+    public IEnumerator LoadLevel(bool menu)
     {
         AsyncOperation opLevel = SceneManager.LoadSceneAsync("Alex", LoadSceneMode.Additive);
 
@@ -165,14 +169,49 @@ public class MenuManager : MonoBehaviour {
             yield return null;
         }
 
-        DOVirtual.DelayedCall(4, () => {
+        if (menu)
+        {
+            DOVirtual.DelayedCall(4, () => {
 
-            backgroundFlash.DOFade(0, .25f).OnComplete(() => {
+                backgroundFlash.DOFade(0, .25f).OnComplete(() => {
 
+
+                    opLevel.allowSceneActivation = true;
+                });
+            });
+        } else
+        {
+            DOVirtual.DelayedCall(2, () => {
 
                 opLevel.allowSceneActivation = true;
+
             });
-        });
+
+        }
+    }
+
+    public IEnumerator LoadMenu()
+    {
+
+        AsyncOperation opMenu = SceneManager.LoadSceneAsync("Menu", LoadSceneMode.Single);
+
+        opMenu.allowSceneActivation = false;
+
+        while (opMenu.progress < .9f)
+        {
+            yield return null;
+        }
+        
+         DOVirtual.DelayedCall(2, () => {
+
+
+             SceneManager.UnloadSceneAsync("Alex");
+
+             opMenu.allowSceneActivation = true;
+
+         });
+
+        
     }
 
     void ScreenShake(int number)

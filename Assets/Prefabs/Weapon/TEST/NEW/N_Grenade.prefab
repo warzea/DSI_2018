@@ -168,7 +168,7 @@ MonoBehaviour:
   BulletCapacity: 13
   FireRate: 0.6
   CoolDown: 0
-  BackPush: 2
+  BackPush: 6
   SpeedReduce: 0.8
   Damage: 1
   Range: 11.5
