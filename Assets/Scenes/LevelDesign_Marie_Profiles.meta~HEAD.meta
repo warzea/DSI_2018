@@ -1,5 +1,9 @@
 fileFormatVersion: 2
 <<<<<<< HEAD
+guid: 2e3706a8a1ca9dd4384f4dea1a06db84
+timeCreated: 1521063608
+=======
+<<<<<<< HEAD
 <<<<<<< HEAD
 guid: 23a56b796ffb7c54fad0d74a59ef9721
 timeCreated: 1521063459
@@ -11,6 +15,7 @@ timeCreated: 1521063612
 guid: 5ec42f4235b944599881e35f73a0c543
 timeCreated: 1521064735
 >>>>>>> David_Branch
+>>>>>>> Alexandre
 licenseType: Free
 DefaultImporter:
   externalObjects: {}
