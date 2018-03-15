@@ -1,10 +1,19 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 1735649ee94abbb46abd22adc6a82102
 timeCreated: 1521131725
 licenseType: Free
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 100100000
+=======
+guid: 277f87d42368fc64ba507d2e6182b761
+timeCreated: 1521133204
+licenseType: Free
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+>>>>>>> Alexandre
   userData: 
   assetBundleName: 
   assetBundleVariant: 

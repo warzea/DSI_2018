@@ -18,6 +18,11 @@ public abstract class AbstractMedal : MonoBehaviour
 	void Awake ()
 	{
 		thisTrans = transform;
+
+		if (ThisText == null)
+		{
+			ThisText = thisTrans.GetComponentInChildren<Text> ();
+		}
 	}
 	#endregion
 

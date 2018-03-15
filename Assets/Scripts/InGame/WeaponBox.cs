@@ -98,16 +98,36 @@ public class WeaponBox : MonoBehaviour
     #endregion
 
     #region Public Methods
-    public void AttackCauld ()
+    public void AttackCauld (Transform thisT)
     {
         if (!checkAttack)
         {
             GetComponent<Collider> ().isTrigger = true;
             checkAttack = true;
+
             gameObject.tag = Constants._PlayerBullet;
+            float getRange = RangeAttack;
+
+            RaycastHit [] allHit;
+            string getTag;
+            Debug.DrawRay (GetTrans.position, GetTrans.forward, Color.black, 10);
+            allHit = Physics.RaycastAll (GetTrans.position, thisT.forward);
+
+            foreach (RaycastHit thisRay in allHit)
+            {
+                getTag = thisRay.collider.tag;
+
+                if (getTag == Constants._Wall)
+                {
+                    if (thisRay.distance - 1f < getRange)
+                    {
+                        getRange = thisRay.distance - 1;
+                    }
+                }
+            }
 
             GetTrans.DOLocalRotate (new Vector3 (0, 360, 0), SpeedAttack * 0.5f + SpeedAttack * 0.5f, RotateMode.LocalAxisAdd);
-            GetTrans.DOLocalMoveZ (RangeAttack, SpeedAttack * 0.5f).OnComplete (() =>
+            GetTrans.DOLocalMoveZ (getRange, SpeedAttack * 0.5f).OnComplete (() =>
             {
                 GetTrans.DOLocalMoveZ (0, SpeedAttack * 0.5f).OnComplete (() =>
                 {

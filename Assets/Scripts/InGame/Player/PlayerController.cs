@@ -239,7 +239,10 @@ public class PlayerController : MonoBehaviour
 
 		if (AllItem.Count > 0 && Vector3.Distance (thisTrans.position, getBoxWeapon.position) < DistToDropItem)
 		{
-			emptyBag ();
+			if (Tweenbag == null || !Tweenbag.IsActive ())
+			{
+				emptyBag ();
+			}
 		}
 	}
 
@@ -410,14 +413,22 @@ public class PlayerController : MonoBehaviour
 	{
 		float Xmove = inputPlayer.GetAxis ("MoveX");
 		float Ymove = inputPlayer.GetAxis ("MoveY");
+		bool checkWall = false;
 
-		RaycastHit hit;
-		if (Physics.Raycast (thisTrans.position, new Vector3 (Xmove, 0, Ymove), out hit))
+		RaycastHit [] allHit = Physics.RaycastAll (thisTrans.position - new Vector3 (0, -0.5f, 0), new Vector3 (Xmove, 0, Ymove));
+		string getTag;
+
+		foreach (RaycastHit thisRay in allHit)
 		{
-			if (hit.transform.tag == Constants._Wall && hit.distance < 0.5f)
+			getTag = thisRay.collider.tag;
+
+			if (getTag == Constants._Wall)
 			{
-				Xmove *= 0.1f;
-				Ymove *= 0.1f;
+				if (thisRay.distance < 0.5f)
+				{
+					checkWall = true;
+					break;
+				}
 			}
 		}
 
@@ -460,11 +471,19 @@ public class PlayerController : MonoBehaviour
 					Debug.Log ("Raimbo jauge empty");
 				}
 			}
+
 			TimeWBox += getDeltaTime;
 		}
 		else if (shooting)
 		{
 			getSpeed *= SpeedReduce;
+		}
+
+		if (checkWall)
+		{
+			getSpeed *= -0.05f;
+			Xmove *= 0.1f;
+			Ymove *= 0.1f;
 		}
 
 		getSpeed = getDeltaTime * getSpeed;
@@ -534,7 +553,7 @@ public class PlayerController : MonoBehaviour
 			{
 				if (driveBox)
 				{
-					thisWB.AttackCauld ();
+					thisWB.AttackCauld (thisTrans);
 					return;
 				}
 
@@ -726,6 +745,7 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	Tween Tweenbag;
 	void emptyBag ()
 	{
 		Manager.Ui.PopPotions (PotionType.Plus);
@@ -744,7 +764,7 @@ public class PlayerController : MonoBehaviour
 
 		animPlayer.SetTrigger ("BagUnfull");
 
-		DOVirtual.DelayedCall (2.1f, () =>
+		Tweenbag = DOVirtual.DelayedCall (2.1f, () =>
 		{
 			BagObj.SetParent (currBagParent);
 
