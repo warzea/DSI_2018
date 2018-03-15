@@ -37,6 +37,7 @@ public class AgentControllerCac : MonoBehaviour
 
     private float timeAttack = 2f;
 
+    public GameObject particleHit;
     void Start()
     {
         navAgent = transform.GetComponent<NavMeshAgent>();
@@ -189,6 +190,8 @@ public class AgentControllerCac : MonoBehaviour
     {
         if (other.tag == "BulletPlayer")
         {
+            GameObject explo = Instantiate(particleHit, transform.position, transform.rotation);
+            Destroy(explo, 1f);
             lifeAgent = lifeAgent - 1;
             if (lifeAgent <= 0 && AgentEtat.aliveAgent == myEtatAgent)
             {

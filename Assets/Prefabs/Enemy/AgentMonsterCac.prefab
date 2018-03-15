@@ -2116,6 +2116,8 @@ MonoBehaviour:
   checkUpdate: 1
   MeshDestroy: {fileID: 1415171531169404, guid: cdb965a6a0e40694c8833fe95a1d5e5d,
     type: 2}
+  particleHit: {fileID: 1064850027848652, guid: e1fd8bc85c578e644be972ac9feb727b,
+    type: 2}
 --- !u!135 &135595202935105828
 SphereCollider:
   m_ObjectHideFlags: 1
