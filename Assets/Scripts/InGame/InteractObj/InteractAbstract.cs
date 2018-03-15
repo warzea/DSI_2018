@@ -119,7 +119,7 @@ public class InteractAbstract : MonoBehaviour
 
             Manager.Ui.AllPotGet[thisPlayer.IdPlayer].GetComponent<PotionFollowP>().NewValue(thisPlayer.CurrItem);
 
-            int b;
+
             for (int a = 0; a < Random.Range(2, 8); a++)
             {
                 DOVirtual.DelayedCall(Random.Range(0, 0.2f), () =>
