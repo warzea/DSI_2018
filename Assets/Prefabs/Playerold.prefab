@@ -1069,6 +1069,7 @@ MonoBehaviour:
   LifePlayer: 5
   TimeToRegen: 3
   MoveSpeed: 14
+  NameHitSong: 
   angleAimSensitivity: 6
   aimSensitivity: 10
   aimSensitivityEnemy: 1.5
@@ -1081,19 +1082,57 @@ MonoBehaviour:
   PourcLootLost: 20
   DistToDropItem: 6
   nbItemBeforeBigBag: 10
+  SpawnBullet: {fileID: 0}
   ItemLostObj: {fileID: 1330381900745004, guid: 0540fd0faddbcfd46bb2584e8d68fc5c,
     type: 2}
   animPlayer: {fileID: 95255310504812768}
   WeaponPos: {fileID: 4522346009082788}
-  BagPos: {fileID: 4248657163601990}
   BoxPlace: {fileID: 4998498178062740}
+  BagPos: {fileID: 4248657163601990}
+  BagObj: {fileID: 0}
   AmmoUI: {fileID: 0}
   WeapText: {fileID: 0}
   DistThrowWeap: 11
-  SpeedThrow: 2
-  SpeedReduceOnBox: 1
-  TimeAccelBox: 0.5
+  SpeedThrow: 21
+  SpeedReduceOnBox: 0.75
+  TimeAccelBox: 2
   SmoothRotateOnBox: 7
+  CurveAcceleration:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.08741119
+      value: 0.28858098
+      inSlope: 0.45128167
+      outSlope: 0.45128167
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.204045
+      value: 0.3363663
+      inSlope: 1.8499775
+      outSlope: 1.8499775
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.38325915
+      value: 0.78775966
+      inSlope: 1.2076823
+      outSlope: 1.2076823
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
   UiAmmoX: 50
   UiAmmoY: -50
   CdShoot: 0
@@ -1127,6 +1166,7 @@ MonoBehaviour:
   checkShoot: 1
   checkAuto: 0
   canCauldron: 0
+  thisWeapon: {fileID: 0}
   thisObjAudio: {fileID: 0}
 --- !u!114 &114717990859517940
 MonoBehaviour:
