@@ -233,6 +233,12 @@ public class UiManager : ManagerParent
 
     public void NewWeapPic (string thisWeap, int idPlayer)
     {
+        if (thisWeap [thisWeap.Length - 1].ToString () == ")")
+        {
+            thisWeap = thisWeap.Substring (0, thisWeap.Length - 7);
+        }
+        UnityEngine.Debug.Log (thisWeap);
+
         for (int a = 0; a < WeapIcone.Length; a++)
         {
             if (WeapIcone [a].Weapon == thisWeap)

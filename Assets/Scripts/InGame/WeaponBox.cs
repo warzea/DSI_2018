@@ -167,13 +167,10 @@ public class WeaponBox : MonoBehaviour
 
         if (newObj == null)
         {
-            GameObject thisObj = AllStartWeap [Random.Range (0, AllStartWeap.Length)];
-            Manager.Ui.NewWeapPic (thisObj.name, thisPlayer.IdPlayer);
-            newObj = (GameObject) Instantiate (thisObj, GetTrans);
+            newObj = (GameObject) Instantiate (AllStartWeap [Random.Range (0, AllStartWeap.Length)], GetTrans);
         }
         else
         {
-            Manager.Ui.NewWeapPic (newObj.name, thisPlayer.IdPlayer);
             checkNew = true;
             for (int a = 0; a < AllOtherWeap.Length; a++)
             {
@@ -187,7 +184,6 @@ public class WeaponBox : MonoBehaviour
             }
         }
 
-        Manager.Ui.NewWeapPic (newObj.name, thisPlayer.IdPlayer);
         Manager.Ui.WeaponChangeIG (thisPlayer.IdPlayer);
 
         Transform objTrans = newObj.transform;
