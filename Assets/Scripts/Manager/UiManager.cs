@@ -131,13 +131,19 @@ public class UiManager : ManagerParent
         PlayersAmmo [PlayerId].GetComponentInChildren<RainbowScale> ().enabled = true;
     }
 
-    public void ResetTween ()
+    public void ResetTween (int PlayerId)
     {
         ammoTwFade.Kill (true);
         ammoTwRot.Kill (true);
         ammoTwScale1.Kill (true);
         ammoTwScale2.Kill (true);
         ammoTwWait.Kill (true);
+
+        Transform getTrans = PlayersAmmo[PlayerId].transform;
+
+        getTrans.GetComponentsInChildren<RainbowColor>()[0].enabled = false;
+        getTrans.GetComponentsInChildren<RainbowColor>()[1].enabled = false;
+        getTrans.GetComponentInChildren<RainbowScale>().enabled = false;
     }
 
     // 1
@@ -237,12 +243,16 @@ public class UiManager : ManagerParent
 
     public void WeaponChangeIG (int PlayerId)
     {
-        ResetTween ();
+        ResetTween (PlayerId);
 
         WeaponChangeHUD (PlayerId);
 
         //HUD INGAME
         Transform getTrans = PlayersAmmo [PlayerId].transform;
+
+        getTrans.DOKill(true);
+        getTrans.GetComponentsInChildren<RainbowColor>()[0].transform.GetComponent<Image>().DOKill(true);
+
         getTrans.GetComponentsInChildren<RainbowColor> () [0].enabled = false;
         getTrans.GetComponentInChildren<RainbowScale> ().enabled = false;
         getTrans.localScale = Vector3.one;
@@ -261,7 +271,7 @@ public class UiManager : ManagerParent
     {
         //HUD ABOVE ALL
 
-        ResetTween ();
+        ResetTween (PlayerId);
 
         Transform getTrans = PlayersWeaponHUD [PlayerId].transform;
 
@@ -280,6 +290,8 @@ public class UiManager : ManagerParent
 
     public void WeaponNew (int PlayerId)
     {
+        ResetTween(PlayerId);
+
         //LE CHARGEUR REAPARAIT VISIBLE
         Transform getTrans = PlayersAmmo [PlayerId].transform;
         ammoTwFade = getTrans.GetComponent<CanvasGroup> ().DOFade (1, .2f);

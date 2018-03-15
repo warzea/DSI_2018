@@ -1080,8 +1080,9 @@ MonoBehaviour:
     type: 2}
   animPlayer: {fileID: 95720146484201416}
   WeaponPos: {fileID: 4824209845070160}
-  BagPos: {fileID: 4172327163606488}
   BoxPlace: {fileID: 4412137378519398}
+  BagPos: {fileID: 4172327163606488}
+  BagObj: {fileID: 4906696698958800}
   AmmoUI: {fileID: 0}
   WeapText: {fileID: 0}
   DistThrowWeap: 11
