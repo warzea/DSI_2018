@@ -1,6 +1,31 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: bdb6e1a2c7f1be64f9e4ba77e59596a5
 folderAsset: yes
+=======
+<<<<<<< HEAD
+guid: eba0179d1f81e6a4eb2adc750c2d71e9
+folderAsset: yes
+timeCreated: 1521060204
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+guid: eba0179d1f81e6a4eb2adc750c2d71e9
+folderAsset: yes
+timeCreated: 1521060204
+=======
+guid: e3e49b8d84a5e724eb7ff726ff51928f
+folderAsset: yes
+timeCreated: 1521063613
+>>>>>>> Tom
+=======
+guid: 5fde6df0539e74a91944d5608a7612b4
+folderAsset: yes
+timeCreated: 1521064735
+>>>>>>> David_Branch
+>>>>>>> Alexandre
+licenseType: Free
+>>>>>>> Loic
 DefaultImporter:
   externalObjects: {}
   userData: 

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0b54c21d6e3c5b43bf2d1d26e8302ae, type: 3}
+  m_Name: Menu_AudioScript
+  m_EditorClassIdentifier: 
+  AllMF:
+  - ThisType: 4
+    SetAudio:
+    - AudioName: menu_ok
+      Volume: 1
+      Pitch: 1
+      Audio: {fileID: 8300000, guid: 88cb59a3788e1154c9324ce379414767, type: 3}
+    - AudioName: menu_back
+      Volume: 1
+      Pitch: 1
+      Audio: {fileID: 8300000, guid: e3a97a5a78871fd45a58de73acddfac6, type: 3}
+    - AudioName: start
+      Volume: 1
+      Pitch: 1
+      Audio: {fileID: 8300000, guid: 190bafa3347a92f4ea61f7c2fd6a62c5, type: 3}

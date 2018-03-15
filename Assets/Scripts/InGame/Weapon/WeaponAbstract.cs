@@ -12,6 +12,7 @@ public class WeaponAbstract : MonoBehaviour
     public GameObject ExploWeapon;
     public GameObject PrefabExplo;
     public string NameMusic;
+    public string MusicExplo = "";
     public float TimeBackPush = 0.1f;
     public int WeightRandom = 0;
     public bool AutoShoot = true;
@@ -182,6 +183,7 @@ public class WeaponAbstract : MonoBehaviour
             if (ExploWeapon != null && PrefabExplo != null)
             {
                 thisBA.canExplose = true;
+                thisBA.NameAudio = MusicExplo;
                 thisBA.GetEffect = ExploWeapon;
                 thisBA.PrefabExplosion = PrefabExplo;
             }
