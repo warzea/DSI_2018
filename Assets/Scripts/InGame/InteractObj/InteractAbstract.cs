@@ -110,15 +110,15 @@ public class InteractAbstract : MonoBehaviour
         {
             NbrItem--;
 
-            transform.DOKill (true);
+            thisTrans.DOKill (true);
 
-            transform.DOShakeScale (.25f, .3f, 15, 0);
+            thisTrans.DOShakeScale (.25f, .3f, 15, 0);
 
             float rdmRotZ = UnityEngine.Random.Range (-30, 30);
             float rdmPosZ = UnityEngine.Random.Range (-1, 1);
 
-            transform.DOPunchRotation (new Vector3 (0, 0, rdmRotZ), .3f, 3, 1).SetEase (Ease.InCirc);
-            transform.DOPunchPosition (new Vector3 (0, 1, rdmPosZ), .3f, 3, 1).SetEase (Ease.InCirc);
+            thisTrans.DOPunchRotation (new Vector3 (0, 0, rdmRotZ), .3f, 3, 1).SetEase (Ease.InCirc);
+            thisTrans.DOPunchPosition (new Vector3 (0, 1, rdmPosZ), .3f, 3, 1).SetEase (Ease.InCirc);
 
             thisPlayer.CurrItem += NbrDropByDrop * valDrop;
 

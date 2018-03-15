@@ -139,9 +139,11 @@ public class PlayerController : MonoBehaviour
 	public bool checkAuto = false;
 	[HideInInspector]
 	public bool canCauldron = false;
+	[HideInInspector]
+	public WeaponAbstract thisWeapon;
 
 	PlayerController thisPC;
-	WeaponAbstract thisWeapon;
+
 	Transform thisTrans;
 	Transform getBoxWeapon;
 	Rigidbody thisRig;
