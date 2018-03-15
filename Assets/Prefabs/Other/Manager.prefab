@@ -4641,7 +4641,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisPlayer: {fileID: 0}
   Score: 0
-  ThisString: 
+  ThisString: Terminal Trickster
   ThisText: {fileID: 0}
 --- !u!114 &114003094791530852
 MonoBehaviour:
@@ -4735,17 +4735,20 @@ MonoBehaviour:
   - {fileID: 1763764888013004, guid: 9a33411c6bda5464d93d925bf3a36eaa, type: 2}
   - {fileID: 1590946614934354, guid: 1dbb50adb1e9e4b47bfbe727eb0ea6ad, type: 2}
   AllMedal:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 114965961998055962}
+  - {fileID: 114524028345991890}
+  - {fileID: 114653149361116136}
+  - {fileID: 114564646556399102}
+  - {fileID: 114380557328331130}
+  - {fileID: 114178081649479118}
+  - {fileID: 114396379723574576}
+  - {fileID: 114929945722139240}
+  - {fileID: 114021971345441696}
+  - {fileID: 114001564500219368}
+  - {fileID: 114120708434105044}
+  - {fileID: 114678536924864102}
+  - {fileID: 114343714328533158}
+  - {fileID: 114053542523014802}
 --- !u!114 &114006857967400932
 MonoBehaviour:
   m_ObjectHideFlags: 1
