@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.AI;
-
 
 public class AgentController : MonoBehaviour
 {
@@ -36,14 +36,16 @@ public class AgentController : MonoBehaviour
 		leadPlayer,
 		cauldron,
 		randomPlayer,
-		nothing}
+		nothing
+	}
 
 	;
 
 	public enum AgentEtat
 	{
 		deadAgent,
-		aliveAgent}
+		aliveAgent
+	}
 
 	;
 
@@ -61,21 +63,22 @@ public class AgentController : MonoBehaviour
 
 	public GameObject particleHit;
 
-	void Awake ()
+	void Awake ( )
 	{
-		navAgent = transform.GetComponent<NavMeshAgent> ();
+		navAgent = transform.GetComponent<NavMeshAgent> ( );
 		myFocusEtatAgent = CibleAgent.nothing;
 		myEtatAgent = AgentEtat.aliveAgent;
 	}
 
-	void Start ()
+	void Start ( )
 	{
 		agentsManager = Manager.AgentM;
 		parentBullet = Manager.GameCont.Garbage;
 		navAgent.stoppingDistance = distanceShoot;
 		cam = Manager.GameCont.MainCam;
 
-		System.Action<AgentEvent> thisAct = delegate (AgentEvent thisEvnt) {
+		System.Action<AgentEvent> thisAct = delegate (AgentEvent thisEvnt)
+		{
 			checkUpdate = thisEvnt.AgentChecking;
 			navAgent.isStopped = checkUpdate;
 			myEtatAgent = AgentEtat.deadAgent;
@@ -87,63 +90,81 @@ public class AgentController : MonoBehaviour
 
 	}
 
-	void Update ()
+	void Update ( )
 	{
-		if (!checkUpdate) {
+		if (!checkUpdate)
+		{
 			return;
 		}
 
-		if (myEtatAgent == AgentEtat.aliveAgent && myFocusPlayer != null) {
+		if (myEtatAgent == AgentEtat.aliveAgent && myFocusPlayer != null)
+		{
 
 			float distance = Vector3.Distance (transform.position, myFocusPlayer.transform.position);
 
-			if (distance > distanceShoot) {
+			if (distance > distanceShoot)
+			{
 				navAgent.SetDestination (myFocusPlayer.transform.position);
 			}
 			float velocity = navAgent.velocity.magnitude;
-			if (velocity > 0.1) {
+			if (velocity > 0.1)
+			{
 				animAgent.SetBool ("IsMoving", true);
-			} else {
+			}
+			else
+			{
 				animAgent.SetBool ("IsMoving", false);
 				Vector3 lookAtPosition2 = new Vector3 (myFocusPlayer.transform.transform.position.x, this.transform.position.y, myFocusPlayer.transform.transform.position.z);
 				transform.LookAt (lookAtPosition2);
 			}
 
-			NavMeshPath path = new NavMeshPath ();
+			NavMeshPath path = new NavMeshPath ( );
 
 			navAgent.CalculatePath (myFocusPlayer.transform.position, path);
-			if (path.status == NavMeshPathStatus.PathPartial) {
+			if (path.status == NavMeshPathStatus.PathPartial)
+			{
 				Vector3 getCamPos = cam.WorldToViewportPoint (transform.position);
 
-				if (getCamPos.x > 1f || getCamPos.x < 0f || getCamPos.y > 1f || getCamPos.y < 0f) {
-					DeadFonction ();
+				if (getCamPos.x > 1f || getCamPos.x < 0f || getCamPos.y > 1f || getCamPos.y < 0f)
+				{
+					DeadFonction ( );
 				}
-			} else {
-				ShootAgent ();
+			}
+			else
+			{
+				ShootAgent ( );
 			}
 
 		}
 	}
 
-	public void ShootAgent ()
+	public void ShootAgent ( )
 	{
 		timeAgent += Time.deltaTime;
-		if (timeAgent > timeAttack) {
+		if (timeAgent > timeAttack)
+		{
 			float distance = Vector3.Distance (transform.position, myFocusPlayer.transform.position);
 
-			if (distance < distanceShoot) {
+			if (distance < distanceShoot)
+			{
 				Vector3 lookAtPosition = new Vector3 (myFocusPlayer.transform.transform.position.x, this.transform.position.y, myFocusPlayer.transform.transform.position.z);
 				transform.LookAt (lookAtPosition);
 				spawnBulletAgent.transform.LookAt (lookAtPosition);
 
 				RaycastHit hit;
 
-				if (Physics.Raycast (spawnBulletAgent.position, spawnBulletAgent.forward, out hit)) {
-					if (hit.transform.tag == "Player" || hit.transform.tag == "WeaponBox") {
+				if (Physics.Raycast (spawnBulletAgent.position, spawnBulletAgent.forward, out hit))
+				{
+					if (hit.transform.tag == "Player" || hit.transform.tag == "WeaponBox")
+					{
 						animAgent.SetBool ("IsMoving", false);
 						animAgent.SetTrigger ("Attack");
-						StartCoroutine (WaitAnimShoot ());
-					} else {
+						Manager.Audm.OpenAudio (AudioType.OtherSound, "dist_projectile");
+
+						StartCoroutine (WaitAnimShoot ( ));
+					}
+					else
+					{
 						//  Debug.Log("I need Move");
 					}
 				}
@@ -155,12 +176,14 @@ public class AgentController : MonoBehaviour
 
 	public void TargetPlayer (float stopDistance, float maxdist)
 	{
-		if (myFocusPlayer != null) {
+		if (myFocusPlayer != null)
+		{
 			float distance = Mathf.Abs (Vector3.Distance (transform.position, myFocusPlayer.transform.position));
 			navAgent.stoppingDistance = stopDistance;
 			distanceShoot = stopDistance;
 
-			if (distance > maxdist) {
+			if (distance > maxdist)
+			{
 				navAgent.SetDestination (myFocusPlayer.transform.position);
 			}
 		}
@@ -168,18 +191,21 @@ public class AgentController : MonoBehaviour
 
 	#region ChangeEtat
 
-	public void DeadFonction ()
+	public void DeadFonction ( )
 	{
 		navAgent.isStopped = true;
-		agentsManager.DeadAgent (myFocusEtatAgent.ToString (), this.gameObject);
-		StartCoroutine (WaitRespawn ());
+		agentsManager.DeadAgent (myFocusEtatAgent.ToString ( ), this.gameObject);
+		StartCoroutine (WaitRespawn ( ));
 	}
 
-	public bool GetEtatAgent ()
+	public bool GetEtatAgent ( )
 	{
-		if (myEtatAgent == AgentEtat.aliveAgent) {
+		if (myEtatAgent == AgentEtat.aliveAgent)
+		{
 			return true;
-		} else {
+		}
+		else
+		{
 			return false;
 		}
 	}
@@ -216,22 +242,22 @@ public class AgentController : MonoBehaviour
 
 	#endregion
 
-	IEnumerator WaitAnimShoot ()
+	IEnumerator WaitAnimShoot ( )
 	{
 		yield return new WaitForSeconds (0.4f);
 		GameObject killeuse = (GameObject)Instantiate (bulletAgent, spawnBulletAgent.position, spawnBulletAgent.rotation, parentBullet);
 	}
 
-	IEnumerator WaitRespawn ()
+	IEnumerator WaitRespawn ( )
 	{
 		animAgent.SetBool ("IsMoving", false);
 		animAgent.ResetTrigger ("TakeDamage");
 		animAgent.SetTrigger ("Die");
 		yield return new WaitForSeconds (timeBeforeDepop);
-		newPos ();
+		newPos ( );
 	}
 
-	async void newPos ()
+	async void newPos ( )
 	{
 		Vector3 newPos = agentsManager.CheckBestcheckPoint (myFocusPlayer.transform);
 		navAgent.Warp (newPos);
@@ -243,22 +269,29 @@ public class AgentController : MonoBehaviour
 
 	void OnTriggerEnter (Collider other)
 	{
-		if (other.tag == Constants._PlayerBullet && myEtatAgent == AgentEtat.aliveAgent) {
-			BulletAbstract getBA = other.GetComponent<BulletAbstract> ();
+		if (other.tag == Constants._PlayerBullet && myEtatAgent == AgentEtat.aliveAgent)
+		{
+			BulletAbstract getBA = other.GetComponent<BulletAbstract> ( );
 			GameObject explo = Instantiate (particleHit, transform.position, transform.rotation);
 			Destroy (explo, 1f);
-			if (getBA != null) {
+			if (getBA != null)
+			{
 				lifeAgent -= getBA.BulletDamage;
-			} else {
+			}
+			else
+			{
 				lifeAgent -= 1;
 			}
 
-
-			if (lifeAgent <= 0 && AgentEtat.aliveAgent == myEtatAgent) {
+			if (lifeAgent <= 0 && AgentEtat.aliveAgent == myEtatAgent)
+			{
+				Manager.Audm.OpenAudio (AudioType.OtherSound, "dist_die");
 				myEtatAgent = AgentEtat.deadAgent;
 				mycollider.enabled = false;
-				DeadFonction ();
-			} else {
+				DeadFonction ( );
+			}
+			else
+			{
 				animAgent.SetTrigger ("TakeDamage");
 			}
 		}
