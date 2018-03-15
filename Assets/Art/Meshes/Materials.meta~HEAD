@@ -1,6 +1,11 @@
 fileFormatVersion: 2
 guid: ddd93f32b855af84c83e389d00a2c211
 folderAsset: yes
+<<<<<<< HEAD
+=======
+timeCreated: 1521125537
+licenseType: Free
+>>>>>>> marie
 DefaultImporter:
   externalObjects: {}
   userData: 
