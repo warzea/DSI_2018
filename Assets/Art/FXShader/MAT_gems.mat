@@ -39,10 +39,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _ChromaticAberration: 0.3
+    - _ChromaticAberration: 0.121
     - _Glossiness: 0.5
     - _Metallic: 0
-    - _Smoothness: 1
     - _Tiling: 3.12
     - _TransAmbient: 0.104
     - _TransDirect: 0.137
@@ -53,5 +52,5 @@ Material:
     - __dirty: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color0: {r: 1, g: 0, b: 0, a: 0}
-    - _Color1: {r: 0, g: 0.44508076, b: 0.9632353, a: 0}
+    - _Color0: {r: 0.5920059, g: 0.22404847, b: 0.8235294, a: 0}
+    - _Color1: {r: 0.6838235, g: 0.82991874, b: 1, a: 0}
