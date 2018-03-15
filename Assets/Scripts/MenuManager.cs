@@ -37,6 +37,8 @@ public class MenuManager : MonoBehaviour {
     public CanvasGroup PressStart;
     public CanvasGroup HowToPlay;
 
+    int PlayersReady;
+
     bool CreditsOpened;
 
     Player player1, player2, player3, player4;
@@ -199,7 +201,7 @@ public class MenuManager : MonoBehaviour {
     public IEnumerator LoadMenu()
     {
 
-        AsyncOperation opMenu = SceneManager.LoadSceneAsync("Menu", LoadSceneMode.Single);
+        AsyncOperation opMenu = SceneManager.LoadSceneAsync("Menu_Enviro", LoadSceneMode.Single);
 
         opMenu.allowSceneActivation = false;
 
@@ -281,6 +283,10 @@ public class MenuManager : MonoBehaviour {
             {
                 if (!player1Ready)
                 {
+
+
+                    PlayersReady += 1;
+
                     DOVirtual.DelayedCall(.05f, () =>
                     {
                         player1Ready = true;
@@ -298,6 +304,9 @@ public class MenuManager : MonoBehaviour {
                 }
                 else
                 {
+
+                    PlayersReady -= 1;
+
                     DOVirtual.DelayedCall(.05f, () => {
                         player1Ready = false;
                     });
@@ -320,6 +329,9 @@ public class MenuManager : MonoBehaviour {
             {
                 if (!player2Ready)
                 {
+
+                    PlayersReady += 1;
+
                     DOVirtual.DelayedCall(.05f, () =>
                     {
                         player2Ready = true;
@@ -337,6 +349,9 @@ public class MenuManager : MonoBehaviour {
                 }
                 else
                 {
+
+                    PlayersReady -= 1;
+
                     DOVirtual.DelayedCall(.05f, () => {
                         player2Ready = false;
                     });
@@ -358,6 +373,9 @@ public class MenuManager : MonoBehaviour {
             {
                 if (!player3Ready)
                 {
+
+                    PlayersReady += 1;
+
                     DOVirtual.DelayedCall(.05f, () =>
                     {
                         player3Ready = true;
@@ -375,6 +393,8 @@ public class MenuManager : MonoBehaviour {
                 }
                 else
                 {
+                    PlayersReady -= 1;
+
                     DOVirtual.DelayedCall(.05f, () => {
                         player3Ready = false;
                     });
@@ -395,6 +415,9 @@ public class MenuManager : MonoBehaviour {
             {
                 if (!player4Ready)
                 {
+
+                    PlayersReady += 1;
+
                     DOVirtual.DelayedCall(.05f, () =>
                     {
                         player4Ready = true;
@@ -412,6 +435,8 @@ public class MenuManager : MonoBehaviour {
                 }
                 else
                 {
+                    PlayersReady -= 1;
+
                     DOVirtual.DelayedCall(.05f, () => {
                         player4Ready = false;
                     });
@@ -427,7 +452,7 @@ public class MenuManager : MonoBehaviour {
                 }
             }
 
-            if (player1Ready && player2Ready && player3Ready && player4Ready)
+            if (PlayersReady >= 2)
             {
                 PressStart.DOFade(1, .1f);
 
@@ -437,7 +462,7 @@ public class MenuManager : MonoBehaviour {
 
                 }
             }
-            else
+            else if (PlayersReady <= 1)
             {
                 PressStart.DOFade(0, .1f);
             }

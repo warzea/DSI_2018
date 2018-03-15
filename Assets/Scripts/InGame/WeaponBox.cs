@@ -145,7 +145,7 @@ public class WeaponBox : MonoBehaviour
 
     public void ActionSpe()
     {
-        if (ThisGauge.fillAmount >= 1f)
+        if (ThisGauge.fillAmount >= .05f)
         {
             GetTrans.DOKill(true);
             getChild.DOKill(true);
