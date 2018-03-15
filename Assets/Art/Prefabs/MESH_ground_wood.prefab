@@ -21,13 +21,12 @@ GameObject:
   - component: {fileID: 4960888233675094}
   - component: {fileID: 33944979987164722}
   - component: {fileID: 23299050918489284}
-  - component: {fileID: 95276301562625862}
   m_Layer: 0
   m_Name: MESH_ground_wood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4960888233675094
 Transform:
@@ -83,20 +82,3 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1719124091549044}
   m_Mesh: {fileID: 4300000, guid: 6c1c9e8a6cd7b30418672fc9a0ca6e15, type: 3}
---- !u!95 &95276301562625862
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1719124091549044}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 6c1c9e8a6cd7b30418672fc9a0ca6e15, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1

@@ -21,13 +21,12 @@ GameObject:
   - component: {fileID: 4951285570295066}
   - component: {fileID: 33948034036142590}
   - component: {fileID: 23899943042534074}
-  - component: {fileID: 95328687246180996}
   m_Layer: 0
   m_Name: MESH_chest_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4951285570295066
 Transform:
@@ -83,20 +82,3 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1772871949941558}
   m_Mesh: {fileID: 4300000, guid: 9a70789d34143804ab52ae1d73c1444f, type: 3}
---- !u!95 &95328687246180996
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1772871949941558}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 9a70789d34143804ab52ae1d73c1444f, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
