@@ -298,12 +298,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25f8eb5ac5a78614fbd08d2188f0a0cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PrefabExplosion: {fileID: 1530796011795326, guid: 6ed916362e889e64e83cb698562d1b26,
+  PrefabExplosion: {fileID: 1530796011795326, guid: 8f494b3085ae4fe4688af2ab6f484323,
     type: 2}
   GetEffect: {fileID: 142746, guid: a183756d778416d4d885ecf041d1acda, type: 2}
   ThisTrajectoir: 0
   MoveSpeed: 10
-  NameAudio: 
+  NameAudio: explosion_lambda
   DefinitiveDestroy: 1
   direction: {x: 0, y: 0, z: 0}
   BulletDamage: 1
