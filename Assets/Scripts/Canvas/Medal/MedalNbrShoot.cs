@@ -9,7 +9,7 @@ public class MedalNbrShoot : AbstractMedal
 	#endregion
 
 	#region Mono
-	public override void StartCheck (PlayerController [] allPlayer)
+	public override void StartCheck (PlayerController [ ] allPlayer)
 	{
 		thisPlayer = allPlayer [0];
 		PlayerController thisPlayerEqua = null;
@@ -29,7 +29,13 @@ public class MedalNbrShoot : AbstractMedal
 				}
 			}
 
+			Score = thisPlayer.ShootBullet;
 			GoTarget (thisPlayerEqua);
+		}
+		else
+		{
+			Score = thisPlayer.ShootBullet;
+			GoTarget ( );
 		}
 	}
 	#endregion
