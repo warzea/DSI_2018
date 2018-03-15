@@ -94,6 +94,6 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color0: {r: 1, g: 0.8948276, b: 0.5514706, a: 0}
-    - _Color1: {r: 0.8602941, g: 0.3381845, b: 0, a: 0}
+    - _Color1: {r: 0.8602941, g: 0.33818448, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Vector0: {r: 0, g: 0, b: 0, a: 0}

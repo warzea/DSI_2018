@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23046124928255982}
   - component: {fileID: 95377930627757620}
   m_Layer: 0
-  m_Name: RedPotion 1
+  m_Name: SpherePotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
