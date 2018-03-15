@@ -96,11 +96,15 @@ public class WeaponBox : MonoBehaviour
             checkAttack = true;
             gameObject.tag = Constants._PlayerBullet;
 
+            GetTrans.DOLocalRotate(new Vector3(0, 360, 0), SpeedAttack * 0.5f + SpeedAttack * 0.5f, RotateMode.LocalAxisAdd);
             GetTrans.DOLocalMoveZ (RangeAttack, SpeedAttack * 0.5f).OnComplete (() =>
             {
                 GetTrans.DOLocalMoveZ (0, SpeedAttack * 0.5f).OnComplete (() =>
                 {
                     GetComponent<Collider> ().isTrigger = false;
+
+                    
+
                     gameObject.tag = Constants._BoxTag;
                 });
             });
@@ -113,7 +117,7 @@ public class WeaponBox : MonoBehaviour
 
     public void ActionSpe ()
     {
-        if (ThisGauge.fillAmount >= .05f)
+        if (ThisGauge.fillAmount >= 1f)
         {
             GetTrans.DOKill (true);
             getChild.DOKill (true);
