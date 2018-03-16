@@ -21,19 +21,17 @@ public class EndTrigger : MonoBehaviour
 	{
 		if (!check && thisColl.gameObject == Manager.GameCont.WeaponB.gameObject)
 		{
-			GameObject [] players = Manager.GameCont.Players.ToArray ();
+			GameObject [ ] players = Manager.GameCont.Players.ToArray ( );
 
 			for (int a = 0; a < players.Length; a++)
 			{
-				Debug.Log ("test");
-				Debug.Log (players [a].name);
-				Destroy (players [a].GetComponent<PlayerController> ());
+				Destroy (players [a].GetComponent<PlayerController> ( ));
 			}
 
-			Destroy (thisColl.GetComponent<WeaponBox> ());
+			Destroy (thisColl.GetComponent<WeaponBox> ( ));
 
 			check = true;
-			Manager.GameCont.EndGame ();
+			Manager.GameCont.EndGame ( );
 		}
 	}
 	#endregion

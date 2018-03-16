@@ -1094,7 +1094,7 @@ MonoBehaviour:
   LifePlayer: 5
   TimeToRegen: 4
   MoveSpeed: 14
-  NameHitSong: 
+  NameHitSong: player_hit
   angleAimSensitivity: 4
   aimSensitivity: 12
   aimSensitivityEnemy: 1.5
@@ -1193,6 +1193,7 @@ MonoBehaviour:
   canCauldron: 0
   thisWeapon: {fileID: 0}
   thisObjAudio: {fileID: 0}
+  getWeaponBox: 1
 --- !u!114 &114935065748046692
 MonoBehaviour:
   m_ObjectHideFlags: 1
