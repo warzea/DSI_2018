@@ -159,7 +159,7 @@ MonoBehaviour:
   PrefabExplo: {fileID: 1530796011795326, guid: ba9e0344ee4dac64a90e0ca8a6368c32,
     type: 2}
   NameMusic: machinegun_spread
-  MusicExplo: 
+  MusicExplo: explosion_lambda
   TimeBackPush: 0.1
   WeightRandom: 0
   AutoShoot: 1
@@ -173,7 +173,7 @@ MonoBehaviour:
   SpeedReduce: 0.6
   Damage: 1
   Range: 17
-  NbrBullet: 10
+  NbrBullet: 9
   ScaleBullet: 1
   SpeedBullet: 90
   Gust: 0

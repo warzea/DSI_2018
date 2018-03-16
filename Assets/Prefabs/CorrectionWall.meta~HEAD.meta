@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: f0ff676e540847044b258b9ec33827cb
 timeCreated: 1521210846
+=======
+guid: d082b987f0bcf3444b400010fdb7b621
+timeCreated: 1521210904
+>>>>>>> Loic
 licenseType: Free
 DefaultImporter:
   externalObjects: {}
