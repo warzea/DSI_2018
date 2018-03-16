@@ -153,6 +153,7 @@ public class WeaponBox : MonoBehaviour
             var fx = Instantiate(FXSpecial, GetTrans.transform.position, Quaternion.identity, GetTrans.transform);
             fx.transform.DOLocalMove(Vector3.zero, 0);
 
+            Destroy(fx, 5);
 
             GetTrans.transform.DOShakeScale (1f, .7f, 20, 0);
 
@@ -166,6 +167,8 @@ public class WeaponBox : MonoBehaviour
             circle.transform.DORotate(new Vector3(-90, 0, 0), 0, RotateMode.LocalAxisAdd);
             circle.DOFade(0, 1f);
             circle.transform.DOScale(6, 1);
+
+            Destroy(circle, 4);
 
             GetTrans.GetChild(1).DOShakeScale(1f, .7f, 20, 0);
 
