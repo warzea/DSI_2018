@@ -576,7 +576,7 @@ public class UiManager : ManagerParent
         {
             foreach (infoP thisIP in NbrPlayerPlaying.NbrPP.NbrPlayer)
             {
-                Debug.Log (thisIP.ready);
+                UnityEngine.Debug.Log (thisIP.ready);
                 if (thisIP.ready)
                 {
                     count++;
