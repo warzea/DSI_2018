@@ -61,7 +61,11 @@ public class GameController : ManagerParent
 
     public void EndGame ()
     {
-        PostEffect.SetActive (true);
+        if (PostEffect == null)
+        {
+            PostEffect = GameObject.Find ("PP_Volume");
+        }
+        PostEffect.SetActive (false);
         Manager.Audm.OpenAudio (AudioType.MusicBackGround, "score", true);
         var newEtat = new AgentEvent ();
         newEtat.AgentChecking = true;
