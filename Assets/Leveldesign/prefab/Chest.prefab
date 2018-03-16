@@ -347,7 +347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59cb39f3416b44543bda58fb7328bc5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NameSongGetRes: 
+  NameSongGetRes: pickup
   NbrItem: 5
   ValueOnDrop: 239
   NbrDropByDrop: 1

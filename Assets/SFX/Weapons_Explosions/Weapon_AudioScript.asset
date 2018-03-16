@@ -23,7 +23,7 @@ MonoBehaviour:
       Pitch: 1
       Audio: {fileID: 8300000, guid: f8a1936b7cf05e24c923ab2ecc827828, type: 3}
     - AudioName: machinegun_gust
-      Volume: 6
+      Volume: 7
       Pitch: 1
       Audio: {fileID: 8300000, guid: 0f883307a58639e4e81b9b4b2352f999, type: 3}
     - AudioName: machinegun_spread
