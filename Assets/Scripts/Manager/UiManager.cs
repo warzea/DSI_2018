@@ -41,6 +41,7 @@ public class UiManager : ManagerParent
     public GameObject Light;
     public GameObject Circle;
     public GameObject CircleMultiplier;
+    public CanvasGroup AboveAll;
 
     [Header ("SCREENSHAKE")]
     public float ShakeMinPos;
@@ -153,6 +154,7 @@ public class UiManager : ManagerParent
         EndScreenWeaponBox.SetActive (true);
         GetInGame.transform.DOLocalMoveY (200, .3f).SetEase (Ease.InOutSine);
 
+        AboveAll.DOFade(0, .2f);
         EndScreenContainer.DOFade (1, .2f);
 
         //UnityEngine.Debug.Log ("EndScree");
@@ -559,10 +561,10 @@ public class UiManager : ManagerParent
         EndScreenContainer.transform.parent.GetComponent<Canvas> ().worldCamera = Manager.GameCont.MainCam;
         GaugeButtonBonus = (GameObject) Instantiate (GaugeButtonBonus, GetInGame);
 
-        CauldronGauge = (GameObject) Instantiate (CauldronGauge, GetInGame);
+        CauldronGauge = (GameObject) Instantiate (CauldronGauge, AboveAll.transform);
         CauldronGauge.GetComponent<CanvasGroup> ().DOFade (0, 0);
 
-        ButtonsInteract = (GameObject) Instantiate (ButtonsInteract, GetInGame);
+        ButtonsInteract = (GameObject) Instantiate (ButtonsInteract, AboveAll.transform);
         AllMenu = setAllMenu;
 
         OpenThisMenu (MenuType.SelectPlayer);

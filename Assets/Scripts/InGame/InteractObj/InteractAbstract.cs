@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 using DG.Tweening;
-
+using Rewired;
 using UnityEngine;
 
 public class InteractAbstract : MonoBehaviour
@@ -38,8 +38,12 @@ public class InteractAbstract : MonoBehaviour
         valDrop = ValueOnDrop;
     }
 
+    bool checkGold = false;
+
     void Start ()
     {
+
+
         animChest = transform.GetComponentInChildren<Animator> ();
         System.Action<ChestEvent> thisAct = delegate (ChestEvent thisEvnt)
         {
@@ -66,6 +70,8 @@ public class InteractAbstract : MonoBehaviour
 
                 if (NbrItem > 0)
                 {
+                    checkGold = true;
+
                     foreach (Renderer thisMat in GetComponentsInChildren<Renderer> ())
                     {
                         if (thisMat.material.name == Constants._MatChest + " (Instance)")
@@ -109,6 +115,11 @@ public class InteractAbstract : MonoBehaviour
         if (NbrItem > 0)
         {
             NbrItem--;
+
+            if(checkGold)
+                Manager.VibM.ShootMediumVibration(thisPlayer.inputPlayer);
+            else
+                Manager.VibM.ShootLowVibration(thisPlayer.inputPlayer);
 
             thisTrans.DOKill (true);
 
