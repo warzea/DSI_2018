@@ -177,7 +177,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4717477712803010}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4207064474343288
 Transform:
@@ -191,7 +191,7 @@ Transform:
   m_Children:
   - {fileID: 4523760889888638}
   m_Father: {fileID: 4717477712803010}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4224456331363132
 Transform:
@@ -205,7 +205,7 @@ Transform:
   m_Children:
   - {fileID: 4856772600638182}
   m_Father: {fileID: 4717477712803010}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4378135087155284
 Transform:
@@ -219,7 +219,7 @@ Transform:
   m_Children:
   - {fileID: 4395541063134098}
   m_Father: {fileID: 4717477712803010}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4395541063134098
 Transform:
@@ -245,7 +245,7 @@ Transform:
   m_LocalScale: {x: 1.387688, y: 1.3876885, z: 1.3876885}
   m_Children: []
   m_Father: {fileID: 4717477712803010}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4523760889888638
 Transform:
@@ -270,11 +270,9 @@ Transform:
   m_LocalPosition: {x: 2.9273186, y: 0.01, z: -10.701752}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4870138779771016}
   - {fileID: 4445688837920104}
   - {fileID: 4224456331363132}
   - {fileID: 4000482442998954}
-  - {fileID: 4782944827100762}
   - {fileID: 4207064474343288}
   - {fileID: 4378135087155284}
   m_Father: {fileID: 0}
@@ -293,73 +291,6 @@ Transform:
   m_Father: {fileID: 4224456331363132}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4870138779771016
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1049539402775612}
-  m_LocalRotation: {x: -0.7132922, y: -0, z: -0, w: 0.7008668}
-  m_LocalPosition: {x: 0.14, y: 0.03, z: -0.43}
-  m_LocalScale: {x: 1.1841421, y: 1.1841422, z: 1.1841422}
-  m_Children: []
-  m_Father: {fileID: 4717477712803010}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -91.006996, y: 0, z: 0}
---- !u!23 &23304247598413372
-MeshRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1049539402775612}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_Materials:
-  - {fileID: 2100000, guid: 5e11c410e424f924e82934c65129c56e, type: 2}
-  - {fileID: 2100000, guid: f4386c3fb1616c04abd333c1937aee3d, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
---- !u!33 &33534110839062912
-MeshFilter:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1049539402775612}
-  m_Mesh: {fileID: 4300002, guid: 6d8e578cd41f5ce4e9d3da4d95f1eb44, type: 3}
---- !u!65 &65063881593229020
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1049539402775612}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.4177914, y: 2, z: 1.8617938}
-  m_Center: {x: 0.000000059604645, y: 0, z: 1.1897616}
 --- !u!65 &65685017026493750
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -469,7 +400,7 @@ MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1049539402775612}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d66e95897310864b85ec28ea1ee4a6b, type: 3}
