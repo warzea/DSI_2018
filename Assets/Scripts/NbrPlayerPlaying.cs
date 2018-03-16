@@ -26,6 +26,18 @@ public class NbrPlayerPlaying : MonoBehaviour
 			DontDestroyOnLoad (gameObject);
 			NbrPP = this;
 		}
+
+		NbrPlayer = new List<infoP> ();
+
+		NbrPlayer.Add (new infoP ());
+		NbrPlayer.Add (new infoP ());
+		NbrPlayer.Add (new infoP ());
+		NbrPlayer.Add (new infoP ());
+
+		NbrPlayer [0].ID = 0;
+		NbrPlayer [1].ID = 1;
+		NbrPlayer [2].ID = 2;
+		NbrPlayer [3].ID = 3;
 	}
 	#endregion
 
@@ -45,6 +57,7 @@ public class NbrPlayerPlaying : MonoBehaviour
 	}
 }
 
+[System.Serializable]
 public class infoP
 {
 	public Player thisP;

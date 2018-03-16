@@ -100,13 +100,14 @@ public class Manager : MonoBehaviour
 	#region Private Methods
 	void InitializeManagers ()
 	{
+		InitializeManager (ref audM);
+		InitializeManager (ref agentM);
+		InitializeManager (ref agentMC);
 		InitializeManager (ref evnt);
 		InitializeManager (ref gamecont);
 		InitializeManager (ref ui);
-		InitializeManager (ref agentM);
-		InitializeManager (ref agentMC);
+
 		InitializeManager (ref vibM);
-		InitializeManager (ref audM);
 		//NbrPlayerPlaying.NbrPP.DestAll ();
 	}
 
