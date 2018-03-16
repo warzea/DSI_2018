@@ -947,6 +947,15 @@ public class PlayerController : MonoBehaviour
             lifePlayer--;
             tweenRegen.Kill();
 
+            if (lifePlayer == 1)
+            {
+                animPlayer.SetBool("NearDead", true);
+            }
+            else
+            {
+                animPlayer.SetBool("NearDead", false);
+            }
+
             if (lifePlayer <= 0)
             {
                 animeDead(thisColl.transform.position);
@@ -958,6 +967,7 @@ public class PlayerController : MonoBehaviour
                    if (lifePlayer < LifePlayer)
                    {
                        lifePlayer++;
+                       animPlayer.SetBool("NearDead", false);
                    }
                });
             }
