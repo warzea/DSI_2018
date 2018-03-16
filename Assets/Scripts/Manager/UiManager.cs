@@ -323,7 +323,7 @@ public class UiManager : ManagerParent
     {
         //HUD ABOVE ALL
 
-        ResetTween (PlayerId);
+        //ResetTween (PlayerId);
 
         Transform getTrans = PlayersWeaponHUD [PlayerId].transform;
 
