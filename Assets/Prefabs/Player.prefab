@@ -498,7 +498,7 @@ GameObject:
   - component: {fileID: 114935065748046692}
   - component: {fileID: 120183435895035160}
   m_Layer: 0
-  m_Name: Lazer (1)
+  m_Name: Lazer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1094,7 +1094,7 @@ MonoBehaviour:
   LifePlayer: 5
   TimeToRegen: 4
   MoveSpeed: 14
-  NameHitSong: 
+  NameHitSong: player_hit
   angleAimSensitivity: 4
   aimSensitivity: 12
   aimSensitivityEnemy: 1.5
@@ -1193,6 +1193,7 @@ MonoBehaviour:
   canCauldron: 0
   thisWeapon: {fileID: 0}
   thisObjAudio: {fileID: 0}
+  getWeaponBox: 1
 --- !u!114 &114935065748046692
 MonoBehaviour:
   m_ObjectHideFlags: 1

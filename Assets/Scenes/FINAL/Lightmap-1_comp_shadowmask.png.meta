@@ -1,6 +1,10 @@
 fileFormatVersion: 2
 guid: b84b82a04560a8540ab84d3b673c6f38
+<<<<<<< HEAD
 timeCreated: 1521176082
+=======
+timeCreated: 1521159620
+>>>>>>> hugo
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}

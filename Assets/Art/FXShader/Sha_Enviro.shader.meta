@@ -1,7 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: a7d61c7ab58c9bf4f93f1ccf26a3755f
 timeCreated: 1521125550
 licenseType: Free
+=======
+guid: 22940f8b0aa70ed4ebdfb4d79af0e3b8
+timeCreated: 1521125764
+licenseType: Pro
+>>>>>>> David_Branch
 ShaderImporter:
   externalObjects: {}
   defaultTextures:

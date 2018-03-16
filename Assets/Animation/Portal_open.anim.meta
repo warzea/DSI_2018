@@ -1,7 +1,19 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
+<<<<<<< HEAD
+guid: f18083545479984448f7bdb1f7ba8003
+timeCreated: 1521128128
+licenseType: Free
+=======
+guid: 824ca7d350926274eb7ca15ca620db84
+timeCreated: 1521129622
+licenseType: Pro
+>>>>>>> David_Branch
+=======
 guid: f0601d797e2056f4d906ac327f566c7c
 timeCreated: 1521127825
 licenseType: Free
+>>>>>>> marie
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 0
