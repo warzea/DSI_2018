@@ -20,10 +20,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4348174038323794}
   - component: {fileID: 95529914406450254}
-  - component: {fileID: 65756387235918196}
+  - component: {fileID: 65554816653024756}
+  - component: {fileID: 114381395022042862}
   m_Layer: 0
   m_Name: Portal
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113,8 +114,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1078088573497734}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -210.78099, y: 180.7396, z: -110.09799}
-  m_LocalScale: {x: 5.047777, y: 5.047777, z: 5.047777}
+  m_LocalPosition: {x: 14.72, y: -0.16, z: -0.64545}
+  m_LocalScale: {x: 1, y: 5, z: 7.806142}
   m_Children:
   - {fileID: 4739114645958122}
   - {fileID: 4112478912686686}
@@ -243,7 +244,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1561409392548192}
   m_Mesh: {fileID: 4300002, guid: 59042ff23dbc71140be628095b43d28f, type: 3}
---- !u!65 &65756387235918196
+--- !u!65 &65554816653024756
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -251,10 +252,10 @@ BoxCollider:
   m_GameObject: {fileID: 1078088573497734}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 0.18, z: 2}
+  m_Center: {x: 0, y: 0.15, z: 0}
 --- !u!95 &95019613255839988
 Animator:
   serializedVersion: 3
@@ -289,3 +290,14 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114381395022042862
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1078088573497734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f5fa16760ca9f04184153534ff45a88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

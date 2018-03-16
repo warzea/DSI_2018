@@ -1,17 +1,6 @@
 fileFormatVersion: 2
 guid: b84b82a04560a8540ab84d3b673c6f38
-<<<<<<< HEAD
-<<<<<<< HEAD
-timeCreated: 1521159620
-=======
-timeCreated: 1521176082
->>>>>>> marie
-=======
-timeCreated: 1521176082
-=======
-timeCreated: 1521159620
->>>>>>> hugo
->>>>>>> marie
+timeCreated: 1521212568
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
@@ -68,7 +57,7 @@ TextureImporter:
   textureFormatSet: 0
   platformSettings:
   - buildTarget: DefaultTexturePlatform
-    maxTextureSize: 4096
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: 2
     textureCompression: 0

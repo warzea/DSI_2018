@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+<<<<<<< HEAD:Assets/WorldBuilding.meta~HEAD_2.meta
+<<<<<<< HEAD
+<<<<<<< HEAD
+guid: f5f428c8d4154944ab7508977a95ef48
+timeCreated: 1521210846
+=======
+guid: b106e0b56fef4f94490e289d59c32efb
+timeCreated: 1521210904
+>>>>>>> Loic
+licenseType: Free
+=======
+guid: e0caa598a0723f9408376de087508528
+timeCreated: 1521211355
+licenseType: Pro
+>>>>>>> DavidDebug
+=======
+guid: f7c08d38c19e4564790b262e082277e7
+folderAsset: yes
+>>>>>>> Clarisse:Assets/Scripts/Scenes/LoicA.meta
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
