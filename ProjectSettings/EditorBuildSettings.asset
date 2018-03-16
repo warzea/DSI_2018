@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menu_Enviro.unity
     guid: 6390282045ebb0543a57f98c4fa142c0
-  - enabled: 1
-    path: Assets/Scenes/FINAL.unity
+  - enabled: 0
+    path: Assets/__DELETED_GUID_Trash/2a040a2e54541e4499f46cac92c0b2a2
     guid: 2a040a2e54541e4499f46cac92c0b2a2
+  - enabled: 1
+    path: Assets/Scenes/Final.unity
+    guid: b72d593371d5c4e42acf508f37502c3d
