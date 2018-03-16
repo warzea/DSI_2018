@@ -101,16 +101,16 @@ public class GameController : ManagerParent
             {
                 for (int a = 0; a < AllMedal.Length; a++)
                 {
-                    AllMedal [a].gameObject.SetActive (true);
+                    //AllMedal [a].gameObject.SetActive (true);
 
-                    AllMedal [a].StartCheck (thisLP.ToArray ());
+                    //AllMedal [a].StartCheck (thisLP.ToArray ());
                 }
 
                 int getVal;
                 MedalsPlayer thisMP;
                 for (int a = 0; a < MedalInfo.Count; a++)
                 {
-                    Debug.Log ("4 : " + a);
+                    /*Debug.Log ("4 : " + a);
                     thisMP = MedalInfo [a];
                     while (thisMP.ThisMedal.Count > 3)
                     {
@@ -123,10 +123,9 @@ public class GameController : ManagerParent
                     for (int b = 0; b < 3; b++)
                     {
                         Manager.Ui.EndScreenMedals (thisMP.ThisMedal [b].transform, thisMP.IDPlayer, b);
-                    }
+                    }*/
                 }
             });
-
             Manager.Ui.GetScores.UpdateValue (thisScore.FinalScore, ScoreType.EndScore, false, Manager.Ui.EndScreenFinished);
 
         });
