@@ -568,7 +568,7 @@ public class UiManager : ManagerParent
         int count = 0;
         try
         {
-            foreach (infoP thisIP in GameObject.Find ("NbrPlayer").GetComponent<NbrPlayerPlaying> ().NbrPlayer)
+            foreach (infoP thisIP in NbrPlayerPlaying.NbrPP.NbrPlayer)
             {
                 if (thisIP.ready)
                 {
@@ -579,13 +579,12 @@ public class UiManager : ManagerParent
         }
         catch
         {
-
+            UnityEngine.Debug.Log ("test");
         }
 
         if (count > 0)
         {
             Manager.GameCont.StartGame ();
-
         }
         else
         {
