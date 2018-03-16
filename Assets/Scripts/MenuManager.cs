@@ -366,7 +366,7 @@ public class MenuManager : MonoBehaviour
                 {
 
                     PlayersReady += 1;
-                    thisNPP.NbrPlayer [3].ready = true;
+                    thisNPP.NbrPlayer [1].ready = true;
 
                     DOVirtual.DelayedCall (.05f, () =>
                     {
