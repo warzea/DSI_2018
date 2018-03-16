@@ -24,8 +24,8 @@ public class WeaponBox : MonoBehaviour
     public int pourcLoot = 10;
     public int MinLost = 10;
     public int ItemOneGauge = 100;
-    public GameObject [] AllStartWeap;
-    public GameObject [] AllOtherWeap;
+    public GameObject [ ] AllStartWeap;
+    public GameObject [ ] AllOtherWeap;
 
     public float DelayNewWeapon = 1;
     [Tooltip ("Time to full fill")]
@@ -50,7 +50,7 @@ public class WeaponBox : MonoBehaviour
     bool checkAttack = false;
     #endregion
 
-    private void Update ()
+    private void Update ( )
     {
         if (Input.GetKeyDown (KeyCode.A))
         {
@@ -65,10 +65,10 @@ public class WeaponBox : MonoBehaviour
             float rdmY = UnityEngine.Random.Range (-30, 30);
             float rdmZ = UnityEngine.Random.Range (-30, 30);
 
-            Material mat = getChild.GetComponent<Renderer> ().material;
+            Material mat = getChild.GetComponent<Renderer> ( ).material;
             mat.DOKill (true);
             Debug.Log (mat);
-            mat.DOColor (Color.red, .15f).OnComplete (() =>
+            mat.DOColor (Color.red, .15f).OnComplete (( )=>
             {
                 mat.DOColor (Color.white, .15f);
             });
@@ -80,15 +80,15 @@ public class WeaponBox : MonoBehaviour
     }
 
     #region Mono
-    void Awake ()
+    void Awake ( )
     {
-        getAllTween = new List<Tween> ();
-        updateWeapon = new List<PlayerWeapon> ();
+        getAllTween = new List<Tween> ( );
+        updateWeapon = new List<PlayerWeapon> ( );
         GetTrans = transform;
         getChild = GetTrans.Find ("MESH_cauldron");
         for (int a = 0; a < 4; a++)
         {
-            updateWeapon.Add (new PlayerWeapon ());
+            updateWeapon.Add (new PlayerWeapon ( ));
             updateWeapon [a].IDPlayer = a;
         }
     }
@@ -105,16 +105,16 @@ public class WeaponBox : MonoBehaviour
             transform.DOKill (true);
             getChild.DOKill (true);
 
-            GetComponent<Collider> ().isTrigger = true;
+            GetComponent<Collider> ( ).isTrigger = true;
             checkAttack = true;
 
             gameObject.tag = Constants._PlayerBullet;
             float getRange = RangeAttack;
 
-            RaycastHit [] allHit;
+            RaycastHit [ ] allHit;
             string getTag;
             Debug.DrawRay (GetTrans.position, GetTrans.forward, Color.black, 10);
-            allHit = Physics.RaycastAll (GetTrans.position - new Vector3 (0, -0.3f, 0), thisT.forward);
+            allHit = Physics.RaycastAll (GetTrans.position - new Vector3 (0, 0.5f, 0), thisT.forward);
 
             foreach (RaycastHit thisRay in allHit)
             {
@@ -130,18 +130,18 @@ public class WeaponBox : MonoBehaviour
             }
 
             GetTrans.DOLocalRotate (new Vector3 (0, 360, 0), SpeedAttack * 0.5f + SpeedAttack * 0.5f, RotateMode.LocalAxisAdd);
-            GetTrans.DOLocalMoveZ (getRange, SpeedAttack * 0.5f).OnComplete (() =>
+            GetTrans.DOLocalMoveZ (getRange, SpeedAttack * 0.5f).OnComplete (( )=>
             {
-                GetTrans.DOLocalMoveZ (0, SpeedAttack * 0.5f).OnComplete (() =>
+                GetTrans.DOLocalMoveZ (0, SpeedAttack * 0.5f).OnComplete (( )=>
                 {
                     gameObject.layer = LayerMask.NameToLayer ("Character");
-                    GetComponent<Collider> ().isTrigger = false;
+                    GetComponent<Collider> ( ).isTrigger = false;
 
                     gameObject.tag = Constants._BoxTag;
                 });
             });
 
-            DOVirtual.DelayedCall (DelayAttack + SpeedAttack, () =>
+            DOVirtual.DelayedCall (DelayAttack + SpeedAttack, ( )=>
             {
                 checkAttack = false;
             });
@@ -149,7 +149,7 @@ public class WeaponBox : MonoBehaviour
         }
     }
 
-    public void ActionSpe ()
+    public void ActionSpe ( )
     {
         if (ThisGauge.fillAmount >= 0.99f)
         {
@@ -163,10 +163,10 @@ public class WeaponBox : MonoBehaviour
 
             GetTrans.transform.DOShakeScale (1f, .7f, 20, 0);
 
-            ThisGauge.transform.parent.GetComponentInChildren<RainbowColor> ().enabled = false;
-            ThisGauge.transform.parent.GetComponentInChildren<RainbowScale> ().enabled = false;
+            ThisGauge.transform.parent.GetComponentInChildren<RainbowColor> ( ).enabled = false;
+            ThisGauge.transform.parent.GetComponentInChildren<RainbowScale> ( ).enabled = false;
 
-            ThisGauge.transform.parent.GetComponentInChildren<RainbowColor> ().transform.GetComponent<Image> ().color = ThisGauge.transform.parent.GetComponentInChildren<RainbowColor> ().colors [1];
+            ThisGauge.transform.parent.GetComponentInChildren<RainbowColor> ( ).transform.GetComponent<Image> ( ).color = ThisGauge.transform.parent.GetComponentInChildren<RainbowColor> ( ).colors [1];
 
             var circle = Instantiate (circleEffect, transform.position, Quaternion.identity, transform);
             circle.transform.DOLocalMove (Vector3.zero, 0);
@@ -179,10 +179,10 @@ public class WeaponBox : MonoBehaviour
             ThisGauge.fillAmount = 0;
             CurrTime = 0;
 
-            var newMult = new ChestEvent ();
+            var newMult = new ChestEvent ( );
             newMult.Mult = SpeMultRessources;
             newMult.TimeMult = StayMult;
-            newMult.Raise ();
+            newMult.Raise ( );
         }
     }
 
@@ -191,10 +191,10 @@ public class WeaponBox : MonoBehaviour
         getChild.DOKill (true);
         transform.GetChild (1).DOKill (true);
         getChild.DORotate (new Vector3 (0, 0, 1080), 2, RotateMode.LocalAxisAdd).SetEase (Ease.InSine);
-        getChild.DOLocalMoveY (3, 2).SetEase (Ease.InSine).OnComplete (() =>
+        getChild.DOLocalMoveY (3, 2).SetEase (Ease.InSine).OnComplete (( )=>
         {
             getChild.DOShakeScale (.5f, .3f, 18, 0);
-            getChild.DOLocalMoveY (0.5f, .6f).SetEase (Ease.InElastic).OnComplete (() =>
+            getChild.DOLocalMoveY (0.5f, .6f).SetEase (Ease.InElastic).OnComplete (( )=>
             {
 
                 getChild.DOShakeScale (1f, .4f, 18, 0);
@@ -210,7 +210,7 @@ public class WeaponBox : MonoBehaviour
 
         if (newObj == null)
         {
-            newObj = (GameObject) Instantiate (AllStartWeap [Random.Range (0, AllStartWeap.Length)], GetTrans);
+            newObj = (GameObject)Instantiate (AllStartWeap [Random.Range (0, AllStartWeap.Length)], GetTrans);
         }
         else
         {
@@ -222,13 +222,13 @@ public class WeaponBox : MonoBehaviour
                     Manager.Ui.WeaponNew (thisPlayer.IdPlayer);
                     List<GameObject> getWeap = new List<GameObject> (AllStartWeap);
                     getWeap.Add (AllOtherWeap [a]);
-                    AllStartWeap = getWeap.ToArray ();
+                    AllStartWeap = getWeap.ToArray ( );
                     break;
                 }
             }
         }
         string thisWeap = newObj.name;
-        if (thisWeap [thisWeap.Length - 1].ToString () == ")")
+        if (thisWeap [thisWeap.Length - 1].ToString ( )== ")")
         {
             thisWeap = thisWeap.Substring (0, thisWeap.Length - 7);
         }
@@ -254,7 +254,7 @@ public class WeaponBox : MonoBehaviour
         {
             Manager.Ui.WeaponGet (thisWeap);
 
-            GameObject otherWeap = (GameObject) Instantiate (newObj);
+            GameObject otherWeap = (GameObject)Instantiate (newObj);
             Transform otherWTrans = otherWeap.transform;
 
             thisPlayer.UiAmmo.fillAmount = 1;
@@ -275,7 +275,7 @@ public class WeaponBox : MonoBehaviour
             thisPlayer.thisWeapon.ThrowWeap (thisPlayer.transform);
 
             otherWTrans.localScale = Vector3.one;
-            thisPlayer.UpdateWeapon (otherWeap.GetComponent<WeaponAbstract> ());
+            thisPlayer.UpdateWeapon (otherWeap.GetComponent<WeaponAbstract> ( ));
             updateWeapon [currId].CurrObj = null;
         }
         else
@@ -283,15 +283,15 @@ public class WeaponBox : MonoBehaviour
             objTrans.position = GetTrans.position;
             //TRANSFO CANON
             getChild.DOKill (true);
-            getChild.DOShakeScale (.15f, .8f, 25, 0).OnComplete (() =>
+            getChild.DOShakeScale (.15f, .8f, 25, 0).OnComplete (( )=>
             {
-                getChild.DOScaleZ (1.75f, .1f).SetEase (Ease.Linear).OnComplete (() =>
+                getChild.DOScaleZ (1.75f, .1f).SetEase (Ease.Linear).OnComplete (( )=>
                 {
                     getChild.DOScaleZ (3.5f, .1f).SetEase (Ease.Linear);
 
-                    DOVirtual.DelayedCall (.1f, () =>
+                    DOVirtual.DelayedCall (.1f, ( )=>
                     {
-                        getChild.DOScaleZ (1.3f, .1f).SetEase (Ease.OutSine).OnComplete (() =>
+                        getChild.DOScaleZ (1.3f, .1f).SetEase (Ease.OutSine).OnComplete (( )=>
                         {
                             getChild.DOShakeScale (.2f, .3f, 18, 0);
                         });
@@ -299,30 +299,30 @@ public class WeaponBox : MonoBehaviour
                 });
             });
 
-            DOVirtual.DelayedCall (DelayNewWeapon, () =>
+            DOVirtual.DelayedCall (DelayNewWeapon, ( )=>
             {
                 thisPlayer.UiAmmo.fillAmount = 1;
                 Manager.Ui.WeaponNew (thisPlayer.IdPlayer);
             });
         }
 
-        DOVirtual.DelayedCall (DelayNewWeapon * 0.25f, () =>
+        DOVirtual.DelayedCall (DelayNewWeapon * 0.25f, ( )=>
         {
-            objTrans.DOScale (scaleWeapon * 2, DelayNewWeapon * 0.5f).OnComplete (() =>
+            objTrans.DOScale (scaleWeapon * 2, DelayNewWeapon * 0.5f).OnComplete (( )=>
             {
                 objTrans.DOScale (scaleWeapon, DelayNewWeapon * 0.15f);
             });
 
             if (!checkNew)
             {
-                objTrans.DOLocalMove (Vector3.zero + Vector3.up * 8, DelayNewWeapon * 0.65f).OnComplete (() =>
+                objTrans.DOLocalMove (Vector3.zero + Vector3.up * 8, DelayNewWeapon * 0.65f).OnComplete (( )=>
                 {
 
                     objTrans.SetParent (thisPlayer.WeaponPos);
                     //    objTrans.DOLocalRotateQuaternion(Quaternion.identity, DelayNewWeapon * 0.1f);
-                    objTrans.DOLocalMove (Vector3.zero, DelayNewWeapon * 0.1f).OnComplete (() =>
+                    objTrans.DOLocalMove (Vector3.zero, DelayNewWeapon * 0.1f).OnComplete (( )=>
                     {
-                        thisPlayer.UpdateWeapon (newObj.GetComponent<WeaponAbstract> ());
+                        thisPlayer.UpdateWeapon (newObj.GetComponent<WeaponAbstract> ( ));
 
                         updateWeapon [currId].CurrObj = null;
                     });
@@ -332,10 +332,10 @@ public class WeaponBox : MonoBehaviour
             {
                 objTrans.SetParent (GetTrans);
 
-                objTrans.DOLocalMove (Vector3.zero + Vector3.up * 9, 0.2f).OnComplete (() =>
+                objTrans.DOLocalMove (Vector3.zero + Vector3.up * 9, 0.2f).OnComplete (( )=>
                 {
                     objTrans.DOLocalMove (Vector3.zero, 1);
-                    objTrans.DOScale (Vector3.zero, 1.5f).OnComplete (() =>
+                    objTrans.DOScale (Vector3.zero, 1.5f).OnComplete (( )=>
                     {
                         Destroy (objTrans.gameObject);
                     });
@@ -358,10 +358,10 @@ public class WeaponBox : MonoBehaviour
             float rdmY = UnityEngine.Random.Range (-30, 30);
             float rdmZ = UnityEngine.Random.Range (-30, 30);
 
-            Material mat = getChild.GetComponent<Renderer> ().material;
+            Material mat = getChild.GetComponent<Renderer> ( ).material;
             mat.DOKill (true);
             //Debug.Log (mat);
-            mat.DOColor (Color.red, .15f).OnComplete (() =>
+            mat.DOColor (Color.red, .15f).OnComplete (( )=>
             {
                 mat.DOColor (Color.white, .15f);
             });
@@ -377,8 +377,8 @@ public class WeaponBox : MonoBehaviour
 
         NbrItem += lenghtItem;
 
-        int currNbr = NbrItem - (nbrTotalSlide - 1) * ItemOneGauge;
-        Image [] getFeedBack = Manager.Ui.GaugeFeedback;
+        int currNbr = NbrItem - (nbrTotalSlide - 1)* ItemOneGauge;
+        Image [ ] getFeedBack = Manager.Ui.GaugeFeedback;
         float getWait = 0;
         bool checkCurr = false;
 
@@ -386,35 +386,35 @@ public class WeaponBox : MonoBehaviour
         {
             getAllTween [a].Kill (true);
         }
-        getAllTween.Clear ();
+        getAllTween.Clear ( );
 
         Manager.Ui.GetGauge.DOKill (true);
-        Manager.Ui.GetGauge.DOFillAmount ((float) currNbr / ItemOneGauge, 0.5f).OnComplete (() =>
+        Manager.Ui.GetGauge.DOFillAmount ((float)currNbr / ItemOneGauge, 0.5f).OnComplete (( )=>
         {
-            if (currNbr > (float) ItemOneGauge * 0.9f)
+            if (currNbr > (float)ItemOneGauge * 0.9f)
             {
-                Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor> () [0].enabled = false;
-                Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor> () [1].enabled = true;
+                Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor> ( )[0].enabled = false;
+                Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor> ( )[1].enabled = true;
             }
-            else if (currNbr < (float) ItemOneGauge * 0.1f)
+            else if (currNbr < (float)ItemOneGauge * 0.1f)
             {
-                Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor> () [1].enabled = false;
-                Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor> () [0].enabled = true;
+                Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor> ( )[1].enabled = false;
+                Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor> ( )[0].enabled = true;
             }
             else
             {
-                Manager.Ui.GetGauge.GetComponentsInChildren<Image> () [1].DOColor (new Color32 (1, 1, 1, 0), 0);
-                Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor> () [1].enabled = false;
-                Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor> () [0].enabled = false;
+                Manager.Ui.GetGauge.GetComponentsInChildren<Image> ( )[1].DOColor (new Color32 (1, 1, 1, 0), 0);
+                Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor> ( )[1].enabled = false;
+                Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor> ( )[0].enabled = false;
             }
         });
 
         Manager.Ui.GetScores.UpdateValue (NbrItem, ScoreType.BoxWeapon, false);
         int getCal = lastNbr;
-        while (currNbr >= lastNbr * (ItemOneGauge * 0.2) && lastNbr * (ItemOneGauge * 0.2) <= ItemOneGauge)
+        while (currNbr >= lastNbr * (ItemOneGauge * 0.2)&& lastNbr * (ItemOneGauge * 0.2)<= ItemOneGauge)
         {
             int thisNbr = lastNbr;
-            DOVirtual.DelayedCall (0.1f * (lastNbr - getCal + 0.5f), () =>
+            DOVirtual.DelayedCall (0.1f * (lastNbr - getCal + 0.5f), ( )=>
             {
                 Manager.Ui.GaugeLevelGet (thisNbr - 1);
             });
@@ -433,38 +433,38 @@ public class WeaponBox : MonoBehaviour
         if (checkCurr)
         {
             Tween getTween;
-            getTween = DOVirtual.DelayedCall (0.5f, () =>
+            getTween = DOVirtual.DelayedCall (0.5f, ( )=>
             {
-                getTween = Manager.Ui.GetGauge.DOFillAmount (0, 0.5f).OnComplete (() =>
+                getTween = Manager.Ui.GetGauge.DOFillAmount (0, 0.5f).OnComplete (( )=>
                 {
                     lastNbr = 1;
                     while (currNbr >= lastNbr * (ItemOneGauge * 0.2))
                     {
                         int thisNbr = lastNbr;
-                        getTween = DOVirtual.DelayedCall (0.1f * lastNbr, () =>
+                        getTween = DOVirtual.DelayedCall (0.1f * lastNbr, ( )=>
                         {
                             Manager.Ui.GaugeLevelGet (thisNbr - 1);
                         });
                         lastNbr++;
                     }
 
-                    getTween = Manager.Ui.GetGauge.DOFillAmount ((float) currNbr / ItemOneGauge, 0.5f).OnComplete (() =>
+                    getTween = Manager.Ui.GetGauge.DOFillAmount ((float)currNbr / ItemOneGauge, 0.5f).OnComplete (( )=>
                     {
-                        if (currNbr > (float) ItemOneGauge * 0.9f)
+                        if (currNbr > (float)ItemOneGauge * 0.9f)
                         {
-                            Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor> () [0].enabled = false;
-                            Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor> () [1].enabled = true;
+                            Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor> ( )[0].enabled = false;
+                            Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor> ( )[1].enabled = true;
                         }
-                        else if (currNbr < (float) ItemOneGauge * 0.1f)
+                        else if (currNbr < (float)ItemOneGauge * 0.1f)
                         {
-                            Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor> () [1].enabled = false;
-                            Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor> () [0].enabled = true;
+                            Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor> ( )[1].enabled = false;
+                            Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor> ( )[0].enabled = true;
                         }
                         else
                         {
-                            Manager.Ui.GetGauge.GetComponentsInChildren<Image> () [1].DOColor (new Color32 (1, 1, 1, 0), 0);
-                            Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor> () [1].enabled = false;
-                            Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor> () [0].enabled = false;
+                            Manager.Ui.GetGauge.GetComponentsInChildren<Image> ( )[1].DOColor (new Color32 (1, 1, 1, 0), 0);
+                            Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor> ( )[1].enabled = false;
+                            Manager.Ui.GetGauge.GetComponentsInChildren<RainbowColor> ( )[0].enabled = false;
                         }
                     });
 
@@ -474,7 +474,7 @@ public class WeaponBox : MonoBehaviour
         }
     }
 
-    public void TakeHit ()
+    public void TakeHit ( )
     {
         if (invc)
         {
@@ -484,10 +484,10 @@ public class WeaponBox : MonoBehaviour
             float rdmY = UnityEngine.Random.Range (-30, 30);
             float rdmZ = UnityEngine.Random.Range (-30, 30);
 
-            Material mat = getChild.GetComponent<Renderer> ().material;
+            Material mat = getChild.GetComponent<Renderer> ( ).material;
             mat.DOKill (true);
             Debug.Log (mat);
-            mat.DOColor (Color.red, .15f).OnComplete (() =>
+            mat.DOColor (Color.red, .15f).OnComplete (( )=>
             {
                 mat.DOColor (Color.white, .15f);
             });
@@ -500,19 +500,19 @@ public class WeaponBox : MonoBehaviour
 
         invc = true;
 
-        DOVirtual.DelayedCall (InvincibleTime, () =>
+        DOVirtual.DelayedCall (InvincibleTime, ( )=>
         {
             invc = false;
         });
 
-        int calLost = (int) ((NbrItem * pourcLoot) * 0.01f);
+        int calLost = (int)((NbrItem * pourcLoot)* 0.01f);
 
         if (calLost < MinLost)
         {
             calLost = MinLost;
         }
 
-        if (calLost > NbrItem - (nbrTotalSlide - 1) * ItemOneGauge)
+        if (calLost > NbrItem - (nbrTotalSlide - 1)* ItemOneGauge)
         {
             if (nbrTotalSlide > 1)
             {
@@ -526,7 +526,7 @@ public class WeaponBox : MonoBehaviour
         {
             NbrItem = 0;
         }
-        int getMult = (int) NbrItem / ItemOneGauge + 1;
+        int getMult = (int)NbrItem / ItemOneGauge + 1;
         if (getMult > nbrTotalSlide)
         {
             Manager.Ui.MultiplierNew (getMult);
@@ -548,7 +548,7 @@ public class WeaponBox : MonoBehaviour
         string tag = thisColl.tag;
         if (tag == Constants._EnemyBullet)
         {
-            TakeHit ();
+            TakeHit ( );
         }
     }
     #endregion
