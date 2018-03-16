@@ -222,8 +222,12 @@ public class WeaponBox : MonoBehaviour
                 }
             }
         }
-
-        Manager.Ui.WeaponChangeIG(thisPlayer.IdPlayer);
+        string thisWeap = newObj.name;
+        if (thisWeap[thisWeap.Length - 1].ToString() == ")")
+        {
+            thisWeap = thisWeap.Substring(0, thisWeap.Length - 7);
+        }
+        Manager.Ui.WeaponChangeIG(thisPlayer.IdPlayer, thisWeap);
 
         Transform objTrans = newObj.transform;
 
