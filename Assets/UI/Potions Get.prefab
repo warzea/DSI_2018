@@ -95,7 +95,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Nbr: -1
   XPos: -0.5
-  YPos: 125
+  YPos: 140
   ThisPlayer: {fileID: 0}
   getCam: {fileID: 0}
 --- !u!114 &114268538704119056
