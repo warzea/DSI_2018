@@ -31,6 +31,7 @@ public class UiManager : ManagerParent
     public Image [] GaugeFeedback;
     public Image WhiteBackground;
     public Tween rotTw;
+    public CanvasGroup newWeapon;
     public CanvasGroup Timer;
 
     [Header ("TUTO")]
@@ -206,6 +207,24 @@ public class UiManager : ManagerParent
 
     }
 
+    public void WeaponGet (string weapName)
+    {
+        newWeapon.DOFade (1, .25f);
+
+        for (int a = 0; a < WeapIcone.Length; a++)
+        {
+            if (WeapIcone [a].Weapon == weapName)
+            {
+                newWeapon.GetComponentsInChildren<Image> () [1].sprite = WeapIcone [a].ThisImage;
+                break;
+            }
+        }
+        DOVirtual.DelayedCall (2, () =>
+        {
+            newWeapon.DOFade (0, .25f);
+        });
+
+    }
     // 2
     public void EndScreenMedals (Transform thisObj, int thisID, int nbr)
     {
