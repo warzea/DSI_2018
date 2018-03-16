@@ -215,7 +215,7 @@ public class UiManager : ManagerParent
         {
             if (WeapIcone [a].Weapon == weapName)
             {
-                newWeapon.GetComponentsInChildren<Image> () [1].sprite = WeapIcone [a].ThisImage;
+                newWeapon.transform.Find ("New Weapon Sprite").GetComponent<Image> ().sprite = WeapIcone [a].ThisImage;
                 break;
             }
         }
