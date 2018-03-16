@@ -10,6 +10,7 @@ using UnityEngine;
 public class GameController : ManagerParent
 {
     #region Variables
+    public GameObject PostEffect;
     public GameObject PlayerPrefab;
     public GameObject StartWeapon;
     public Transform PlayerPosSpawn;
@@ -60,6 +61,7 @@ public class GameController : ManagerParent
 
     public void EndGame ()
     {
+        PostEffect.SetActive (true);
         Manager.Audm.OpenAudio (AudioType.MusicBackGround, "score", true);
         var newEtat = new AgentEvent ();
         newEtat.AgentChecking = true;

@@ -29,7 +29,7 @@ public class CheckRoom : MonoBehaviour
     {
         if (launch)
         {
-            getText.text = TimerRoom.ToString ();
+            getText.text = TimerRoom.ToString () [0].ToString () + TimerRoom.ToString () [1].ToString () + TimerRoom.ToString () [2].ToString () + TimerRoom.ToString () [3].ToString ();
         }
     }
     #endregion
