@@ -608,7 +608,7 @@ public class PlayerController : MonoBehaviour
             checkShoot = true;
         }
 
-        if (shootInput > 0.3f && thisWeapon != null && checkShoot)
+        if (shootInput > 0.1f && thisWeapon != null && checkShoot)
         {
             if (!autoShoot)
             {
