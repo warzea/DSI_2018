@@ -56,6 +56,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _Float0: 0
+    - _NormalFlatten: 0
     - _ToggleSwitch0: 1
     - __dirty: 0
-    m_Colors: []
+    m_Colors:
+    - _EmissiveColor: {r: 1, g: 0.3931034, b: 0, a: 0}
