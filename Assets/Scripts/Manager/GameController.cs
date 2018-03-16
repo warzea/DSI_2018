@@ -36,6 +36,8 @@ public class GameController : ManagerParent
     [HideInInspector]
     public List<MedalsPlayer> MedalInfo;
     List<PlayerController> getPlayerCont;
+
+    public int NbrPlayer = 0;
     #endregion
 
     #region Mono
@@ -187,6 +189,10 @@ public class GameController : ManagerParent
             if (!getPlayers [a].EnablePlayer)
             {
                 getPlayer.SetActive (false);
+            }
+            else
+            {
+                NbrPlayer++;
             }
             /* getPlayer.transform.SetParent (PlayerPosSpawn);
              getPlayer.transform.localPosition = Vector3.zero;

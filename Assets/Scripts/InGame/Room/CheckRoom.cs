@@ -72,7 +72,8 @@ public class CheckRoom : MonoBehaviour
         if (thisColl.tag == Constants._Player)
         {
             nbrPlayer++;
-            if (nbrPlayer == Manager.GameCont.Players.Count && CauldronInside)
+
+            if (nbrPlayer == Manager.GameCont.NbrPlayer && CauldronInside)
             {
                 launchRoom ();
             }
@@ -80,7 +81,7 @@ public class CheckRoom : MonoBehaviour
         else if (thisColl.tag == Constants._BoxTag)
         {
             CauldronInside = true;
-            if (nbrPlayer == Manager.GameCont.Players.Count && CauldronInside)
+            if (nbrPlayer == Manager.GameCont.NbrPlayer && CauldronInside)
             {
                 launchRoom ();
             }
