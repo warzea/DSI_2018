@@ -416,8 +416,8 @@ public class PlayerController : MonoBehaviour
         float Ymove = inputPlayer.GetAxis("MoveY");
         bool checkWall = false;
 
-        RaycastHit[] allHit = Physics.RaycastAll(thisTrans.position, new Vector3(Xmove, 0, Ymove));
-        string getTag;
+		RaycastHit [] allHit = Physics.RaycastAll (thisTrans.position - new Vector3 (0, -0.5f, 0), new Vector3 (Xmove, 0, Ymove));
+		string getTag;
 
         foreach (RaycastHit thisRay in allHit)
         {
@@ -480,12 +480,12 @@ public class PlayerController : MonoBehaviour
             getSpeed *= SpeedReduce;
         }
 
-        if (checkWall)
-        {
-            getSpeed *= 0.05f;
-            Xmove *= 0.1f;
-            Ymove *= 0.1f;
-        }
+		if (checkWall)
+		{
+			getSpeed *= -0.05f;
+			Xmove *= 0.1f;
+			Ymove *= 0.1f;
+		}
 
         getSpeed = getDeltaTime * getSpeed;
         TotalDist += getSpeed;

@@ -21,13 +21,12 @@ GameObject:
   - component: {fileID: 4092735203189628}
   - component: {fileID: 33511619143776530}
   - component: {fileID: 23729775876287662}
-  - component: {fileID: 95258317637132736}
   m_Layer: 0
   m_Name: MESH_guardrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4092735203189628
 Transform:
@@ -83,20 +82,3 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1940718773927016}
   m_Mesh: {fileID: 4300000, guid: e2ef7181eddfc5b4f931f684c4a6a377, type: 3}
---- !u!95 &95258317637132736
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1940718773927016}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: e2ef7181eddfc5b4f931f684c4a6a377, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
