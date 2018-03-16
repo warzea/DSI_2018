@@ -1,36 +1,38 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+
 using DG.Tweening;
+
+using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
     #region Variables
     public float smoothTime = 0.3F;
     Vector3 velocity = Vector3.zero;
-    Transform Target;
+    public Transform Target;
     Transform thisTrans;
     #endregion
 
     #region Mono
-    void Start()
+    void Start ()
     {
         thisTrans = transform;
 
-        if ( Target == null )
+        if (Target == null)
         {
             Target = Manager.GameCont.WeaponB.transform;
         }
     }
 
-    void LateUpdate()
+    void LateUpdate ()
     {
-        transform.position = Vector3.Lerp(transform.position, Target.position, smoothTime * Time.deltaTime);
+        transform.position = Vector3.Lerp (transform.position, Target.position, smoothTime * Time.deltaTime);
     }
     #endregion
 
     #region Public Methods
-    public void InitGame(Transform setTarget = null)
+    public void InitGame (Transform setTarget = null)
     {
         if (setTarget != null)
         {
@@ -38,7 +40,7 @@ public class CameraFollow : MonoBehaviour
         }
     }
 
-    public void UpdateTarget(Transform newTarget)
+    public void UpdateTarget (Transform newTarget)
     {
         Target = newTarget;
     }
