@@ -49,16 +49,25 @@ public class MenuManager : MonoBehaviour
 
     private void Awake ()
     {
-        thisNPP = GameObject.Find ("NbrPlayer").GetComponent<NbrPlayerPlaying> ();
-        thisNPP.NbrPlayer.Add (new infoP ());
-        thisNPP.NbrPlayer.Add (new infoP ());
-        thisNPP.NbrPlayer.Add (new infoP ());
-        thisNPP.NbrPlayer.Add (new infoP ());
+        try
+        {
+            thisNPP = GameObject.Find ("NbrPlayer").GetComponent<NbrPlayerPlaying> ();
+            thisNPP.NbrPlayer = new List<infoP> ();
 
-        thisNPP.NbrPlayer [0].ID = 0;
-        thisNPP.NbrPlayer [1].ID = 1;
-        thisNPP.NbrPlayer [2].ID = 2;
-        thisNPP.NbrPlayer [3].ID = 3;
+            thisNPP.NbrPlayer.Add (new infoP ());
+            thisNPP.NbrPlayer.Add (new infoP ());
+            thisNPP.NbrPlayer.Add (new infoP ());
+            thisNPP.NbrPlayer.Add (new infoP ());
+
+            thisNPP.NbrPlayer [0].ID = 0;
+            thisNPP.NbrPlayer [1].ID = 1;
+            thisNPP.NbrPlayer [2].ID = 2;
+            thisNPP.NbrPlayer [3].ID = 3;
+        }
+        catch
+        {
+
+        }
 
         if (Singleton == null)
         {
@@ -187,8 +196,9 @@ public class MenuManager : MonoBehaviour
 
     public IEnumerator LoadLevel (bool menu)
     {
-        AsyncOperation opLevel = SceneManager.LoadSceneAsync ("Alex", LoadSceneMode.Additive);
+        Scene thisSc = SceneManager.GetActiveScene ();
 
+        AsyncOperation opLevel = SceneManager.LoadSceneAsync ("Final 1", LoadSceneMode.Additive);
         opLevel.allowSceneActivation = false;
 
         while (opLevel.progress < .9f)
@@ -206,6 +216,7 @@ public class MenuManager : MonoBehaviour
                 backgroundFlash.DOFade (0, .25f).OnComplete (() =>
                 {
 
+                    SceneManager.UnloadSceneAsync (thisSc.buildIndex);
                     opLevel.allowSceneActivation = true;
                 });
             });
@@ -216,7 +227,7 @@ public class MenuManager : MonoBehaviour
             {
 
                 opLevel.allowSceneActivation = true;
-
+                SceneManager.UnloadSceneAsync (thisSc.buildIndex);
             });
 
         }
