@@ -36,7 +36,7 @@ public abstract class AbstractMedal : MonoBehaviour
 	{
 		if (ThisText != null)
 		{
-			ThisText.text = ThisString + Score.ToString ();
+            ThisText.text = ThisString;// + Score.ToString ();
 		}
 
 		if (Score > 1)

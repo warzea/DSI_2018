@@ -102,6 +102,11 @@ public class WeaponBox : MonoBehaviour
     {
         if (!checkAttack)
         {
+
+            transform.DOKill(true);
+            getChild.DOKill(true);
+
+
             GetComponent<Collider>().isTrigger = true;
             checkAttack = true;
 
@@ -126,20 +131,22 @@ public class WeaponBox : MonoBehaviour
                 }
             }
 
-            GetTrans.DOLocalRotate (new Vector3 (0, 360, 0), SpeedAttack * 0.5f + SpeedAttack * 0.5f, RotateMode.LocalAxisAdd);
-            GetTrans.DOLocalMoveZ (getRange, SpeedAttack * 0.5f).OnComplete (() =>
+            GetTrans.DOLocalRotate(new Vector3(0, 360, 0), SpeedAttack * 0.5f + SpeedAttack * 0.5f, RotateMode.LocalAxisAdd);
+            GetTrans.DOLocalMoveZ(getRange, SpeedAttack * 0.5f).OnComplete(() =>
             {
-                GetTrans.DOLocalMoveZ (0, SpeedAttack * 0.5f).OnComplete (() =>
+                GetTrans.DOLocalMoveZ(0, SpeedAttack * 0.5f).OnComplete(() =>
                 {
-                    GetComponent<Collider> ().isTrigger = false;
+                    GetComponent<Collider>().isTrigger = false;
 
-                  gameObject.tag = Constants._BoxTag;
-              });
-          });
+                    gameObject.tag = Constants._BoxTag;
+                });
+            });
+
             DOVirtual.DelayedCall(DelayAttack + SpeedAttack, () =>
-           {
-               checkAttack = false;
-           });
+            {
+                checkAttack = false;
+            });
+
         }
     }
 
