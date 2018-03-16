@@ -113,19 +113,19 @@ MonoBehaviour:
     m_Settings:
       tonemapping:
         tonemapper: 2
-        neutralBlackIn: -0.04
-        neutralWhiteIn: 6
-        neutralBlackOut: 0.046
-        neutralWhiteOut: 7
-        neutralWhiteLevel: 11.3
-        neutralWhiteClip: 7.9
+        neutralBlackIn: 0.004
+        neutralWhiteIn: 7.3
+        neutralBlackOut: 0.078
+        neutralWhiteOut: 5.8
+        neutralWhiteLevel: 9.1
+        neutralWhiteClip: 9.7
       basic:
-        postExposure: 1.6
+        postExposure: 1.18
         temperature: 0
         tint: 0
         hueShift: 0
         saturation: 1.13
-        contrast: 2
+        contrast: 1.36
       channelMixer:
         red: {x: 1, y: 0, z: 0}
         green: {x: 0, y: 1, z: 0}
@@ -135,7 +135,7 @@ MonoBehaviour:
         mode: 1
         log:
           slope: {r: 0.9588808, g: 0.9177631, b: 1, a: -0.15384616}
-          power: {r: 0.7242911, g: 0.92025584, b: 1, a: -0.076923095}
+          power: {r: 0.7242911, g: 0.92025584, b: 1, a: -0.00000001776677}
           offset: {r: 1, g: 0.97320825, b: 0.84836316, a: 0.038461547}
         linear:
           lift: {r: 0, g: 0, b: 0, a: 0}
@@ -279,7 +279,7 @@ MonoBehaviour:
     m_Enabled: 1
     m_Settings:
       lut: {fileID: 2800000, guid: 1cbd447e1bc6c744fae0c5d930b235d1, type: 3}
-      contribution: 1
+      contribution: 0.65
   chromaticAberration:
     m_Enabled: 0
     m_Settings:
