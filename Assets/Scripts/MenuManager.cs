@@ -190,11 +190,11 @@ public class MenuManager : MonoBehaviour
 
         if (menu)
         {
-            SceneManager.LoadSceneAsync ("FINAL", LoadSceneMode.Single);
+            opLevel = SceneManager.LoadSceneAsync ("FINAL", LoadSceneMode.Single);
         }
         else
         {
-            SceneManager.LoadSceneAsync ("Menu_Enviro", LoadSceneMode.Single);
+            opLevel = SceneManager.LoadSceneAsync ("Menu_Enviro", LoadSceneMode.Single);
         }
 
         opLevel.allowSceneActivation = false;
