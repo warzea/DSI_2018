@@ -342,7 +342,7 @@ public class PlayerController : MonoBehaviour
             RaycastHit [] allHit;
             string getTag;
 
-            allHit = Physics.RaycastAll (thisTrans.position, getDir, 0.5f);
+            allHit = Physics.RaycastAll (thisTrans.position - new Vector3 (0, -0.3f, 0), getDir, 0.5f);
 
             foreach (RaycastHit thisRay in allHit)
             {
@@ -416,7 +416,7 @@ public class PlayerController : MonoBehaviour
         float Ymove = inputPlayer.GetAxis ("MoveY");
         bool checkWall = false;
 
-        RaycastHit [] allHit = Physics.RaycastAll (thisTrans.position - new Vector3 (0, -0.5f, 0), new Vector3 (Xmove, 0, Ymove));
+        RaycastHit [] allHit = Physics.RaycastAll (thisTrans.position - new Vector3 (0, -0.3f, 0), new Vector3 (Xmove, 0, Ymove));
         string getTag;
 
         foreach (RaycastHit thisRay in allHit)
@@ -841,7 +841,7 @@ public class PlayerController : MonoBehaviour
         RaycastHit [] allHit;
 
         getDist -= checkBorderDead (thisTrans.position + getDirect * DistProjDead);
-        allHit = Physics.RaycastAll (thisTrans.position, getDirect, getDist);
+        allHit = Physics.RaycastAll (thisTrans.position - new Vector3 (0, -0.3f, 0), getDirect, getDist);
 
         foreach (RaycastHit thisRay in allHit)
         {

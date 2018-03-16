@@ -196,16 +196,11 @@ public class MenuManager : MonoBehaviour
 
     public IEnumerator LoadLevel (bool menu)
     {
-        //NbrPlayerPlaying.NbrPP.thisScene = thisSc;
-        //Scene thisSc = SceneManager.GetActiveScene ();
-        AsyncOperation opLevel = SceneManager.LoadSceneAsync ("FINAL", LoadSceneMode.Additive);
-
-        //Slider getSlider = NbrPlayerPlaying.NbrPP.GetComponentInChildren<Slider> ();
+        AsyncOperation opLevel = SceneManager.LoadSceneAsync ("FINAL", LoadSceneMode.Single);
 
         opLevel.allowSceneActivation = false;
         while (opLevel.progress < .9f)
         {
-            UnityEngine.Debug.Log (opLevel.progress);
             yield return null;
         }
 

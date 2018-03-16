@@ -96,26 +96,27 @@ public class UiManager : ManagerParent
             thisUi.OpenThis (GetTok);
         }
 
-        DOVirtual.DelayedCall (22, () =>
-        {
-            WeaponChangeHUD (3, "");
-        }).SetLoops (-1, LoopType.Restart);
+        /*
+                DOVirtual.DelayedCall (22, () =>
+                {
+                    WeaponChangeHUD (3, "");
+                }).SetLoops (-1, LoopType.Restart);
 
-        DOVirtual.DelayedCall (19, () =>
-        {
-            WeaponChangeHUD (2, "");
-        }).SetLoops (-1, LoopType.Restart);
+                DOVirtual.DelayedCall (19, () =>
+                {
+                    WeaponChangeHUD (2, "");
+                }).SetLoops (-1, LoopType.Restart);
 
-        DOVirtual.DelayedCall (17, () =>
-        {
-            WeaponChangeHUD (1, "");
-        }).SetLoops (-1, LoopType.Restart);
+                DOVirtual.DelayedCall (17, () =>
+                {
+                    WeaponChangeHUD (1, "");
+                }).SetLoops (-1, LoopType.Restart);
 
-        DOVirtual.DelayedCall (15, () =>
-        {
-            WeaponChangeHUD (0, "");
-        }).SetLoops (-1, LoopType.Restart);
-
+                DOVirtual.DelayedCall (15, () =>
+                {
+                    WeaponChangeHUD (0, "");
+                }).SetLoops (-1, LoopType.Restart);
+         */
     }
 
     public void CloseThisMenu ()
@@ -156,7 +157,7 @@ public class UiManager : ManagerParent
         EndScreenWeaponBox.SetActive (true);
         GetInGame.transform.DOLocalMoveY (200, .3f).SetEase (Ease.InOutSine);
 
-        AboveAll.DOFade(0, .2f);
+        AboveAll.DOFade (0, .2f);
         EndScreenContainer.DOFade (1, .2f);
 
         //UnityEngine.Debug.Log ("EndScree");
@@ -269,12 +270,10 @@ public class UiManager : ManagerParent
         ResetTween (PlayerId);
 
         //HUD INGAME
-        Transform getTrans = PlayersAmmo[PlayerId].transform;
-        getTrans.DOKill(true);
-        rotTw.Kill(true);
+        Transform getTrans = PlayersAmmo [PlayerId].transform;
+        getTrans.DOKill (true);
+        rotTw.Kill (true);
         WeaponChangeHUD (PlayerId, weap);
-
-
 
         getTrans.GetComponentsInChildren<RainbowColor> () [0].transform.GetComponent<Image> ().DOKill (true);
 
@@ -303,7 +302,7 @@ public class UiManager : ManagerParent
         getTrans.GetChild (0).GetComponent<Image> ().DOFade (1, .25f).OnComplete (() =>
         {
             getTrans.GetChild (0).GetComponent<Image> ().DOFade (0, .25f);
-            NewWeapPic(thisWeap, PlayerId);
+            NewWeapPic (thisWeap, PlayerId);
         });
 
         var circle = Instantiate (Circle, getTrans.parent.position, Quaternion.identity, getTrans.parent.GetChild (0));
@@ -580,6 +579,7 @@ public class UiManager : ManagerParent
                 if (thisIP.ready)
                 {
                     count++;
+                    Manager.GameCont.GetPlayersInput [thisIP.ID].EnablePlayer = true;
                     Manager.GameCont.GetPlayersInput [thisIP.ID].ReadyPlayer = true;
                 }
             }
@@ -591,6 +591,7 @@ public class UiManager : ManagerParent
 
         if (count > 0)
         {
+            CloseThisMenu ();
             Manager.GameCont.StartGame ();
         }
         else
