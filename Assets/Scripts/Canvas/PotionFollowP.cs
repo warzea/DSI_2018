@@ -7,6 +7,7 @@ using DG.Tweening;
 public class PotionFollowP : MonoBehaviour 
 {
 	#region Variables
+	public int Nbr = -1;
 	public float XPos = 1;
 	public float YPos = 1;
 	public Transform ThisPlayer;
@@ -18,7 +19,6 @@ public class PotionFollowP : MonoBehaviour
 	CanvasGroup thisCanvas;
 	#endregion
 	
-	
 	#region Mono
 	void Start ( )
 	{
@@ -29,22 +29,33 @@ public class PotionFollowP : MonoBehaviour
 	}
 	#endregion
 	
-	
 	#region Public
+	public void NewValue ( int val )
+	{
+    	 DOTween.To(() => Nbr, x => Nbr = x, val, 0.3f);
+	}
 	void Update ()
 	{
-		thisTrans.position = getCam.WorldToScreenPoint(ThisPlayer.position + Vector3.up * YPos + Vector3.right * XPos );
-		getText.text = "+" + thisPC.AllItem.Count.ToString();
+		thisTrans.position = getCam.WorldToScreenPoint(ThisPlayer.position );
+		thisTrans.localPosition += Vector3.up * YPos + Vector3.right * XPos ;
 
-		if ( thisPC.AllItem.Count - 1 > 0 && !checkPotion )
+		if ( thisPC != null )
 		{
-			checkPotion = true;
-			thisCanvas.DOFade(1,0.5f);
+			getText.text = "+" + Nbr;
+			if ( thisPC.AllItem.Count - 1 > 0 && !checkPotion )
+			{
+				checkPotion = true;
+				thisCanvas.DOFade(1,0.5f);
+			}
+			else if ( thisPC.AllItem.Count - 1< 0 && checkPotion )
+			{
+				checkPotion = false;
+				thisCanvas.DOFade(0,0.5f);
+			}
 		}
-		else if ( thisPC.AllItem.Count - 1< 0 && checkPotion )
+		else
 		{
-			checkPotion = false;
-			thisCanvas.DOFade(0,0.5f);
+			getText.text = "+" + Nbr.ToString();
 		}
 	}
 	#endregion

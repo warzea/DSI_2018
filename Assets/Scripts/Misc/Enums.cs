@@ -13,13 +13,14 @@ public enum MenuType
 public enum ScoreType
 {
 	Nothing,
-	BoxWeapon
+	BoxWeapon,
+	EndScore
 }
 
 public enum Trajectoir
 {
-	Standard
-	
+	Standard,
+	Nothing
 }
 
 public enum TypeEnemy
@@ -43,3 +44,15 @@ public enum TypeMedail
 	hard
 
 }
+
+public enum AudioType
+{
+	MusicBackGround,
+	OtherMusic,
+	FxSound,
+	OtherSound,
+	Other,
+	MusicTrash,
+	Shoot
+}
+

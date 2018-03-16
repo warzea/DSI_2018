@@ -108,7 +108,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NbrItem: 10
+  ValueOnDrop: 5
   NbrDropByDrop: 2
   NbrTouchToDrop: 2
   ItemDrop:
+  - {fileID: 1090906710411644, guid: 5b5f54211795c3c48bf567180a7d600f, type: 2}
+  - {fileID: 1090906710411644, guid: 5b5f54211795c3c48bf567180a7d600f, type: 2}
   - {fileID: 1090906710411644, guid: 5b5f54211795c3c48bf567180a7d600f, type: 2}

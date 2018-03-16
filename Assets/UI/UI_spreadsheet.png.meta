@@ -27,6 +27,8 @@ TextureImporter:
     21300040: UI_Score_Slot
     21300042: UI_Gradient_Green
     21300044: UI_Ammo_Inside
+    21300046: UI_Gauge_Cauldron_Outline
+    21300048: UI_Gauge_Cauldron_Inside
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -164,8 +166,8 @@ TextureImporter:
         serializedVersion: 2
         x: 857
         y: 2014
-        width: 580
-        height: 511
+        width: 577
+        height: 469
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -336,6 +338,34 @@ TextureImporter:
         height: 335
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UI_Gauge_Cauldron_Outline
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 151
+        width: 714
+        height: 171
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UI_Gauge_Cauldron_Inside
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 31
+        width: 713
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

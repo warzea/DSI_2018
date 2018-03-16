@@ -9,13 +9,28 @@ public class FollowPlayerUI : MonoBehaviour
 	public Camera getCam;
 	Transform thisTrans;
 
+    public float offSetY;
+    public float offSetX;
+
 	#endregion
-	
 	
 	#region Mono
 	void Awake ( )
 	{
-		thisTrans = transform;
+		thisTrans = transform;		
+	}
+
+	void Start ( )
+	{
+		if ( getCam == null )
+		{
+			getCam = Manager.GameCont.MainCam;
+		}
+
+		if ( ThisPlayer == null )
+		{
+			ThisPlayer = Manager.GameCont.WeaponB.transform;
+		}
 	}
 	#endregion
 	
@@ -23,7 +38,8 @@ public class FollowPlayerUI : MonoBehaviour
 	#region Public
 	void Update ()
 	{
-		thisTrans.position = getCam.WorldToScreenPoint(ThisPlayer.position + Vector3.up * 9);
+		thisTrans.position = getCam.WorldToScreenPoint(ThisPlayer.position );
+		thisTrans.localPosition +=  Vector3.up * 9 + new Vector3(offSetX,offSetY, 0);
 	}
 	#endregion
 	

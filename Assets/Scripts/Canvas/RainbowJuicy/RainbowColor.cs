@@ -58,7 +58,7 @@ public class RainbowColor : MonoBehaviour
 	{
         if (ComponentType == Type.Image) { 
             GetComponent<Image> ().DOKill (true);
-		    //GetComponent<Image> ().DOColor (Color.white, time * 2f);
+            //GetComponent<Image> ().DOColor (Color.white, time * 2f);
         }
 
         if (ComponentType == Type.Material)

@@ -24,9 +24,9 @@ TagManager:
   - BulletPlayer
   - ZoneAggro
   - BulletAgent
-  - 
-  - 
-  - 
+  - IgnoreBulletAgent
+  - SpawnZone
+  - Post_Process
   - 
   - 
   - 

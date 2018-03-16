@@ -1,11 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+
 using DG.Tweening;
+
+using UnityEngine;
 
 public class WeaponAbstract : MonoBehaviour
 {
     #region Variables
+    public GameObject SpeEffet;
+    public GameObject ExploWeapon;
+    public GameObject PrefabExplo;
+    public string NameMusic;
+    public string MusicExplo = "";
+    public float TimeBackPush = 0.1f;
     public int WeightRandom = 0;
     public bool AutoShoot = true;
     public bool Projectile = false;
@@ -55,7 +63,6 @@ public class WeaponAbstract : MonoBehaviour
     public float Diameter;
     // -- end Explosion
 
-
     //public float ForceProjection;
     //public float SpeedBullet = 10;
 
@@ -66,17 +73,18 @@ public class WeaponAbstract : MonoBehaviour
     public bool canShoot = true;
 
     bool blockShoot = false;
-	public bool OnFloor = true;
+    public bool OnFloor = true;
 
     Transform getGargabe;
-    int getCapacity;
+    [HideInInspector]
+    public int getCapacity;
 
     IEnumerator GetEnumerator;
 
     #endregion
 
     #region Mono
-    void Awake()
+    void Start()
     {
         getCapacity = BulletCapacity;
         getGargabe = Manager.GameCont.Garbage;
@@ -89,33 +97,57 @@ public class WeaponAbstract : MonoBehaviour
     {
         if (canShoot && getCapacity > 0 && !blockShoot)
         {
+            Manager.Ui.ScreenShake();
+
             //playerTrans.localPosition -= playerTrans.forward * BackPush * Time.deltaTime;
             string getTag;
             float getDist = BackPush * Time.deltaTime;
+            int getDir = 1;
+            if (getDist < 0)
+            {
+                getDir = -1;
+                getDist = -getDist;
+            }
             RaycastHit[] allHit;
 
-            allHit = Physics.RaycastAll ( playerTrans.position, - playerTrans.forward, getDist );
-            
-            foreach ( RaycastHit thisRay in allHit )
+            if (getDist > 0)
             {
-                getTag = thisRay.collider.tag;
-                
-                if ( getTag == Constants._Wall && thisRay.distance < getDist )
+                allHit = Physics.RaycastAll(playerTrans.position, -playerTrans.forward * getDir, getDist);
+
+                foreach (RaycastHit thisRay in allHit)
                 {
-                    getDist = thisRay.distance - 0.5f;
+                    getTag = thisRay.collider.tag;
+
+                    if (getTag == Constants._Wall && thisRay.distance < getDist)
+                    {
+                        getDist = thisRay.distance - 0.5f;
+                    }
                 }
             }
-            playerTrans.DOLocalMove ( playerTrans.localPosition - playerTrans.forward * getDist, 0.1f );
+
+            if (getDist != 0)
+            {
+                playerTrans.DOLocalMove(playerTrans.localPosition - playerTrans.forward * getDist * getDir, TimeBackPush);
+            }
 
             getCapacity--;
             canShoot = false;
 
             PlayerController getPC = playerTrans.GetComponent<PlayerController>();
-            getPC.UiAmmo.fillAmount = (float) getCapacity / BulletCapacity;
+            getPC.UiAmmo.fillAmount = (float)getCapacity / BulletCapacity;
 
-            if ( getCapacity == 0 )
+            if (getCapacity == 0)
             {
                 Manager.Ui.WeaponEmpty(getPC.IdPlayer);
+                getPC.autoShoot = false;
+                getPC.CdShoot = 0;
+                getPC.checkShoot = false;
+                getPC.checkAuto = true;
+            }
+
+            if (SpeEffet == null)
+            {
+                Manager.Audm.OpenAudio(AudioType.Shoot, NameMusic);
             }
 
             customWeapon(playerTrans);
@@ -124,26 +156,51 @@ public class WeaponAbstract : MonoBehaviour
         {
             canShoot = false;
 
-            PlayerController getPC = playerTrans.GetComponent<PlayerController>();
-            getPC.WeaponThrow ++;
-            Transform getTrans = transform;
-            Vector3 getForward = playerTrans.forward;
-
-            transform.SetParent(null);
-            getPC.UpdateWeapon();
-
             //getRigid.AddForce(getForward * ForceProjection, ForceMode.VelocityChange);
+            ThrowWeap(playerTrans);
 
-            GetComponent<Collider>().enabled = true;
-            GetComponent<Collider>().isTrigger = true;
-            BulletAbstract thisBA = getTrans.gameObject.AddComponent<BulletAbstract>();
-            thisBA.direction = playerTrans.forward;
-            thisBA.TimeStay = 0.2f;
-            thisBA.thisPlayer = getPC;
-            thisBA.Projectil = Projectile;
-
-            Manager.GameCont.WeaponB.NewWeapon(getPC);
+            Manager.GameCont.WeaponB.NewWeapon(playerTrans.GetComponent<PlayerController>());
         }
+    }
+
+    public void ThrowWeap(Transform playerTrans)
+    {
+        Transform getTrans = transform;
+        getTrans.SetParent(null);
+
+        PlayerController getPC = playerTrans.GetComponent<PlayerController>();
+        getPC.WeaponThrow++;
+        Vector3 getForward = playerTrans.forward;
+
+        if (getPC.thisObjAudio != null)
+        {
+            Destroy(getPC.thisObjAudio);
+        }
+
+        getPC.UpdateWeapon();
+
+        GetComponent<Collider>().enabled = true;
+        GetComponent<Collider>().isTrigger = true;
+
+        BulletAbstract thisBA = getTrans.gameObject.AddComponent<BulletAbstract>();
+        thisBA.direction = playerTrans.forward;
+        thisBA.TimeStay = 0.2f;
+        thisBA.thisPlayer = getPC;
+        thisBA.Projectil = true;
+
+        if (ExploWeapon != null && PrefabExplo != null)
+        {
+            thisBA.canExplose = true;
+            thisBA.NameAudio = MusicExplo;
+            thisBA.GetEffect = ExploWeapon;
+            thisBA.PrefabExplosion = PrefabExplo;
+        }
+
+        thisBA.Diameter = 3;
+        thisBA.BulletRange = playerTrans.GetComponent<PlayerController>().DistThrowWeap;
+        thisBA.MoveSpeed = playerTrans.GetComponent<PlayerController>().SpeedThrow;
+        thisBA.gameObject.tag = Constants._BulletPlayer;
+        Destroy(GetComponent<WeaponAbstract>());
     }
     #endregion
 
@@ -183,7 +240,7 @@ public class WeaponAbstract : MonoBehaviour
         thisBullet.FarEffect = FarEffect;
         thisBullet.TimeFarEffect = TimeFarEffect;
         thisBullet.thisPlayer = thisPlayer;
-        thisPlayer.ShootBullet ++;
+        thisPlayer.ShootBullet++;
     }
 
     void zoneShoot(Transform thisPlayer)
@@ -201,18 +258,18 @@ public class WeaponAbstract : MonoBehaviour
         setNewProj(getBullet.GetComponent<BulletAbstract>(), thisPlayer.GetComponent<PlayerController>());
 
         DOVirtual.DelayedCall(SpaceBullet, () =>
-        {
-            nbrLeft--;
-            if (nbrLeft > 0)
-            {
-                gustProjectile(nbrLeft, thisPlayer);
-            }
-            else
-            {
-                waitNewShoot();
-                blockShoot = false;
-            }
-        });
+       {
+           nbrLeft--;
+           if (nbrLeft > 0)
+           {
+               gustProjectile(nbrLeft, thisPlayer);
+           }
+           else
+           {
+               waitNewShoot();
+               blockShoot = false;
+           }
+       });
     }
     void spreadProjectile(Transform playerTrans)
     {
@@ -257,18 +314,18 @@ public class WeaponAbstract : MonoBehaviour
                 getScript.direction = (playerTrans.forward * (75 - (a - nbrMidle) * getAngle) - playerTrans.right * (a - nbrMidle) * getAngle).normalized;
             }
         }
-        
+
         waitNewShoot();
     }
 
-    void waitNewShoot( )
+    void waitNewShoot()
     {
-        if ( FireRate > 0 )
+        if (FireRate > 0)
         {
-            DOVirtual.DelayedCall(FireRate, () => 
-            {
-                canShoot = true;
-            });
+            DOVirtual.DelayedCall(FireRate, () =>
+           {
+               canShoot = true;
+           });
         }
         else
         {
@@ -276,15 +333,26 @@ public class WeaponAbstract : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter ( Collider thisColl )
-	{
-		string tag = thisColl.tag;
-		if ( tag == Constants._Player && OnFloor )
-		{
-            PlayerController getPlayer = thisColl.GetComponent<PlayerController>();
-            getPlayer.WeaponCatch ++;
-			Manager.GameCont.WeaponB.NewWeapon( getPlayer, gameObject );
-		}
-	}
+    void OnCollisionEnter(Collision collisionInfo)
+    {
+        string tag = collisionInfo.collider.tag;
+        if (tag == Constants._Player && OnFloor)
+        {
+            GetComponent<Collider>().enabled = false;
+            gameObject.layer = LayerMask.NameToLayer(Constants._BulletPlayer);
+            PlayerController getPlayer = collisionInfo.gameObject.GetComponent<PlayerController>();
+            getPlayer.WeaponCatch++;
+            Transform[] child = transform.GetComponentsInChildren<Transform>();
+            foreach (Transform thisobject in child)
+            {
+                if (thisobject.gameObject.name == "FX_WeaponCircle")
+                {
+                    thisobject.gameObject.SetActive(false);
+                }
+
+            }
+            Manager.GameCont.WeaponB.NewWeapon(getPlayer, gameObject);
+        }
+    }
     #endregion
 }

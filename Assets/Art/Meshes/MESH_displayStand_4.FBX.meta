@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: b5f5f9ce2f48c5549842c591fa195ee7
-timeCreated: 1520511621
+guid: 9261903f376d1084ba07b9d0b81c89df
+timeCreated: 1520688966
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -8,9 +8,11 @@ ModelImporter:
     100000: //RootNode
     400000: //RootNode
     2100000: No Name
+    2100002: 'Material #31'
     2300000: //RootNode
     3300000: //RootNode
     4300000: displayStand_4
+    4300002: displayStand_3
     9500000: //RootNode
   externalObjects: {}
   materials:
@@ -43,24 +45,24 @@ ModelImporter:
   meshes:
     lODScreenPercentages: []
     globalScale: 1
-    meshCompression: 0
+    meshCompression: 1
     addColliders: 0
-    importVisibility: 1
+    importVisibility: 0
     importBlendShapes: 1
-    importCameras: 1
-    importLights: 1
+    importCameras: 0
+    importLights: 0
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0
-    weldVertices: 1
+    weldVertices: 0
     preserveHierarchy: 0
     indexFormat: 0
     secondaryUVAngleDistortion: 8
-    secondaryUVAreaDistortion: 15.000001
+    secondaryUVAreaDistortion: 15
     secondaryUVHardAngle: 88
-    secondaryUVPackMargin: 4
+    secondaryUVPackMargin: 6
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
