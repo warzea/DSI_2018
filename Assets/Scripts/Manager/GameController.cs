@@ -187,14 +187,16 @@ public class GameController : ManagerParent
                 getPlayer = (GameObject) Instantiate (PlayerPrefab);
                 getPlayer.name = getPlayer.name + "+" + a.ToString ();
 
-                if (PlayerPosSpawn != null)
-                {
-                    getPlayer.transform.position = PlayerPosSpawn.position + new Vector3 (a * 1.5f, 0, 0);
-                }
-                else
-                {
-                    getPlayer.transform.position = new Vector3 (a * 1.5f, 0, 0);
-                }
+                getPlayer.transform.localPosition = PlayerPosSpawn.position + new Vector3 (3 * -1.5f, 0.5f, -10);
+                /* if (PlayerPosSpawn != null)
+                 {
+                                         getPlayer.transform.localPosition = PlayerPosSpawn.position + new Vector3 (a * 1.5f, 0, 0);
+
+                 }
+                 else
+                 {
+                     getPlayer.transform.position = new Vector3 (a * 1.5f, 0, 0);
+                 }*/
 
                 foreach (Renderer thisMat in getPlayer.GetComponentsInChildren<Renderer> ())
                 {
