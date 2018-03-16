@@ -14,7 +14,7 @@ using UnityEngine.UI;
 public class MenuManager : MonoBehaviour
 {
 
-    bool canPress;
+    bool canPress = false;
 
     public static MenuManager Singleton;
 
@@ -27,8 +27,8 @@ public class MenuManager : MonoBehaviour
     public Image backgroundFlash;
 
     [Header ("PLAYER MODELS")]
-    public GameObject [] PlayersMesh;
-    public float [] PlayersRotate;
+    public GameObject [ ] PlayersMesh;
+    public float [ ] PlayersRotate;
     public GameObject Cauldron;
     public GameObject CamCinemachine;
 
@@ -47,11 +47,11 @@ public class MenuManager : MonoBehaviour
     NbrPlayerPlaying thisNPP;
     Player player1, player2, player3, player4;
 
-    private void Awake ()
+    private void Awake ( )
     {
         try
         {
-            thisNPP = GameObject.Find ("NbrPlayer").GetComponent<NbrPlayerPlaying> ();
+            thisNPP = GameObject.Find ("NbrPlayer").GetComponent<NbrPlayerPlaying> ( );
 
         }
         catch
@@ -71,7 +71,7 @@ public class MenuManager : MonoBehaviour
     }
 
     // Use this for initialization
-    void Start ()
+    void Start ( )
     {
 
         player1 = ReInput.players.GetPlayer (0);
@@ -79,16 +79,16 @@ public class MenuManager : MonoBehaviour
         player3 = ReInput.players.GetPlayer (2);
         player4 = ReInput.players.GetPlayer (3);
 
-        DOVirtual.DelayedCall (3, () =>
+        DOVirtual.DelayedCall (3, ( )=>
         {
             if (firstItemMenu != null)
-                firstItemMenu.Select ();
+                firstItemMenu.Select ( );
         });
 
         Cursor.visible = false;
     }
 
-    public void PlayReady ()
+    public void PlayReady ( )
     {
         canvasSelect.DOFade (1, .25f);
         canvasMenu.DOFade (0, .1f);
@@ -96,30 +96,30 @@ public class MenuManager : MonoBehaviour
 
         canvasSelect.transform.GetChild (0).transform.DOScale (3, 0);
         canvasSelect.transform.GetChild (0).transform.DOScale (1, .2f);
-        canvasSelect.transform.GetChild (0).GetComponent<CanvasGroup> ().DOFade (1, .2f);
+        canvasSelect.transform.GetChild (0).GetComponent<CanvasGroup> ( ).DOFade (1, .2f);
 
-        DOVirtual.DelayedCall (.2f, () =>
+        DOVirtual.DelayedCall (.2f, ( )=>
         {
             canvasSelect.transform.GetChild (1).transform.DOScale (3, 0);
             canvasSelect.transform.GetChild (1).transform.DOScale (1, .2f);
-            canvasSelect.transform.GetChild (1).GetComponent<CanvasGroup> ().DOFade (1, .2f);
+            canvasSelect.transform.GetChild (1).GetComponent<CanvasGroup> ( ).DOFade (1, .2f);
         });
 
-        DOVirtual.DelayedCall (.4f, () =>
+        DOVirtual.DelayedCall (.4f, ( )=>
         {
             canvasSelect.transform.GetChild (2).transform.DOScale (3, 0);
             canvasSelect.transform.GetChild (2).transform.DOScale (1, .2f);
-            canvasSelect.transform.GetChild (2).GetComponent<CanvasGroup> ().DOFade (1, .2f);
+            canvasSelect.transform.GetChild (2).GetComponent<CanvasGroup> ( ).DOFade (1, .2f);
         });
 
-        DOVirtual.DelayedCall (.6f, () =>
+        DOVirtual.DelayedCall (.6f, ( )=>
         {
             canvasSelect.transform.GetChild (3).transform.DOScale (3, 0);
             canvasSelect.transform.GetChild (3).transform.DOScale (1, .2f);
-            canvasSelect.transform.GetChild (3).GetComponent<CanvasGroup> ().DOFade (1, .2f);
+            canvasSelect.transform.GetChild (3).GetComponent<CanvasGroup> ( ).DOFade (1, .2f);
         });
 
-        DOVirtual.DelayedCall (1, () =>
+        DOVirtual.DelayedCall (1, ( )=>
         {
 
             canPress = true;
@@ -128,7 +128,7 @@ public class MenuManager : MonoBehaviour
 
     }
 
-    public void PlayStart ()
+    public void PlayStart ( )
     {
         canPress = false;
 
@@ -137,39 +137,39 @@ public class MenuManager : MonoBehaviour
             PlayersMesh [i].transform.DOLocalRotate (new Vector3 (0, PlayersRotate [i], 0), .4f, RotateMode.LocalAxisAdd).SetEase (Ease.InCirc);
         }
 
-        Cauldron.GetComponentInChildren<Animator> ().SetTrigger ("More");
+        Cauldron.GetComponentInChildren<Animator> ( ).SetTrigger ("More");
 
-        DOVirtual.DelayedCall (1, () =>
+        DOVirtual.DelayedCall (1, ( )=>
         {
 
             PlayersMesh [4].SetActive (true);
 
             ScreenShake (1);
 
-            DOVirtual.DelayedCall (.5f, () =>
+            DOVirtual.DelayedCall (.5f, ( )=>
             {
 
                 PlayersMesh [5].SetActive (true);
                 ScreenShake (2);
 
-                DOVirtual.DelayedCall (.4f, () =>
+                DOVirtual.DelayedCall (.4f, ( )=>
                 {
 
                     PlayersMesh [6].SetActive (true);
                     ScreenShake (3);
 
-                    DOVirtual.DelayedCall (.3f, () =>
+                    DOVirtual.DelayedCall (.3f, ( )=>
                     {
 
                         PlayersMesh [7].SetActive (true);
                         ScreenShake (4);
 
-                        DOVirtual.DelayedCall (.3f, () =>
+                        DOVirtual.DelayedCall (.3f, ( )=>
                         {
 
                             HowToPlay.DOFade (1, 1f);
 
-                            backgroundFlash.GetComponent<CanvasGroup> ().DOFade (1, 1f).OnComplete (() =>
+                            backgroundFlash.GetComponent<CanvasGroup> ( ).DOFade (1, 1f).OnComplete (( )=>
                             {
 
                                 StartCoroutine (LoadLevel (true));
@@ -206,34 +206,33 @@ public class MenuManager : MonoBehaviour
         // NbrPlayerPlaying.NbrPP.transform.GetChild (0).gameObject.SetActive (false);
         if (menu)
         {
-            DOVirtual.DelayedCall (2, () =>
+            DOVirtual.DelayedCall (2, ( )=>
             {
 
                 HowToPlay.DOFade (0, .25f);
-
-                backgroundFlash.DOFade (0, .25f).OnComplete (() =>
+                opLevel.allowSceneActivation = true;
+                backgroundFlash.DOFade (0, .25f).OnComplete (( )=>
                 {
                     //SceneManager.LoadSceneAsync ("FINAL", LoadSceneMode.Single);
 
-                    opLevel.allowSceneActivation = true;
                 });
             });
         }
         else
         {
-            DOVirtual.DelayedCall (2, () =>
+            opLevel.allowSceneActivation = true;
+            DOVirtual.DelayedCall (2, ( )=>
             {
 
                 //SceneManager.LoadSceneAsync ("FINAL", LoadSceneMode.Single);
 
-                opLevel.allowSceneActivation = true;
             });
 
         }
 
     }
 
-    public IEnumerator LoadMenu ()
+    public IEnumerator LoadMenu ( )
     {
 
         AsyncOperation opMenu = SceneManager.LoadSceneAsync ("Menu_Enviro", LoadSceneMode.Single);
@@ -245,7 +244,7 @@ public class MenuManager : MonoBehaviour
             yield return null;
         }
 
-        DOVirtual.DelayedCall (2, () =>
+        DOVirtual.DelayedCall (2, ( )=>
         {
 
             SceneManager.UnloadSceneAsync ("Alex");
@@ -297,13 +296,13 @@ public class MenuManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update ()
+    void Update ( )
     {
 
 #if UNITY_EDITOR
         if (Input.GetKeyDown (KeyCode.J))
         {
-            PlayStart ();
+            PlayStart ( );
         }
 
         if (Input.GetKeyDown (KeyCode.K))
@@ -316,14 +315,13 @@ public class MenuManager : MonoBehaviour
         {
             if (player1.GetButtonDown ("UISubmit"))
             {
-
                 if (!player1Ready)
                 {
                     thisNPP.NbrPlayer [0].ready = true;
 
                     PlayersReady += 1;
 
-                    DOVirtual.DelayedCall (.05f, () =>
+                    DOVirtual.DelayedCall (.05f, ( )=>
                     {
                         player1Ready = true;
                     });
@@ -332,8 +330,8 @@ public class MenuManager : MonoBehaviour
 
                     Transform p1 = canvasSelect.transform.GetChild (0).transform;
 
-                    p1.GetComponentsInChildren<Text> () [1].text = "READY !";
-                    p1.GetComponentInChildren<Image> ().DOFade (0, .05f);
+                    p1.GetComponentsInChildren<Text> ( )[1].text = "READY !";
+                    p1.GetComponentInChildren<Image> ( ).DOFade (0, .05f);
 
                     PlayersMesh [0].gameObject.SetActive (true);
                 }
@@ -343,15 +341,15 @@ public class MenuManager : MonoBehaviour
                     PlayersReady -= 1;
                     thisNPP.NbrPlayer [0].ready = false;
 
-                    DOVirtual.DelayedCall (.05f, () =>
+                    DOVirtual.DelayedCall (.05f, ( )=>
                     {
                         player1Ready = false;
                     });
 
                     Transform p1 = canvasSelect.transform.GetChild (0).transform;
 
-                    p1.GetComponentsInChildren<Text> () [1].text = "GET READY \n PRESS";
-                    p1.GetComponentInChildren<Image> ().DOFade (1, .05f);
+                    p1.GetComponentsInChildren<Text> ( )[1].text = "GET READY \n PRESS";
+                    p1.GetComponentInChildren<Image> ( ).DOFade (1, .05f);
 
                     var fx = Instantiate (PlayersMesh [8].gameObject, PlayersMesh [0].transform.position, Quaternion.identity, PlayersMesh [0].transform);
 
@@ -368,15 +366,15 @@ public class MenuManager : MonoBehaviour
                     PlayersReady += 1;
                     thisNPP.NbrPlayer [1].ready = true;
 
-                    DOVirtual.DelayedCall (.05f, () =>
+                    DOVirtual.DelayedCall (.05f, ( )=>
                     {
                         player2Ready = true;
                     });
 
                     Transform p2 = canvasSelect.transform.GetChild (1).transform;
 
-                    p2.GetComponentsInChildren<Text> () [1].text = "READY !";
-                    p2.GetComponentInChildren<Image> ().DOFade (0, .05f);
+                    p2.GetComponentsInChildren<Text> ( )[1].text = "READY !";
+                    p2.GetComponentInChildren<Image> ( ).DOFade (0, .05f);
 
                     var fx = Instantiate (PlayersMesh [8].gameObject, PlayersMesh [1].transform.position, Quaternion.identity, PlayersMesh [1].transform);
 
@@ -388,15 +386,15 @@ public class MenuManager : MonoBehaviour
                     PlayersReady -= 1;
                     thisNPP.NbrPlayer [1].ready = false;
 
-                    DOVirtual.DelayedCall (.05f, () =>
+                    DOVirtual.DelayedCall (.05f, ( )=>
                     {
                         player2Ready = false;
                     });
 
                     Transform p2 = canvasSelect.transform.GetChild (1).transform;
 
-                    p2.GetComponentsInChildren<Text> () [1].text = "GET READY \n PRESS";
-                    p2.GetComponentInChildren<Image> ().DOFade (1, .05f);
+                    p2.GetComponentsInChildren<Text> ( )[1].text = "GET READY \n PRESS";
+                    p2.GetComponentInChildren<Image> ( ).DOFade (1, .05f);
 
                     var fx = Instantiate (PlayersMesh [8].gameObject, PlayersMesh [1].transform.position, Quaternion.identity, PlayersMesh [1].transform);
 
@@ -413,15 +411,15 @@ public class MenuManager : MonoBehaviour
                     PlayersReady += 1;
                     thisNPP.NbrPlayer [2].ready = true;
 
-                    DOVirtual.DelayedCall (.05f, () =>
+                    DOVirtual.DelayedCall (.05f, ( )=>
                     {
                         player3Ready = true;
                     });
 
                     Transform p3 = canvasSelect.transform.GetChild (2).transform;
 
-                    p3.GetComponentsInChildren<Text> () [1].text = "READY !";
-                    p3.GetComponentInChildren<Image> ().DOFade (0, .05f);
+                    p3.GetComponentsInChildren<Text> ( )[1].text = "READY !";
+                    p3.GetComponentInChildren<Image> ( ).DOFade (0, .05f);
 
                     var fx = Instantiate (PlayersMesh [8].gameObject, PlayersMesh [2].transform.position, Quaternion.identity, PlayersMesh [2].transform);
 
@@ -432,15 +430,15 @@ public class MenuManager : MonoBehaviour
                     PlayersReady -= 1;
                     thisNPP.NbrPlayer [2].ready = false;
 
-                    DOVirtual.DelayedCall (.05f, () =>
+                    DOVirtual.DelayedCall (.05f, ( )=>
                     {
                         player3Ready = false;
                     });
 
                     Transform p3 = canvasSelect.transform.GetChild (2).transform;
 
-                    p3.GetComponentsInChildren<Text> () [1].text = "GET READY \n PRESS";
-                    p3.GetComponentInChildren<Image> ().DOFade (1, .05f);
+                    p3.GetComponentsInChildren<Text> ( )[1].text = "GET READY \n PRESS";
+                    p3.GetComponentInChildren<Image> ( ).DOFade (1, .05f);
 
                     var fx = Instantiate (PlayersMesh [8].gameObject, PlayersMesh [2].transform.position, Quaternion.identity, PlayersMesh [2].transform);
 
@@ -456,15 +454,15 @@ public class MenuManager : MonoBehaviour
                     PlayersReady += 1;
                     thisNPP.NbrPlayer [3].ready = true;
 
-                    DOVirtual.DelayedCall (.05f, () =>
+                    DOVirtual.DelayedCall (.05f, ( )=>
                     {
                         player4Ready = true;
                     });
 
                     Transform p4 = canvasSelect.transform.GetChild (3).transform;
 
-                    p4.GetComponentsInChildren<Text> () [1].text = "READY !";
-                    p4.GetComponentInChildren<Image> ().DOFade (0, .05f);
+                    p4.GetComponentsInChildren<Text> ( )[1].text = "READY !";
+                    p4.GetComponentInChildren<Image> ( ).DOFade (0, .05f);
 
                     var fx = Instantiate (PlayersMesh [8].gameObject, PlayersMesh [3].transform.position, Quaternion.identity, PlayersMesh [3].transform);
 
@@ -475,15 +473,15 @@ public class MenuManager : MonoBehaviour
                     PlayersReady -= 1;
                     thisNPP.NbrPlayer [3].ready = false;
 
-                    DOVirtual.DelayedCall (.05f, () =>
+                    DOVirtual.DelayedCall (.05f, ( )=>
                     {
                         player4Ready = false;
                     });
 
                     Transform p4 = canvasSelect.transform.GetChild (3).transform;
 
-                    p4.GetComponentsInChildren<Text> () [1].text = "GET READY \n PRESS";
-                    p4.GetComponentInChildren<Image> ().DOFade (1, .05f);
+                    p4.GetComponentsInChildren<Text> ( )[1].text = "GET READY \n PRESS";
+                    p4.GetComponentInChildren<Image> ( ).DOFade (1, .05f);
 
                     var fx = Instantiate (PlayersMesh [8].gameObject, PlayersMesh [3].transform.position, Quaternion.identity, PlayersMesh [3].transform);
 
@@ -495,9 +493,9 @@ public class MenuManager : MonoBehaviour
             {
                 PressStart.DOFade (1, .1f);
 
-                if (player1.GetButtonDown ("Start") || player2.GetButtonDown ("Start") || player3.GetButtonDown ("Start") || player4.GetButtonDown ("Start"))
+                if (player1.GetButtonDown ("Start")|| player2.GetButtonDown ("Start")|| player3.GetButtonDown ("Start")|| player4.GetButtonDown ("Start"))
                 {
-                    PlayStart ();
+                    PlayStart ( );
 
                 }
             }
