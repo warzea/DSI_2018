@@ -98,10 +98,15 @@ public class AgentController : MonoBehaviour
             return;
         }
 
-        if (myFocusPlayer != null && !myFocusPlayer.gameObject.activeSelf)
+        try
         {
-            myFocusPlayer = Manager.GameCont.Players [0];
+            if (myFocusPlayer != null && !myFocusPlayer.gameObject.activeSelf)
+            {
+                myFocusPlayer = Manager.GameCont.Players [0];
+            }
         }
+        catch
+        { }
 
         if (myEtatAgent == AgentEtat.aliveAgent && myFocusPlayer != null)
         {
