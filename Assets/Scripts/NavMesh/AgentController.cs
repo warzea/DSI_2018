@@ -193,6 +193,7 @@ public class AgentController : MonoBehaviour
 
 	public void DeadFonction ( )
 	{
+
 		navAgent.isStopped = true;
 		agentsManager.DeadAgent (myFocusEtatAgent.ToString ( ), this.gameObject);
 		StartCoroutine (WaitRespawn ( ));

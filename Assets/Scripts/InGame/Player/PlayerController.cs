@@ -148,7 +148,7 @@ public class PlayerController : MonoBehaviour
     Transform getBoxWeapon;
     Rigidbody thisRig;
     CameraFollow GetCamFoll;
-    Player inputPlayer;
+    public Player inputPlayer;
     Camera getCam;
     WeaponBox thisWB;
     GameObject getEffect;

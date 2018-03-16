@@ -156,6 +156,7 @@ public class WeaponBox : MonoBehaviour
             var fx = Instantiate(FXSpecial, GetTrans.transform.position, Quaternion.identity, GetTrans.transform);
             fx.transform.DOLocalMove(Vector3.zero, 0);
 
+            Destroy(fx, 5);
 
             GetTrans.transform.DOShakeScale (1f, .7f, 20, 0);
 
