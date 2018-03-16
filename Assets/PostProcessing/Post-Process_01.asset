@@ -29,7 +29,7 @@ MonoBehaviour:
     m_Settings:
       excludeSkybox: 1
   antialiasing:
-    m_Enabled: 1
+    m_Enabled: 0
     m_Settings:
       method: 0
       fxaaSettings:
@@ -43,8 +43,8 @@ MonoBehaviour:
     m_Enabled: 1
     m_Settings:
       intensity: 4
-      radius: 1.01
-      sampleCount: 10
+      radius: 0.18
+      sampleCount: 16
       downsampling: 1
       forceForwardCompatibility: 0
       ambientOnly: 1
@@ -69,13 +69,13 @@ MonoBehaviour:
       screenEdgeMask:
         intensity: 0.03
   depthOfField:
-    m_Enabled: 0
+    m_Enabled: 1
     m_Settings:
-      focusDistance: 9.32
-      aperture: 0.7
-      focalLength: 50
+      focusDistance: 27.8
+      aperture: 0.5
+      focalLength: 97
       useCameraFov: 0
-      kernelSize: 1
+      kernelSize: 0
   motionBlur:
     m_Enabled: 0
     m_Settings:
@@ -97,7 +97,7 @@ MonoBehaviour:
       logMin: -8
       logMax: 4
   bloom:
-    m_Enabled: 1
+    m_Enabled: 0
     m_Settings:
       bloom:
         intensity: 2.21
@@ -109,7 +109,7 @@ MonoBehaviour:
         texture: {fileID: 0}
         intensity: 2.78
   colorGrading:
-    m_Enabled: 1
+    m_Enabled: 0
     m_Settings:
       tonemapping:
         tonemapper: 1
@@ -350,22 +350,22 @@ MonoBehaviour:
   userLut:
     m_Enabled: 0
     m_Settings:
-      lut: {fileID: 0}
-      contribution: 1
+      lut: {fileID: 2800000, guid: 9f700736c7174d8479773cc68e4613dc, type: 3}
+      contribution: 0
   chromaticAberration:
     m_Enabled: 1
     m_Settings:
       spectralTexture: {fileID: 0}
-      intensity: 0.053
+      intensity: 0.02
   grain:
-    m_Enabled: 1
+    m_Enabled: 0
     m_Settings:
       colored: 0
-      intensity: 0.07
+      intensity: 0
       size: 1.39
       luminanceContribution: 0.959
   vignette:
-    m_Enabled: 1
+    m_Enabled: 0
     m_Settings:
       mode: 0
       color: {r: 0, g: 0.30400604, b: 0.4044118, a: 1}
