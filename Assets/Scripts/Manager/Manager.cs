@@ -107,7 +107,7 @@ public class Manager : MonoBehaviour
 		InitializeManager (ref agentMC);
 		InitializeManager (ref vibM);
 		InitializeManager (ref audM);
-		NbrPlayerPlaying.NbrPP.DestAll ();
+		//NbrPlayerPlaying.NbrPP.DestAll ();
 	}
 
 	void InitializeManager<T> (ref T manager) where T : ManagerParent
