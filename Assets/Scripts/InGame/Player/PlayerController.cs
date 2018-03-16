@@ -148,7 +148,7 @@ public class PlayerController : MonoBehaviour
     Transform getBoxWeapon;
     Rigidbody thisRig;
     CameraFollow GetCamFoll;
-    Player inputPlayer;
+    public Player inputPlayer;
     Camera getCam;
     WeaponBox thisWB;
     GameObject getEffect;
@@ -179,36 +179,36 @@ public class PlayerController : MonoBehaviour
 
     #region Mono
 
-    void Awake ( )
+    void Awake ()
     {
-        AllEnemy = new List<EnemyInfo> ( );
+        AllEnemy = new List<EnemyInfo> ();
         lifePlayer = LifePlayer;
-        thisPC = GetComponent<PlayerController> ( );
+        thisPC = GetComponent<PlayerController> ();
 
         System.Array thisArray = System.Enum.GetValues (typeof (TypeEnemy));
 
         for (int a = 0; a < thisArray.Length; a++)
         {
-            AllEnemy.Add (new EnemyInfo ( ));
-            AllEnemy [a].ThisType = (TypeEnemy)thisArray.GetValue (a);
+            AllEnemy.Add (new EnemyInfo ());
+            AllEnemy [a].ThisType = (TypeEnemy) thisArray.GetValue (a);
         }
     }
 
-    void Start ( )
+    void Start ()
     {
         thisTrans = transform;
-        thisRig = GetComponent<Rigidbody> ( );
+        thisRig = GetComponent<Rigidbody> ();
 
         AmmoUI.gameObject.SetActive (true);
-        UiAmmo = AmmoUI.Find ("Ammo Inside").GetComponent<Image> ( );
+        UiAmmo = AmmoUI.Find ("Ammo Inside").GetComponent<Image> ();
         inputPlayer = ReInput.players.GetPlayer (IdPlayer);
         getBoxWeapon = Manager.GameCont.WeaponB.transform;
         getCam = Manager.GameCont.MainCam;
         GetCamFoll = Manager.GameCont.GetCameraFollow;
-        thisWB = getBoxWeapon.GetComponent<WeaponBox> ( );
+        thisWB = getBoxWeapon.GetComponent<WeaponBox> ();
     }
 
-    void Update ( )
+    void Update ()
     {
         thisRig.velocity = Vector3.zero;
 
@@ -224,7 +224,7 @@ public class PlayerController : MonoBehaviour
             inputAction (getDeltaTime);
         }
 
-        checkBorder ( );
+        checkBorder ();
 
         if (!checkUIBorder)
         {
@@ -238,11 +238,11 @@ public class PlayerController : MonoBehaviour
             AmmoUI.localPosition += Vector3.right * UiAmmoX + Vector3.up * UiAmmoY;
         }
 
-        if (AllItem.Count > 0 && Vector3.Distance (thisTrans.position, getBoxWeapon.position)< DistToDropItem)
+        if (AllItem.Count > 0 && Vector3.Distance (thisTrans.position, getBoxWeapon.position) < DistToDropItem)
         {
-            if (Tweenbag == null || !Tweenbag.IsActive ( ))
+            if (Tweenbag == null || !Tweenbag.IsActive ())
             {
-                emptyBag ( );
+                emptyBag ();
             }
         }
     }
@@ -255,7 +255,7 @@ public class PlayerController : MonoBehaviour
     {
         if (thisWeap != null)
         {
-            Manager.Ui.NewWeapPic (thisWeap.name, IdPlayer);
+            //Manager.Ui.NewWeapPic(thisWeap.name, IdPlayer);
             thisWeap.SpawnBullet = SpawnBullet;
             thisWeap.OnFloor = false;
             autoShoot = thisWeap.AutoShoot;
@@ -278,7 +278,7 @@ public class PlayerController : MonoBehaviour
             lifePlayer -= intDmg;
             animPlayer.SetTrigger ("Damage");
 
-            tweenRegen.Kill ( );
+            tweenRegen.Kill ();
 
             if (lifePlayer <= 0)
             {
@@ -286,7 +286,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                tweenRegen = DOVirtual.DelayedCall (TimeToRegen, ( )=>
+                tweenRegen = DOVirtual.DelayedCall (TimeToRegen, () =>
                 {
                     if (lifePlayer < LifePlayer)
                     {
@@ -301,7 +301,7 @@ public class PlayerController : MonoBehaviour
 
     #region Private Methods
 
-    void checkBorder ( )
+    void checkBorder ()
     {
         Vector3 getCamPos = getCam.WorldToViewportPoint (thisTrans.position);
         Vector3 getDir = Vector3.zero;
@@ -339,10 +339,10 @@ public class PlayerController : MonoBehaviour
 
         if (getDir != Vector3.zero)
         {
-            RaycastHit [ ] allHit;
+            RaycastHit [] allHit;
             string getTag;
 
-            allHit = Physics.RaycastAll (thisTrans.position, getDir, 0.5f);
+            allHit = Physics.RaycastAll (thisTrans.position - new Vector3 (0, -0.3f, 0), getDir, 0.5f);
 
             foreach (RaycastHit thisRay in allHit)
             {
@@ -354,7 +354,7 @@ public class PlayerController : MonoBehaviour
                     checkUpdate = false;
 
                     thisTrans.DOKill (true);
-                    thisTrans.DOMove (getBoxWeapon.position, 0.5f, true).OnComplete (( )=>
+                    thisTrans.DOMove (getBoxWeapon.position, 0.5f, true).OnComplete (() =>
                     {
                         checkUpdate = true;
                     });
@@ -401,7 +401,7 @@ public class PlayerController : MonoBehaviour
 
         if (!dashing)
         {
-            interactPlayer ( );
+            interactPlayer ();
             playerMove (getDeltaTime);
         }
 
@@ -416,7 +416,7 @@ public class PlayerController : MonoBehaviour
         float Ymove = inputPlayer.GetAxis ("MoveY");
         bool checkWall = false;
 
-        RaycastHit [ ] allHit = Physics.RaycastAll (thisTrans.position - new Vector3 (0, -0.5f, 0), new Vector3 (Xmove, 0, Ymove));
+        RaycastHit [] allHit = Physics.RaycastAll (thisTrans.position - new Vector3 (0, -0.3f, 0), new Vector3 (Xmove, 0, Ymove));
         string getTag;
 
         foreach (RaycastHit thisRay in allHit)
@@ -425,7 +425,7 @@ public class PlayerController : MonoBehaviour
 
             if (getTag == Constants._Wall)
             {
-                if (thisRay.distance < 0.5f)
+                if (thisRay.distance < 0.75f)
                 {
                     checkWall = true;
                     break;
@@ -433,18 +433,18 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        float speed = Mathf.Abs (Xmove)+ Mathf.Abs (Ymove)* 2;
+        float speed = Mathf.Abs (Xmove) + Mathf.Abs (Ymove) * 2;
 
         if (speed == 0 && !checkAcc)
         {
-            accel.Kill ( );
+            accel.Kill ();
             checkAcc = true;
             currSpeed = 0;
         }
 
         if (checkAcc)
         {
-            accel = DOTween.To (( )=> currSpeed, x => currSpeed = x, MoveSpeed * SpeedReduceOnBox, TimeAccelBox).SetEase (CurveAcceleration);
+            accel = DOTween.To (() => currSpeed, x => currSpeed = x, MoveSpeed * SpeedReduceOnBox, TimeAccelBox).SetEase (CurveAcceleration);
             checkAcc = false;
         }
 
@@ -454,21 +454,21 @@ public class PlayerController : MonoBehaviour
         if (driveBox)
         {
             getSpeed = currSpeed;
-            thisWB.CurrTime += (float)getDeltaTime / thisWB.TimeFullFill;
+            thisWB.CurrTime += (float) getDeltaTime / thisWB.TimeFullFill;
             thisWB.ThisGauge.fillAmount = thisWB.CurrTime;
 
             if (thisWB.ThisGauge.fillAmount >= 1)
             {
                 try
                 {
-                    Manager.Ui.GaugeButtonBonus.GetComponent<CanvasGroup> ( ).DOFade (1, .1f);
-                    thisWB.ThisGauge.transform.parent.GetComponentInChildren<RainbowColor> ( ).enabled = true;;
-                    thisWB.ThisGauge.transform.parent.GetComponentInChildren<RainbowScale> ( ).enabled = true;
+                    Manager.Ui.GaugeButtonBonus.GetComponent<CanvasGroup> ().DOFade (1, .1f);
+                    thisWB.ThisGauge.transform.parent.GetComponentInChildren<RainbowColor> ().enabled = true;;
+                    thisWB.ThisGauge.transform.parent.GetComponentInChildren<RainbowScale> ().enabled = true;
 
                 }
                 catch
                 {
-                    Manager.Ui.GaugeButtonBonus.GetComponent<CanvasGroup> ( ).DOFade (0, .1f);
+                    Manager.Ui.GaugeButtonBonus.GetComponent<CanvasGroup> ().DOFade (0, .1f);
                     Debug.Log ("Raimbo jauge empty");
                 }
             }
@@ -558,7 +558,7 @@ public class PlayerController : MonoBehaviour
                     return;
                 }
 
-                useBoxWeapon ( );
+                useBoxWeapon ();
             }
             else
             {
@@ -567,12 +567,12 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        if (shootInput == 1 && checkShootScore)
+        if (shootInput > 0.3f && checkShootScore)
         {
             if (thisWeapon != null && thisWeapon.SpeEffet != null && thisWeapon.getCapacity > 0)
             {
-                getEffect = (GameObject)Instantiate (thisWeapon.SpeEffet, thisWeapon.SpawnBullet);
-                getEffect.GetComponent<BulletAbstract> ( ).thisPlayer = this;
+                getEffect = (GameObject) Instantiate (thisWeapon.SpeEffet, thisWeapon.SpawnBullet);
+                getEffect.GetComponent<BulletAbstract> ().thisPlayer = this;
                 getEffect.transform.rotation = Quaternion.LookRotation (thisTrans.forward, thisTrans.up);
 
                 if (thisWeapon.SpeEffet != null)
@@ -612,7 +612,7 @@ public class PlayerController : MonoBehaviour
             {
                 checkAuto = false;
                 checkShoot = false;
-                DOVirtual.DelayedCall (CdShoot, ( )=>
+                DOVirtual.DelayedCall (CdShoot, () =>
                 {
                     checkAuto = true;
                 });
@@ -643,7 +643,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void AddItem ( )
+    public void AddItem ()
     {
         if (AllItem.Count <= nbItemBeforeBigBag)
         {
@@ -655,7 +655,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void interactPlayer ( )
+    void interactPlayer ()
     {
         bool interactInput = inputPlayer.GetButtonDown ("Interact");
 
@@ -664,7 +664,7 @@ public class PlayerController : MonoBehaviour
             NbrTouchInteract++;
             if (canEnterBox || driveBox)
             {
-                useBoxWeapon ( );
+                useBoxWeapon ();
                 return;
             }
         }
@@ -681,38 +681,38 @@ public class PlayerController : MonoBehaviour
             }
             else if (driveBox)
             {
-                thisWB.ActionSpe ( );
+                thisWB.ActionSpe ();
             }
             else if (currInt != null)
             {
                 currInt.OnInteract (thisPC);
-                AddItem ( );
+                AddItem ();
             }
         }
     }
 
     Tween accel;
-    void useBoxWeapon ( )
+    void useBoxWeapon ()
     {
         if (Manager.GameCont.WeaponB.CanControl)
         {
             if (thisWB.ThisGauge == null)
             {
-                thisWB.ThisGauge = Manager.Ui.CauldronGauge.transform.Find ("Cauldron Inside").GetComponent<Image> ( );
+                thisWB.ThisGauge = Manager.Ui.CauldronGauge.transform.Find ("Cauldron Inside").GetComponent<Image> ();
             }
 
             currSpeed = 0;
-            accel = DOTween.To (( )=> currSpeed, x => currSpeed = x, MoveSpeed * SpeedReduceOnBox, TimeAccelBox).SetEase (CurveAcceleration);
+            accel = DOTween.To (() => currSpeed, x => currSpeed = x, MoveSpeed * SpeedReduceOnBox, TimeAccelBox).SetEase (CurveAcceleration);
 
             Manager.Ui.checkDrive = false;
-            Manager.Ui.CauldronGauge.GetComponent<CanvasGroup> ( ).DOKill (true);
-            Manager.Ui.CauldronGauge.GetComponent<CanvasGroup> ( ).DOFade (1, 0.3f);
+            Manager.Ui.CauldronGauge.GetComponent<CanvasGroup> ().DOKill (true);
+            Manager.Ui.CauldronGauge.GetComponent<CanvasGroup> ().DOFade (1, 0.3f);
 
             GetCamFoll.UpdateTarget (thisTrans);
             WeaponPos.gameObject.SetActive (false);
-            AmmoUI.GetComponent<CanvasGroup> ( ).alpha = 0;
+            AmmoUI.GetComponent<CanvasGroup> ().alpha = 0;
             canShoot = false;
-            Physics.IgnoreCollision (GetComponent<Collider> ( ), getBoxWeapon.GetComponent<Collider> ( ), true);
+            Physics.IgnoreCollision (GetComponent<Collider> (), getBoxWeapon.GetComponent<Collider> (), true);
             Manager.GameCont.WeaponB.CanControl = false;
             getBoxWeapon.SetParent (BoxPlace);
 
@@ -723,17 +723,17 @@ public class PlayerController : MonoBehaviour
         }
         else if (driveBox)
         {
-            accel.Kill ( );
-            Manager.Ui.CauldronGauge.GetComponent<CanvasGroup> ( ).DOKill (true);
+            accel.Kill ();
+            Manager.Ui.CauldronGauge.GetComponent<CanvasGroup> ().DOKill (true);
 
             currSpeed = 0;
-            thisWB.GetComponent<Collider> ( ).isTrigger = false;
+            thisWB.GetComponent<Collider> ().isTrigger = false;
             thisWB.gameObject.tag = Constants._BoxTag;
             thisWB.transform.DOKill (true);
-            Manager.Ui.CauldronGauge.GetComponent<CanvasGroup> ( ).DOFade (0, 0.3f);
+            Manager.Ui.CauldronGauge.GetComponent<CanvasGroup> ().DOFade (0, 0.3f);
             Manager.Ui.checkDrive = false;
-            AmmoUI.GetComponent<CanvasGroup> ( ).alpha = 1;
-            getBoxWeapon.DOKill ( );
+            AmmoUI.GetComponent<CanvasGroup> ().alpha = 1;
+            getBoxWeapon.DOKill ();
             WeaponPos.gameObject.SetActive (true);
             GetCamFoll.UpdateTarget (getBoxWeapon);
 
@@ -743,7 +743,7 @@ public class PlayerController : MonoBehaviour
                 Manager.Ui.WeaponNew (IdPlayer);
             }
             canShoot = true;
-            Physics.IgnoreCollision (GetComponent<Collider> ( ), getBoxWeapon.GetComponent<Collider> ( ), false);
+            Physics.IgnoreCollision (GetComponent<Collider> (), getBoxWeapon.GetComponent<Collider> (), false);
             Manager.GameCont.WeaponB.CanControl = true;
             getBoxWeapon.SetParent (null);
 
@@ -752,14 +752,14 @@ public class PlayerController : MonoBehaviour
     }
 
     Tween Tweenbag;
-    void emptyBag ( )
+    void emptyBag ()
     {
         Manager.Ui.PopPotions (PotionType.Plus);
 
         Transform currBagParent = BagObj.parent;
-        GameObject currParent = (GameObject)Instantiate (new GameObject ( ), BagObj.parent);
+        GameObject currParent = (GameObject) Instantiate (new GameObject (), BagObj.parent);
 
-        GameObject [ ] getBagItems = AllItem.ToArray ( );
+        GameObject [] getBagItems = AllItem.ToArray ();
         Transform getBoxTrans = getBoxWeapon;
         Transform currTrans;
 
@@ -770,7 +770,7 @@ public class PlayerController : MonoBehaviour
 
         animPlayer.SetTrigger ("BagUnfull");
 
-        Tweenbag = DOVirtual.DelayedCall (2.1f, ( )=>
+        Tweenbag = DOVirtual.DelayedCall (2.1f, () =>
         {
             BagObj.SetParent (currBagParent);
 
@@ -785,7 +785,7 @@ public class PlayerController : MonoBehaviour
         for (int a = 0; a < getBagItems.Length; a++)
         {
             currTrans = getBagItems [a].transform;
-            currTrans.DOKill ( );
+            currTrans.DOKill ();
 
             currTrans.gameObject.SetActive (true);
             currTrans.SetParent (null);
@@ -795,7 +795,7 @@ public class PlayerController : MonoBehaviour
 
             dropItem (currTrans);
         }
-        AllItem.Clear ( );
+        AllItem.Clear ();
     }
 
     void dropItem (Transform currTrans)
@@ -804,11 +804,11 @@ public class PlayerController : MonoBehaviour
         float getRange2 = Random.Range (-0.2f, 0.21f);
         float getRange3 = Random.Range (-0.2f, 0.21f);
         currTrans.DOScale (Vector3.one, 0.5f);
-        currTrans.DOLocalMove (new Vector3 (getRange, getRange2, getRange3)+ Vector3.zero + Vector3.up * 5, 0.5f).OnComplete (( )=>
+        currTrans.DOLocalMove (new Vector3 (getRange, getRange2, getRange3) + Vector3.zero + Vector3.up * 5, 0.5f).OnComplete (() =>
         {
-            currTrans.DOLocalMove (Vector3.zero, 0.5f).OnComplete (( )=>
+            currTrans.DOLocalMove (Vector3.zero, 0.5f).OnComplete (() =>
             {
-                currTrans.DOScale (Vector3.zero, 0.5f).OnComplete (( )=>
+                currTrans.DOScale (Vector3.zero, 0.5f).OnComplete (() =>
                 {
                     Destroy (currTrans.gameObject);
                 });
@@ -825,11 +825,11 @@ public class PlayerController : MonoBehaviour
 
         if (driveBox)
         {
-            useBoxWeapon ( );
+            useBoxWeapon ();
         }
 
         WeaponPos.gameObject.SetActive (false);
-        GetComponent<Collider> ( ).isTrigger = true;
+        GetComponent<Collider> ().isTrigger = true;
 
         Vector3 getDirect = Vector3.Normalize (thisTrans.position - pointColl);
         getDirect = new Vector3 (getDirect.x, 0, getDirect.z);
@@ -838,10 +838,10 @@ public class PlayerController : MonoBehaviour
         float getTime = TimeProjDead;
         string getTag;
 
-        RaycastHit [ ] allHit;
+        RaycastHit [] allHit;
 
         getDist -= checkBorderDead (thisTrans.position + getDirect * DistProjDead);
-        allHit = Physics.RaycastAll (thisTrans.position, getDirect, getDist);
+        allHit = Physics.RaycastAll (thisTrans.position - new Vector3 (0, -0.3f, 0), getDirect, getDist);
 
         foreach (RaycastHit thisRay in allHit)
         {
@@ -857,19 +857,19 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        thisTrans.DOKill ( );
+        thisTrans.DOKill ();
 
         thisTrans.DOLocalMove (thisTrans.localPosition + getDirect * getDist, getTime);
 
-        DOVirtual.DelayedCall (getTime + TimeDead + TimeProjDead - getTime, ( )=>
+        DOVirtual.DelayedCall (getTime + TimeDead + TimeProjDead - getTime, () =>
         {
-            GetComponent<Collider> ( ).isTrigger = false;
+            GetComponent<Collider> ().isTrigger = false;
             WeaponPos.gameObject.SetActive (true);
             lifePlayer = LifePlayer;
             dead = false;
             thisWeapon.canShoot = true;
 
-            DOVirtual.DelayedCall (TimeInvincible, ( )=>
+            DOVirtual.DelayedCall (TimeInvincible, () =>
             {
                 canTakeDmg = true;
             });
@@ -879,39 +879,39 @@ public class PlayerController : MonoBehaviour
 		    Destroy(getList[a]);	
 		}*/
 
-        lostItem ( );
+        lostItem ();
     }
 
-    void lostItem ( )
+    void lostItem ()
     {
-        GameObject [ ] getList = AllItem.ToArray ( );
+        GameObject [] getList = AllItem.ToArray ();
         if (getList.Length > 0)
         {
             int a;
             ItemLost getItem;
-            GameObject newObj = (GameObject)Instantiate (ItemLostObj, thisTrans.position, thisTrans.rotation);
-            GameObject newObjUi = (GameObject)Instantiate (Manager.Ui.PotionGet, Manager.Ui.GetInGame);
-            PotionFollowP thisPFP = newObjUi.GetComponent<PotionFollowP> ( );
-            newObj.GetComponent<ItemObjLost> ( ).ThisObj = newObjUi;
+            GameObject newObj = (GameObject) Instantiate (ItemLostObj, thisTrans.position, thisTrans.rotation);
+            GameObject newObjUi = (GameObject) Instantiate (Manager.Ui.PotionGet, Manager.Ui.GetInGame);
+            PotionFollowP thisPFP = newObjUi.GetComponent<PotionFollowP> ();
+            newObj.GetComponent<ItemObjLost> ().ThisObj = newObjUi;
             thisPFP.ThisPlayer = newObj.transform;
             thisPFP.getCam = getCam;
 
-            int getNbr = (int)(CurrItem - (CurrItem * PourcLootLost)* 0.01f);
+            int getNbr = (int) (CurrItem - (CurrItem * PourcLootLost) * 0.01f);
             LostItem += CurrItem;
             thisPFP.Nbr = getNbr;
-            newObj.GetComponent<ItemObjLost> ( ).NbrItem = getNbr;
-            thisPFP.GetComponent<CanvasGroup> ( ).DOFade (1, 0.1f);
+            newObj.GetComponent<ItemObjLost> ().NbrItem = getNbr;
+            thisPFP.GetComponent<CanvasGroup> ().DOFade (1, 0.1f);
 
             for (a = getList.Length - 1; a > getList.Length * 0.5f; a--)
             {
-                getItem = getList [a].transform.GetComponent<ItemLost> ( );
+                getItem = getList [a].transform.GetComponent<ItemLost> ();
                 getItem.gameObject.SetActive (true);
                 getItem.transform.localScale = Vector3.one;
                 getItem.transform.localPosition = Vector3.zero;
 
                 if (!getItem)
                 {
-                    getItem = getList [a].AddComponent<ItemLost> ( );
+                    getItem = getList [a].AddComponent<ItemLost> ();
                 }
 
                 //getItem.EnableColl(true);
@@ -919,13 +919,13 @@ public class PlayerController : MonoBehaviour
                 AllItem.RemoveAt (a);
             }
 
-            getList = AllItem.ToArray ( );
+            getList = AllItem.ToArray ();
             for (a = 0; a < getList.Length; a++)
             {
                 Destroy (getList [a]);
             }
 
-            AllItem.Clear ( );
+            AllItem.Clear ();
             Destroy (newObj, 60);
         }
     }
@@ -941,7 +941,7 @@ public class PlayerController : MonoBehaviour
         {
             Manager.Audm.OpenAudio (AudioType.Other, NameHitSong);
             lifePlayer--;
-            tweenRegen.Kill ( );
+            tweenRegen.Kill ();
 
             if (lifePlayer <= 0)
             {
@@ -949,7 +949,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                tweenRegen = DOVirtual.DelayedCall (TimeToRegen, ( )=>
+                tweenRegen = DOVirtual.DelayedCall (TimeToRegen, () =>
                 {
                     if (lifePlayer < LifePlayer)
                     {

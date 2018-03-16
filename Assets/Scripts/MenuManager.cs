@@ -196,16 +196,15 @@ public class MenuManager : MonoBehaviour
 
     public IEnumerator LoadLevel (bool menu)
     {
-        Scene thisSc = SceneManager.GetActiveScene ();
+        AsyncOperation opLevel = SceneManager.LoadSceneAsync ("FINAL", LoadSceneMode.Single);
 
-        AsyncOperation opLevel = SceneManager.LoadSceneAsync ("Final 1", LoadSceneMode.Additive);
         opLevel.allowSceneActivation = false;
-
         while (opLevel.progress < .9f)
         {
             yield return null;
         }
 
+        // NbrPlayerPlaying.NbrPP.transform.GetChild (0).gameObject.SetActive (false);
         if (menu)
         {
             DOVirtual.DelayedCall (12, () =>
@@ -216,7 +215,6 @@ public class MenuManager : MonoBehaviour
                 backgroundFlash.DOFade (0, .25f).OnComplete (() =>
                 {
 
-                    SceneManager.UnloadSceneAsync (thisSc.buildIndex);
                     opLevel.allowSceneActivation = true;
                 });
             });
@@ -226,11 +224,13 @@ public class MenuManager : MonoBehaviour
             DOVirtual.DelayedCall (2, () =>
             {
 
+                SceneManager.LoadSceneAsync ("FINAL", LoadSceneMode.Single);
+
                 opLevel.allowSceneActivation = true;
-                SceneManager.UnloadSceneAsync (thisSc.buildIndex);
             });
 
         }
+
     }
 
     public IEnumerator LoadMenu ()
