@@ -567,7 +567,7 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        if (shootInput == 1 && checkShootScore)
+        if (shootInput > 0.3f && checkShootScore)
         {
             if (thisWeapon != null && thisWeapon.SpeEffet != null && thisWeapon.getCapacity > 0)
             {
