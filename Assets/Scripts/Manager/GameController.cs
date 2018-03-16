@@ -10,6 +10,7 @@ using UnityEngine;
 public class GameController : ManagerParent
 {
     #region Variables
+    public GameObject PostEffect;
     public GameObject PlayerPrefab;
     public GameObject StartWeapon;
     public Transform PlayerPosSpawn;
@@ -36,6 +37,8 @@ public class GameController : ManagerParent
     [HideInInspector]
     public List<MedalsPlayer> MedalInfo;
     List<PlayerController> getPlayerCont;
+
+    public int NbrPlayer = 0;
     #endregion
 
     #region Mono
@@ -58,6 +61,11 @@ public class GameController : ManagerParent
 
     public void EndGame ()
     {
+        if (PostEffect == null)
+        {
+            PostEffect = GameObject.Find ("PP_Volume");
+        }
+        PostEffect.SetActive (false);
         Manager.Audm.OpenAudio (AudioType.MusicBackGround, "score", true);
         var newEtat = new AgentEvent ();
         newEtat.AgentChecking = true;
@@ -182,57 +190,64 @@ public class GameController : ManagerParent
             getPlayers [a].ReadyPlayer = false;
             getPlayerHud [a].SetActive (getPlayers [a].EnablePlayer);
 
-            if (getPlayers [a].EnablePlayer)
+            getPlayer = (GameObject) Instantiate (PlayerPrefab);
+            getPlayer.name = getPlayer.name + "+" + a.ToString ();
+            if (!getPlayers [a].EnablePlayer)
             {
-                getPlayer = (GameObject) Instantiate (PlayerPrefab);
-                getPlayer.name = getPlayer.name + "+" + a.ToString ();
-
-                getPlayer.transform.localPosition = PlayerPosSpawn.position + new Vector3 (3 * -1.5f, 0.5f, -10);
-                /* if (PlayerPosSpawn != null)
-                 {
-                                         getPlayer.transform.localPosition = PlayerPosSpawn.position + new Vector3 (a * 1.5f, 0, 0);
-
-                 }
-                 else
-                 {
-                     getPlayer.transform.position = new Vector3 (a * 1.5f, 0, 0);
-                 }*/
-
-                foreach (Renderer thisMat in getPlayer.GetComponentsInChildren<Renderer> ())
-                {
-                    if (thisMat.gameObject.name == "Corpus")
-                    {
-                        thisMat.material = PlayerMaterial [a];
-                        Instantiate (PlayerTrail [a], getPlayer.transform.position, Quaternion.identity, getPlayer.transform);
-                        break;
-                    }
-                }
-
-                Instantiate (LaserFX [a], new Vector3 (getPlayer.transform.position.x + 0.3f, getPlayer.transform.position.y, getPlayer.transform.position.z), Quaternion.identity, getPlayer.transform);
-
-                getPC = getPlayer.GetComponent<PlayerController> ();
-                getPC.IdPlayer = getPlayers [a].IdPlayer;
-                getPC.AmmoUI = Manager.Ui.PlayersAmmo [a].transform;
-
-                getWeapon = (GameObject) Instantiate (Manager.Ui.PlayerText [a], Manager.Ui.GetInGame);
-                getWeapon.GetComponent<FollowPlayerUI> ().getCam = MainCam;
-                getWeapon.GetComponent<FollowPlayerUI> ().ThisPlayer = getPlayer.transform;
-
-                getWeapon = (GameObject) Instantiate (Manager.Ui.PotionGet, Manager.Ui.GetInGame);
-                getWeapon.GetComponent<PotionFollowP> ().getCam = MainCam;
-                getWeapon.GetComponent<PotionFollowP> ().ThisPlayer = getPlayer.transform;
-                getPotGets.Add (getWeapon);
-
-                getWeapon = (GameObject) Instantiate (StartWeapon, getPC.WeaponPos.transform);
-                getWeapon.transform.localPosition = Vector3.zero;
-                //getWeapon.transform.localRotation = Quaternion.identity;
-
-                //getPlayer.GetComponent<PlayerController>().WeapText = Manager.Ui.textWeapon[a];
-
-                getPC.UpdateWeapon (getWeapon.GetComponent<WeaponAbstract> ());
-                Players.Add (getPlayer);
-                getPlayerCont.Add (getPlayer.GetComponent<PlayerController> ());
+                getPlayer.SetActive (false);
             }
+            else
+            {
+                NbrPlayer++;
+            }
+            /* getPlayer.transform.SetParent (PlayerPosSpawn);
+             getPlayer.transform.localPosition = Vector3.zero;
+             getPlayer.transform.SetParent (null);*/
+
+            //getPlayer.transform.localPosition += Vector3.up * 0.5f;
+            if (PlayerPosSpawn != null)
+            {
+                getPlayer.transform.localPosition = PlayerPosSpawn.position + new Vector3 (a * 1.5f, 0, 0);
+            }
+            else
+            {
+                getPlayer.transform.position = new Vector3 (a * 1.5f, 0, 0);
+            }
+
+            foreach (Renderer thisMat in getPlayer.GetComponentsInChildren<Renderer> ())
+            {
+                if (thisMat.gameObject.name == "Corpus")
+                {
+                    thisMat.material = PlayerMaterial [a];
+                    Instantiate (PlayerTrail [a], getPlayer.transform.position, Quaternion.identity, getPlayer.transform);
+                    break;
+                }
+            }
+
+            Instantiate (LaserFX [a], new Vector3 (getPlayer.transform.position.x + 0.3f, getPlayer.transform.position.y, getPlayer.transform.position.z), Quaternion.identity, getPlayer.transform);
+
+            getPC = getPlayer.GetComponent<PlayerController> ();
+            getPC.IdPlayer = getPlayers [a].IdPlayer;
+            getPC.AmmoUI = Manager.Ui.PlayersAmmo [a].transform;
+
+            getWeapon = (GameObject) Instantiate (Manager.Ui.PlayerText [a], Manager.Ui.GetInGame);
+            getWeapon.GetComponent<FollowPlayerUI> ().getCam = MainCam;
+            getWeapon.GetComponent<FollowPlayerUI> ().ThisPlayer = getPlayer.transform;
+
+            getWeapon = (GameObject) Instantiate (Manager.Ui.PotionGet, Manager.Ui.GetInGame);
+            getWeapon.GetComponent<PotionFollowP> ().getCam = MainCam;
+            getWeapon.GetComponent<PotionFollowP> ().ThisPlayer = getPlayer.transform;
+            getPotGets.Add (getWeapon);
+
+            getWeapon = (GameObject) Instantiate (StartWeapon, getPC.WeaponPos.transform);
+            getWeapon.transform.localPosition = Vector3.zero;
+            //getWeapon.transform.localRotation = Quaternion.identity;
+
+            //getPlayer.GetComponent<PlayerController>().WeapText = Manager.Ui.textWeapon[a];
+
+            getPC.UpdateWeapon (getWeapon.GetComponent<WeaponAbstract> ());
+            Players.Add (getPlayer);
+            getPlayerCont.Add (getPlayer.GetComponent<PlayerController> ());
         }
 
         Manager.Ui.AllPotGet = getPotGets.ToArray ();

@@ -31,6 +31,7 @@ public class UiManager : ManagerParent
     public Image [] GaugeFeedback;
     public Image WhiteBackground;
     public Tween rotTw;
+    public CanvasGroup newWeapon;
     public CanvasGroup Timer;
 
     [Header ("TUTO")]
@@ -157,7 +158,16 @@ public class UiManager : ManagerParent
         EndScreenWeaponBox.SetActive (true);
         GetInGame.transform.DOLocalMoveY (200, .3f).SetEase (Ease.InOutSine);
 
-        AboveAll.DOFade (0, .2f);
+        PlayersAmmo[0].GetComponent<CanvasGroup>().DOFade(0, .1f);
+        PlayersAmmo[1].GetComponent<CanvasGroup>().DOFade(0, .1f);
+        PlayersAmmo[2].GetComponent<CanvasGroup>().DOFade(0, .1f);
+        PlayersAmmo[3].GetComponent<CanvasGroup>().DOFade(0, .1f);
+
+
+        GaugeButtonBonus.GetComponent<CanvasGroup>().DOFade(0, .1f);
+
+
+        AboveAll.DOFade(0, .2f);
         EndScreenContainer.DOFade (1, .2f);
 
         //UnityEngine.Debug.Log ("EndScree");
@@ -206,6 +216,24 @@ public class UiManager : ManagerParent
 
     }
 
+    public void WeaponGet (string weapName)
+    {
+        newWeapon.DOFade (1, .25f);
+
+        for (int a = 0; a < WeapIcone.Length; a++)
+        {
+            if (WeapIcone [a].Weapon == weapName)
+            {
+                newWeapon.transform.Find ("New Weapon Sprite").GetComponent<Image> ().sprite = WeapIcone [a].ThisImage;
+                break;
+            }
+        }
+        DOVirtual.DelayedCall (2, () =>
+        {
+            newWeapon.DOFade (0, .25f);
+        });
+
+    }
     // 2
     public void EndScreenMedals (Transform thisObj, int thisID, int nbr)
     {

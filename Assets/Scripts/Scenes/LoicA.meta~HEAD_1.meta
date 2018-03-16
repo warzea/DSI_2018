@@ -1,7 +1,18 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
+<<<<<<< HEAD
+guid: 60d00f886537ee04c8b290bedae7ad7d
+timeCreated: 1521210846
+=======
+guid: f1a839b08a042e24db1825b3f4f9a7ba
+timeCreated: 1521210904
+>>>>>>> Loic
+licenseType: Free
+=======
 guid: 8ea9ddef6fc6b8043af2acff3016ede6
 timeCreated: 1521211356
 licenseType: Pro
+>>>>>>> DavidDebug
 DefaultImporter:
   externalObjects: {}
   userData: 
