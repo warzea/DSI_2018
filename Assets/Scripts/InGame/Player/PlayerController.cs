@@ -255,7 +255,7 @@ public class PlayerController : MonoBehaviour
     {
         if (thisWeap != null)
         {
-            Manager.Ui.NewWeapPic (thisWeap.name, IdPlayer);
+            //Manager.Ui.NewWeapPic(thisWeap.name, IdPlayer);
             thisWeap.SpawnBullet = SpawnBullet;
             thisWeap.OnFloor = false;
             autoShoot = thisWeap.AutoShoot;

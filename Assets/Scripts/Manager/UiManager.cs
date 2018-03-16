@@ -30,6 +30,8 @@ public class UiManager : ManagerParent
     public GameObject GaugeButtonBonus;
     public Image [] GaugeFeedback;
     public Image WhiteBackground;
+    public Tween rotTw;
+    public CanvasGroup Timer;
 
     [Header ("TUTO")]
     public GameObject ButtonsInteract;
@@ -96,22 +98,22 @@ public class UiManager : ManagerParent
 
         DOVirtual.DelayedCall (22, () =>
         {
-            WeaponChangeHUD (3);
+            WeaponChangeHUD (3, "");
         }).SetLoops (-1, LoopType.Restart);
 
         DOVirtual.DelayedCall (19, () =>
         {
-            WeaponChangeHUD (2);
+            WeaponChangeHUD (2, "");
         }).SetLoops (-1, LoopType.Restart);
 
         DOVirtual.DelayedCall (17, () =>
         {
-            WeaponChangeHUD (1);
+            WeaponChangeHUD (1, "");
         }).SetLoops (-1, LoopType.Restart);
 
         DOVirtual.DelayedCall (15, () =>
         {
-            WeaponChangeHUD (0);
+            WeaponChangeHUD (0, "");
         }).SetLoops (-1, LoopType.Restart);
 
     }
@@ -245,7 +247,7 @@ public class UiManager : ManagerParent
         {
             if (WeapIcone [a].Weapon == thisWeap)
             {
-                PlayersWeaponHUD [idPlayer].sprite = WeapIcone [a].ThisImage.sprite;
+                PlayersWeaponHUD [idPlayer].sprite = WeapIcone [a].ThisImage;
                 break;
             }
         }
@@ -262,16 +264,18 @@ public class UiManager : ManagerParent
         }
     }
 
-    public void WeaponChangeIG (int PlayerId)
+    public void WeaponChangeIG (int PlayerId, string weap)
     {
         ResetTween (PlayerId);
 
-        WeaponChangeHUD (PlayerId);
-
         //HUD INGAME
-        Transform getTrans = PlayersAmmo [PlayerId].transform;
+        Transform getTrans = PlayersAmmo[PlayerId].transform;
+        getTrans.DOKill(true);
+        rotTw.Kill(true);
+        WeaponChangeHUD (PlayerId, weap);
 
-        getTrans.DOKill (true);
+
+
         getTrans.GetComponentsInChildren<RainbowColor> () [0].transform.GetComponent<Image> ().DOKill (true);
 
         getTrans.GetComponentsInChildren<RainbowColor> () [0].enabled = false;
@@ -288,7 +292,7 @@ public class UiManager : ManagerParent
         ammoTwScale2 = getTrans.DOScale (0, .3f);
     }
 
-    public void WeaponChangeHUD (int PlayerId)
+    public void WeaponChangeHUD (int PlayerId, string thisWeap)
     {
         //HUD ABOVE ALL
 
@@ -299,10 +303,11 @@ public class UiManager : ManagerParent
         getTrans.GetChild (0).GetComponent<Image> ().DOFade (1, .25f).OnComplete (() =>
         {
             getTrans.GetChild (0).GetComponent<Image> ().DOFade (0, .25f);
+            NewWeapPic(thisWeap, PlayerId);
         });
 
         var circle = Instantiate (Circle, getTrans.parent.position, Quaternion.identity, getTrans.parent.GetChild (0));
-        getTrans.DOLocalRotate (new Vector3 (0, 0, 360), .5f, RotateMode.LocalAxisAdd).OnComplete (() =>
+        rotTw = getTrans.DOLocalRotate (new Vector3 (0, 0, 360), .5f, RotateMode.LocalAxisAdd).OnComplete (() =>
         {
             var light = Instantiate (Light, getTrans.position, Quaternion.identity, getTrans);
         });
@@ -507,7 +512,7 @@ public class UiManager : ManagerParent
         }
         if (Input.GetKeyDown (KeyCode.P))
         {
-            WeaponChangeIG (0);
+            WeaponChangeIG (0, "");
         }
         if (Input.GetKeyDown (KeyCode.I))
         {
@@ -601,5 +606,5 @@ public class UiManager : ManagerParent
 public class WeapPicture
 {
     public string Weapon;
-    public Image ThisImage;
+    public Sprite ThisImage;
 }

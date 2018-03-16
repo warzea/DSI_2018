@@ -103,8 +103,13 @@ public class WeaponBox : MonoBehaviour
         if (!checkAttack)
         {
             Manager.Audm.OpenAudio (AudioType.OtherSound, CauldHitSong);
-            GetComponent<Collider> ( ).isTrigger = true;
             gameObject.layer = LayerMask.NameToLayer ("BulletPlayer");
+
+            transform.DOKill(true);
+            getChild.DOKill(true);
+
+
+            GetComponent<Collider>().isTrigger = true;
             checkAttack = true;
 
             gameObject.tag = Constants._PlayerBullet;
@@ -128,21 +133,23 @@ public class WeaponBox : MonoBehaviour
                 }
             }
 
-            GetTrans.DOLocalRotate (new Vector3 (0, 360, 0), SpeedAttack * 0.5f + SpeedAttack * 0.5f, RotateMode.LocalAxisAdd);
-            GetTrans.DOLocalMoveZ (getRange, SpeedAttack * 0.5f).OnComplete (( )=>
+            GetTrans.DOLocalRotate(new Vector3(0, 360, 0), SpeedAttack * 0.5f + SpeedAttack * 0.5f, RotateMode.LocalAxisAdd);
+            GetTrans.DOLocalMoveZ(getRange, SpeedAttack * 0.5f).OnComplete(() =>
             {
-                GetTrans.DOLocalMoveZ (0, SpeedAttack * 0.5f).OnComplete (( )=>
+                GetTrans.DOLocalMoveZ(0, SpeedAttack * 0.5f).OnComplete(() =>
                 {
-                    GetComponent<Collider> ( ).isTrigger = false;
                     gameObject.layer = LayerMask.NameToLayer ("Character");
+                    GetComponent<Collider>().isTrigger = false;
 
                     gameObject.tag = Constants._BoxTag;
                 });
             });
-            DOVirtual.DelayedCall (DelayAttack + SpeedAttack, ( )=>
+
+            DOVirtual.DelayedCall(DelayAttack + SpeedAttack, () =>
             {
                 checkAttack = false;
             });
+
         }
     }
 
@@ -223,8 +230,12 @@ public class WeaponBox : MonoBehaviour
                 }
             }
         }
-
-        Manager.Ui.WeaponChangeIG (thisPlayer.IdPlayer);
+        string thisWeap = newObj.name;
+        if (thisWeap[thisWeap.Length - 1].ToString() == ")")
+        {
+            thisWeap = thisWeap.Substring(0, thisWeap.Length - 7);
+        }
+        Manager.Ui.WeaponChangeIG(thisPlayer.IdPlayer, thisWeap);
 
         Transform objTrans = newObj.transform;
 

@@ -196,9 +196,9 @@ public class MenuManager : MonoBehaviour
 
     public IEnumerator LoadLevel (bool menu)
     {
-        Scene thisSc = SceneManager.GetActiveScene ();
         NbrPlayerPlaying.NbrPP.thisScene = thisSc;
-        //NbrPlayerPlaying.NbrPP.transform.GetChild (0).gameObject.SetActive (true);
+        Scene thisSc = SceneManager.GetActiveScene ();
+        AsyncOperation opLevel = SceneManager.LoadSceneAsync("FINAL", LoadSceneMode.Additive);
 
         Slider getSlider = NbrPlayerPlaying.NbrPP.GetComponentInChildren<Slider> ();
 
@@ -229,6 +229,8 @@ public class MenuManager : MonoBehaviour
         {
             DOVirtual.DelayedCall (2, () =>
             {
+
+                SceneManager.LoadSceneAsync("FINAL", LoadSceneMode.Single);
 
                 opLevel.allowSceneActivation = true;
             });
