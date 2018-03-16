@@ -52,17 +52,7 @@ public class MenuManager : MonoBehaviour
         try
         {
             thisNPP = GameObject.Find ("NbrPlayer").GetComponent<NbrPlayerPlaying> ();
-            thisNPP.NbrPlayer = new List<infoP> ();
 
-            thisNPP.NbrPlayer.Add (new infoP ());
-            thisNPP.NbrPlayer.Add (new infoP ());
-            thisNPP.NbrPlayer.Add (new infoP ());
-            thisNPP.NbrPlayer.Add (new infoP ());
-
-            thisNPP.NbrPlayer [0].ID = 0;
-            thisNPP.NbrPlayer [1].ID = 1;
-            thisNPP.NbrPlayer [2].ID = 2;
-            thisNPP.NbrPlayer [3].ID = 3;
         }
         catch
         {
