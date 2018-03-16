@@ -9,14 +9,16 @@ public class MedalChest : AbstractMedal
 	#endregion
 
 	#region Mono
-	public override void StartCheck (PlayerController [ ] allPlayer)
+	public override void StartCheck (PlayerController [] allPlayer)
 	{
 		thisPlayer = allPlayer [0];
 		PlayerController thisPlayerEqua = null;
 
-		if (allPlayer.Length > 1)
+		int get = Manager.GameCont.NbrPlayer;
+
+		if (get > 1)
 		{
-			for (int a = 1; a < allPlayer.Length; a++)
+			for (int a = 1; a < get; a++)
 			{
 				if (thisPlayer.NbrChest < allPlayer [a].NbrChest)
 				{
@@ -35,7 +37,7 @@ public class MedalChest : AbstractMedal
 		else
 		{
 			Score = thisPlayer.NbrChest;
-			GoTarget ( );
+			GoTarget ();
 		}
 	}
 	#endregion

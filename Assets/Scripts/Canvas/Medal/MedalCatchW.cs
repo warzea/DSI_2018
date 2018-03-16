@@ -9,14 +9,15 @@ public class MedalCatchW : AbstractMedal
 	#endregion
 
 	#region Mono
-	public override void StartCheck (PlayerController [ ] allPlayer)
+	public override void StartCheck (PlayerController [] allPlayer)
 	{
 		thisPlayer = allPlayer [0];
 		PlayerController thisPlayerEqua = null;
+		int get = Manager.GameCont.NbrPlayer;
 
-		if (allPlayer.Length > 1)
+		if (get > 1)
 		{
-			for (int a = 1; a < allPlayer.Length; a++)
+			for (int a = 1; a < get; a++)
 			{
 				if (thisPlayer.WeaponCatch < allPlayer [a].WeaponCatch)
 				{
@@ -35,7 +36,7 @@ public class MedalCatchW : AbstractMedal
 		else
 		{
 			Score = thisPlayer.WeaponCatch;
-			GoTarget ( );
+			GoTarget ();
 		}
 	}
 	#endregion

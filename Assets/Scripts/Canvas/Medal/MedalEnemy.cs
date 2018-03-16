@@ -12,14 +12,15 @@ public class MedalEnemy : AbstractMedal
 	#endregion
 
 	#region Public Methods
-	public override void StartCheck (PlayerController [ ] allPlayer)
+	public override void StartCheck (PlayerController [] allPlayer)
 	{
 		thisPlayer = allPlayer [0];
 		PlayerController thisPlayerEqua = null;
+		int get = Manager.GameCont.NbrPlayer;
 
-		if (allPlayer.Length > 1)
+		if (get > 1)
 		{
-			for (int a = 1; a < allPlayer.Length; a++)
+			for (int a = 1; a < get; a++)
 			{
 				if (thisPlayer.NbrEnemy < allPlayer [a].NbrEnemy)
 				{
@@ -73,7 +74,7 @@ public class MedalEnemy : AbstractMedal
 		else
 		{
 			Score = thisPlayer.NbrEnemy;
-			GoTarget ( );
+			GoTarget ();
 		}
 	}
 

@@ -27,7 +27,7 @@ public class CheckRoom : MonoBehaviour
     #region Public
     void Update ()
     {
-        if (launch)
+        if (launch && getText != null)
         {
             getText.text = TimerRoom.ToString () [0].ToString () + TimerRoom.ToString () [1].ToString () + TimerRoom.ToString () [2].ToString () + TimerRoom.ToString () [3].ToString ();
         }

@@ -77,6 +77,14 @@ public class GameController : ManagerParent
         DOVirtual.DelayedCall (2, () =>
         {
 
+            List<PlayerController> thisLP = new List<PlayerController> ();
+            foreach (PlayerController thisP in getPlayerCont)
+            {
+                if (thisP.gameObject.activeSelf)
+                {
+                    thisLP.Add (thisP);
+                }
+            }
             ScoreInfo [] allSc = Manager.Ui.GetScores.AllScore.ToArray ();
             ScoreInfo thisScore = allSc [0];
 
@@ -95,13 +103,14 @@ public class GameController : ManagerParent
                 {
                     AllMedal [a].gameObject.SetActive (true);
 
-                    AllMedal [a].StartCheck (getPlayerCont.ToArray ());
+                    AllMedal [a].StartCheck (thisLP.ToArray ());
                 }
 
                 int getVal;
                 MedalsPlayer thisMP;
                 for (int a = 0; a < MedalInfo.Count; a++)
                 {
+                    Debug.Log ("4 : " + a);
                     thisMP = MedalInfo [a];
                     while (thisMP.ThisMedal.Count > 3)
                     {
@@ -257,10 +266,21 @@ public class GameController : ManagerParent
 
     void checkPlayer ()
     {
-        PlayerController [] playerCont = getPlayerCont.ToArray ();
+        PlayerController [] playerCont;
+        List<PlayerController> playerCont2 = new List<PlayerController> ();
         GameObject lowLife = Players [0];
         GameObject maxLife = Players [0];
         GameObject boxWeapon = Players [0];
+
+        foreach (PlayerController thisP in getPlayerCont)
+        {
+            if (thisP.gameObject.activeSelf)
+            {
+                playerCont.Add (thisP);
+            }
+        }
+
+        playerCont = playerCont2.ToArray ();
 
         bool check = false;
 
