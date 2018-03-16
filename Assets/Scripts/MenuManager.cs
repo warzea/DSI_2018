@@ -166,7 +166,7 @@ public class MenuManager : MonoBehaviour {
 
     public IEnumerator LoadLevel(bool menu)
     {
-        AsyncOperation opLevel = SceneManager.LoadSceneAsync("Alex", LoadSceneMode.Additive);
+        AsyncOperation opLevel = SceneManager.LoadSceneAsync("FINAL", LoadSceneMode.Additive);
 
         opLevel.allowSceneActivation = false;
 
@@ -190,6 +190,8 @@ public class MenuManager : MonoBehaviour {
         } else
         {
             DOVirtual.DelayedCall(2, () => {
+
+                SceneManager.LoadSceneAsync("FINAL", LoadSceneMode.Single);
 
                 opLevel.allowSceneActivation = true;
 

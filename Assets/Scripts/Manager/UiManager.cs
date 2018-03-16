@@ -31,6 +31,7 @@ public class UiManager : ManagerParent
     public Image [] GaugeFeedback;
     public Image WhiteBackground;
     public Tween rotTw;
+    public CanvasGroup Timer;
 
     [Header ("TUTO")]
     public GameObject ButtonsInteract;
