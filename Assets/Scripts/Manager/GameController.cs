@@ -29,7 +29,7 @@ public class GameController : ManagerParent
     [HideInInspector]
     public List<GameObject> Players;
     public Material[] PlayerMaterial;
-    public Material[] LaserMaterial;
+    public GameObject[] LaserFX;
     public GameObject[] PlayerTrail;
     public AbstractMedal[] AllMedal;
 
@@ -202,7 +202,7 @@ public class GameController : ManagerParent
                     }
                 }
 
-                getPlayer.GetComponentInChildren<LineRenderer>().gameObject.GetComponent<Renderer>().material = LaserMaterial[a];
+                Instantiate(LaserFX[a], new Vector3(getPlayer.transform.position.x + 0.3f, getPlayer.transform.position.y, getPlayer.transform.position.z), Quaternion.identity, getPlayer.transform);
 
                 Debug.Log(Manager.Ui.PlayersAmmo[a].name);
 

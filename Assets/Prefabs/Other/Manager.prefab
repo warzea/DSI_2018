@@ -3749,7 +3749,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1562912703750432}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -439, y: -242, z: -10}
+  m_LocalPosition: {x: -7.4, y: -242, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4348142322103540}
@@ -4724,11 +4724,11 @@ MonoBehaviour:
   - {fileID: 2100000, guid: fd995c12fd6cecd46990ad13315dd302, type: 2}
   - {fileID: 2100000, guid: 98ba3f491559e844aa096fcb6da184fe, type: 2}
   - {fileID: 2100000, guid: 846fc72ce6db65e408c2feec08b9e04d, type: 2}
-  LaserMaterial:
-  - {fileID: 2100000, guid: dd4859d0e4ac98948b53d05952be9963, type: 2}
-  - {fileID: 2100000, guid: 2a5f86b9838725e4ab21ccfcb5a41473, type: 2}
-  - {fileID: 2100000, guid: 33353a6124653934794aaecc81e6c47f, type: 2}
-  - {fileID: 2100000, guid: ec77ba2955eb75440b7f594c2fbef7e0, type: 2}
+  LaserFX:
+  - {fileID: 1675910694677112, guid: 285800e5d744fc743944a38520753f4e, type: 2}
+  - {fileID: 1675910694677112, guid: 9296d07cc12597743a27be55f7339fa7, type: 2}
+  - {fileID: 1675910694677112, guid: 5b95046ff15864546ba6d31cd953d2e7, type: 2}
+  - {fileID: 1675910694677112, guid: aa715c7d759cbe3479edc58e3bd23315, type: 2}
   PlayerTrail:
   - {fileID: 1509112707808290, guid: c561e6e97a6582f429fe6922a3a9c2ad, type: 2}
   - {fileID: 1036497637330534, guid: 6d7ea60d0b955584ab6f3aba2b076af9, type: 2}
