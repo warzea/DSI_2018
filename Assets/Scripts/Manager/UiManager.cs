@@ -31,6 +31,7 @@ public class UiManager : ManagerParent
     public Image [] GaugeFeedback;
     public Image WhiteBackground;
     public Tween rotTw;
+    public CanvasGroup newWeapon;
     public CanvasGroup Timer;
 
     [Header ("TUTO")]
@@ -96,26 +97,27 @@ public class UiManager : ManagerParent
             thisUi.OpenThis (GetTok);
         }
 
-        DOVirtual.DelayedCall (22, () =>
-        {
-            WeaponChangeHUD (3, "");
-        }).SetLoops (-1, LoopType.Restart);
+        /*
+                DOVirtual.DelayedCall (22, () =>
+                {
+                    WeaponChangeHUD (3, "");
+                }).SetLoops (-1, LoopType.Restart);
 
-        DOVirtual.DelayedCall (19, () =>
-        {
-            WeaponChangeHUD (2, "");
-        }).SetLoops (-1, LoopType.Restart);
+                DOVirtual.DelayedCall (19, () =>
+                {
+                    WeaponChangeHUD (2, "");
+                }).SetLoops (-1, LoopType.Restart);
 
-        DOVirtual.DelayedCall (17, () =>
-        {
-            WeaponChangeHUD (1, "");
-        }).SetLoops (-1, LoopType.Restart);
+                DOVirtual.DelayedCall (17, () =>
+                {
+                    WeaponChangeHUD (1, "");
+                }).SetLoops (-1, LoopType.Restart);
 
-        DOVirtual.DelayedCall (15, () =>
-        {
-            WeaponChangeHUD (0, "");
-        }).SetLoops (-1, LoopType.Restart);
-
+                DOVirtual.DelayedCall (15, () =>
+                {
+                    WeaponChangeHUD (0, "");
+                }).SetLoops (-1, LoopType.Restart);
+         */
     }
 
     public void CloseThisMenu ()
@@ -214,6 +216,24 @@ public class UiManager : ManagerParent
 
     }
 
+    public void WeaponGet (string weapName)
+    {
+        newWeapon.DOFade (1, .25f);
+
+        for (int a = 0; a < WeapIcone.Length; a++)
+        {
+            if (WeapIcone [a].Weapon == weapName)
+            {
+                newWeapon.GetComponentsInChildren<Image> () [1].sprite = WeapIcone [a].ThisImage;
+                break;
+            }
+        }
+        DOVirtual.DelayedCall (2, () =>
+        {
+            newWeapon.DOFade (0, .25f);
+        });
+
+    }
     // 2
     public void EndScreenMedals (Transform thisObj, int thisID, int nbr)
     {
@@ -278,12 +298,10 @@ public class UiManager : ManagerParent
         ResetTween (PlayerId);
 
         //HUD INGAME
-        Transform getTrans = PlayersAmmo[PlayerId].transform;
-        getTrans.DOKill(true);
-        rotTw.Kill(true);
+        Transform getTrans = PlayersAmmo [PlayerId].transform;
+        getTrans.DOKill (true);
+        rotTw.Kill (true);
         WeaponChangeHUD (PlayerId, weap);
-
-
 
         getTrans.GetComponentsInChildren<RainbowColor> () [0].transform.GetComponent<Image> ().DOKill (true);
 
@@ -312,7 +330,7 @@ public class UiManager : ManagerParent
         getTrans.GetChild (0).GetComponent<Image> ().DOFade (1, .25f).OnComplete (() =>
         {
             getTrans.GetChild (0).GetComponent<Image> ().DOFade (0, .25f);
-            NewWeapPic(thisWeap, PlayerId);
+            NewWeapPic (thisWeap, PlayerId);
         });
 
         var circle = Instantiate (Circle, getTrans.parent.position, Quaternion.identity, getTrans.parent.GetChild (0));
@@ -581,7 +599,34 @@ public class UiManager : ManagerParent
         ButtonsInteract = (GameObject) Instantiate (ButtonsInteract, AboveAll.transform);
         AllMenu = setAllMenu;
 
-        OpenThisMenu (MenuType.SelectPlayer);
+        int count = 0;
+        try
+        {
+            foreach (infoP thisIP in NbrPlayerPlaying.NbrPP.NbrPlayer)
+            {
+                UnityEngine.Debug.Log (thisIP.ready);
+                if (thisIP.ready)
+                {
+                    count++;
+                    Manager.GameCont.GetPlayersInput [thisIP.ID].EnablePlayer = true;
+                    Manager.GameCont.GetPlayersInput [thisIP.ID].ReadyPlayer = true;
+                }
+            }
+        }
+        catch
+        {
+            UnityEngine.Debug.Log ("test");
+        }
+
+        if (count > 0)
+        {
+            CloseThisMenu ();
+            Manager.GameCont.StartGame ();
+        }
+        else
+        {
+            OpenThisMenu (MenuType.SelectPlayer);
+        }
     }
 
     #endregion

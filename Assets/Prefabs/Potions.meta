@@ -1,7 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 69b287a30e759b44a8734a1f01d341fd
 folderAsset: yes
 timeCreated: 1521144449
+=======
+guid: 31e4d80d58021d44b96e6b357bbbb6de
+folderAsset: yes
+timeCreated: 1521145836
+>>>>>>> LoicTolinos
 licenseType: Free
 DefaultImporter:
   externalObjects: {}

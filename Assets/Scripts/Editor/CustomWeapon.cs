@@ -134,6 +134,7 @@ public class CustomWeapon : Editor
 		EditorGUILayout.PropertyField (WeightRandom);
 
 		EditorGUILayout.PropertyField (NameMusic);
+		EditorGUILayout.PropertyField (MusicExplo);
 
 		EditorGUILayout.Space ();
 		EditorGUILayout.BeginVertical ();

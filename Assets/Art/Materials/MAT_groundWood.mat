@@ -32,6 +32,6 @@ Material:
     - _Metalness: 0
     - _NormalFlatten: 0.64
     - _Smoothness: 0.1
-    - _Tiling: 0.05
+    - _Tiling: 0.06
     - __dirty: 0
     m_Colors: []

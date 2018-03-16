@@ -1,17 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+
 using DG.Tweening;
+
+using UnityEngine;
+using UnityEngine.UI;
 
 public class CheckRoom : MonoBehaviour
 {
     #region Variables
     public float TimerRoom = 50;
-    public Door[] AllDoor;
-    public Transform[] checkPoint;
+    public Door [] AllDoor;
+    public Transform [] checkPoint;
     int nbrPlayer = 0;
     bool CauldronInside = false;
     public bool launch = false;
+
+    Text getText;
 
     private bool isUse = false;
     #endregion
@@ -20,44 +25,56 @@ public class CheckRoom : MonoBehaviour
     #endregion
 
     #region Public
+    void Update ()
+    {
+        if (launch)
+        {
+            getText.text = TimerRoom.ToString ();
+        }
+    }
     #endregion
 
     #region Private
-    void launchRoom()
+    void launchRoom ()
     {
         if (!launch && !isUse)
         {
+            Manager.Ui.Timer.DOFade (1, 0.1f);
+            getText = Manager.Ui.Timer.GetComponent<Text> ();
+            getText.text = TimerRoom.ToString ();
+
             launch = true;
             for (int a = 0; a < AllDoor.Length; a++)
             {
-                AllDoor[a].gameObject.SetActive(true);
+                AllDoor [a].OpenDoor (false);
             }
 
-            DOVirtual.DelayedCall(TimerRoom, () =>
+            DOVirtual.DelayedCall (TimerRoom, () =>
             {
                 for (int a = 0; a < AllDoor.Length; a++)
                 {
-                    AllDoor[a].gameObject.SetActive(false);
+                    AllDoor [a].OpenDoor (true);
                     isUse = true;
                     launch = false;
                 }
             });
+            DOTween.To (() => TimerRoom, x => TimerRoom = x, 0, TimerRoom);
         }
     }
 
-    public bool GetEtatRoom()
+    public bool GetEtatRoom ()
     {
         return launch;
     }
 
-    void OnTriggerEnter(Collider thisColl)
+    void OnTriggerEnter (Collider thisColl)
     {
         if (thisColl.tag == Constants._Player)
         {
             nbrPlayer++;
             if (nbrPlayer == Manager.GameCont.Players.Count && CauldronInside)
             {
-                launchRoom();
+                launchRoom ();
             }
         }
         else if (thisColl.tag == Constants._BoxTag)
@@ -65,12 +82,12 @@ public class CheckRoom : MonoBehaviour
             CauldronInside = true;
             if (nbrPlayer == Manager.GameCont.Players.Count && CauldronInside)
             {
-                launchRoom();
+                launchRoom ();
             }
         }
     }
 
-    void OnTriggerExit(Collider thisColl)
+    void OnTriggerExit (Collider thisColl)
     {
         if (thisColl.tag == Constants._Player)
         {

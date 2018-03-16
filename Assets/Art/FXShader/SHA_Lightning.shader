@@ -16,7 +16,7 @@ Shader "Custom/SHA_Lightning"
 		Cull Back
 		CGPROGRAM
 		#pragma target 3.0
-		#pragma surface surf Standard keepalpha addshadow fullforwardshadows 
+		#pragma surface surf Standard keepalpha noshadow noambient novertexlights nolightmap  nodynlightmap nodirlightmap 
 		struct Input
 		{
 			float2 uv_texcoord;
@@ -67,12 +67,11 @@ Shader "Custom/SHA_Lightning"
 
 		ENDCG
 	}
-	Fallback "Diffuse"
 	CustomEditor "ASEMaterialInspector"
 }
 /*ASEBEGIN
 Version=14101
-1927;29;1586;824;608.345;512.9443;1;True;True
+7;29;1660;855;1815.978;802.3907;1.778142;True;True
 Node;AmplifyShaderEditor.VertexColorNode;5;-1227.696,276.03;Float;False;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.TextureCoordinatesNode;3;-1325.2,-87.59999;Float;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;6;-979.3971,140.83;Float;False;2;2;0;FLOAT;0.0;False;1;FLOAT;16.0;False;1;FLOAT;0
@@ -80,9 +79,8 @@ Node;AmplifyShaderEditor.TFHCFlipBookUVAnimation;2;-750.7,-37.3;Float;False;0;0;
 Node;AmplifyShaderEditor.SamplerNode;1;-428.3,-52.8;Float;True;Property;_T_AvatarTrail;T_AvatarTrail;1;0;Create;Assets/Art/FXShader/Texture/T_AvatarTrail.tga;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0.0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1.0;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.StepOpNode;10;13.80258,170.73;Float;False;2;0;FLOAT;2.0;False;1;FLOAT;1.0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;9;211.4028,109.63;Float;False;2;2;0;FLOAT;0.0;False;1;FLOAT;0.0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;12;-1058.696,-8.6698;Float;False;2;2;0;FLOAT2;0,0;False;1;FLOAT2;4,4;False;1;FLOAT2;0
 Node;AmplifyShaderEditor.RangedFloatNode;20;115.655,-105.9443;Float;False;Constant;_Float0;Float 0;2;0;Create;1;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.StandardSurfaceOutputNode;14;570.7,-5.200006;Float;False;True;2;Float;ASEMaterialInspector;0;0;Standard;Custom/SHA_Lightning;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;Back;0;0;False;0;0;Custom;0.5;True;True;0;True;TransparentCutout;Geometry;All;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;False;0;255;255;0;0;0;0;0;0;0;0;False;2;15;10;25;False;0.5;True;0;Zero;Zero;0;Zero;Zero;OFF;OFF;0;False;0;0,0,0,0;VertexOffset;True;False;Cylindrical;False;Relative;0;;0;-1;-1;-1;0;0;0;False;0;0;16;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT;0.0;False;4;FLOAT;0.0;False;5;FLOAT;0.0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0.0;False;9;FLOAT;0.0;False;10;FLOAT;0.0;False;13;FLOAT3;0,0,0;False;11;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;14;FLOAT4;0,0,0,0;False;15;FLOAT3;0,0,0;False;0
+Node;AmplifyShaderEditor.StandardSurfaceOutputNode;14;570.7,-5.200006;Float;False;True;2;Float;ASEMaterialInspector;0;0;Standard;Custom/SHA_Lightning;False;False;False;False;True;True;True;True;True;False;False;False;False;False;False;False;False;Back;0;0;False;0;0;Custom;0.5;True;False;0;True;TransparentCutout;Geometry;All;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;False;0;255;255;0;0;0;0;0;0;0;0;False;2;15;10;25;False;0.5;False;0;Zero;Zero;0;Zero;Zero;OFF;OFF;0;False;0;0,0,0,0;VertexOffset;True;False;Cylindrical;False;Relative;0;;0;-1;-1;-1;0;0;0;False;0;0;16;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT;0.0;False;4;FLOAT;0.0;False;5;FLOAT;0.0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0.0;False;9;FLOAT;0.0;False;10;FLOAT;0.0;False;13;FLOAT3;0,0,0;False;11;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;14;FLOAT4;0,0,0,0;False;15;FLOAT3;0,0,0;False;0
 WireConnection;6;0;5;1
 WireConnection;2;0;3;0
 WireConnection;2;4;6;0
@@ -91,8 +89,7 @@ WireConnection;10;0;1;1
 WireConnection;10;1;5;2
 WireConnection;9;0;1;2
 WireConnection;9;1;10;0
-WireConnection;12;0;3;0
 WireConnection;14;2;20;0
 WireConnection;14;10;9;0
 ASEEND*/
-//CHKSM=739A1490E049AAA5B56C4714C959F1FF3D70F0D4
+//CHKSM=65E641B76EFD46056822193F5944653A5FF1C0A4

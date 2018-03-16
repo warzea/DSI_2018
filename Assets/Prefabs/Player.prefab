@@ -503,7 +503,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1980685019417938
 GameObject:
   m_ObjectHideFlags: 1
@@ -526,7 +526,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1033107672597512}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 23.215488, y: 0.8699678, z: -9.903572}
+  m_LocalPosition: {x: 0, y: 0.8699678, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4246215549971970}
@@ -1094,7 +1094,7 @@ MonoBehaviour:
   LifePlayer: 5
   TimeToRegen: 4
   MoveSpeed: 14
-  NameHitSong: 
+  NameHitSong: player_hit
   angleAimSensitivity: 4
   aimSensitivity: 12
   aimSensitivityEnemy: 1.5
@@ -1193,6 +1193,7 @@ MonoBehaviour:
   canCauldron: 0
   thisWeapon: {fileID: 0}
   thisObjAudio: {fileID: 0}
+  getWeaponBox: 1
 --- !u!114 &114935065748046692
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -1,8 +1,10 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 
 using DG.Tweening;
+
 using Rewired;
+
 using UnityEngine;
 
 public class InteractAbstract : MonoBehaviour
@@ -42,7 +44,6 @@ public class InteractAbstract : MonoBehaviour
 
     void Start ()
     {
-
 
         animChest = transform.GetComponentInChildren<Animator> ();
         System.Action<ChestEvent> thisAct = delegate (ChestEvent thisEvnt)
@@ -116,10 +117,10 @@ public class InteractAbstract : MonoBehaviour
         {
             NbrItem--;
 
-            if(checkGold)
-                Manager.VibM.ShootMediumVibration(thisPlayer.inputPlayer);
+            if (checkGold)
+                Manager.VibM.ShootMediumVibration (thisPlayer.inputPlayer);
             else
-                Manager.VibM.ShootLowVibration(thisPlayer.inputPlayer);
+                Manager.VibM.ShootLowVibration (thisPlayer.inputPlayer);
 
             thisTrans.DOKill (true);
 

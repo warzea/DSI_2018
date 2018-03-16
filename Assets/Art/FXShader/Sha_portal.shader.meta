@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: aba2879684f5362438a9884c41d7640a
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _TEX_ground_wood_N: {fileID: 2800000, guid: d0c03b6bdd92b5a49aaaba47b4126fe3,
+      type: 3}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
