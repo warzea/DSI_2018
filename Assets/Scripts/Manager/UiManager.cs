@@ -566,13 +566,20 @@ public class UiManager : ManagerParent
         AllMenu = setAllMenu;
 
         int count = 0;
-        foreach (infoP thisIP in GameObject.Find ("NbrPlayer").GetComponent<NbrPlayerPlaying> ().NbrPlayer)
+        try
         {
-            if (thisIP.ready)
+            foreach (infoP thisIP in GameObject.Find ("NbrPlayer").GetComponent<NbrPlayerPlaying> ().NbrPlayer)
             {
-                count++;
-                Manager.GameCont.GetPlayersInput [thisIP.ID].ReadyPlayer = true;
+                if (thisIP.ready)
+                {
+                    count++;
+                    Manager.GameCont.GetPlayersInput [thisIP.ID].ReadyPlayer = true;
+                }
             }
+        }
+        catch
+        {
+
         }
 
         if (count > 0)
