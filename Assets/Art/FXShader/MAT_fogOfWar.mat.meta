@@ -1,4 +1,5 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Scripts/Scenes/David.meta
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -17,7 +18,14 @@ licenseType: Free
 =======
 >>>>>>> DavidDebug
 DefaultImporter:
+=======
+guid: 80d4572e411f2604088c715d057a701d
+timeCreated: 1521195543
+licenseType: Pro
+NativeFormatImporter:
+>>>>>>> MarieFinal:Assets/Art/FXShader/MAT_fogOfWar.mat.meta
   externalObjects: {}
+  mainObjectFileID: 2100000
   userData: 
   assetBundleName: 
   assetBundleVariant: 

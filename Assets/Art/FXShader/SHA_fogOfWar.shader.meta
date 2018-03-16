@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: 2a54a380b8dbe304a9e28b3986cf41b3
+timeCreated: 1521195527
+licenseType: Pro
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _T_Diform_02: {fileID: 2800000, guid: 68b5a8b4202df2748aa5f8cfbf92c7ac, type: 3}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
