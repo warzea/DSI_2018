@@ -3749,7 +3749,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1562912703750432}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -439, y: -242, z: -10}
+  m_LocalPosition: {x: -7.4, y: -242, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4348142322103540}
@@ -3926,7 +3926,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1033900107710658}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 431, y: 242.5, z: 0}
+  m_LocalPosition: {x: 0, y: 242.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4660628724800108}
@@ -4641,7 +4641,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisPlayer: {fileID: 0}
   Score: 0
-  ThisString: 
+  ThisString: Terminal Trickster
   ThisText: {fileID: 0}
 --- !u!114 &114003094791530852
 MonoBehaviour:
@@ -4735,17 +4735,20 @@ MonoBehaviour:
   - {fileID: 1763764888013004, guid: 9a33411c6bda5464d93d925bf3a36eaa, type: 2}
   - {fileID: 1590946614934354, guid: 1dbb50adb1e9e4b47bfbe727eb0ea6ad, type: 2}
   AllMedal:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 114965961998055962}
+  - {fileID: 114524028345991890}
+  - {fileID: 114653149361116136}
+  - {fileID: 114564646556399102}
+  - {fileID: 114380557328331130}
+  - {fileID: 114178081649479118}
+  - {fileID: 114396379723574576}
+  - {fileID: 114929945722139240}
+  - {fileID: 114021971345441696}
+  - {fileID: 114001564500219368}
+  - {fileID: 114120708434105044}
+  - {fileID: 114678536924864102}
+  - {fileID: 114343714328533158}
+  - {fileID: 114053542523014802}
 --- !u!114 &114006857967400932
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6238,6 +6241,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AllMF:
+  - {fileID: 11400000, guid: 667e3acc1a6482d4b9966035d99b092a, type: 2}
+  - {fileID: 11400000, guid: 3e3d520e7a004434d92d3f8c2c3004b2, type: 2}
+  - {fileID: 11400000, guid: 9125ed627ad20a440bc4f8270bb57fbc, type: 2}
+  - {fileID: 11400000, guid: ef5cad07821993a4ca2072efb647c4b5, type: 2}
   - {fileID: 11400000, guid: 2b4aa91d0b0b8724d85c7176ead2277e, type: 2}
 --- !u!114 &114325115896278630
 MonoBehaviour:
@@ -32259,7 +32266,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.0000019073486}
+  m_AnchoredPosition: {x: 0, y: -0.0000019073486}
   m_SizeDelta: {x: 105, y: 106.65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224901121980887612

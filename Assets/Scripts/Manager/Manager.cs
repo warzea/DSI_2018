@@ -3,36 +3,78 @@
 public class Manager : MonoBehaviour
 {
 	#region Variables
-   	static Manager mainManagerInstance;
+	static Manager mainManagerInstance;
 
 	//Add new managers here
 	static UiManager ui;
-	public static UiManager Ui { get { return ui; } }
+	public static UiManager Ui
+	{
+		get
+		{
+			return ui;
+		}
+	}
 
 	static GameController gamecont;
-	public static GameController GameCont { get { return gamecont; } }
+	public static GameController GameCont
+	{
+		get
+		{
+			return gamecont;
+		}
+	}
 
 	static EventManager evnt;
-	public static EventManager Event { get { return evnt; } }
+	public static EventManager Event
+	{
+		get
+		{
+			return evnt;
+		}
+	}
 
 	static AgentsManager agentM;
-	public static AgentsManager AgentM { get { return agentM; } }
-	
+	public static AgentsManager AgentM
+	{
+		get
+		{
+			return agentM;
+		}
+	}
+
 	static AgentsManagerCac agentMC;
-	public static AgentsManagerCac AgentMC { get { return agentMC; } }
+	public static AgentsManagerCac AgentMC
+	{
+		get
+		{
+			return agentMC;
+		}
+	}
 
 	static VibrationManager vibM;
-	public static VibrationManager VibM { get { return vibM; } }
+	public static VibrationManager VibM
+	{
+		get
+		{
+			return vibM;
+		}
+	}
 
 	static AudioManager audM;
-	public static AudioManager Audm { get { return audM; } }
-	#endregion
-	
-	#region Mono
-	void Awake()
+	public static AudioManager Audm
 	{
-		PlayerPrefs.DeleteAll ( );
-	
+		get
+		{
+			return audM;
+		}
+	}
+	#endregion
+
+	#region Mono
+	void Awake ()
+	{
+		PlayerPrefs.DeleteAll ();
+
 		Application.targetFrameRate = 60;
 
 		//Keep manager a singleton
@@ -45,10 +87,10 @@ public class Manager : MonoBehaviour
 			DontDestroyOnLoad ( gameObject );
 			mainManagerInstance = this;
 			InitializeManagers ( );
-		}  */ 
+		}  */
 
 		mainManagerInstance = this;
-		InitializeManagers ( );    
+		InitializeManagers ();
 	}
 	#endregion
 
@@ -56,40 +98,41 @@ public class Manager : MonoBehaviour
 	#endregion
 
 	#region Private Methods
-	void InitializeManagers()
+	void InitializeManagers ()
 	{
-		InitializeManager ( ref evnt );
-		InitializeManager ( ref gamecont );
-		InitializeManager ( ref ui );
-		InitializeManager ( ref agentM );
-		InitializeManager ( ref agentMC );
-		InitializeManager ( ref vibM );
-		InitializeManager ( ref audM );
+		InitializeManager (ref evnt);
+		InitializeManager (ref gamecont);
+		InitializeManager (ref ui);
+		InitializeManager (ref agentM);
+		InitializeManager (ref agentMC);
+		InitializeManager (ref vibM);
+		InitializeManager (ref audM);
+		//NbrPlayerPlaying.NbrPP.DestAll ();
 	}
 
-	void InitializeManager<T>(ref T manager) where T : ManagerParent
+	void InitializeManager<T> (ref T manager) where T : ManagerParent
 	{
-		Debug.Log("Initializing managers");
-		T[] managers = GetComponentsInChildren<T>();
+		Debug.Log ("Initializing managers");
+		T [] managers = GetComponentsInChildren<T> ();
 
-		if(managers.Length == 0)
+		if (managers.Length == 0)
 		{
-		    Debug.LogError("No manager of type: " + typeof(T) + " found.");
-		    return;
+			Debug.LogError ("No manager of type: " + typeof (T) + " found.");
+			return;
 		}
 
 		//Set to first manager
-		manager = managers[0];
-		manager.Initialize();
+		manager = managers [0];
+		manager.Initialize ();
 
-		if(managers.Length > 1) //Too many managers
+		if (managers.Length > 1) //Too many managers
 		{
-		    Debug.LogError("Found " + managers.Length + " managers of type " + typeof(T));
-		    for(int i = 1; i < managers.Length; i++)
-		    {
-		        Destroy(managers[i].gameObject);
-		    }
-		} 
+			Debug.LogError ("Found " + managers.Length + " managers of type " + typeof (T));
+			for (int i = 1; i < managers.Length; i++)
+			{
+				Destroy (managers [i].gameObject);
+			}
+		}
 	}
 	#endregion
 }

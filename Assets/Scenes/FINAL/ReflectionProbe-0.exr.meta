@@ -1,6 +1,10 @@
 fileFormatVersion: 2
 guid: d562402d8591e3742b845fe04f8c1705
-timeCreated: 1521138693
+<<<<<<< HEAD
+timeCreated: 1521159622
+=======
+timeCreated: 1521176124
+>>>>>>> marie
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
