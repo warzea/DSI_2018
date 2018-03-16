@@ -17,12 +17,12 @@ public class slider_positionplayer : MonoBehaviour
     {
         Cauldron = Manager.GameCont.WeaponB.transform;
         posDepart = Cauldron.transform.position;
-        maxdistance = Vector3.Distance (posDepart, posFinal.position);
 
         if (posFinal == null)
         {
             posFinal = GameObject.FindObjectOfType<EndTrigger> ().transform;
         }
+        maxdistance = Vector3.Distance (posDepart, posFinal.position);
     }
 
     void Update ()

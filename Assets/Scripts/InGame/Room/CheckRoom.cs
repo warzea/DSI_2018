@@ -57,6 +57,8 @@ public class CheckRoom : MonoBehaviour
                     isUse = true;
                     launch = false;
                 }
+
+                getText.gameObject.SetActive (false);
             });
             DOTween.To (() => TimerRoom, x => TimerRoom = x, 0, TimerRoom);
         }
