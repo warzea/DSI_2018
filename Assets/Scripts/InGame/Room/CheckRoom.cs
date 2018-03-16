@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CheckRoom : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class CheckRoom : MonoBehaviour
     bool CauldronInside = false;
     public bool launch = false;
 
+    Text getText;
+
     private bool isUse = false;
     #endregion
 
@@ -22,6 +25,13 @@ public class CheckRoom : MonoBehaviour
     #endregion
 
     #region Public
+    void Update ()
+    {
+        if (launch)
+        {
+            getText.text = TimerRoom.ToString ();
+        }
+    }
     #endregion
 
     #region Private
@@ -29,6 +39,10 @@ public class CheckRoom : MonoBehaviour
     {
         if (!launch && !isUse)
         {
+            Manager.Ui.Timer.DOFade (1, 0.1f);
+            getText = Manager.Ui.Timer.GetComponent<Text> ();
+            getText.text = TimerRoom.ToString ();
+
             launch = true;
             for (int a = 0; a < AllDoor.Length; a++)
             {
@@ -44,6 +58,7 @@ public class CheckRoom : MonoBehaviour
                     launch = false;
                 }
             });
+            DOTween.To (() => TimerRoom, x => TimerRoom = x, 0, TimerRoom);
         }
     }
 
