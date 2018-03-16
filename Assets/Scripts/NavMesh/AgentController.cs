@@ -8,18 +8,18 @@ public class AgentController : MonoBehaviour
 {
     /// <summary> Public <summary>
 
-    [Header("------------------")]
-    [Header("----INFO AGENT----")]
-    [Header("------------------")]
+    [Header ("------------------")]
+    [Header ("----INFO AGENT----")]
+    [Header ("------------------")]
     public TypeEnemy ThisType;
     public GameObject myFocusPlayer;
     public int lifeAgent = 1;
     public float timeBeforeDepop = 2f;
     public Animator animAgent;
 
-    [Header("------------------")]
-    [Header("----INFO SHOOT----")]
-    [Header("------------------")]
+    [Header ("------------------")]
+    [Header ("----INFO SHOOT----")]
+    [Header ("------------------")]
     public GameObject bulletAgent;
     public Transform spawnBulletAgent;
     Transform parentBullet;
@@ -49,7 +49,7 @@ public class AgentController : MonoBehaviour
 
     ;
 
-    [Header("Info Agent")]
+    [Header ("Info Agent")]
     public CibleAgent myFocusEtatAgent;
     public AgentEtat myEtatAgent;
     private AgentsManager agentsManager;
@@ -64,15 +64,14 @@ public class AgentController : MonoBehaviour
     public GameObject particleHit;
     public GameObject particulWeapon;
 
-
-    void Awake()
+    void Awake ()
     {
-        navAgent = transform.GetComponent<NavMeshAgent>();
+        navAgent = transform.GetComponent<NavMeshAgent> ();
         myFocusEtatAgent = CibleAgent.nothing;
         myEtatAgent = AgentEtat.aliveAgent;
     }
 
-    void Start()
+    void Start ()
     {
         agentsManager = Manager.AgentM;
         parentBullet = Manager.GameCont.Garbage;
@@ -86,82 +85,87 @@ public class AgentController : MonoBehaviour
             myEtatAgent = AgentEtat.deadAgent;
         };
 
-        Manager.Event.Register(thisAct);
+        Manager.Event.Register (thisAct);
 
-        timeAttack = Random.Range(timeLeftAgentshoot - 0.2f, timeLeftAgentshoot + 0.2f);
+        timeAttack = Random.Range (timeLeftAgentshoot - 0.2f, timeLeftAgentshoot + 0.2f);
 
     }
 
-    void Update()
+    void Update ()
     {
         if (!checkUpdate)
         {
             return;
         }
 
+        if (myFocusPlayer != null && !myFocusPlayer.gameObject.activeSelf)
+        {
+            myFocusPlayer = Manager.GameCont.Players [0];
+        }
+
         if (myEtatAgent == AgentEtat.aliveAgent && myFocusPlayer != null)
         {
 
-            float distance = Vector3.Distance(transform.position, myFocusPlayer.transform.position);
+            float distance = Vector3.Distance (transform.position, myFocusPlayer.transform.position);
 
             if (distance > distanceShoot)
             {
-                navAgent.SetDestination(myFocusPlayer.transform.position);
+                navAgent.SetDestination (myFocusPlayer.transform.position);
             }
             float velocity = navAgent.velocity.magnitude;
             if (velocity > 0.1)
             {
-                animAgent.SetBool("IsMoving", true);
+                animAgent.SetBool ("IsMoving", true);
             }
             else
             {
-                animAgent.SetBool("IsMoving", false);
-                Vector3 lookAtPosition2 = new Vector3(myFocusPlayer.transform.transform.position.x, this.transform.position.y, myFocusPlayer.transform.transform.position.z);
-                transform.LookAt(lookAtPosition2);
+                animAgent.SetBool ("IsMoving", false);
+                Vector3 lookAtPosition2 = new Vector3 (myFocusPlayer.transform.transform.position.x, this.transform.position.y, myFocusPlayer.transform.transform.position.z);
+                transform.LookAt (lookAtPosition2);
             }
 
-            NavMeshPath path = new NavMeshPath();
+            NavMeshPath path = new NavMeshPath ();
 
-            navAgent.CalculatePath(myFocusPlayer.transform.position, path);
+            navAgent.CalculatePath (myFocusPlayer.transform.position, path);
             if (path.status == NavMeshPathStatus.PathPartial)
             {
-                Vector3 getCamPos = cam.WorldToViewportPoint(transform.position);
+                Vector3 getCamPos = cam.WorldToViewportPoint (transform.position);
 
                 if (getCamPos.x > 1f || getCamPos.x < 0f || getCamPos.y > 1f || getCamPos.y < 0f)
                 {
-                    DeadFonction();
+                    DeadFonction ();
                 }
             }
             else
             {
-                ShootAgent();
+                ShootAgent ();
             }
 
         }
     }
 
-    public void ShootAgent()
+    public void ShootAgent ()
     {
         timeAgent += Time.deltaTime;
         if (timeAgent > timeAttack)
         {
-            float distance = Vector3.Distance(transform.position, myFocusPlayer.transform.position);
+            float distance = Vector3.Distance (transform.position, myFocusPlayer.transform.position);
 
             if (distance < distanceShoot)
             {
-                Vector3 lookAtPosition = new Vector3(myFocusPlayer.transform.transform.position.x, this.transform.position.y, myFocusPlayer.transform.transform.position.z);
-                transform.LookAt(lookAtPosition);
-                spawnBulletAgent.transform.LookAt(lookAtPosition);
+                Vector3 lookAtPosition = new Vector3 (myFocusPlayer.transform.transform.position.x, this.transform.position.y, myFocusPlayer.transform.transform.position.z);
+                transform.LookAt (lookAtPosition);
+                spawnBulletAgent.transform.LookAt (lookAtPosition);
 
                 RaycastHit hit;
 
-                if (Physics.Raycast(spawnBulletAgent.position, spawnBulletAgent.forward, out hit))
+                if (Physics.Raycast (spawnBulletAgent.position, spawnBulletAgent.forward, out hit))
                 {
                     if (hit.transform.tag == "Player" || hit.transform.tag == "WeaponBox")
                     {
-                        animAgent.SetBool("IsMoving", false);
-                        animAgent.SetTrigger("Attack");
-                        StartCoroutine(WaitAnimShoot());
+                        animAgent.SetBool ("IsMoving", false);
+                        animAgent.SetTrigger ("Attack");
+                        StartCoroutine (WaitAnimShoot ());
                     }
                     else
                     {
@@ -169,37 +173,37 @@ public class AgentController : MonoBehaviour
                     }
                 }
             }
-            timeAttack = Random.Range(timeLeftAgentshoot - 0.2f, timeLeftAgentshoot + 0.2f);
+            timeAttack = Random.Range (timeLeftAgentshoot - 0.2f, timeLeftAgentshoot + 0.2f);
             timeAgent = 0;
         }
     }
 
-    public void TargetPlayer(float stopDistance, float maxdist)
+    public void TargetPlayer (float stopDistance, float maxdist)
     {
         if (myFocusPlayer != null)
         {
-            float distance = Mathf.Abs(Vector3.Distance(transform.position, myFocusPlayer.transform.position));
+            float distance = Mathf.Abs (Vector3.Distance (transform.position, myFocusPlayer.transform.position));
             navAgent.stoppingDistance = stopDistance;
             distanceShoot = stopDistance;
 
             if (distance > maxdist)
             {
-                navAgent.SetDestination(myFocusPlayer.transform.position);
+                navAgent.SetDestination (myFocusPlayer.transform.position);
             }
         }
     }
 
     #region ChangeEtat
 
-    public void DeadFonction()
+    public void DeadFonction ()
     {
-        particulWeapon.SetActive(false);
+        particulWeapon.SetActive (false);
         navAgent.isStopped = true;
-        agentsManager.DeadAgent(myFocusEtatAgent.ToString(), this.gameObject);
-        StartCoroutine(WaitRespawn());
+        agentsManager.DeadAgent (myFocusEtatAgent.ToString (), this.gameObject);
+        StartCoroutine (WaitRespawn ());
     }
 
-    public bool GetEtatAgent()
+    public bool GetEtatAgent ()
     {
         if (myEtatAgent == AgentEtat.aliveAgent)
         {
@@ -211,31 +215,31 @@ public class AgentController : MonoBehaviour
         }
     }
 
-    public void SetFocusLawPlayer(GameObject player)
+    public void SetFocusLawPlayer (GameObject player)
     {
         myFocusEtatAgent = CibleAgent.lawPlayer;
         myFocusPlayer = player;
     }
 
-    public void SetFocusMaxPlayer(GameObject player)
+    public void SetFocusMaxPlayer (GameObject player)
     {
         myFocusEtatAgent = CibleAgent.maxPlayer;
         myFocusPlayer = player;
     }
 
-    public void SetFocusLeadPlayer(GameObject player)
+    public void SetFocusLeadPlayer (GameObject player)
     {
         myFocusEtatAgent = CibleAgent.leadPlayer;
         myFocusPlayer = player;
     }
 
-    public void SetFocusCauldron(GameObject player)
+    public void SetFocusCauldron (GameObject player)
     {
         myFocusEtatAgent = CibleAgent.cauldron;
         myFocusPlayer = player;
     }
 
-    public void SetFocusRandomPlayer(GameObject player)
+    public void SetFocusRandomPlayer (GameObject player)
     {
         myFocusEtatAgent = CibleAgent.randomPlayer;
         myFocusPlayer = player;
@@ -243,40 +247,40 @@ public class AgentController : MonoBehaviour
 
     #endregion
 
-    IEnumerator WaitAnimShoot()
+    IEnumerator WaitAnimShoot ()
     {
-        yield return new WaitForSeconds(0.4f);
-        GameObject killeuse = (GameObject)Instantiate(bulletAgent, spawnBulletAgent.position, spawnBulletAgent.rotation, parentBullet);
+        yield return new WaitForSeconds (0.4f);
+        GameObject killeuse = (GameObject) Instantiate (bulletAgent, spawnBulletAgent.position, spawnBulletAgent.rotation, parentBullet);
     }
 
-    IEnumerator WaitRespawn()
+    IEnumerator WaitRespawn ()
     {
-        animAgent.SetBool("IsMoving", false);
-        animAgent.ResetTrigger("TakeDamage");
-        animAgent.SetTrigger("Die");
-        yield return new WaitForSeconds(timeBeforeDepop);
-        newPos();
+        animAgent.SetBool ("IsMoving", false);
+        animAgent.ResetTrigger ("TakeDamage");
+        animAgent.SetTrigger ("Die");
+        yield return new WaitForSeconds (timeBeforeDepop);
+        newPos ();
     }
 
-    async void newPos()
+    async void newPos ()
     {
-        Vector3 newPos = agentsManager.CheckBestcheckPoint(myFocusPlayer.transform);
-        navAgent.Warp(newPos);
+        Vector3 newPos = agentsManager.CheckBestcheckPoint (myFocusPlayer.transform);
+        navAgent.Warp (newPos);
         mycollider.enabled = true;
         myEtatAgent = AgentEtat.aliveAgent;
         navAgent.isStopped = false;
         lifeAgent = 1;
-        particulWeapon.SetActive(true);
+        particulWeapon.SetActive (true);
 
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerEnter (Collider other)
     {
         if (other.tag == Constants._PlayerBullet && myEtatAgent == AgentEtat.aliveAgent)
         {
-            BulletAbstract getBA = other.GetComponent<BulletAbstract>();
-            GameObject explo = Instantiate(particleHit, transform.position, transform.rotation);
-            Destroy(explo, 1f);
+            BulletAbstract getBA = other.GetComponent<BulletAbstract> ();
+            GameObject explo = Instantiate (particleHit, transform.position, transform.rotation);
+            Destroy (explo, 1f);
             if (getBA != null)
             {
                 lifeAgent -= getBA.BulletDamage;
@@ -286,16 +290,15 @@ public class AgentController : MonoBehaviour
                 lifeAgent -= 1;
             }
 
-
             if (lifeAgent <= 0 && AgentEtat.aliveAgent == myEtatAgent)
             {
                 myEtatAgent = AgentEtat.deadAgent;
                 mycollider.enabled = false;
-                DeadFonction();
+                DeadFonction ();
             }
             else
             {
-                animAgent.SetTrigger("TakeDamage");
+                animAgent.SetTrigger ("TakeDamage");
             }
         }
     }

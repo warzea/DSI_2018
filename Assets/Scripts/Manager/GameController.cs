@@ -276,7 +276,7 @@ public class GameController : ManagerParent
         {
             if (thisP.gameObject.activeSelf)
             {
-                playerCont.Add (thisP);
+                playerCont2.Add (thisP);
             }
         }
 
@@ -360,6 +360,7 @@ public class GameController : ManagerParent
             boxWeapon = playerCont [Random.Range (0, playerCont.Length)].gameObject;
         }
 
+        Debug.Log (lowLife.name + " / " + maxLife.name);
         Manager.AgentM.ChangeEtatFocus (lowLife, maxLife, boxWeapon);
 
         DOVirtual.DelayedCall (TimerCheckPlayer, () =>
