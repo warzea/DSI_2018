@@ -22,6 +22,12 @@ public class MedalAim : AbstractMedal
 		{
 			for (int a = 1; a < get; a++)
 			{
+				if (thisPlayer.ShootBullet == 0)
+				{
+					thisPlayer = allPlayer [a];
+					continue;
+				}
+
 				cal1 = thisPlayer.ShootSucceed / thisPlayer.ShootBullet;
 				cal2 = allPlayer [a].ShootSucceed / allPlayer [a].ShootBullet;
 				if (cal1 > cal2)
