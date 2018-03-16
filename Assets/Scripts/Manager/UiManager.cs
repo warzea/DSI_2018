@@ -565,7 +565,25 @@ public class UiManager : ManagerParent
         ButtonsInteract = (GameObject) Instantiate (ButtonsInteract, GetInGame);
         AllMenu = setAllMenu;
 
-        OpenThisMenu (MenuType.SelectPlayer);
+        int count = 0;
+        foreach (infoP thisIP in GameObject.Find ("NbrPlayer").GetComponent<NbrPlayerPlaying> ().NbrPlayer)
+        {
+            if (thisIP.ready)
+            {
+                count++;
+                Manager.GameCont.GetPlayersInput [thisIP.ID].ReadyPlayer = true;
+            }
+        }
+
+        if (count > 0)
+        {
+            Manager.GameCont.StartGame ();
+
+        }
+        else
+        {
+            OpenThisMenu (MenuType.SelectPlayer);
+        }
     }
 
     #endregion

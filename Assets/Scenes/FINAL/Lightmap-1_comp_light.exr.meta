@@ -1,6 +1,10 @@
 fileFormatVersion: 2
 guid: ab91cfcabf8442b4f861d5f1445020ae
-timeCreated: 1521155001
+<<<<<<< HEAD
+timeCreated: 1521159620
+=======
+timeCreated: 1521176081
+>>>>>>> marie
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
@@ -57,7 +61,7 @@ TextureImporter:
   textureFormatSet: 0
   platformSettings:
   - buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
