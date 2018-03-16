@@ -158,7 +158,16 @@ public class UiManager : ManagerParent
         EndScreenWeaponBox.SetActive (true);
         GetInGame.transform.DOLocalMoveY (200, .3f).SetEase (Ease.InOutSine);
 
-        AboveAll.DOFade (0, .2f);
+        PlayersAmmo[0].GetComponent<CanvasGroup>().DOFade(0, .1f);
+        PlayersAmmo[1].GetComponent<CanvasGroup>().DOFade(0, .1f);
+        PlayersAmmo[2].GetComponent<CanvasGroup>().DOFade(0, .1f);
+        PlayersAmmo[3].GetComponent<CanvasGroup>().DOFade(0, .1f);
+
+
+        GaugeButtonBonus.GetComponent<CanvasGroup>().DOFade(0, .1f);
+
+
+        AboveAll.DOFade(0, .2f);
         EndScreenContainer.DOFade (1, .2f);
 
         //UnityEngine.Debug.Log ("EndScree");
