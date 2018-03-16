@@ -9,7 +9,7 @@ public class MedalAim : AbstractMedal
 	#endregion
 
 	#region Mono
-	public override void StartCheck (PlayerController [] allPlayer)
+	public override void StartCheck (PlayerController [ ] allPlayer)
 	{
 		thisPlayer = allPlayer [0];
 		PlayerController thisPlayerEqua = null;
@@ -34,13 +34,13 @@ public class MedalAim : AbstractMedal
 					thisPlayerEqua = allPlayer [a];
 				}
 			}
-			Score = thisPlayer.ShootSucceed / thisPlayer.ShootBullet;
+			//Score = thisPlayer.ShootSucceed / thisPlayer.ShootBullet;
 			GoTarget (thisPlayerEqua);
 		}
 		else
 		{
-			Score = thisPlayer.ShootSucceed / thisPlayer.ShootBullet;
-			GoTarget ();
+			//Score = thisPlayer.ShootSucceed / thisPlayer.ShootBullet;
+			GoTarget ( );
 		}
 	}
 	#endregion
