@@ -21,6 +21,7 @@ public class MenuButton : Button
     protected override void Start ( )
     {
         thisAud = GameObject.Find ("AudioManager").GetComponent<AudioManager> ( );
+        thisAud.Initialize ( );
         base.Start ( );
 
     }
