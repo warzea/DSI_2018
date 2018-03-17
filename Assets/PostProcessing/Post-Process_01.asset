@@ -348,12 +348,12 @@ MonoBehaviour:
         e_CurveG: 0
         e_CurveB: 0
   userLut:
-    m_Enabled: 0
+    m_Enabled: 1
     m_Settings:
       lut: {fileID: 2800000, guid: 9f700736c7174d8479773cc68e4613dc, type: 3}
-      contribution: 1
+      contribution: 0.417
   chromaticAberration:
-    m_Enabled: 1
+    m_Enabled: 0
     m_Settings:
       spectralTexture: {fileID: 0}
       intensity: 0.02
