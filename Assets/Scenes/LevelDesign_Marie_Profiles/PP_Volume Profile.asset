@@ -198,7 +198,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 0.75
+    value: 0.64
   color:
     overrideState: 1
     value: {r: 0.23783521, g: 0.3328763, b: 0.6102941, a: 1}
@@ -287,8 +287,8 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   saturation:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 9
   brightness:
     overrideState: 0
     value: 0
@@ -296,8 +296,8 @@ MonoBehaviour:
     overrideState: 1
     value: 1
   contrast:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 26
   mixerRedOutRedIn:
     overrideState: 0
     value: 100
@@ -327,13 +327,13 @@ MonoBehaviour:
     value: 100
   lift:
     overrideState: 1
-    value: {x: 0.9435341, y: 0.9576505, z: 1, w: -0.13061224}
+    value: {x: 0.9435341, y: 0.9576505, z: 1, w: -0.2512395}
   gamma:
     overrideState: 1
-    value: {x: 1, y: 0.9770433, z: 0.9840967, w: -0.03265306}
+    value: {x: 1, y: 0.9770433, z: 0.9840967, w: 0.039723303}
   gain:
     overrideState: 1
-    value: {x: 1, y: 0.93638706, z: 0.90817344, w: 0.114285715}
+    value: {x: 1, y: 0.93638706, z: 0.90817344, w: -0.084439255}
   masterCurve:
     overrideState: 0
     value:
@@ -474,7 +474,7 @@ MonoBehaviour:
         m_Curve: []
         m_PreInfinity: 2
         m_PostInfinity: 2
-        m_RotationOrder: 4
+        m_RotationOrder: 0
       m_Loop: 0
       m_ZeroValue: 0.5
       m_Range: 1
