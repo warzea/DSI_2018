@@ -27,7 +27,6 @@ public class GameController : ManagerParent
     [HideInInspector]
     public PlayerInfoInput [ ] GetPlayersInput;
 
-    [HideInInspector]
     public List<GameObject> Players;
     public Material [ ] PlayerMaterial;
     public GameObject [ ] LaserFX;
@@ -71,20 +70,11 @@ public class GameController : ManagerParent
         newEtat.AgentChecking = true;
         newEtat.Raise ( );
 
-        Players.Clear ( );
         Manager.Ui.EndScreenStart ( );
 
         DOVirtual.DelayedCall (2, ( )=>
         {
 
-            List<PlayerController> thisLP = new List<PlayerController> ( );
-            foreach (PlayerController thisP in getPlayerCont)
-            {
-                if (thisP.gameObject.activeSelf)
-                {
-                    thisLP.Add (thisP);
-                }
-            }
             ScoreInfo [ ] allSc = Manager.Ui.GetScores.AllScore.ToArray ( );
             ScoreInfo thisScore = allSc [0];
 
@@ -102,15 +92,14 @@ public class GameController : ManagerParent
                 for (int a = 0; a < AllMedal.Length; a++)
                 {
                     AllMedal [a].gameObject.SetActive (true);
-
                     try
                     {
-                        AllMedal [a].StartCheck (thisLP.ToArray ( ));
+                        AllMedal [a].StartCheck (getPlayerCont.ToArray ( ));
 
                     }
                     catch
                     {
-
+                        Debug.Log ("Erreur");
                     }
                 }
 
@@ -118,14 +107,17 @@ public class GameController : ManagerParent
                 MedalsPlayer thisMP;
                 for (int a = 0; a < MedalInfo.Count; a++)
                 {
-                    Debug.Log ("4 : " + a);
                     thisMP = MedalInfo [a];
                     while (thisMP.ThisMedal.Count > 3)
                     {
                         getVal = Random.Range (0, thisMP.ThisMedal.Count);
-                        Destroy (thisMP.ThisMedal [getVal].gameObject);
 
-                        thisMP.ThisMedal.RemoveAt (getVal);
+                        if (thisMP.ThisMedal [getVal] != null)
+                        {
+                            Debug.Log (thisMP.ThisMedal [getVal].gameObject.name);
+                            Destroy (thisMP.ThisMedal [getVal].gameObject);
+                            thisMP.ThisMedal.RemoveAt (getVal);
+                        }
                     }
 
                     for (int b = 0; b < 3; b++)
@@ -133,6 +125,7 @@ public class GameController : ManagerParent
                         Manager.Ui.EndScreenMedals (thisMP.ThisMedal [b].transform, thisMP.IDPlayer, b);
                     }
                 }
+
             });
             Manager.Ui.GetScores.UpdateValue (thisScore.FinalScore, ScoreType.EndScore, false, Manager.Ui.EndScreenFinished);
 

@@ -9,7 +9,7 @@ public class MedalLostRes : AbstractMedal
 	#endregion
 
 	#region Mono
-	public override void StartCheck (PlayerController [] allPlayer)
+	public override void StartCheck (PlayerController [ ] allPlayer)
 	{
 		thisPlayer = allPlayer [0];
 		PlayerController thisPlayerEqua = null;
@@ -31,13 +31,13 @@ public class MedalLostRes : AbstractMedal
 				}
 			}
 
-			Score = thisPlayerEqua.LostItem;
+			//Score = thisPlayerEqua.LostItem;
 			GoTarget (thisPlayerEqua);
 		}
 		else
 		{
-			Score = thisPlayer.LostItem;
-			GoTarget ();
+			//Score = thisPlayer.LostItem;
+			GoTarget ( );
 		}
 	}
 	#endregion

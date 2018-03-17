@@ -11,6 +11,9 @@ public class MedalAim : AbstractMedal
 	#region Mono
 	public override void StartCheck (PlayerController [ ] allPlayer)
 	{
+		Debug.Log (allPlayer.Length);
+
+		Debug.Log (allPlayer [0].gameObject.name);
 		thisPlayer = allPlayer [0];
 		PlayerController thisPlayerEqua = null;
 

@@ -9,7 +9,7 @@ public class MedalCauldron : AbstractMedal
 	#endregion
 
 	#region Mono
-	public override void StartCheck (PlayerController [] allPlayer)
+	public override void StartCheck (PlayerController [ ] allPlayer)
 	{
 		thisPlayer = allPlayer [0];
 		PlayerController thisPlayerEqua = null;
@@ -31,12 +31,12 @@ public class MedalCauldron : AbstractMedal
 				}
 			}
 
-			Score = thisPlayer.TimeWBox;
+			//Score = thisPlayer.TimeWBox;
 			GoTarget (thisPlayerEqua);
 		}
 		else
 		{
-			GoTarget ();
+			GoTarget ( );
 		}
 	}
 	#endregion

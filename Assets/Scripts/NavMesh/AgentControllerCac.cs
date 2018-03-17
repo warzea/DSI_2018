@@ -137,7 +137,13 @@ public class AgentControllerCac : MonoBehaviour
 				{
 					animAgent.SetBool ("Move", false);
 					animAgent.SetTrigger ("MeleeAttack");
-					focusPlayer.GetComponent<PlayerController> ( ).GetDamage (transform);
+					try
+					{
+						focusPlayer.GetComponent<PlayerController> ( ).GetDamage (transform);
+
+					}
+					catch
+					{ }
 				}
 			}
 			timeAttack = Random.Range (timeLeftAgentAttacCac - 0.1f, timeLeftAgentAttacCac + 0.1f);

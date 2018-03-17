@@ -12,7 +12,7 @@ public class MedalEnemy : AbstractMedal
 	#endregion
 
 	#region Public Methods
-	public override void StartCheck (PlayerController [] allPlayer)
+	public override void StartCheck (PlayerController [ ] allPlayer)
 	{
 		thisPlayer = allPlayer [0];
 		PlayerController thisPlayerEqua = null;
@@ -32,7 +32,7 @@ public class MedalEnemy : AbstractMedal
 					thisPlayerEqua = allPlayer [a];
 				}
 			}
-			Score = thisPlayer.NbrEnemy;
+			//Score = thisPlayer.NbrEnemy;
 			GoTarget (thisPlayerEqua);
 
 			/*int b;
@@ -73,8 +73,8 @@ public class MedalEnemy : AbstractMedal
 		}
 		else
 		{
-			Score = thisPlayer.NbrEnemy;
-			GoTarget ();
+			//Score = thisPlayer.NbrEnemy;
+			GoTarget ( );
 		}
 	}
 

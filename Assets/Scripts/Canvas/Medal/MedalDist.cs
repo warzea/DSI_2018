@@ -9,7 +9,7 @@ public class MedalDist : AbstractMedal
 	#endregion
 
 	#region Mono
-	public override void StartCheck (PlayerController [] allPlayer)
+	public override void StartCheck (PlayerController [ ] allPlayer)
 	{
 		thisPlayer = allPlayer [0];
 		PlayerController thisPlayerEqua = null;
@@ -31,13 +31,13 @@ public class MedalDist : AbstractMedal
 				}
 			}
 
-			Score = thisPlayer.TotalDist;
+			//Score = thisPlayer.TotalDist;
 			GoTarget (thisPlayerEqua);
 		}
 		else
 		{
-			Score = thisPlayer.TotalDist;
-			GoTarget ();
+			//Score = thisPlayer.TotalDist;
+			GoTarget ( );
 		}
 	}
 	#endregion

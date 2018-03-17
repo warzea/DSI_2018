@@ -9,7 +9,7 @@ public class MedalSwitchWeap : AbstractMedal
 	#endregion
 
 	#region Mono
-	public override void StartCheck (PlayerController [] allPlayer)
+	public override void StartCheck (PlayerController [ ] allPlayer)
 	{
 		thisPlayer = allPlayer [0];
 		PlayerController thisPlayerEqua = null;
@@ -30,13 +30,13 @@ public class MedalSwitchWeap : AbstractMedal
 					thisPlayerEqua = allPlayer [a];
 				}
 			}
-			Score = thisPlayer.WeaponSwitch;
+			//Score = thisPlayer.WeaponSwitch;
 			GoTarget (thisPlayerEqua);
 		}
 		else
 		{
-			Score = thisPlayer.WeaponSwitch;
-			GoTarget ();
+			//Score = thisPlayer.WeaponSwitch;
+			GoTarget ( );
 		}
 	}
 	#endregion

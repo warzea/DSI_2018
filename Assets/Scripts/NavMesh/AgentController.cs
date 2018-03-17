@@ -64,14 +64,14 @@ public class AgentController : MonoBehaviour
     public GameObject particleHit;
     public GameObject particulWeapon;
 
-    void Awake ()
+    void Awake ( )
     {
-        navAgent = transform.GetComponent<NavMeshAgent> ();
+        navAgent = transform.GetComponent<NavMeshAgent> ( );
         myFocusEtatAgent = CibleAgent.nothing;
         myEtatAgent = AgentEtat.aliveAgent;
     }
 
-    void Start ()
+    void Start ( )
     {
         agentsManager = Manager.AgentM;
         parentBullet = Manager.GameCont.Garbage;
@@ -91,7 +91,7 @@ public class AgentController : MonoBehaviour
 
     }
 
-    void Update ()
+    void Update ( )
     {
         if (!checkUpdate)
         {
@@ -129,7 +129,7 @@ public class AgentController : MonoBehaviour
                 transform.LookAt (lookAtPosition2);
             }
 
-            NavMeshPath path = new NavMeshPath ();
+            NavMeshPath path = new NavMeshPath ( );
 
             navAgent.CalculatePath (myFocusPlayer.transform.position, path);
             if (path.status == NavMeshPathStatus.PathPartial)
@@ -138,18 +138,18 @@ public class AgentController : MonoBehaviour
 
                 if (getCamPos.x > 1f || getCamPos.x < 0f || getCamPos.y > 1f || getCamPos.y < 0f)
                 {
-                    DeadFonction ();
+                    DeadFonction ( );
                 }
             }
             else
             {
-                ShootAgent ();
+                ShootAgent ( );
             }
 
         }
     }
 
-    public void ShootAgent ()
+    public void ShootAgent ( )
     {
         timeAgent += Time.deltaTime;
         if (timeAgent > timeAttack)
@@ -170,7 +170,7 @@ public class AgentController : MonoBehaviour
                     {
                         animAgent.SetBool ("IsMoving", false);
                         animAgent.SetTrigger ("Attack");
-                        StartCoroutine (WaitAnimShoot ());
+                        StartCoroutine (WaitAnimShoot ( ));
                     }
                     else
                     {
@@ -200,15 +200,15 @@ public class AgentController : MonoBehaviour
 
     #region ChangeEtat
 
-    public void DeadFonction ()
+    public void DeadFonction ( )
     {
         particulWeapon.SetActive (false);
         navAgent.isStopped = true;
-        agentsManager.DeadAgent (myFocusEtatAgent.ToString (), this.gameObject);
-        StartCoroutine (WaitRespawn ());
+        agentsManager.DeadAgent (myFocusEtatAgent.ToString ( ), this.gameObject);
+        StartCoroutine (WaitRespawn ( ));
     }
 
-    public bool GetEtatAgent ()
+    public bool GetEtatAgent ( )
     {
         if (myEtatAgent == AgentEtat.aliveAgent)
         {
@@ -252,22 +252,22 @@ public class AgentController : MonoBehaviour
 
     #endregion
 
-    IEnumerator WaitAnimShoot ()
+    IEnumerator WaitAnimShoot ( )
     {
         yield return new WaitForSeconds (0.4f);
-        GameObject killeuse = (GameObject) Instantiate (bulletAgent, spawnBulletAgent.position, spawnBulletAgent.rotation, parentBullet);
+        GameObject killeuse = (GameObject)Instantiate (bulletAgent, spawnBulletAgent.position, spawnBulletAgent.rotation, parentBullet);
     }
 
-    IEnumerator WaitRespawn ()
+    IEnumerator WaitRespawn ( )
     {
         animAgent.SetBool ("IsMoving", false);
         animAgent.ResetTrigger ("TakeDamage");
         animAgent.SetTrigger ("Die");
         yield return new WaitForSeconds (timeBeforeDepop);
-        newPos ();
+        newPos ( );
     }
 
-    async void newPos ()
+    void newPos ( )
     {
         Vector3 newPos = agentsManager.CheckBestcheckPoint (myFocusPlayer.transform);
         navAgent.Warp (newPos);
@@ -283,7 +283,7 @@ public class AgentController : MonoBehaviour
     {
         if (other.tag == Constants._PlayerBullet && myEtatAgent == AgentEtat.aliveAgent)
         {
-            BulletAbstract getBA = other.GetComponent<BulletAbstract> ();
+            BulletAbstract getBA = other.GetComponent<BulletAbstract> ( );
             GameObject explo = Instantiate (particleHit, transform.position, transform.rotation);
             Destroy (explo, 1f);
             if (getBA != null)
@@ -299,7 +299,7 @@ public class AgentController : MonoBehaviour
             {
                 myEtatAgent = AgentEtat.deadAgent;
                 mycollider.enabled = false;
-                DeadFonction ();
+                DeadFonction ( );
             }
             else
             {
