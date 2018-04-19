@@ -14,9 +14,11 @@ public class MedalStun : AbstractMedal
 		thisPlayer = allPlayer [0];
 		PlayerController thisPlayerEqua = null;
 
-		if (allPlayer.Length > 1)
+		int get = Manager.GameCont.NbrPlayer;
+
+		if (get > 1)
 		{
-			for (int a = 1; a < allPlayer.Length; a++)
+			for (int a = 1; a < get; a++)
 			{
 				if (thisPlayer.NbrDead < allPlayer [a].NbrDead)
 				{
@@ -29,12 +31,12 @@ public class MedalStun : AbstractMedal
 				}
 			}
 
-			Score = thisPlayer.NbrDead;
+			//Score = thisPlayer.NbrDead;
 			GoTarget (thisPlayerEqua);
 		}
 		else
 		{
-			Score = thisPlayer.NbrDead;
+			//Score = thisPlayer.NbrDead;
 
 			GoTarget ( );
 		}

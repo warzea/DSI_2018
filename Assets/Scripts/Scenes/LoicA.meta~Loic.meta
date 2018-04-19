@@ -1,17 +1,18 @@
 fileFormatVersion: 2
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
+<<<<<<< HEAD
+<<<<<<< HEAD
+guid: f9ae8b5c765deef4f8ba0f9728c8e4b8
+timeCreated: 1521210847
+=======
 guid: a0eefaab3ac4beb468c9be1962af0e1c
-timeCreated: 1521143455
-=======
-guid: 7935f499888ea644eb7cdbd9b912e406
-timeCreated: 1521145837
->>>>>>> Stashed changes
-=======
-guid: 8544006fba83e3c4cb2d6cc5842becf7
-timeCreated: 1521144449
->>>>>>> Stashed changes
+timeCreated: 1521210904
+>>>>>>> Loic
 licenseType: Free
+=======
+guid: 82eb793c64ff6a04d906d48bb3033afe
+timeCreated: 1521211356
+licenseType: Pro
+>>>>>>> DavidDebug
 DefaultImporter:
   externalObjects: {}
   userData: 

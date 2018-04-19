@@ -35,13 +35,16 @@ public class AgentsManagerCac : ManagerParent
     protected override void InitializeManager ()
     {
         agents = GameObject.FindObjectsOfType<AgentControllerCac> ();
-        playerCauldron = Manager.GameCont.WeaponB.gameObject;
         roomFight = GameObject.FindObjectsOfType<CheckRoom> ();
-        cam = Manager.GameCont.MainCam;
 
-        initialisation ();
     }
 
+    void Start ()
+    {
+        playerCauldron = Manager.GameCont.WeaponB.gameObject;
+        cam = Manager.GameCont.MainCam;
+        initialisation ();
+    }
     public Vector3 CheckBestcheckPoint (Transform posTarget)
     {
         Vector3 bestSpawn = new Vector3 ();
@@ -76,7 +79,15 @@ public class AgentsManagerCac : ManagerParent
         {
             for (int i = 0; i < posRespawn.Length; i++)
             {
-                Vector3 getCamPos = cam.WorldToViewportPoint (posRespawn [i].transform.position);
+                Vector3 getCamPos = Vector3.zero;
+                try
+                {
+                    getCamPos = cam.WorldToViewportPoint (posRespawn [i].transform.position);
+                }
+                catch
+                {
+                    return Vector3.zero;
+                }
 
                 if (getCamPos.x > 0.97f || getCamPos.x < 0.03f || getCamPos.y > 0.97f || getCamPos.y < 0.03f)
                 {

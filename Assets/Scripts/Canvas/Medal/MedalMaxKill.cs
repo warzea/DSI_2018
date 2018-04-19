@@ -14,9 +14,11 @@ public class MedalMaxKill : AbstractMedal
 		thisPlayer = allPlayer [0];
 		PlayerController thisPlayerEqua = null;
 
-		if (allPlayer.Length > 1)
+		int get = Manager.GameCont.NbrPlayer;
+
+		if (get > 1)
 		{
-			for (int a = 1; a < allPlayer.Length; a++)
+			for (int a = 1; a < get; a++)
 			{
 				if (thisPlayer.CurrKillScore < allPlayer [a].CurrKillScore)
 				{
@@ -29,12 +31,12 @@ public class MedalMaxKill : AbstractMedal
 				}
 			}
 
-			Score = thisPlayer.CurrKillScore;
+			//Score = thisPlayer.CurrKillScore;
 			GoTarget (thisPlayerEqua);
 		}
 		else
 		{
-			Score = thisPlayer.CurrKillScore;
+			//Score = thisPlayer.CurrKillScore;
 			GoTarget ( );
 		}
 	}

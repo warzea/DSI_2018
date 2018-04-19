@@ -9,17 +9,19 @@ public class MedalUnAward : AbstractMedal
 	#endregion
 
 	#region Mono
-	public override void StartCheck (PlayerController [ ] allPlayer)
+	public override void StartCheck (PlayerController [] allPlayer)
 	{
-		if (allPlayer.Length > 1)
+		int get = Manager.GameCont.NbrPlayer;
+
+		if (get > 1)
 		{
-			for (int a = 0; a < allPlayer.Length; a++)
+			for (int a = 1; a < get; a++)
 			{
 				if (allPlayer [a].NbrAward == 0)
 				{
-					GameObject thisObj = (GameObject)Instantiate (gameObject, thisTrans.parent);
-					thisObj.GetComponent<AbstractMedal> ( ).thisPlayer = allPlayer [a];
-					thisObj.GetComponent<AbstractMedal> ( ).GoTarget ( );
+					GameObject thisObj = (GameObject) Instantiate (gameObject, thisTrans.parent);
+					thisObj.GetComponent<AbstractMedal> ().thisPlayer = allPlayer [a];
+					thisObj.GetComponent<AbstractMedal> ().GoTarget ();
 				}
 			}
 
@@ -28,7 +30,7 @@ public class MedalUnAward : AbstractMedal
 		else if (allPlayer [0].NbrAward == 0)
 		{
 			thisPlayer = allPlayer [0];
-			GoTarget ( );
+			GoTarget ();
 		}
 		else
 		{

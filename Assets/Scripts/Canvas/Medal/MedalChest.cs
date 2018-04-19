@@ -14,9 +14,11 @@ public class MedalChest : AbstractMedal
 		thisPlayer = allPlayer [0];
 		PlayerController thisPlayerEqua = null;
 
-		if (allPlayer.Length > 1)
+		int get = Manager.GameCont.NbrPlayer;
+
+		if (get > 1)
 		{
-			for (int a = 1; a < allPlayer.Length; a++)
+			for (int a = 1; a < get; a++)
 			{
 				if (thisPlayer.NbrChest < allPlayer [a].NbrChest)
 				{
@@ -29,12 +31,12 @@ public class MedalChest : AbstractMedal
 				}
 			}
 
-			Score = thisPlayer.NbrChest;
+			//Score = thisPlayer.NbrChest;
 			GoTarget (thisPlayerEqua);
 		}
 		else
 		{
-			Score = thisPlayer.NbrChest;
+			//Score = thisPlayer.NbrChest;
 			GoTarget ( );
 		}
 	}

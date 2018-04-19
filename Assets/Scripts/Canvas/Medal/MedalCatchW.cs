@@ -13,10 +13,11 @@ public class MedalCatchW : AbstractMedal
 	{
 		thisPlayer = allPlayer [0];
 		PlayerController thisPlayerEqua = null;
+		int get = Manager.GameCont.NbrPlayer;
 
-		if (allPlayer.Length > 1)
+		if (get > 1)
 		{
-			for (int a = 1; a < allPlayer.Length; a++)
+			for (int a = 1; a < get; a++)
 			{
 				if (thisPlayer.WeaponCatch < allPlayer [a].WeaponCatch)
 				{
@@ -29,12 +30,12 @@ public class MedalCatchW : AbstractMedal
 				}
 			}
 
-			Score = thisPlayer.WeaponCatch;
+			//Score = thisPlayer.WeaponCatch;
 			GoTarget (thisPlayerEqua);
 		}
 		else
 		{
-			Score = thisPlayer.WeaponCatch;
+			//Score = thisPlayer.WeaponCatch;
 			GoTarget ( );
 		}
 	}

@@ -16,10 +16,11 @@ public class MedalEnemy : AbstractMedal
 	{
 		thisPlayer = allPlayer [0];
 		PlayerController thisPlayerEqua = null;
+		int get = Manager.GameCont.NbrPlayer;
 
-		if (allPlayer.Length > 1)
+		if (get > 1)
 		{
-			for (int a = 1; a < allPlayer.Length; a++)
+			for (int a = 1; a < get; a++)
 			{
 				if (thisPlayer.NbrEnemy < allPlayer [a].NbrEnemy)
 				{
@@ -31,7 +32,7 @@ public class MedalEnemy : AbstractMedal
 					thisPlayerEqua = allPlayer [a];
 				}
 			}
-			Score = thisPlayer.NbrEnemy;
+			//Score = thisPlayer.NbrEnemy;
 			GoTarget (thisPlayerEqua);
 
 			/*int b;
@@ -72,7 +73,7 @@ public class MedalEnemy : AbstractMedal
 		}
 		else
 		{
-			Score = thisPlayer.NbrEnemy;
+			//Score = thisPlayer.NbrEnemy;
 			GoTarget ( );
 		}
 	}

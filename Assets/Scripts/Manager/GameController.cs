@@ -10,6 +10,7 @@ using UnityEngine;
 public class GameController : ManagerParent
 {
     #region Variables
+    public GameObject PostEffect;
     public GameObject PlayerPrefab;
     public GameObject StartWeapon;
     public Transform PlayerPosSpawn;
@@ -24,96 +25,116 @@ public class GameController : ManagerParent
     public Transform Garbage;
 
     [HideInInspector]
-    public PlayerInfoInput[] GetPlayersInput;
+    public PlayerInfoInput [ ] GetPlayersInput;
 
-    [HideInInspector]
     public List<GameObject> Players;
-    public Material[] PlayerMaterial;
-    public Material[] LaserMaterial;
-    public GameObject[] PlayerTrail;
-    public AbstractMedal[] AllMedal;
+    public Material [ ] PlayerMaterial;
+    public GameObject [ ] LaserFX;
+    public GameObject [ ] PlayerTrail;
+    public AbstractMedal [ ] AllMedal;
 
     [HideInInspector]
     public List<MedalsPlayer> MedalInfo;
     List<PlayerController> getPlayerCont;
+
+    public int NbrPlayer = 0;
     #endregion
 
     #region Mono
     #endregion
 
     #region Public Methods
-    public void StartGame()
+    public void StartGame ( )
     {
+        Manager.Audm.OpenAudio (AudioType.MusicBackGround, "gameplay", true);
         if (WeaponB == null)
         {
-            WeaponB = (WeaponBox)FindObjectOfType(typeof(WeaponBox));
+            WeaponB = (WeaponBox)FindObjectOfType (typeof (WeaponBox));
         }
 
-        SpawnPlayer();
+        SpawnPlayer ( );
 
-        GetCameraFollow.InitGame();
-        checkPlayer();
+        GetCameraFollow.InitGame ( );
+        checkPlayer ( );
     }
 
-    public void EndGame()
+    public void EndGame ( )
     {
-        Players.Clear();
-        Manager.Ui.EndScreenStart();
+        if (PostEffect == null)
+        {
+            PostEffect = GameObject.Find ("PP_Volume");
+        }
+        PostEffect.SetActive (false);
+        Manager.Audm.OpenAudio (AudioType.MusicBackGround, "score", true);
+        var newEtat = new AgentEvent ( );
+        newEtat.AgentChecking = true;
+        newEtat.Raise ( );
 
-        DOVirtual.DelayedCall(2, () =>
-       {
+        Manager.Ui.EndScreenStart ( );
 
-           ScoreInfo[] allSc = Manager.Ui.GetScores.AllScore.ToArray();
-           ScoreInfo thisScore = allSc[0];
+        DOVirtual.DelayedCall (2, ( )=>
+        {
 
-           for (int a = 0; a < allSc.Length; a++)
-           {
-               if (allSc[a].ScoreTpe == ScoreType.BoxWeapon)
-               {
-                   thisScore = allSc[a];
-                   break;
-               }
-           }
+            ScoreInfo [ ] allSc = Manager.Ui.GetScores.AllScore.ToArray ( );
+            ScoreInfo thisScore = allSc [0];
 
-           DOVirtual.DelayedCall(1, () =>
-           {
-               for (int a = 0; a < AllMedal.Length; a++)
-               {
-                   AllMedal[a].gameObject.SetActive(true);
+            for (int a = 0; a < allSc.Length; a++)
+            {
+                if (allSc [a].ScoreTpe == ScoreType.BoxWeapon)
+                {
+                    thisScore = allSc [a];
+                    break;
+                }
+            }
 
-                   AllMedal[a].StartCheck(getPlayerCont.ToArray());
-               }
+            DOVirtual.DelayedCall (1, ( )=>
+            {
+                for (int a = 0; a < AllMedal.Length; a++)
+                {
+                    AllMedal [a].gameObject.SetActive (true);
+                    try
+                    {
+                        AllMedal [a].StartCheck (getPlayerCont.ToArray ( ));
 
-               int getVal;
-               MedalsPlayer thisMP;
-               for (int a = 0; a < MedalInfo.Count; a++)
-               {
-                   thisMP = MedalInfo[a];
-                   while (thisMP.ThisMedal.Count > 3)
-                   {
-                       getVal = Random.Range(0, thisMP.ThisMedal.Count);
-                       Destroy(thisMP.ThisMedal[getVal].gameObject);
+                    }
+                    catch
+                    {
+                        Debug.Log ("Erreur");
+                    }
+                }
 
-                       thisMP.ThisMedal.RemoveAt(getVal);
-                   }
+                int getVal;
+                MedalsPlayer thisMP;
+                for (int a = 0; a < MedalInfo.Count; a++)
+                {
+                    thisMP = MedalInfo [a];
+                    while (thisMP.ThisMedal.Count > 3)
+                    {
+                        getVal = Random.Range (0, thisMP.ThisMedal.Count);
 
-                   for (int b = 0; b < 3; b++)
-                   {
-                       Manager.Ui.EndScreenMedals(thisMP.ThisMedal[b].transform, thisMP.IDPlayer, b);
-                   }
-               }
-           });
+                        if (thisMP.ThisMedal [getVal] != null)
+                        {
+                            Debug.Log (thisMP.ThisMedal [getVal].gameObject.name);
+                            Destroy (thisMP.ThisMedal [getVal].gameObject);
+                            thisMP.ThisMedal.RemoveAt (getVal);
+                        }
+                    }
 
-           Manager.Ui.GetScores.UpdateValue(thisScore.FinalScore, ScoreType.EndScore, false, Manager.Ui.EndScreenFinished);
+                    for (int b = 0; b < 3; b++)
+                    {
+                        Manager.Ui.EndScreenMedals (thisMP.ThisMedal [b].transform, thisMP.IDPlayer, b);
+                    }
+                }
 
-       });
+            });
+            Manager.Ui.GetScores.UpdateValue (thisScore.FinalScore, ScoreType.EndScore, false, Manager.Ui.EndScreenFinished);
+
+        });
     }
 
-    public void EtatAgent(bool thisEtat)
+    public void EtatAgent (bool thisEtat)
     {
-        var newEtat = new AgentEvent();
-        newEtat.AgentChecking = thisEtat;
-        newEtat.Raise();
+
         /*System.Action <AgentEvent> thisAct = delegate( AgentEvent thisEvnt )
         {
             thisEvnt.AgentChecking = thisEtat;
@@ -125,123 +146,141 @@ public class GameController : ManagerParent
     #endregion
 
     #region Private Methods
-    protected override void InitializeManager()
+    protected override void InitializeManager ( )
     {
-        MedalInfo = new List<MedalsPlayer>();
+        MedalInfo = new List<MedalsPlayer> ( );
         for (int a = 0; a < 4; a++)
         {
-            MedalInfo.Add(new MedalsPlayer());
-            MedalInfo[a].IDPlayer = a;
-            MedalInfo[a].ThisMedal = new List<AbstractMedal>();
+            MedalInfo.Add (new MedalsPlayer ( ));
+            MedalInfo [a].IDPlayer = a;
+            MedalInfo [a].ThisMedal = new List<AbstractMedal> ( );
         }
-        getPlayerCont = new List<PlayerController>();
-        Garbage = transform.Find("Garbage");
-        GetPlayersInput = new PlayerInfoInput[4];
+        getPlayerCont = new List<PlayerController> ( );
+        Garbage = transform.Find ("Garbage");
+        GetPlayersInput = new PlayerInfoInput [4];
 
         for (int a = 0; a < 4; a++)
         {
-            GetPlayersInput[a] = new PlayerInfoInput();
-            GetPlayersInput[a].IdPlayer = a;
-            GetPlayersInput[a].InputPlayer = ReInput.players.GetPlayer(a);
-            GetPlayersInput[a].EnablePlayer = false;
+            GetPlayersInput [a] = new PlayerInfoInput ( );
+            GetPlayersInput [a].IdPlayer = a;
+            GetPlayersInput [a].InputPlayer = ReInput.players.GetPlayer (a);
+            GetPlayersInput [a].EnablePlayer = false;
         }
 
         if (WeaponB == null)
         {
-            WeaponB = (WeaponBox)FindObjectOfType(typeof(WeaponBox));
+            WeaponB = (WeaponBox)FindObjectOfType (typeof (WeaponBox));
         }
 
         if (StartWeapon == null)
         {
-            StartWeapon = WeaponB.AllStartWeap[0];
+            StartWeapon = WeaponB.AllStartWeap [0];
         }
 
         if (MainCam == null)
         {
             MainCam = Camera.main;
-            GetCameraFollow = MainCam.transform.parent.GetComponent<CameraFollow>();
+            GetCameraFollow = MainCam.transform.parent.GetComponent<CameraFollow> ( );
         }
     }
 
-    void SpawnPlayer()
+    void SpawnPlayer ( )
     {
-        PlayerInfoInput[] getPlayers = GetPlayersInput;
+        PlayerInfoInput [ ] getPlayers = GetPlayersInput;
         PlayerController getPC;
         GameObject getPlayer;
         GameObject getWeapon;
-        GameObject[] getPlayerHud = Manager.Ui.PlayersHUD;
+        GameObject [ ] getPlayerHud = Manager.Ui.PlayersHUD;
 
-        List<GameObject> getPotGets = new List<GameObject>();
+        List<GameObject> getPotGets = new List<GameObject> ( );
 
         for (int a = 0; a < getPlayers.Length; a++)
         {
-            getPlayers[a].ReadyPlayer = false;
-            getPlayerHud[a].SetActive(getPlayers[a].EnablePlayer);
+            getPlayers [a].ReadyPlayer = false;
+            getPlayerHud [a].SetActive (getPlayers [a].EnablePlayer);
 
-            if (getPlayers[a].EnablePlayer)
+            getPlayer = (GameObject)Instantiate (PlayerPrefab);
+            getPlayer.name = getPlayer.name + "+" + a.ToString ( );
+            if (!getPlayers [a].EnablePlayer)
             {
-                getPlayer = (GameObject)Instantiate(PlayerPrefab);
-                getPlayer.name = getPlayer.name + "+" + a.ToString();
+                getPlayer.SetActive (false);
+            }
+            else
+            {
+                NbrPlayer++;
+            }
+            /* getPlayer.transform.SetParent (PlayerPosSpawn);
+             getPlayer.transform.localPosition = Vector3.zero;
+             getPlayer.transform.SetParent (null);*/
 
-                if (PlayerPosSpawn != null)
+            //getPlayer.transform.localPosition += Vector3.up * 0.5f;
+            if (PlayerPosSpawn != null)
+            {
+                getPlayer.transform.position = PlayerPosSpawn.position;
+            }
+            else
+            {
+                getPlayer.transform.position = new Vector3 (a * 1.5f, 0, 0);
+            }
+
+            foreach (Renderer thisMat in getPlayer.GetComponentsInChildren<Renderer> ( ))
+            {
+                if (thisMat.gameObject.name == "Corpus")
                 {
-                    getPlayer.transform.position = PlayerPosSpawn.position + new Vector3(a * 1.5f, 0, 0);
+                    thisMat.material = PlayerMaterial [a];
+                    Instantiate (PlayerTrail [a], getPlayer.transform.position, Quaternion.identity, getPlayer.transform);
+                    break;
                 }
-                else
-                {
-                    getPlayer.transform.position = new Vector3(a * 1.5f, 0, 0);
-                }
+            }
 
-                foreach (Renderer thisMat in getPlayer.GetComponentsInChildren<Renderer>())
-                {
-                    if (thisMat.gameObject.name == "Corpus")
-                    {
-                        thisMat.material = PlayerMaterial[a];
-                        Instantiate(PlayerTrail[a], getPlayer.transform.position, Quaternion.identity, getPlayer.transform);
-                        break;
-                    }
-                }
+            Instantiate (LaserFX [a], new Vector3 (getPlayer.transform.position.x + 0.3f, getPlayer.transform.position.y, getPlayer.transform.position.z), Quaternion.identity, getPlayer.transform);
 
-                getPlayer.GetComponentInChildren<LineRenderer>().gameObject.GetComponent<Renderer>().material = LaserMaterial[a];
+            getPC = getPlayer.GetComponent<PlayerController> ( );
+            getPC.IdPlayer = getPlayers [a].IdPlayer;
+            getPC.AmmoUI = Manager.Ui.PlayersAmmo [a].transform;
 
-                Debug.Log(Manager.Ui.PlayersAmmo[a].name);
+            getWeapon = (GameObject)Instantiate (Manager.Ui.PlayerText [a], Manager.Ui.GetInGame);
+            getWeapon.GetComponent<FollowPlayerUI> ( ).getCam = MainCam;
+            getWeapon.GetComponent<FollowPlayerUI> ( ).ThisPlayer = getPlayer.transform;
 
-                getPC = getPlayer.GetComponent<PlayerController>();
-                getPC.IdPlayer = getPlayers[a].IdPlayer;
-                getPC.AmmoUI = Manager.Ui.PlayersAmmo[a].transform;
+            getWeapon = (GameObject)Instantiate (Manager.Ui.PotionGet, Manager.Ui.GetInGame);
+            getWeapon.GetComponent<PotionFollowP> ( ).getCam = MainCam;
+            getWeapon.GetComponent<PotionFollowP> ( ).ThisPlayer = getPlayer.transform;
+            getPotGets.Add (getWeapon);
 
-                getWeapon = (GameObject)Instantiate(Manager.Ui.PlayerText[a], Manager.Ui.GetInGame);
-                getWeapon.GetComponent<FollowPlayerUI>().getCam = MainCam;
-                getWeapon.GetComponent<FollowPlayerUI>().ThisPlayer = getPlayer.transform;
+            getWeapon = (GameObject)Instantiate (StartWeapon, getPC.WeaponPos.transform);
+            getWeapon.transform.localPosition = Vector3.zero;
+            //getWeapon.transform.localRotation = Quaternion.identity;
 
-                getWeapon = (GameObject)Instantiate(Manager.Ui.PotionGet, Manager.Ui.GetInGame);
-                getWeapon.GetComponent<PotionFollowP>().getCam = MainCam;
-                getWeapon.GetComponent<PotionFollowP>().ThisPlayer = getPlayer.transform;
-                getPotGets.Add(getWeapon);
+            //getPlayer.GetComponent<PlayerController>().WeapText = Manager.Ui.textWeapon[a];
 
-                getWeapon = (GameObject)Instantiate(StartWeapon, getPC.WeaponPos.transform);
-                getWeapon.transform.localPosition = Vector3.zero;
-                //getWeapon.transform.localRotation = Quaternion.identity;
+            getPC.UpdateWeapon (getWeapon.GetComponent<WeaponAbstract> ( ));
+            Players.Add (getPlayer);
+            getPlayerCont.Add (getPlayer.GetComponent<PlayerController> ( ));
+        }
 
-                //getPlayer.GetComponent<PlayerController>().WeapText = Manager.Ui.textWeapon[a];
+        Manager.Ui.AllPotGet = getPotGets.ToArray ( );
+        Manager.AgentM.player = Players.ToArray ( );
+        Manager.AgentM.InitGame ( );
+    }
 
-                getPC.UpdateWeapon(getWeapon.GetComponent<WeaponAbstract>());
-                Players.Add(getPlayer);
-                getPlayerCont.Add(getPlayer.GetComponent<PlayerController>());
+    void checkPlayer ( )
+    {
+        PlayerController [ ] playerCont;
+        List<PlayerController> playerCont2 = new List<PlayerController> ( );
+        GameObject lowLife = Players [0];
+        GameObject maxLife = Players [0];
+        GameObject boxWeapon = Players [0];
+
+        foreach (PlayerController thisP in getPlayerCont)
+        {
+            if (thisP.gameObject.activeSelf)
+            {
+                playerCont2.Add (thisP);
             }
         }
 
-        Manager.Ui.AllPotGet = getPotGets.ToArray();
-        Manager.AgentM.player = Players.ToArray();
-        Manager.AgentM.InitGame();
-    }
-
-    void checkPlayer()
-    {
-        PlayerController[] playerCont = getPlayerCont.ToArray();
-        GameObject lowLife = Players[0];
-        GameObject maxLife = Players[0];
-        GameObject boxWeapon = Players[0];
+        playerCont = playerCont2.ToArray ( );
 
         bool check = false;
 
@@ -250,25 +289,25 @@ public class GameController : ManagerParent
 
         for (a = 0; a < playerCont.Length; a++)
         {
-            if (playerCont[a].LifePlayer < playerCont[getID].LifePlayer && !playerCont[a].dead)
+            if (playerCont [a].LifePlayer < playerCont [getID].LifePlayer && !playerCont [a].dead)
             {
                 getID = a;
             }
-            else if (playerCont[a].LifePlayer == playerCont[getID].LifePlayer && !playerCont[a].dead)
+            else if (playerCont [a].LifePlayer == playerCont [getID].LifePlayer && !playerCont [a].dead)
             {
-                if (Random.Range(0, 2) == 0)
+                if (Random.Range (0, 2)== 0)
                 {
                     getID = a;
                 }
             }
         }
 
-        if (playerCont[getID].dead)
+        if (playerCont [getID].dead)
         {
             check = false;
             for (a = 0; a < playerCont.Length; a++)
             {
-                if (!playerCont[a].dead)
+                if (!playerCont [a].dead)
                 {
                     getID = a;
                     check = true;
@@ -278,39 +317,39 @@ public class GameController : ManagerParent
 
             if (!check)
             {
-                DOVirtual.DelayedCall(TimerCheckPlayer, () =>
-               {
-                   checkPlayer();
-               });
+                DOVirtual.DelayedCall (TimerCheckPlayer, ( )=>
+                {
+                    checkPlayer ( );
+                });
                 return;
             }
         }
 
-        lowLife = playerCont[getID].gameObject;
+        lowLife = playerCont [getID].gameObject;
 
         for (a = 0; a < playerCont.Length; a++)
         {
-            if (playerCont[a].LifePlayer > playerCont[getID].LifePlayer)
+            if (playerCont [a].LifePlayer > playerCont [getID].LifePlayer)
             {
                 getID = a;
             }
-            else if (playerCont[a].LifePlayer == playerCont[getID].LifePlayer)
+            else if (playerCont [a].LifePlayer == playerCont [getID].LifePlayer)
             {
-                if (Random.Range(0, 2) == 0)
+                if (Random.Range (0, 2)== 0)
                 {
                     getID = a;
                 }
             }
         }
 
-        maxLife = playerCont[getID].gameObject;
+        maxLife = playerCont [getID].gameObject;
 
         check = false;
         for (a = 0; a < playerCont.Length; a++)
         {
-            if (playerCont[a].driveBox)
+            if (playerCont [a].driveBox)
             {
-                boxWeapon = playerCont[a].gameObject;
+                boxWeapon = playerCont [a].gameObject;
                 check = true;
                 break;
             }
@@ -318,15 +357,16 @@ public class GameController : ManagerParent
 
         if (!check)
         {
-            boxWeapon = playerCont[Random.Range(0, playerCont.Length)].gameObject;
+            boxWeapon = playerCont [Random.Range (0, playerCont.Length)].gameObject;
         }
 
-        Manager.AgentM.ChangeEtatFocus(lowLife, maxLife, boxWeapon);
+        Debug.Log (lowLife.name + " / " + maxLife.name);
+        Manager.AgentM.ChangeEtatFocus (lowLife, maxLife, boxWeapon);
 
-        DOVirtual.DelayedCall(TimerCheckPlayer, () =>
-       {
-           checkPlayer();
-       });
+        DOVirtual.DelayedCall (TimerCheckPlayer, ( )=>
+        {
+            checkPlayer ( );
+        });
     }
     #endregion
 }

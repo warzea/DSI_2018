@@ -14,9 +14,11 @@ public class MedalCauldron : AbstractMedal
 		thisPlayer = allPlayer [0];
 		PlayerController thisPlayerEqua = null;
 
-		if (allPlayer.Length > 1)
+		int get = Manager.GameCont.NbrPlayer;
+
+		if (get > 1)
 		{
-			for (int a = 1; a < allPlayer.Length; a++)
+			for (int a = 1; a < get; a++)
 			{
 				if (thisPlayer.TimeWBox < allPlayer [a].TimeWBox)
 				{
@@ -29,7 +31,7 @@ public class MedalCauldron : AbstractMedal
 				}
 			}
 
-			Score = thisPlayer.TimeWBox;
+			//Score = thisPlayer.TimeWBox;
 			GoTarget (thisPlayerEqua);
 		}
 		else
